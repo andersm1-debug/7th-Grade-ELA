@@ -77,8 +77,19 @@
 
         .question {
             font-size: 1.3rem;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             line-height: 1.4;
+        }
+
+        #hint-text {
+            display: none;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.9rem;
+            color: #5d4037;
+            background: rgba(62, 43, 20, 0.1);
+            padding: 10px;
+            border-left: 3px solid #3e2b14;
+            margin-bottom: 20px;
         }
 
         .options-container {
@@ -89,7 +100,7 @@
             z-index: 2;
         }
 
-        .option-btn {
+        .option-btn, .hint-btn {
             background: rgba(255, 255, 255, 0.4);
             border: 1px solid #3e2b14;
             padding: 15px;
@@ -99,6 +110,16 @@
             font-family: inherit;
             font-size: 1.1rem;
             color: #3e2b14;
+        }
+
+        .hint-btn {
+            background: none;
+            border: 1px dashed #3e2b14;
+            font-size: 0.8rem;
+            padding: 8px;
+            margin-bottom: 15px;
+            width: fit-content;
+            font-family: 'Special Elite', monospace;
         }
 
         .option-btn:hover {
@@ -126,12 +147,6 @@
             font-size: 1.5rem;
             margin-bottom: 15px;
             text-transform: uppercase;
-        }
-
-        #feedback-text {
-            margin-bottom: 25px;
-            line-height: 1.5;
-            font-size: 1.05rem;
         }
 
         .close-btn {
@@ -166,13 +181,15 @@
     <h1 id="title">Salem Interaction Lab</h1>
     <div id="quiz-content">
         <p class="question" id="question-text">Loading investigation...</p>
+        <button class="hint-btn" onclick="showHint()">[ Seek Counsel ]</button>
+        <div id="hint-text"></div>
         <div class="options-container" id="options"></div>
     </div>
 </div>
 
 <div id="feedback-modal">
     <h2 id="feedback-title">Analysis Result</h2>
-    <p id="feedback-text"></p>
+    <p id="feedback-text" style="margin-bottom: 25px; line-height: 1.5; font-size: 1.05rem;"></p>
     <button class="close-btn" onclick="closeModal()">Continue Investigation</button>
 </div>
 
@@ -183,6 +200,7 @@
     const quizData = [
         {
             q: "How did the lack of scientific knowledge in 1692 interact with the physical symptoms of the girls?",
+            hint: "Think about how people explain things they don't understand without medicine.",
             options: [
                 { text: "It led the community to seek a supernatural explanation (witchcraft).", correct: true },
                 { text: "It caused the town to ignore the girls until they got better.", correct: false },
@@ -192,6 +210,7 @@
         },
         {
             q: "What was the primary interaction between the initial accusations and social tensions in Salem?",
+            hint: "Did people use the trials to solve existing problems with their neighbors?",
             options: [
                 { text: "People used accusations to settle old grudges over land and family disputes.", correct: true },
                 { text: "The town worked together to protect the accused.", correct: false },
@@ -201,6 +220,7 @@
         },
         {
             q: "How did the court’s decision to allow 'spectral evidence' change the power dynamic?",
+            hint: "If you can't see the evidence, how can you argue against it?",
             options: [
                 { text: "It gave the accusers absolute power, as spectral evidence cannot be disproved.", correct: true },
                 { text: "It gave the accused a way to prove innocence through dreams.", correct: false },
@@ -210,6 +230,7 @@
         },
         {
             q: "How did the location of the first 'afflicted' girls (the home of Minister Samuel Parris) interact with the community's reaction?",
+            hint: "Consider the influence a Minister had over a Puritan town.",
             options: [
                 { text: "It gave the event immediate religious authority and sparked town-wide alarm.", correct: true },
                 { text: "It caused the town to ignore the event because they disliked the Minister.", correct: false },
@@ -219,6 +240,7 @@
         },
         {
             q: "How did the brutal death of Giles Corey (who was pressed to death) interact with the community's view of the trials?",
+            hint: "Think about how a person's sympathy changes when they see something truly cruel.",
             options: [
                 { text: "The extreme cruelty of his death began to turn public opinion against the trials.", correct: true },
                 { text: "It made people even more afraid of the court and caused them to stop protesting.", correct: false },
@@ -228,6 +250,7 @@
         },
         {
             q: "How did the idea of 'Puritan Purity' interact with the event of an accusation?",
+            hint: "Once someone was accused, did their past 'good' behavior still matter?",
             options: [
                 { text: "It forced the accused to confess to a lie because their reputation was no longer enough to save them.", correct: true },
                 { text: "It meant that a 'good name' was enough to protect someone from any charge.", correct: false },
@@ -242,10 +265,12 @@
                 { text: "It reinforced the idea that children should be seen and not heard.", correct: false },
                 { text: "It led to the creation of a new school for the girls.", correct: false }
             ],
+            hint: "In 1692, who usually had the power, and who has it during the trials?",
             note: "This shows an interaction between individuals (the girls) and the social structure (ideas) of the town."
         },
         {
             q: "How did the social status of the first three women accused interact with the town’s willingness to believe the charges?",
+            hint: "Is it easier to believe a crime was committed by someone who is already an outcast?",
             options: [
                 { text: "They were social outcasts, which made it easier for the community to target them without guilt.", correct: true },
                 { text: "They were powerful leaders, which made the town afraid to question them.", correct: false },
@@ -255,6 +280,7 @@
         },
         {
             q: "How did the isolated nature of Salem Village interact with the spread of rumors?",
+            hint: "Think about how news travels in a small, disconnected place versus a big city.",
             options: [
                 { text: "It allowed rumors to grow because they could not be easily checked against outside information.", correct: true },
                 { text: "It made rumors travel much slower than in the city.", correct: false },
@@ -264,12 +290,12 @@
         },
         {
             q: "What specific interaction finally led Governor Phipps to stop the proceedings of the court?",
+            hint: "The Governor didn't act until the 'spectral evidence' hit very close to home.",
             options: [
                 { text: "The 'Spectral Evidence' was used to accuse the Governor's own wife, forcing him to intervene.", correct: true },
                 { text: "The girls admitted they were lying for attention.", correct: false },
                 { text: "The British government ordered him to stop the trials immediately.", correct: false }
             ],
-            correct: 1,
             note: "When the idea of 'Spectral Evidence' interacted with an individual of high power (the Governor's wife), it finally forced a change in the legal event."
         }
     ];
@@ -282,14 +308,20 @@
         return array;
     }
 
+    function showHint() {
+        const hText = document.getElementById("hint-text");
+        hText.innerText = quizData[current].hint;
+        hText.style.display = "block";
+    }
+
     function loadQuestion() {
         const d = quizData[current];
         document.getElementById("progress").innerText = `Entry ${current + 1} of ${quizData.length}`;
         document.getElementById("question-text").innerText = d.q;
+        document.getElementById("hint-text").style.display = "none";
         const optCont = document.getElementById("options");
         optCont.innerHTML = "";
 
-        // Create a copy of the options and shuffle them
         let shuffledOptions = shuffle([...d.options]);
 
         shuffledOptions.forEach((opt) => {
@@ -302,7 +334,6 @@
     }
 
     function checkAnswer(isCorrect) {
-        const d = quizData[current];
         if (isCorrect) {
             score++;
             document.getElementById("feedback-title").innerText = "✓ Analysis Verified";
@@ -311,7 +342,7 @@
             document.getElementById("feedback-title").innerText = "✗ Flawed Reasoning";
             document.getElementById("feedback-title").style.color = "#b71c1c";
         }
-        document.getElementById("feedback-text").innerHTML = d.note;
+        document.getElementById("feedback-text").innerHTML = quizData[current].note;
         document.getElementById("feedback-modal").style.display = "block";
         document.getElementById("overlay").style.display = "block";
     }
@@ -337,15 +368,9 @@
             <div style="text-align:center; padding: 20px;">
                 <h2 style="color:#3e2b14">Investigation Concluded</h2>
                 <p style="font-size: 1.5rem; margin: 20px 0;">Final Analysis Score: <br><strong>${finalScore}%</strong></p>
-                <p>To record your grade in the archives, click the button below to submit your score to Mr. Anderson.</p>
-                
-                <a href="${preFilledURL}" target="_blank" class="close-btn" style="margin-top:20px;">
-                    Submit Score
-                </a>
-                
-                <p style="font-family: 'Special Elite', monospace; font-size: 0.7rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:40px;">
-                    VERIFICATION CODE: [S-1692-7ELA-PRO]
-                </p>
+                <p>Submit your score to the archives below.</p>
+                <a href="${preFilledURL}" target="_blank" class="close-btn" style="margin-top:20px;">Submit Score</a>
+                <p style="font-family: 'Special Elite', monospace; font-size: 0.7rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:40px;">VERIFICATION CODE: [S-1692-7ELA-PRO]</p>
             </div>
         `;
     }
