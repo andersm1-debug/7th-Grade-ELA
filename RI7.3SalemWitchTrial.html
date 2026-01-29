@@ -29,7 +29,6 @@
             position: relative;
         }
 
-        /* Paper Texture Overlay */
         #quiz-container::before {
             content: "";
             position: absolute;
@@ -39,7 +38,6 @@
             opacity: 0.4;
         }
 
-        /* Navigation Button */
         .home-nav {
             display: inline-block;
             margin-bottom: 20px;
@@ -108,7 +106,6 @@
             transform: translateX(5px);
         }
 
-        /* Feedback Modal */
         #feedback-modal {
             display: none;
             position: fixed;
@@ -162,8 +159,8 @@
 <div id="overlay"></div>
 
 <div id="quiz-container">
-    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/" class="home-nav">← Back to Hub</a>
-    <div class="progress" id="progress">Entry 1 of 5</div>
+    <a href="index.html" class="home-nav">← Back to Hub</a>
+    <div class="progress" id="progress">Entry 1 of 10</div>
     <h1 id="title">Salem Interaction Lab</h1>
     <div id="quiz-content">
         <p class="question" id="question-text">Loading investigation...</p>
@@ -197,7 +194,7 @@
                 "The court dismissed the claims as simple teenage 'hysteria'."
             ],
             correct: 1,
-            note: "The 'Ripple' shows how an event (accusation) interacts with long-standing social ideas (grudges) to create a crisis."
+            note: "The 'Ripple Effect': Small events interact with long-standing social ideas (grudges) to create a crisis."
         },
         {
             q: "How did the court’s decision to allow 'spectral evidence' change the power dynamic?",
@@ -207,7 +204,7 @@
                 "It balanced the power so both sides had an equal chance."
             ],
             correct: 1,
-            note: "This idea (spectral evidence) interacted with the legal system to make justice impossible."
+            note: "This idea (spectral evidence) interacted with the legal system (event) to make justice impossible."
         },
         {
             q: "How did the strict religious setting interact with the girls' fear of being caught dancing?",
@@ -228,6 +225,56 @@
             ],
             correct: 1,
             note: "As the idea of logic and verifiable evidence interacted with the legal system, the hysteria lost its power."
+        },
+        {
+            q: "How did the idea of 'Puritan Purity' interact with the event of an accusation?",
+            options: [
+                "It meant that a 'good name' was enough to protect someone from any charge.",
+                "It forced the accused to confess to a lie because their reputation was no longer enough to save them.",
+                "It allowed neighbors to forgive each other easily."
+            ],
+            correct: 1,
+            note: "An individual's reputation (idea) interacted with the court (event) to create a 'confess or die' situation."
+        },
+        {
+            q: "How did the age of the accusers interact with the social hierarchy of Salem?",
+            options: [
+                "It flipped the power structure, giving children authority over the town’s most powerful adults.",
+                "It reinforced the idea that children should be seen and not heard.",
+                "It led to the creation of a new school for the girls."
+            ],
+            correct: 0,
+            note: "This shows an interaction between individuals (the girls) and the social structure (ideas) of the town."
+        },
+        {
+            q: "How did economic events, like paying the Minister's salary, interact with the trials?",
+            options: [
+                "It provided the funding needed to pay for the lawyers.",
+                "It created deep divisions in the church that made neighbors more likely to accuse one another.",
+                "It had no effect on the community's behavior."
+            ],
+            correct: 1,
+            note: "Economic events often interact with social ideas to create the 'fuel' for a community crisis."
+        },
+        {
+            q: "How did the isolated nature of Salem Village interact with the spread of rumors?",
+            options: [
+                "It allowed rumors to grow because they could not be easily checked against outside information.",
+                "It made rumors travel much slower than in the city.",
+                "It encouraged people to travel more to find the truth."
+            ],
+            correct: 0,
+            note: "The physical setting (isolation) interacted with the spread of a dangerous idea (rumors)."
+        },
+        {
+            q: "How did the final executions interact with the ideas of the surviving community members?",
+            options: [
+                "The hangings confirmed that the community was finally safe from witches.",
+                "The horror of the deaths eventually interacted with people's sense of justice, leading them to admit the court was wrong.",
+                "The community decided to move the town to a new location."
+            ],
+            correct: 1,
+            note: "New events (the deaths) eventually changed the community's ideas about the trials, ending the hysteria."
         }
     ];
 
@@ -266,7 +313,7 @@
         } else {
             fbTitle.innerText = "✗ Flawed Reasoning";
             fbTitle.style.color = "#b71c1c";
-            fbText.innerHTML = `<strong>Not quite.</strong> Review your Interaction Triangle.<br><br>${d.note}`;
+            fbText.innerHTML = `<strong>Not quite.</strong> Review the Interaction Triangle.<br><br>${d.note}`;
         }
 
         modal.style.display = "block";
@@ -288,9 +335,9 @@
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center; padding: 20px;">
                 <h2 style="color:#3e2b14">Investigation Concluded</h2>
-                <p>You have successfully analyzed the interactions of Salem, 1692.</p>
+                <p>You have successfully analyzed 10 key interactions of Salem, 1692.</p>
                 <p style="font-family: 'Special Elite', monospace; font-size: 0.8rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:20px;">
-                    VERIFICATION CODE: [S-1692-7ELA]
+                    VERIFICATION CODE: [S-1692-7ELA-PRO]
                 </p>
                 <button class="close-btn" onclick="location.reload()">Reset Records</button>
             </div>
