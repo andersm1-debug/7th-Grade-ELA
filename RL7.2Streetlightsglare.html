@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Glare: Theme Lab</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Playfair+Display:ital@0;1&display=swap');
+
+        body {
+            background-color: #0a0a0a;
+            color: #d4d4d4;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 50%;
+            width: 300px; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        #quiz-container {
+            background: #121212;
+            border: 1px solid #333;
+            padding: 40px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
+            z-index: 5;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 200;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .progress {
+            font-family: 'Special Elite', monospace;
+            font-size: 0.8rem;
+            text-align: right;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .hint-text {
+            display: none;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.9rem;
+            background: #1a1a1a;
+            padding: 10px;
+            border-left: 2px solid #fff;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #999;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-size: 1.1rem;
+        }
+
+        .option-btn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: #444;
+            cursor: pointer;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.7rem;
+            text-decoration: underline;
+            margin-bottom: 20px;
+        }
+
+        #feedback-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            color: #000;
+            padding: 35px;
+            z-index: 1000;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .close-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Special Elite', monospace;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<div id="overlay"></div>
+
+<div id="quiz-container">
+    <a href="index.html" style="color:#666; text-decoration:none; font-size:0.7rem; letter-spacing:2px;">← HUB</a>
+    <div class="progress" id="progress">STATION 1/10</div>
+    <h1 id="title">The Glare</h1>
+    <div id="quiz-content">
+        <p class="question" id="question-text">Initializing...</p>
+        <button class="hint-btn" onclick="toggleHint()">[ SEEK COUNSEL ]</button>
+        <div id="hint-text" class="hint-text"></div>
+        <div class="options-container" id="options"></div>
+    </div>
+</div>
+
+<div id="feedback-modal">
+    <h2 id="fb-title" style="font-family:'Special Elite';">RESULT</h2>
+    <p id="fb-text" style="line-height:1.6;"></p>
+    <button class="close-btn" onclick="nextQuestion()">PROCEED</button>
+</div>
+
+<script>
+    let score = 0;
+    let current = 0;
+
+    const quizData = [
+        {
+            q: "Which of the following is a THEME of the text rather than a summary of the plot?",
+            hint: "A theme is a universal message; a summary describes specific characters and events.",
+            options: [
+                { text: "Suspicions can turn a peaceful community into a source of conflict.", correct: true },
+                { text: "The neighborhood lost power after a strange light appeared.", correct: false },
+                { text: "Neighbors began to argue in the street during a blackout.", correct: false }
+            ],
+            note: "RL.7.2: Theme focuses on the 'Big Idea' or lesson learned about human nature."
+        },
+        {
+            q: "How does the 'glaring' streetlight at the beginning of the text contribute to the theme?",
+            hint: "Consider how the lighting makes the neighborhood feel before the panic starts.",
+            options: [
+                { text: "It establishes a false sense of security and modern order.", correct: true },
+                { text: "It creates a scary mood that warns the reader of monsters.", correct: false },
+                { text: "It shows that the neighborhood is poorly lit and dangerous.", correct: false }
+            ],
+            note: "The contrast between the 'safe' light and the later 'harsh' glare develops the theme of fragility."
+        },
+        {
+            q: "When the author describes the 'harsh glare' of neighbors looking at one another, what thematic idea is being developed?",
+            hint: "Think about the pressure of being watched or judged by others.",
+            options: [
+                { text: "The theme that fear turns people into judges of their own friends.", correct: true },
+                { text: "The theme that everyone in a neighborhood should be identical.", correct: false },
+                { text: "The idea that light is always better than darkness.", correct: false }
+            ],
+            note: "The 'glare' shifts from being a physical light to a metaphorical light of judgment."
+        },
+        {
+            q: "How does the author use character interactions to develop the theme of 'Mob Mentality'?",
+            hint: "Look at how the crowd acts together versus how individuals act alone.",
+            options: [
+                { text: "By showing how a single rumor can lead a group to turn on an individual.", correct: true },
+                { text: "By having the characters work together to fix the power outage.", correct: false },
+                { text: "By showing that the characters have always hated each other.", correct: false }
+            ],
+            note: "RL.7.2: Theme is often built through the way characters treat one another during a crisis."
+        },
+        {
+            q: "What is the thematic significance of the silence that follows the 'glare' of the conflict?",
+            hint: "What does the silence suggest about the damage that has been done?",
+            options: [
+                { text: "It emphasizes the realization that the community has destroyed its own peace.", correct: true },
+                { text: "It shows that the neighbors have finally agreed with one another.", correct: false },
+                { text: "It suggests that the monsters have finally arrived and taken everyone.", correct: false }
+            ],
+            note: "The aftermath (silence) helps the reader determine the final lesson or theme."
+        },
+        {
+            q: "Which quote from the text best supports the theme that 'fear is a powerful weapon'?",
+            hint: "Look for a line that describes the effect fear has on the characters.",
+            options: [
+                { text: "The suspicion became a glare that no one could look away from.", correct: true },
+                { text: "The streetlights went out at exactly six-o-clock.", correct: false },
+                { text: "They all stood on their porches looking at the sky.", correct: false }
+            ],
+            note: "Evidence for theme usually describes a change in behavior or a deep realization."
+        },
+        {
+            q: "How does the author's choice of a 'normal' setting develop the theme?",
+            hint: "Why set a story about chaos in a place that looks perfectly safe?",
+            options: [
+                { text: "It highlights the idea that hysteria can happen anywhere, even in 'safe' places.", correct: true },
+                { text: "It makes the story feel like a fairy tale or a myth.", correct: false },
+                { text: "It proves that the suburbs are more dangerous than the city.", correct: false }
+            ],
+            note: "Contrast between setting and event is a classic way authors build a theme."
+        },
+        {
+            q: "In 'The Streetlights Glare,' how does the theme evolve from the beginning to the end?",
+            hint: "Think about the shift from 'ordered life' to 'disorder.'",
+            options: [
+                { text: "It moves from a sense of communal safety to a total breakdown of trust.", correct: true },
+                { text: "It moves from a story about aliens to a story about neighbors.", correct: false },
+                { text: "It moves from a mystery about lights to a manual on electrical repair.", correct: false }
+            ],
+            note: "RL.7.2 requires analyzing how the theme develops over the *entire* text."
+        },
+        {
+            q: "What role does 'prejudice' play in the development of the theme?",
+            hint: "How do the neighbors' preconceived ideas about each other interact with the blackout?",
+            options: [
+                { text: "It acts as the catalyst that turns a simple event into a tragic conflict.", correct: true },
+                { text: "It is a minor detail that doesn't affect the final message.", correct: false },
+                { text: "It is shown to be a positive trait that helps the characters stay safe.", correct: false }
+            ],
+            note: "Prejudice is often a 'topic' that leads to the 'theme' of social destruction."
+        },
+        {
+            q: "Which character action best illustrates the theme that 'civilization is fragile'?",
+            hint: "Look for a moment where a character forgets their 'polite' rules.",
+            options: [
+                { text: "When a neighbor points a finger at a friend they have known for years.", correct: true },
+                { text: "When a character tries to call the police to report the outage.", correct: false },
+                { text: "When the characters decide to share their flashlights.", correct: false }
+            ],
+            note: "Theme is proven when characters abandon their normal values under stress."
+        }
+    ];
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function toggleHint() {
+        const h = document.getElementById("hint-text");
+        h.innerText = quizData[current].hint;
+        h.style.display = h.style.display === "block" ? "none" : "block";
+    }
+
+    function loadQuestion() {
+        const d = quizData[current];
+        document.getElementById("progress").innerText = `STATION ${current + 1}/${quizData.length}`;
+        document.getElementById("question-text").innerText = d.q;
+        document.getElementById("hint-text").style.display = "none";
+        const optCont = document.getElementById("options");
+        optCont.innerHTML = "";
+
+        let shuffled = shuffle([...d.options]);
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt.text;
+            btn.onclick = () => {
+                if(opt.correct) score++;
+                document.getElementById("fb-text").innerText = d.note;
+                document.getElementById("feedback-modal").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+            };
+            optCont.appendChild(btn);
+        });
+    }
+
+    function nextQuestion() {
+        document.getElementById("feedback-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        current++;
+        if (current < quizData.length) loadQuestion();
+        else showEnd();
+    }
+
+    function showEnd() {
+        const finalPercent = Math.round((score / quizData.length) * 100);
+        const entryID = "1211047074"; 
+        const formURL = `https://docs.google.com/forms/d/e/1FAIpQLSd-glvVAJGNDvunL1ziEaZkMtZvpnZNQ_JNo720134QHLXS7A/viewform?usp=pp_url&entry.${entryID}=${finalPercent}%25`;
+
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <h2 style="letter-spacing:5px;">ANALYSIS COMPLETE</h2>
+                <p style="font-size:2rem; margin:20px 0;">${finalPercent}%</p>
+                <p>The theme has been brought to light. Submit your findings to Mr. Anderson.</p>
+                <a href="${formURL}" target="_blank" class="close-btn">SUBMIT DATA</a>
+            </div>
+        `;
+    }
+
+    loadQuestion();
+</script>
+</body>
+</html>
