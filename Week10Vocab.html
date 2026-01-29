@@ -44,8 +44,6 @@
             text-transform: uppercase;
         }
 
-        .hub-btn:hover { background: #52ffcc; color: #0b1311; }
-
         #q-type {
             text-align: center;
             text-transform: uppercase;
@@ -64,14 +62,13 @@
             text-shadow: 0 0 10px #52ffcc;
         }
 
-        .context-box {
+        .report-box {
             background: rgba(0,0,0,0.3);
             border: 1px dashed #52ffcc;
             padding: 20px;
             margin-bottom: 20px;
             color: #e0e0e0;
             line-height: 1.6;
-            font-size: 1.1rem;
             text-align: center;
         }
 
@@ -85,11 +82,27 @@
             width: 100%;
             text-align: left;
             font-family: inherit;
-            font-size: 1rem;
             transition: 0.3s;
         }
 
         .protocol-btn:hover { background: #52ffcc; color: #0b1311; }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #52ffcc;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #fff; display: block; font-size: 0.9rem; }
 
         #containment-modal {
             display: none;
@@ -100,7 +113,6 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            text-align: center;
         }
 
         .action-btn {
@@ -118,38 +130,46 @@
 
 <div id="lab-container">
     <a href="index.html" class="hub-btn">_EXIT_TO_HUB</a>
-    <p id="q-type">PROTOCOL: INITIALIZING</p>
+    <p id="q-type">LAB: CALIBRATING</p>
     
     <div id="quiz-content">
-        <div id="sentence-display" class="context-box" style="display:none;"></div>
-        <div id="word-display" class="sample-display">SCANNING...</div>
+        <div id="sentence-display" class="report-box" style="display:none;"></div>
+        <div id="word-display" class="sample-display">ANALYZING...</div>
         <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>ANTI-</b> AGAINST</div>
+            <div class="decoder-item"><b>CIRCUM-</b> AROUND</div>
+            <div class="decoder-item"><b>DE-</b> AWAY/FROM</div>
+        </div>
     </div>
 </div>
 
 <div id="containment-modal">
     <h1 id="fb-status" style="font-family:'Audiowide'; font-size: 2.5rem;"></h1>
-    <p id="fb-info" style="font-size: 1.1rem; max-width: 500px; color: #52ffcc; padding: 20px;"></p>
+    <p id="fb-info" style="font-size: 1.1rem; max-width: 500px; color: #52ffcc; text-align:center; padding: 20px;"></p>
     <button class="action-btn" onclick="nextWord()">PROCEED</button>
 </div>
 
 <script>
     const wordBank = [
-        { word: "Antiseptic", def: "Clean, sterile; substance that prevents infection", sent: "The nurse applied an ________ to the cut to keep it from getting infected." },
-        { word: "Antifreeze", def: "Substance added to liquid to lower its freezing point", sent: "In the winter, cars need ________ so their engines don't freeze up." },
-        { word: "Antisocial", def: "Unsociable; unfriendly; avoiding company", sent: "He wasn't being mean, he was just feeling ________ and wanted to stay home." },
-        { word: "Antidepressant", def: "Used or tending to relieve or prevent depression", sent: "The doctor prescribed an ________ to help the patient feel more balanced." },
-        { word: "Antidote", def: "A remedy to counteract the effects of poison", sent: "We need to find the ________ before the snake's venom spreads!" },
-        { word: "Deflate", def: "To reduce in size, importance, or effectiveness", sent: "The loss of the game helped ________ the team's overconfidence." },
-        { word: "Deactivate", def: "To make inactive or ineffective", sent: "You must ________ the security code before you open the vault." },
-        { word: "Decaffeinated", def: "Having the caffeine removed", sent: "I prefer ________ coffee late at night so I can still sleep." },
-        { word: "Decelerate", def: "To slow down or cause to slow down", sent: "The pilot had to ________ as the plane approached the landing strip." },
-        { word: "Decrease", def: "To grow progressively less in size, amount, or intensity", sent: "We hope the number of errors will ________ as you practice more." },
-        { word: "Circumstance", def: "A condition or fact accompanying an event", sent: "Due to a change in ________, the meeting has been rescheduled." },
-        { word: "Circumvent", def: "To get around; to bypass", sent: "The clever cat found a way to ________ the fence and get into the garden." },
-        { word: "Circumference", def: "The external boundary or surface of a figure; the perimeter", sent: "We used a string to measure the ________ of the giant pumpkin." },
-        { word: "Circumnavigate", def: "To go completely around especially by water", sent: "Magellan's crew was the first to ________ the entire globe." },
-        { word: "Circumspect", def: "Careful to consider all circumstances and consequences", sent: "The diplomat was very ________ with his words to avoid a conflict." }
+        { word: "Antiseptic", def: "Clean, sterile; substance that prevents infection", sent: "Applying an ________ to the wound will help keep bacteria away." },
+        { word: "Antifreeze", def: "Substance added to liquid to lower its freezing point", sent: "We checked the level of ________ in the truck before the blizzard hit." },
+        { word: "Antisocial", def: "Unsociable; unfriendly; avoiding company", sent: "Choosing to eat lunch alone in the library isn't mean, it's just a bit ________." },
+        { word: "Antidepressant", def: "Used or tending to relieve or prevent depression", sent: "The doctor discussed the benefits of starting an ________ with the patient." },
+        { word: "Antidote", def: "A remedy to counteract the effects of poison", sent: "The scientists worked around the clock to synthesize an ________ for the toxin." },
+        { word: "Deflate", def: "To reduce in size, importance, or effectiveness", sent: "The pin-prick caused the giant balloon to slowly ________." },
+        { word: "Deactivate", def: "To make inactive or ineffective", sent: "The technician had to ________ the laser before we could enter the room." },
+        { word: "Decaffeinated", def: "Having the caffeine removed", sent: "If I drink anything other than ________ tea at night, I won't sleep." },
+        { word: "Decelerate", def: "To slow down or cause to slow down", sent: "You must ________ the vehicle as you enter the construction zone." },
+        { word: "Decrease", def: "To grow progressively less in size, amount, or intensity", sent: "The heavy rain caused the temperature to ________ rapidly." },
+        { word: "Circumstance", def: "A condition or fact accompanying an event", sent: "The strange ________ of the disappearance left the detectives baffled." },
+        { word: "Circumvent", def: "To get around; to bypass", sent: "He tried to ________ the rules by finding a loophole in the contract." },
+        { word: "Circumference", def: "The external boundary or perimeter of a circle", sent: "We calculated the ________ of the circular track to be 400 meters." },
+        { word: "Circumnavigate", def: "To go completely around especially by water", sent: "It took many months for the explorers to ________ the continent." },
+        { word: "Circumspect", def: "Careful to consider all circumstances and consequences", sent: "A ________ investor will always research a company before buying stock." }
     ];
 
     let current = 0;
@@ -157,7 +177,7 @@
 
     function loadWord() {
         const d = wordBank[current];
-        const isBlankType = current % 2 === 1; // Alternates Identification and Context
+        const isBlankType = current % 2 === 1;
         
         const qType = document.getElementById("q-type");
         const sentBox = document.getElementById("sentence-display");
@@ -167,10 +187,10 @@
         optCont.innerHTML = "";
 
         if (isBlankType) {
-            qType.innerText = "PROTOCOL: CONTEXTUAL FILL";
+            qType.innerText = "PROTOCOL: FIELD REPORT FILING";
             sentBox.style.display = "block";
             sentBox.innerText = d.sent.replace(d.word, "__________");
-            wordBox.innerText = "SEARCHING...";
+            wordBox.innerText = "???";
             
             let choices = [
                 { text: d.word, correct: true },
@@ -179,20 +199,20 @@
             ].sort(() => Math.random() - 0.5);
             renderButtons(choices, d.word);
         } else {
-            qType.innerText = "PROTOCOL: DEFINITION IDENT";
+            qType.innerText = "PROTOCOL: SAMPLE IDENTIFICATION";
             sentBox.style.display = "none";
             wordBox.innerText = d.word;
             
             let choices = [
                 { text: d.def, correct: true },
-                { text: "To increase in volume or intensity rapidly", correct: false },
-                { text: "Moving directly through the center of a mass", correct: false }
+                { text: "To expand in volume or pressure rapidly", correct: false },
+                { text: "Moving through the center of a mass", correct: false }
             ].sort(() => Math.random() - 0.5);
             renderButtons(choices, d.def);
         }
     }
 
-    function renderButtons(choices, correctValue) {
+    function renderButtons(choices, correctVal) {
         choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "protocol-btn";
@@ -200,17 +220,15 @@
             btn.onclick = () => {
                 const modal = document.getElementById("containment-modal");
                 const fbStatus = document.getElementById("fb-status");
-                const fbInfo = document.getElementById("fb-info");
-                
-                if(c.correct) {
+                if (c.correct) {
                     score++;
                     fbStatus.innerText = "STABILIZED";
                     fbStatus.style.color = "#52ffcc";
-                    fbInfo.innerText = "Entry verified. Sample remains secure.";
+                    document.getElementById("fb-info").innerText = "Data verified. Sample is secure.";
                 } else {
                     fbStatus.innerText = "BREACH!";
                     fbStatus.style.color = "#ff5252";
-                    fbInfo.innerText = "Incorrect data. The correct value was: " + correctValue;
+                    document.getElementById("fb-info").innerText = "Correction required: " + correctVal;
                 }
                 modal.style.display = "flex";
             };
@@ -229,9 +247,9 @@
         const pct = Math.round((score/wordBank.length)*100);
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:Audiowide; color:#fff;">LAB ANALYSIS COMPLETE</h2>
+                <h2 style="font-family:Audiowide; color:#fff;">CONTAINMENT COMPLETE</h2>
                 <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>All biological data has been cross-referenced.</p>
+                <p>All week 10 samples are archived.</p>
                 <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
             </div>`;
     }
