@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Starfield effect */
         body::before {
             content: "";
             position: fixed;
@@ -50,23 +49,35 @@
             font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
         }
 
-        .exit-link:hover {
-            border-bottom: 1px solid #00d4ff;
-            text-shadow: 0 0 10px #00d4ff;
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #00d4ff;
+            margin-top: 10px;
+            letter-spacing: 3px;
+            opacity: 0.7;
         }
 
         .word-display {
             font-size: 2.5rem;
             text-align: center;
-            margin: 30px 0 20px 0;
+            margin: 20px 0;
             color: #fff;
             text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 3px;
+        }
+
+        .context-display {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px dashed #00d4ff;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #e0e0e0;
         }
 
         .option-btn {
@@ -79,7 +90,6 @@
             width: 100%;
             text-align: left;
             font-family: inherit;
-            font-size: 1.05rem;
             border-radius: 8px;
             transition: 0.3s;
         }
@@ -87,11 +97,9 @@
         .option-btn:hover {
             background: rgba(0, 212, 255, 0.15);
             border-color: #00d4ff;
-            color: #fff;
             transform: translateX(8px);
         }
 
-        /* Galactic Root Decoder */
         #root-decoder {
             margin-top: 30px;
             border-top: 1px solid rgba(0, 212, 255, 0.3);
@@ -118,7 +126,6 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            text-align: center;
         }
 
         .engage-btn {
@@ -131,12 +138,6 @@
             font-weight: bold;
             font-family: 'Orbitron', sans-serif;
             margin-top: 20px;
-            transition: 0.3s;
-        }
-
-        .engage-btn:hover {
-            box-shadow: 0 0 20px #00d4ff;
-            transform: scale(1.05);
         }
     </style>
 </head>
@@ -144,10 +145,11 @@
 
 <div id="starship-interface">
     <a href="index.html" class="exit-link">← RETURN_TO_BASE</a>
-    <h2 style="text-align:center; font-weight:300; letter-spacing:4px; color:#00d4ff; margin-top:20px;">SECTOR: WEEK 14</h2>
+    <p id="q-type">SECTOR: SCANNING</p>
     
     <div id="quiz-content">
-        <div id="word-box" class="word-display">SCANNING...</div>
+        <div id="sentence-display" class="context-display" style="display:none;"></div>
+        <div id="word-display" class="word-display">INITIALIZING...</div>
         <div id="options"></div>
     </div>
 
@@ -162,27 +164,27 @@
 
 <div id="feedback-overlay">
     <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 3rem; margin: 0;"></h1>
-    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #aaa; margin-top: 10px;"></p>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #aaa; margin-top: 10px; text-align:center;"></p>
     <button class="engage-btn" onclick="nextWord()">ENGAGE NEXT SECTOR</button>
 </div>
 
 <script>
     const wordBank = [
-        { word: "Irrelevant", def: "Not to the point; not applicable or pertinent" },
-        { word: "Incapable", def: "Not able to do something; unskilled; unable" },
-        { word: "Impossible", def: "Not able to occur, exist, or be done" },
-        { word: "Illicit", def: "Not permitted, unlawful, or improper" },
-        { word: "Incompetent", def: "Not having or showing the necessary skills to do something successfully" },
-        { word: "Microscope", def: "Device that produces magnified images of structures too small to see with the unaided eye" },
-        { word: "Microchip", def: "A miniature electronic circuit used to control computers" },
-        { word: "Microwave", def: "A short electromagnetic wave used to cook or heat food" },
-        { word: "Micromanage", def: "To manage or control with excessive attention to minor details" },
-        { word: "Microcosm", def: "A miniature world; a system viewed as a model of a larger one" },
-        { word: "Monologue", def: "A dramatic sketch performed by one actor" },
-        { word: "Monotone", def: "A constant pitch or tone of voice" },
-        { word: "Monotheistic", def: "Belief that there is only one God" },
-        { word: "Monopoly", def: "Complete control of a product or business by one person or group" },
-        { word: "Monotony", def: "Tedious sameness or repetitiveness" }
+        { word: "Irrelevant", def: "Not to the point; not applicable or pertinent", sent: "That comment is ________ to the current discussion about ancient Egypt." },
+        { word: "Incapable", def: "Not able to do something; unskilled; unable", sent: "Without a ladder, the cat was ________ of reaching the bird's nest." },
+        { word: "Impossible", def: "Not able to occur, exist, or be done", sent: "Getting a perfect score on the hardest test in the world felt ________." },
+        { word: "Illicit", def: "Not permitted, unlawful, or improper", sent: "The detective discovered an ________ trade occurring in the docks at midnight." },
+        { word: "Incompetent", def: "Not having or showing the necessary skills to do something successfully", sent: "The ________ repairman actually made the broken sink leak even more." },
+        { word: "Microscope", def: "Device that produces magnified images of structures too small to see with the unaided eye", sent: "In science lab, we used a ________ to look at the patterns on a fly's wing." },
+        { word: "Microchip", def: "A miniature electronic circuit used to control computers", sent: "The new ________ in the computer allows it to process data twice as fast." },
+        { word: "Microwave", def: "A short electromagnetic wave used to cook or heat food", sent: "If you are in a rush, you can heat your dinner in the ________." },
+        { word: "Micromanage", def: "To manage or control with excessive attention to minor details", sent: "I prefer a teacher who gives us freedom rather than one who tries to ________ us." },
+        { word: "Microcosm", def: "A miniature world; a system viewed as a model of a larger one", sent: "The classroom environment is often a ________ of the larger society." },
+        { word: "Monologue", def: "A dramatic sketch performed by one actor", sent: "The actor rehearsed his long ________ for the play's final scene." },
+        { word: "Monotone", def: "A constant pitch or tone of voice", sent: "The robot spoke in a boring ________ that made the students sleepy." },
+        { word: "Monotheistic", def: "Relating to the belief that there is only one God", sent: "Christianity, Islam, and Judaism are all ________ religions." },
+        { word: "Monopoly", def: "Complete control of a product or business by one person or group", sent: "The electric company has a ________ because there are no other power providers." },
+        { word: "Monotony", def: "Tedious sameness or repetitiveness", sent: "The ________ of the long highway drive was broken when we saw the mountains." }
     ];
 
     let current = 0;
@@ -190,16 +192,42 @@
 
     function loadWord() {
         const d = wordBank[current];
-        document.getElementById("word-box").innerText = d.word;
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
         const optCont = document.getElementById("options");
+
         optCont.innerHTML = "";
 
-        let choices = [
-            { text: d.def, correct: true },
-            { text: "Something large enough to see from space", correct: false },
-            { text: "A group containing many diverse opinions", correct: false }
-        ].sort(() => Math.random() - 0.5);
+        if (isBlankType) {
+            qType.innerText = "SECTOR: CONTEXTUAL NAV";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "SEARCHING...";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "SECTOR: DATA IDENT";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Relating to many different parts or systems", correct: false },
+                { text: "A massive explosion occurring in deep space", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
 
+    function renderButtons(choices, correctVal) {
         choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
@@ -210,15 +238,15 @@
                     score++;
                     fbStatus.innerText = "✓ TARGET SECURED";
                     fbStatus.style.color = "#00d4ff";
-                    document.getElementById("fb-info").innerText = "Translation data verified by ship's computer.";
+                    document.getElementById("fb-info").innerText = "Navigational data verified.";
                 } else {
                     fbStatus.innerText = "✗ OFF COURSE";
                     fbStatus.style.color = "#ff4b2b";
-                    document.getElementById("fb-info").innerText = "Correction required: " + d.def;
+                    document.getElementById("fb-info").innerText = "Correction required: " + correctVal;
                 }
                 document.getElementById("feedback-overlay").style.display = "flex";
             };
-            optCont.appendChild(btn);
+            document.getElementById("options").appendChild(btn);
         });
     }
 
@@ -227,13 +255,12 @@
         current++;
         if (current < wordBank.length) loadWord();
         else {
-            const finalPercent = Math.round((score/wordBank.length)*100);
+            const pct = Math.round((score/wordBank.length)*100);
             document.getElementById("quiz-content").innerHTML = `
                 <div style="text-align:center; padding: 40px 0;">
                     <h2 style='font-family:Orbitron; color:#00d4ff;'>MISSION COMPLETE</h2>
-                    <p style="font-size:3rem; margin:10px 0;">${finalPercent}%</p>
-                    <p>Vocabulary Data Synced. Return to Command Center.</p>
-                    <a href="index.html" class="engage-btn" style="text-decoration:none; display:inline-block; margin-top:20px;">RETURN_TO_BASE</a>
+                    <p style="font-size:3rem; margin:10px 0;">${pct}%</p>
+                    <a href="index.html" class="engage-btn" style="text-decoration:none; display:inline-block;">RETURN_TO_BASE</a>
                 </div>`;
         }
     }
