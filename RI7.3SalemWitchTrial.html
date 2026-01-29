@@ -143,6 +143,8 @@
             font-family: inherit;
             font-size: 0.9rem;
             text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
         }
 
         #overlay {
@@ -175,6 +177,9 @@
 </div>
 
 <script>
+    let score = 0;
+    let current = 0;
+
     const quizData = [
         {
             q: "How did the lack of scientific knowledge in 1692 interact with the physical symptoms of the girls?",
@@ -278,19 +283,11 @@
         }
     ];
 
-    let current = 0;
-    const qText = document.getElementById("question-text");
-    const optCont = document.getElementById("options");
-    const prog = document.getElementById("progress");
-    const modal = document.getElementById("feedback-modal");
-    const fbTitle = document.getElementById("feedback-title");
-    const fbText = document.getElementById("feedback-text");
-    const overlay = document.getElementById("overlay");
-
     function loadQuestion() {
         const d = quizData[current];
-        prog.innerText = `Entry ${current + 1} of ${quizData.length}`;
-        qText.innerText = d.q;
+        document.getElementById("progress").innerText = `Entry ${current + 1} of ${quizData.length}`;
+        document.getElementById("question-text").innerText = d.q;
+        const optCont = document.getElementById("options");
         optCont.innerHTML = "";
 
         d.options.forEach((opt, i) => {
@@ -305,24 +302,22 @@
     function checkAnswer(index) {
         const d = quizData[current];
         const isCorrect = (index === d.correct);
-        
         if (isCorrect) {
-            fbTitle.innerText = "✓ Analysis Verified";
-            fbTitle.style.color = "#2e7d32";
-            fbText.innerHTML = `<strong>Accurate.</strong><br><br>${d.note}`;
+            score++;
+            document.getElementById("feedback-title").innerText = "✓ Analysis Verified";
+            document.getElementById("feedback-title").style.color = "#2e7d32";
         } else {
-            fbTitle.innerText = "✗ Flawed Reasoning";
-            fbTitle.style.color = "#b71c1c";
-            fbText.innerHTML = `<strong>Not quite.</strong> Review the Interaction Triangle.<br><br>${d.note}`;
+            document.getElementById("feedback-title").innerText = "✗ Flawed Reasoning";
+            document.getElementById("feedback-title").style.color = "#b71c1c";
         }
-
-        modal.style.display = "block";
-        overlay.style.display = "block";
+        document.getElementById("feedback-text").innerHTML = d.note;
+        document.getElementById("feedback-modal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
     }
 
     function closeModal() {
-        modal.style.display = "none";
-        overlay.style.display = "none";
+        document.getElementById("feedback-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
         current++;
         if (current < quizData.length) {
             loadQuestion();
@@ -332,14 +327,24 @@
     }
 
     function showEnd() {
+        const finalScore = Math.round((score / quizData.length) * 100);
+        const entryID = "1211047074"; 
+        const formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSd-glvVAJGNDvunL1ziEaZkMtZvpnZNQ_JNo720134QHLXS7A/viewform";
+        const preFilledURL = `${formBaseURL}?usp=pp_url&entry.${entryID}=${finalScore}%25`;
+
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center; padding: 20px;">
                 <h2 style="color:#3e2b14">Investigation Concluded</h2>
-                <p>You have successfully analyzed 10 key interactions of Salem, 1692.</p>
-                <p style="font-family: 'Special Elite', monospace; font-size: 0.8rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:20px;">
+                <p style="font-size: 1.5rem; margin: 20px 0;">Final Analysis Score: <br><strong>${finalScore}%</strong></p>
+                <p>To record your grade in the archives, click the button below to submit your score to Mr. Anderson.</p>
+                
+                <a href="${preFilledURL}" target="_blank" class="close-btn" style="margin-top:20px;">
+                    Submit Score
+                </a>
+                
+                <p style="font-family: 'Special Elite', monospace; font-size: 0.7rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:40px;">
                     VERIFICATION CODE: [S-1692-7ELA-PRO]
                 </p>
-                <button class="close-btn" onclick="location.reload()">Reset Records</button>
             </div>
         `;
     }
