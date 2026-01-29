@@ -29,6 +29,7 @@
             position: relative;
         }
 
+        /* Paper Texture Overlay */
         #quiz-container::before {
             content: "";
             position: absolute;
@@ -38,25 +39,46 @@
             opacity: 0.4;
         }
 
+        /* Navigation Button */
+        .home-nav {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #3e2b14;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.8rem;
+            border: 1px solid #3e2b14;
+            padding: 5px 12px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .home-nav:hover {
+            background-color: #3e2b14;
+            color: #e9dcc9;
+        }
+
         h1 {
             text-align: center;
             border-bottom: 2px solid #3e2b14;
             padding-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 2rem;
+            font-size: 1.8rem;
+            margin-top: 0;
         }
 
         .progress {
-            font-family: 'Special+Elite', monospace;
-            font-size: 0.9rem;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.8rem;
             text-align: right;
             margin-bottom: 10px;
             color: #6d4c41;
         }
 
         .question {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 25px;
             line-height: 1.4;
         }
@@ -64,7 +86,9 @@
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
         }
 
         .option-btn {
@@ -75,7 +99,7 @@
             cursor: pointer;
             transition: all 0.2s;
             font-family: inherit;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: #3e2b14;
         }
 
@@ -84,7 +108,7 @@
             transform: translateX(5px);
         }
 
-        /* Feedback Modal Styles */
+        /* Feedback Modal */
         #feedback-modal {
             display: none;
             position: fixed;
@@ -102,7 +126,7 @@
         }
 
         #feedback-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             margin-bottom: 15px;
             text-transform: uppercase;
         }
@@ -110,7 +134,7 @@
         #feedback-text {
             margin-bottom: 25px;
             line-height: 1.5;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .close-btn {
@@ -120,12 +144,8 @@
             padding: 12px 25px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-        }
-
-        .close-btn:hover {
-            background: #5d4037;
         }
 
         #overlay {
@@ -142,6 +162,7 @@
 <div id="overlay"></div>
 
 <div id="quiz-container">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/" class="home-nav">← Back to Hub</a>
     <div class="progress" id="progress">Entry 1 of 5</div>
     <h1 id="title">Salem Interaction Lab</h1>
     <div id="quiz-content">
@@ -159,54 +180,54 @@
 <script>
     const quizData = [
         {
-            q: "The Interaction Triangle: How did the lack of scientific/medical knowledge in 1692 interact with the physical symptoms of the young girls?",
+            q: "How did the lack of scientific knowledge in 1692 interact with the physical symptoms of the girls?",
             options: [
-                "It led the community to seek a supernatural explanation (witchcraft) rather than a medical one.",
-                "It caused the town to ignore the girls until they got better on their own.",
-                "It forced the girls to admit they were faking their symptoms to avoid doctors."
+                "It led the community to seek a supernatural explanation (witchcraft).",
+                "It caused the town to ignore the girls until they got better.",
+                "It forced the girls to admit they were faking symptoms."
             ],
             correct: 0,
-            note: "RI.7.3 Analysis: When an event (symptoms) lacks a known idea (science), a new idea (superstition) fills the gap to explain the unknown."
+            note: "RI.7.3: When a physical event (symptoms) lacks a known scientific idea, a new cultural idea (superstition) fills the gap."
         },
         {
-            q: "Ripple Effect: What was the primary interaction between the girls' initial accusations and the existing social tensions in Salem?",
+            q: "What was the primary interaction between the initial accusations and social tensions in Salem?",
             options: [
-                "The town worked together to protect the accused from unfair trials.",
-                "People used the accusations to settle old grudges over land, family, and religion.",
-                "The court dismissed the girls' claims as simple teenage 'hysteria'."
+                "The town worked together to protect the accused.",
+                "People used accusations to settle old grudges over land and family disputes.",
+                "The court dismissed the claims as simple teenage 'hysteria'."
             ],
             correct: 1,
-            note: "The 'Ripple' shows how a small event (accusation) interacts with long-standing social ideas (grudges) to create a massive crisis."
+            note: "The 'Ripple' shows how an event (accusation) interacts with long-standing social ideas (grudges) to create a crisis."
         },
         {
-            q: "Interactions of Power: How did the court’s decision to allow 'spectral evidence' change the power dynamic in the community?",
+            q: "How did the court’s decision to allow 'spectral evidence' change the power dynamic?",
             options: [
-                "It gave the accused a way to prove their innocence through their dreams.",
-                "It gave the accusers absolute power, as spectral evidence is impossible to disprove or verify.",
-                "It balanced the power so both sides had an equal chance to be heard."
+                "It gave the accused a way to prove innocence through dreams.",
+                "It gave the accusers absolute power, as spectral evidence cannot be disproved.",
+                "It balanced the power so both sides had an equal chance."
             ],
             correct: 1,
-            note: "RI.7.3: This idea (spectral evidence) interacted with the legal event (the trial) to make true justice impossible."
+            note: "This idea (spectral evidence) interacted with the legal system to make justice impossible."
         },
         {
-            q: "Setting the Scene: How did the strict religious setting of Salem interact with the girls' fear of getting in trouble for dancing?",
+            q: "How did the strict religious setting interact with the girls' fear of being caught dancing?",
             options: [
-                "It encouraged them to tell the truth and ask for forgiveness early.",
-                "It created an environment where confessing to 'witchcraft' was safer than admitting to 'sinful' behavior.",
+                "It encouraged them to tell the truth and ask for forgiveness.",
+                "It created an environment where confessing to 'witchcraft' was safer than admitting to 'sin.'",
                 "It allowed the girls to create a new church for themselves."
             ],
             correct: 1,
-            note: "The strict social ideas of the Puritans interacted with the event of the girls' behavior, forcing them into a lie to survive."
+            note: "Strict social ideas interacted with the girls' actions, forcing them to lie to avoid harsh punishment."
         },
         {
-            q: "The Final Interaction: According to 'Understanding the Salem Witch Trials,' what happened when people finally started to question the use of spectral evidence?",
+            q: "What happened when people finally started to question the use of spectral evidence?",
             options: [
                 "The trials immediately stopped and everyone was set free.",
-                "The interaction between logic and the law eventually dissolved the court and ended the hangings.",
+                "The interaction between logic and the law eventually dissolved the court.",
                 "The accusers were arrested for lying."
             ],
             correct: 1,
-            note: "As the idea of logic and verifiable evidence interacted with the legal system, the hysteria finally began to lose its power."
+            note: "As the idea of logic and verifiable evidence interacted with the legal system, the hysteria lost its power."
         }
     ];
 
@@ -240,11 +261,11 @@
         
         if (isCorrect) {
             fbTitle.innerText = "✓ Analysis Verified";
-            fbTitle.style.color = "#2e7d32"; // Green
+            fbTitle.style.color = "#2e7d32";
             fbText.innerHTML = `<strong>Accurate.</strong><br><br>${d.note}`;
         } else {
             fbTitle.innerText = "✗ Flawed Reasoning";
-            fbTitle.style.color = "#b71c1c"; // Dark Red
+            fbTitle.style.color = "#b71c1c";
             fbText.innerHTML = `<strong>Not quite.</strong> Review your Interaction Triangle.<br><br>${d.note}`;
         }
 
@@ -269,7 +290,7 @@
                 <h2 style="color:#3e2b14">Investigation Concluded</h2>
                 <p>You have successfully analyzed the interactions of Salem, 1692.</p>
                 <p style="font-family: 'Special Elite', monospace; font-size: 0.8rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:20px;">
-                    RECORDS ARCHIVED: VERIFICATION CODE [S-1692-7ELA]
+                    VERIFICATION CODE: [S-1692-7ELA]
                 </p>
                 <button class="close-btn" onclick="location.reload()">Reset Records</button>
             </div>
