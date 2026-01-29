@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Monsters Are Due on Maple Street - Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+        body {
+            background-color: #000;
+            color: #d1d1d1;
+            font-family: 'Special+Elite', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Eerie Background Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(26, 51, 26, 0.2) 0%, rgba(0,0,0,1) 80%);
+            z-index: -1;
+        }
+
+        #quiz-container {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #2e5a2e;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(46, 90, 46, 0.5);
+            position: relative;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #2e5a2e;
+            padding-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #1a1a1a;
+            color: #bbb;
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            border-radius: 4px;
+        }
+
+        .option-btn:hover {
+            background: #2e5a2e;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hint-btn {
+            background: transparent;
+            color: #888;
+            border: 1px dashed #555;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Modal Styles */
+        #feedback-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #111;
+            border: 3px solid #4CAF50;
+            padding: 25px;
+            z-index: 100;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 50px #000;
+        }
+
+        #feedback-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        #feedback-text {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        .close-btn {
+            background: #2e5a2e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        #hint-display {
+            display: none;
+            color: #4CAF50;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .progress {
+            font-size: 0.8rem;
+            color: #555;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <a href="https://andersm1-debug.github.io/7th-Grade-ELA/" class="home-nav">← Back to Hub</a>
+    <div class="progress" id="progress">Question 1 of 10</div>
+    <h1 id="title">The Twilight Zone Quiz</h1>
+    <div id="quiz-content">
+        <p class="question" id="question-text">Loading...</p>
+        <div class="options-container" id="options"></div>
+        <div id="hint-display"></div>
+        <div class="controls">
+            <button class="hint-btn" onclick="showHint()">I need a hint...</button>
+        </div>
+    </div>
+</div>
+
+<div id="feedback-modal">
+    <h2 id="feedback-title">Feedback</h2>
+    <p id="feedback-text"></p>
+    <button class="close-btn" onclick="closeModal()">Proceed</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            q: "How does the initial setting of a 'quiet, tree-lined' Maple Street contribute to the play’s impact when the power goes out?",
+            options: [
+                "It shows that the characters were already prepared for an emergency.",
+                "It establishes a sense of normalcy that makes the ensuing chaos more jarring.",
+                "It suggests that the characters are naturally suspicious of one another."
+            ],
+            correct: 1,
+            hint: "Think about the contrast between the beginning of the play and the end.",
+            note: "(RL.7.3) Establishing a peaceful setting is essential for showing how quickly social order can break down when fear is introduced."
+        },
+        {
+            q: "What is the first event that triggers the residents' suspicion of one another?",
+            options: [
+                "Les Goodman’s car starts by itself.",
+                "Steve Brand’s radio stops working.",
+                "Tommy tells a story about an alien invasion."
+            ],
+            correct: 0,
+            hint: "Look for the moment when a neighbor's 'normal' behavior suddenly seems 'weird.'",
+            note: "Les Goodman’s car is the first piece of 'evidence' used to single out an individual as 'different.'"
+        },
+        {
+            q: "How does the loss of electricity and phone service specifically shape the plot?",
+            options: [
+                "It forces the characters to leave Maple Street to find help.",
+                "It isolates the neighborhood, turning it into a 'closed' environment where fear can grow.",
+                "It makes the neighbors work together to fix the power lines."
+            ],
+            correct: 1,
+            hint: "If the characters could just call for help or drive away, would the conflict still happen?",
+            note: "The isolation created by the setting is the 'incubator' for the mob mentality."
+        },
+        {
+            q: "In the 1950s, Senator Joseph McCarthy rose to power by accusing people of being secret Communists. How does this reflect the behavior on Maple Street?",
+            options: [
+                "They use logical evidence to find the real monster.",
+                "They make accusations based on fear and 'odd' personal habits.",
+                "They wait for the authorities to arrive before taking action."
+            ],
+            correct: 1,
+            hint: "Think about Charlie’s reaction to Les Goodman looking at the stars at night.",
+            note: "This connects the 'Red Scare' to the play, showing how a lack of evidence is often replaced by paranoia."
+        },
+        {
+            q: "Why is Tommy’s story about 'monsters' so effective in causing conflict?",
+            options: [
+                "The adults already believed in aliens.",
+                "It gives the residents a framework for their existing fear.",
+                "Tommy is the leader of the neighborhood."
+            ],
+            correct: 1,
+            hint: "Sometimes people look for a story to explain things they don't understand.",
+            note: "Tommy introduces the 'monster' narrative, which the adults eventually adopt to justify their own violence."
+        },
+        {
+            q: "As the darkness of the night continues, how does the physical setting affect the neighbors' behavior?",
+            options: [
+                "They become more thoughtful and quiet.",
+                "The darkness provides a sense of anonymity that allows them to become a violent mob.",
+                "It makes them sleepy and less interested in the conflict."
+            ],
+            correct: 1,
+            hint: "Think about how the lack of light changes the 'vibe' of the street.",
+            note: "The shift from day to night mirrors the shift from civilized neighbors to an irrational mob."
+        },
+        {
+            q: "By the end of the play, who does the narrator suggest are the real monsters?",
+            options: [
+                "The figures at the spaceship.",
+                "The residents of Maple Street themselves.",
+                "The police who never showed up."
+            ],
+            correct: 1,
+            hint: "Look at the closing monologue.",
+            note: "The central theme is that 'prejudices and suspicions' are the real weapons of destruction."
+        },
+        {
+            q: "Which character on Maple Street experiences a 'blacklisting' similar to the McCarthy era?",
+            options: [
+                "Steve Brand, because of his radio.",
+                "Les Goodman, because of his car.",
+                "Both A and B."
+            ],
+            correct: 2,
+            hint: "Who is treated like an outcast because they have a 'hobby' others don't understand?",
+            note: "Both Steve and Les are 'blacklisted' by their neighbors based on purely circumstantial evidence."
+        },
+        {
+            q: "What is the 'breaking point' where the neighborhood's fear turns into irreversible violence?",
+            options: [
+                "When Charlie shoots Pete Van Horn.",
+                "When the lights go out.",
+                "When the aliens land on the street."
+            ],
+            correct: 0,
+            hint: "Look for the most violent action in the play.",
+            note: "This moment shows that fear can lead to actions that can never be taken back."
+        },
+        {
+            q: "Why did Rod Serling use a science-fiction setting to talk about McCarthyism?",
+            options: [
+                "He wanted to write about aliens and space travel.",
+                "It allowed him to criticize society's behavior through a 'story' rather than a lecture.",
+                "He didn't know about McCarthyism when he wrote it."
+            ],
+            correct: 1,
+            hint: "Think about how the Twilight Zone uses weird situations to teach lessons.",
+            note: "Serling used science fiction as a mirror to show audiences the ugliness of real-world events like the Red Scare."
+        }
+    ];
+
+    let currentQuestion = 0;
+
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options");
+    const progressText = document.getElementById("progress");
+    const hintDisplay = document.getElementById("hint-display");
+    const feedbackModal = document.getElementById("feedback-modal");
+    const feedbackTitle = document.getElementById("feedback-title");
+    const feedbackText = document.getElementById("feedback-text");
+
+    function loadQuestion() {
+        const data = quizData[currentQuestion];
+        progressText.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        questionText.innerText = data.q;
+        optionsContainer.innerHTML = "";
+        hintDisplay.style.display = "none";
+        hintDisplay.innerText = "Hint: " + data.hint;
+
+        data.options.forEach((opt, index) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(index);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(index) {
+        const data = quizData[currentQuestion];
+        if (index === data.correct) {
+            feedbackTitle.innerText = "Safe... for now.";
+            feedbackTitle.style.color = "#4CAF50";
+        } else {
+            feedbackTitle.innerText = "The Monsters have found you.";
+            feedbackTitle.style.color = "#ff4444";
+        }
+        feedbackText.innerText = data.note;
+        feedbackModal.style.display = "block";
+    }
+
+    function showHint() {
+        hintDisplay.style.display = "block";
+    }
+
+    function closeModal() {
+        feedbackModal.style.display = "none";
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showFinalScreen();
+        }
+    }
+
+    function showFinalScreen() {
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 20px;">
+                <h2 style="color:#4CAF50">THE END?</h2>
+                <p>You have survived Maple Street... or have you?</p>
+                <p style="font-size: 0.8rem; border-top: 1px solid #333; padding-top:10px;">
+                    Teacher Code: MS-${Math.floor(Math.random()*9000) + 1000}
+                </p>
+                <button class="close-btn" onclick="location.reload()">Try Again</button>
+            </div>
+        `;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
