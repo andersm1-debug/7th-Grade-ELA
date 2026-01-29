@@ -12,7 +12,6 @@
             color: #00ff41;
             font-family: 'Share Tech Mono', monospace;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -40,22 +39,34 @@
             border: 1px solid #00ff41;
             padding: 4px 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
         }
 
-        .exit-link:hover {
-            background: #00ff41;
-            color: #000;
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #008f11;
+            margin-top: 15px;
+            letter-spacing: 2px;
         }
 
         .word-display {
             font-size: 2.2rem;
             text-align: center;
-            margin: 25px 0 15px 0;
+            margin: 20px 0;
             color: #fff;
             text-shadow: 0 0 10px #00ff41;
             font-family: 'Orbitron', sans-serif;
+        }
+
+        .context-box {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px dashed #00ff41;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
         .option-btn {
@@ -68,14 +79,10 @@
             width: 100%;
             text-align: left;
             font-family: inherit;
-            font-size: 1rem;
             transition: 0.3s;
         }
 
-        .option-btn:hover {
-            background: #00ff41;
-            color: #000;
-        }
+        .option-btn:hover { background: #00ff41; color: #000; }
 
         #root-decoder {
             margin-top: 30px;
@@ -88,7 +95,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             font-size: 0.8rem;
-            color: #aaa;
+            color: #008f11;
         }
 
         .decoder-item b { color: #00ff41; }
@@ -104,7 +111,6 @@
             z-index: 1000;
             text-align: center;
             width: 80%;
-            box-shadow: 0 0 50px #000;
         }
 
         .close-btn {
@@ -112,7 +118,6 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            font-family: inherit;
             font-weight: bold;
             margin-top: 15px;
         }
@@ -122,19 +127,20 @@
 
 <div id="vault-container">
     <a href="index.html" class="exit-link">_EXIT_TO_HUB</a>
-    <h1 style="text-align:center; font-family:'Orbitron'; font-size: 1.5rem; margin-top: 20px;">BREACH: WEEK 12</h1>
+    <p id="q-type">SYSTEM: SCANNING</p>
     
     <div id="quiz-content">
-        <div id="word-box" class="word-display">INITIALIZING...</div>
+        <div id="sentence-display" class="context-box" style="display:none;"></div>
+        <div id="word-display" class="word-display">INITIALIZING...</div>
         <div id="options"></div>
     </div>
 
     <div id="root-decoder">
-        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Deciphering Active Affixes...</p>
+        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Active Affix Reference</p>
         <div class="decoder-grid">
-            <div class="decoder-item"><b>BI-</b> = TWO</div>
-            <div class="decoder-item"><b>CONTRA-</b> = AGAINST</div>
-            <div class="decoder-item"><b>EN/EM-</b> = IN/INTO/CAUSE TO</div>
+            <div class="decoder-item"><b>BI-</b> TWO</div>
+            <div class="decoder-item"><b>CONTRA-</b> AGAINST</div>
+            <div class="decoder-item"><b>EN/EM-</b> IN/INTO/CAUSE TO</div>
         </div>
     </div>
 </div>
@@ -147,21 +153,21 @@
 
 <script>
     const wordBank = [
-        { word: "Contrast", def: "Showing how things are different" },
-        { word: "Enable", def: "To give someone the power to do something" },
-        { word: "Enlighten", def: "To inform or give new insight; to create illumination" },
-        { word: "Engrave", def: "To cut or carve onto a hard surface" },
-        { word: "Biennial", def: "Happening every two years" },
-        { word: "Bicameral", def: "Having two parts or two chambers" },
-        { word: "Contraption", def: "A mechanical device" },
-        { word: "Contraband", def: "Goods that have been imported or exported illegally" },
-        { word: "Bipartisan", def: "In politics, referring to two political parties" },
-        { word: "Embark", def: "To board a ship, aircraft, or other vehicle" },
-        { word: "Embellish", def: "To make more attractive by adding decorative details" },
-        { word: "Bifocals", def: "Eyeglasses with lenses having two different sections for seeing" },
-        { word: "Bicep", def: "Skeletal muscle having two origins; flexes the forearm" },
-        { word: "Enzyme", def: "Protein that increases the rate of chemical reactions" },
-        { word: "Contradict", def: "To deny the truth by asserting the opposite" }
+        { word: "Contrast", def: "Showing how things are different", sent: "In your essay, you should ________ the two main characters to show their differences." },
+        { word: "Enable", def: "To give someone the power to do something", sent: "A special password will ________ you to access the high-security files." },
+        { word: "Enlighten", def: "To inform or give new insight; to create illumination", sent: "He hoped the documentary would ________ the audience about climate change." },
+        { word: "Engrave", def: "To cut or carve onto a hard surface", sent: "The jeweler will ________ the couple's initials inside the gold ring." },
+        { word: "Biennial", def: "Happening every two years", sent: "The ________ art festival only occurs in even-numbered years." },
+        { word: "Bicameral", def: "Having two parts or two chambers", sent: "The U.S. Congress is a ________ legislature, consisting of the House and Senate." },
+        { word: "Contraption", def: "A mechanical device", sent: "He built a strange ________ made of gears and springs to flip his pancakes." },
+        { word: "Contraband", def: "Goods that have been imported or exported illegally", sent: "Customs officers searched the ship for ________ hidden in the cargo." },
+        { word: "Bipartisan", def: "In politics, referring to two political parties", sent: "The new law passed with ________ support from both sides of the aisle." },
+        { word: "Embark", def: "To board a ship, aircraft, or other vehicle", sent: "The passengers were ready to ________ on their long journey across the Atlantic." },
+        { word: "Embellish", def: "To make more attractive by adding decorative details", sent: "The storyteller would often ________ the facts to make the tale more exciting." },
+        { word: "Bifocals", def: "Eyeglasses with lenses having two different sections for seeing", sent: "Since he had trouble seeing both near and far, his doctor prescribed ________." },
+        { word: "Bicep", def: "Skeletal muscle having two origins; flexes the forearm", sent: "He did curls at the gym to strengthen his ________ muscle." },
+        { word: "Enzyme", def: "Protein that increases the rate of chemical reactions", sent: "Saliva contains an ________ that helps start the process of digestion." },
+        { word: "Contradict", def: "To deny the truth by asserting the opposite", sent: "You should not ________ your own testimony if you want people to believe you." }
     ];
 
     let current = 0;
@@ -169,36 +175,58 @@
 
     function loadWord() {
         const d = wordBank[current];
-        document.getElementById("word-box").innerText = d.word;
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
         const optCont = document.getElementById("options");
+
         optCont.innerHTML = "";
 
-        let choices = [
-            { text: d.def, correct: true },
-            { text: "To stay hidden or out of sight", correct: false },
-            { text: "A single part or one-sided opinion", correct: false }
-        ].sort(() => Math.random() - 0.5);
+        if (isBlankType) {
+            qType.innerText = "SYSTEM: CONTEXT INJECTION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [{ text: d.word, correct: true }, 
+                           { text: wordBank[(current + 2) % 15].word, correct: false },
+                           { text: wordBank[(current + 4) % 15].word, correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "SYSTEM: DEFINITION DECRYPT";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [{ text: d.def, correct: true }, 
+                           { text: "To remain unchanged and constant", correct: false },
+                           { text: "To move away from the center of a system", correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
 
-        choices.forEach(choice => {
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
-            btn.innerText = choice.text;
+            btn.innerText = c.text;
             btn.onclick = () => {
+                const modal = document.getElementById("feedback-modal");
                 const fbTitle = document.getElementById("fb-title");
-                const fbText = document.getElementById("fb-text");
-                if (choice.correct) {
+                if (c.correct) {
                     score++;
                     fbTitle.innerText = "✓ ACCESS GRANTED";
                     fbTitle.style.color = "#00ff41";
-                    fbText.innerText = "Data point verified. Sector unlocked.";
+                    document.getElementById("fb-text").innerText = "Encryption verified.";
                 } else {
                     fbTitle.innerText = "✗ ACCESS DENIED";
                     fbTitle.style.color = "#ff3131";
-                    fbText.innerText = "DECRYPTION FAILED. Correct definition: " + d.def;
+                    document.getElementById("fb-text").innerText = "Correct value: " + correctVal;
                 }
-                document.getElementById("feedback-modal").style.display = "block";
+                modal.style.display = "block";
             };
-            optCont.appendChild(btn);
+            document.getElementById("options").appendChild(btn);
         });
     }
 
@@ -207,14 +235,7 @@
         current++;
         if (current < wordBank.length) loadWord();
         else {
-            const finalPercent = Math.round((score/wordBank.length)*100);
-            document.getElementById("quiz-content").innerHTML = `
-                <div style="text-align:center; padding: 20px;">
-                    <h2 style='font-family:Orbitron;'>SYSTEM_BREACHED</h2>
-                    <p style="font-size:2.5rem; margin:10px 0;">${finalPercent}%</p>
-                    <p>Week 12 Data Extracted successfully.</p>
-                    <a href="index.html" class="close-btn" style="text-decoration:none; display:inline-block;">RETURN_TO_BASE</a>
-                </div>`;
+            document.getElementById("quiz-content").innerHTML = `<div style="text-align:center;"><h2 style='font-family:Orbitron;'>BREACH_SUCCESS: ${Math.round((score/wordBank.length)*100)}%</h2><a href="index.html" class="option-btn" style="text-decoration:none; display:inline-block; text-align:center;">RETURN_TO_BASE</a></div>`;
         }
     }
 
