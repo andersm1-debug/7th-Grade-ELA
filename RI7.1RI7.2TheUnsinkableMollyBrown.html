@@ -47,7 +47,7 @@
 
         .question {
             font-size: 1.3rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.4;
             font-weight: bold;
         }
@@ -62,13 +62,16 @@
             margin-bottom: 20px;
         }
 
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .option-btn {
-            display: block;
-            width: 100%;
             background: #fff;
             border: 1px solid #222;
             padding: 15px;
-            margin-bottom: 10px;
             cursor: pointer;
             text-align: left;
             font-family: inherit;
@@ -109,7 +112,7 @@
             background: #222;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             margin-top: 20px;
             cursor: pointer;
             font-family: 'Special Elite', monospace;
@@ -135,7 +138,7 @@
     <div class="progress" id="progress">FILE 1/10</div>
     <h1>The Archive</h1>
     <div id="quiz-content">
-        <p class="question" id="question-text">Loading file...</p>
+        <p class="question" id="question-text">Loading investigation...</p>
         <button class="hint-btn" onclick="toggleHint()">[ REQUEST CLARIFICATION ]</button>
         <div id="hint-text" class="hint-text"></div>
         <div id="options" class="options-container"></div>
@@ -143,8 +146,8 @@
 </div>
 
 <div id="feedback-modal">
-    <h2 style="font-family:'Special Elite';">FILE UPDATE</h2>
-    <p id="fb-text"></p>
+    <h2 id="fb-title" style="font-family:'Special Elite';">FILE UPDATE</h2>
+    <p id="fb-text" style="line-height:1.5;"></p>
     <button class="close-btn" onclick="nextQuestion()">PROCEED</button>
 </div>
 
@@ -154,26 +157,105 @@
 
     const quizData = [
         {
-            q: "Which statement best identifies the central idea of the article?",
-            hint: "Look for the answer that covers her whole life, not just the Titanic.",
+            q: "Which statement best identifies the central idea of the text?",
+            hint: "A central idea must cover her whole life, not just the Titanic.",
             options: [
-                { text: "Molly Brown used her fame and wealth to fight for the rights of others.", correct: true },
-                { text: "Molly Brown survived the sinking of the Titanic in 1912.", correct: false },
-                { text: "Molly Brown grew up in Hannibal, Missouri before moving West.", correct: false }
+                { text: "Molly Brown used her influence and wealth to advocate for social reform and human rights.", correct: true },
+                { text: "Molly Brown became famous solely because she survived the sinking of the Titanic.", correct: false },
+                { text: "Molly Brown was a wealthy woman who enjoyed traveling the world.", correct: false }
             ],
-            note: "RI.7.2: A central idea must be broad enough to cover the major points of the entire text."
+            note: "RI.7.2: Central ideas summarize the primary purpose of the entire passage, not just a single event."
         },
         {
-            q: "Which piece of evidence best supports the claim that Molly was an activist *before* the Titanic?",
-            hint: "Find the citation that mentions her work in the mining camps.",
+            q: "Which piece of evidence supports the claim that Molly Brown was an activist for miners?",
+            hint: "Look for specific actions she took in the mining communities.",
             options: [
-                { text: "'She worked to establish soup kitchens and literacy classes in mining communities.'", correct: true },
-                { text: "'She became a national hero after the rescue ship Carpathia docked.'", correct: false },
-                { text: "'She famously took control of Lifeboat 6 and demanded they return for survivors.'", correct: false }
+                { text: "'She worked to establish soup kitchens and literacy classes for mining families in Leadville.'", correct: true },
+                { text: "'She moved to Leadville in 1886 and met J.J. Brown.'", correct: false },
+                { text: "'The Titanic hit an iceberg in the middle of the North Atlantic.'", correct: false }
             ],
-            note: "RI.7.1: Strong evidence must directly connect to the specific time frame in the question."
+            note: "RI.7.1: Textual evidence must provide factual proof that directly supports the claim."
+        },
+        {
+            q: "How does the author develop the idea that Molly was 'unsinkable' beyond the ship?",
+            hint: "What did she do once she reached safety on the Carpathia?",
+            options: [
+                { text: "By describing how she organized a committee to raise money for destitute survivors.", correct: true },
+                { text: "By explaining that she was a very strong swimmer.", correct: false },
+                { text: "By mentioning that she wore her most expensive furs onto the lifeboat.", correct: false }
+            ],
+            note: "RI.7.2: Character development helps reveal the deeper central idea of resilience."
+        },
+        {
+            q: "Which of the following belongs in an OBJECTIVE summary of this biography?",
+            hint: "Objective summaries do not use 'feeling' words or opinions.",
+            options: [
+                { text: "Brown founded a committee to assist passengers who lost everything in the sinking.", correct: true },
+                { text: "Molly Brown was a brave woman who did many incredible things for people.", correct: false },
+                { text: "The sinking of the Titanic was a tragic event that should have been avoided.", correct: false }
+            ],
+            note: "RI.7.2: Objective summaries must stay neutral and focus strictly on verified facts."
+        },
+        {
+            q: "Find the evidence of Molly Brown's political activism later in life:",
+            hint: "Look for mentions of the right to vote or international conferences.",
+            options: [
+                { text: "'She helped organize the International Women's Rights Conference in 1914.'", correct: true },
+                { text: "'She was famously quoted as saying her luck was 'unsinkable.'", correct: false },
+                { text: "'She began her life in a small cottage in Hannibal, Missouri.'", correct: false }
+            ],
+            note: "RI.7.1: To cite evidence, you must match the quote to the specific achievement asked for."
+        },
+        {
+            q: "How did Brown's early life in Hannibal interact with her later activism?",
+            hint: "Does the text mention her working-class roots?",
+            options: [
+                { text: "Her working-class background made her sympathetic to the struggles of the poor.", correct: true },
+                { text: "She hated being poor and wanted to get as far away from Missouri as possible.", correct: false },
+                { text: "She learned how to navigate a ship while growing up on the Mississippi River.", correct: false }
+            ],
+            note: "RI.7.3: This analyzes the interaction between a person's history and their lifelong central ideas."
+        },
+        {
+            q: "What is the author's purpose in discussing the Miners' Strike in Colorado?",
+            hint: "Does it show her helping people or just her having money?",
+            options: [
+                { text: "To prove that Brown used her wealth to support workers' rights during conflicts.", correct: true },
+                { text: "To show that the mining business was very dangerous and high-paying.", correct: false },
+                { text: "To explain how J.J. Brown made his fortune in gold and silver.", correct: false }
+            ],
+            note: "RI.7.2: Supporting details must always point back to the central idea (Activism)."
+        },
+        {
+            q: "Which sentence provides evidence for why Brown was considered a 'hero' by the press?",
+            hint: "Look for how the public reacted to her leadership on the lifeboat.",
+            options: [
+                { text: "'News of her leadership on Lifeboat 6 spread quickly, turning her into a national figure.'", correct: true },
+                { text: "'She was returning from a vacation in Egypt when she boarded the Titanic.'", correct: false },
+                { text: "'She was awarded the French Legion of Honor for her work in WWI.'", correct: false }
+            ],
+            note: "RI.7.1: Evidence should explain the 'why' behind a person's reputation."
+        },
+        {
+            q: "What makes a summary 'non-objective'?",
+            hint: "Think about the difference between a fact and a feeling.",
+            options: [
+                { text: "Including personal opinions or judgmental adjectives like 'wonderful.'", correct: true },
+                { text: "Including names, dates, and specific historical locations.", correct: false },
+                { text: "Summarizing the beginning, middle, and end of the text.", correct: false }
+            ],
+            note: "RI.7.2: Objectivity is the key difference between a report and a review."
+        },
+        {
+            q: "What is the primary message the author wants the reader to take away?",
+            hint: "Is it about the ship sinking, or about what a person does with their life?",
+            options: [
+                { text: "Molly Brown’s true legacy is her lifelong dedication to helping others, not just her survival.", correct: true },
+                { text: "The Titanic was the most significant event in 20th-century history.", correct: false },
+                { text: "Living in Leadville, Colorado was the key to becoming a millionaire.", correct: false }
+            ],
+            note: "RI.7.2: The primary message is synonymous with the Central Idea."
         }
-        // ... (8 more questions following the same pattern)
     ];
 
     function shuffle(array) {
@@ -204,7 +286,15 @@
             btn.className = "option-btn";
             btn.innerText = opt.text;
             btn.onclick = () => {
-                if(opt.correct) score++;
+                const fbTitle = document.getElementById("fb-title");
+                if(opt.correct) {
+                    score++;
+                    fbTitle.innerText = "✓ EVIDENCE VERIFIED";
+                    fbTitle.style.color = "#2e7d32";
+                } else {
+                    fbTitle.innerText = "✗ INCORRECT ENTRY";
+                    fbTitle.style.color = "#b71c1c";
+                }
                 document.getElementById("fb-text").innerText = d.note;
                 document.getElementById("feedback-modal").style.display = "block";
                 document.getElementById("overlay").style.display = "block";
@@ -223,15 +313,12 @@
 
     function showEnd() {
         const finalPercent = Math.round((score / quizData.length) * 100);
-        const entryID = "1211047074"; 
-        const formURL = `https://docs.google.com/forms/d/e/1FAIpQLSd-glvVAJGNDvunL1ziEaZkMtZvpnZNQ_JNo720134QHLXS7A/viewform?usp=pp_url&entry.${entryID}=${finalPercent}%25`;
-
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center;">
                 <h2 style="font-family:'Special Elite';">ARCHIVE COMPLETE</h2>
-                <p style="font-size:2rem;">${finalPercent}%</p>
-                <p>Submit your evidence briefing to the main office.</p>
-                <a href="${formURL}" target="_blank" class="close-btn">SUBMIT REPORT</a>
+                <p style="font-size:2rem; margin:20px 0;">Final Accuracy: ${finalPercent}%</p>
+                <p>The evidence has been filed. Review your results for standard mastery.</p>
+                <button class="close-btn" onclick="location.reload()">RE-RUN ANALYSIS</button>
             </div>
         `;
     }
