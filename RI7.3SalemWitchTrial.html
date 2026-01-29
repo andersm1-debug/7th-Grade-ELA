@@ -3,144 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr. Anderson's ELA Hub</title>
+    <title>Salem 1692: Interaction Lab</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
-
-        :root {
-            --vikings-purple: #4F2683;
-            --vikings-gold: #FFC62F;
-            --pure-white: #FFFFFF;
-            --soft-grey: #f4f4f4;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Special+Elite&display=swap');
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--soft-grey);
+            background-color: #1a150f;
+            color: #3e2b14;
+            font-family: 'IM Fell English', serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        header {
-            background-color: var(--vikings-purple);
-            color: var(--pure-white);
+        #quiz-container {
+            background: #e9dcc9; /* Parchment Color */
+            border: 8px double #3e2b14;
+            padding: 40px;
             width: 100%;
-            padding: 40px 0;
-            text-align: center;
-            border-bottom: 8px solid var(--vikings-gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            max-width: 650px;
+            box-shadow: 15px 15px 0px #000;
+            position: relative;
+        }
+
+        #quiz-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            pointer-events: none;
+            opacity: 0.4;
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
+            text-align: center;
+            border-bottom: 2px solid #3e2b14;
+            padding-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-size: 2rem;
         }
 
-        .container {
-            max-width: 800px;
-            width: 90%;
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .progress {
+            font-family: 'Special+Elite', monospace;
+            font-size: 0.9rem;
+            text-align: right;
+            margin-bottom: 10px;
+            color: #6d4c41;
         }
 
-        .card {
-            background: var(--pure-white);
-            border-radius: 12px;
-            border-left: 10px solid var(--vikings-purple);
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            border-left-color: var(--vikings-gold);
-        }
-
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: var(--vikings-purple);
+        .question {
             font-size: 1.4rem;
-        }
-
-        .card p {
-            font-size: 1rem;
-            color: #666;
+            margin-bottom: 25px;
             line-height: 1.4;
         }
 
-        .status-badge {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid #3e2b14;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-size: 1.15rem;
+            color: #3e2b14;
+        }
+
+        .option-btn:hover {
+            background: #dcd0ba;
+            transform: translateX(5px);
+        }
+
+        /* Feedback Modal Styles */
+        #feedback-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fdf5e6;
+            border: 5px solid #3e2b14;
+            padding: 30px;
+            z-index: 1000;
+            width: 85%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
+        }
+
+        #feedback-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
 
-        .active { background-color: #e8f5e9; color: #2e7d32; }
-        .placeholder { background-color: #fff3e0; color: #ef6c00; }
+        #feedback-text {
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
 
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
+        .close-btn {
+            background: #3e2b14;
+            color: #e9dcc9;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .close-btn:hover {
+            background: #5d4037;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>7th Grade ELA Hub</h1>
-</header>
+<div id="overlay"></div>
 
-<div class="container">
-    
-    <a href="SalemAnalysis.html" class="card">
-        <div>
-            <h2>RI 7.3: Salem Witch Trials</h2>
-            <p>Analyze how individuals, events, and ideas interact in colonial Salem.</p>
-        </div>
-        <span class="status-badge active">Live Interaction</span>
-    </a>
-
-    <a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
-        <div>
-            <h2>Unit 4: Future Focus</h2>
-            <p>Coming soon: Analyzing arguments and claims in modern media.</p>
-        </div>
-        <span class="status-badge placeholder">Under Construction</span>
-    </a>
-
-    <a href="#" class="card">
-        <div>
-            <h2>Softball Strategy</h2>
-            <p>Interactive lineup cards and situational drills for the Lady Hornets.</p>
-        </div>
-        <span class="status-badge placeholder">Coming Soon</span>
-    </a>
-
+<div id="quiz-container">
+    <div class="progress" id="progress">Entry 1 of 5</div>
+    <h1 id="title">Salem Interaction Lab</h1>
+    <div id="quiz-content">
+        <p class="question" id="question-text">Loading investigation...</p>
+        <div class="options-container" id="options"></div>
+    </div>
 </div>
 
-<footer>
-    &copy; 2026 Mr. Anderson | AI Coach & ELA Professional
-</footer>
+<div id="feedback-modal">
+    <h2 id="feedback-title">Analysis Result</h2>
+    <p id="feedback-text"></p>
+    <button class="close-btn" onclick="closeModal()">Continue Investigation</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            q: "The Interaction Triangle: How did the lack of scientific/medical knowledge in 1692 interact with the physical symptoms of the young girls?",
+            options: [
+                "It led the community to seek a supernatural explanation (witchcraft) rather than a medical one.",
+                "It caused the town to ignore the girls until they got better on their own.",
+                "It forced the girls to admit they were faking their symptoms to avoid doctors."
+            ],
+            correct: 0,
+            note: "RI.7.3 Analysis: When an event (symptoms) lacks a known idea (science), a new idea (superstition) fills the gap to explain the unknown."
+        },
+        {
+            q: "Ripple Effect: What was the primary interaction between the girls' initial accusations and the existing social tensions in Salem?",
+            options: [
+                "The town worked together to protect the accused from unfair trials.",
+                "People used the accusations to settle old grudges over land, family, and religion.",
+                "The court dismissed the girls' claims as simple teenage 'hysteria'."
+            ],
+            correct: 1,
+            note: "The 'Ripple' shows how a small event (accusation) interacts with long-standing social ideas (grudges) to create a massive crisis."
+        },
+        {
+            q: "Interactions of Power: How did the court’s decision to allow 'spectral evidence' change the power dynamic in the community?",
+            options: [
+                "It gave the accused a way to prove their innocence through their dreams.",
+                "It gave the accusers absolute power, as spectral evidence is impossible to disprove or verify.",
+                "It balanced the power so both sides had an equal chance to be heard."
+            ],
+            correct: 1,
+            note: "RI.7.3: This idea (spectral evidence) interacted with the legal event (the trial) to make true justice impossible."
+        },
+        {
+            q: "Setting the Scene: How did the strict religious setting of Salem interact with the girls' fear of getting in trouble for dancing?",
+            options: [
+                "It encouraged them to tell the truth and ask for forgiveness early.",
+                "It created an environment where confessing to 'witchcraft' was safer than admitting to 'sinful' behavior.",
+                "It allowed the girls to create a new church for themselves."
+            ],
+            correct: 1,
+            note: "The strict social ideas of the Puritans interacted with the event of the girls' behavior, forcing them into a lie to survive."
+        },
+        {
+            q: "The Final Interaction: According to 'Understanding the Salem Witch Trials,' what happened when people finally started to question the use of spectral evidence?",
+            options: [
+                "The trials immediately stopped and everyone was set free.",
+                "The interaction between logic and the law eventually dissolved the court and ended the hangings.",
+                "The accusers were arrested for lying."
+            ],
+            correct: 1,
+            note: "As the idea of logic and verifiable evidence interacted with the legal system, the hysteria finally began to lose its power."
+        }
+    ];
+
+    let current = 0;
+    const qText = document.getElementById("question-text");
+    const optCont = document.getElementById("options");
+    const prog = document.getElementById("progress");
+    const modal = document.getElementById("feedback-modal");
+    const fbTitle = document.getElementById("feedback-title");
+    const fbText = document.getElementById("feedback-text");
+    const overlay = document.getElementById("overlay");
+
+    function loadQuestion() {
+        const d = quizData[current];
+        prog.innerText = `Entry ${current + 1} of ${quizData.length}`;
+        qText.innerText = d.q;
+        optCont.innerHTML = "";
+
+        d.options.forEach((opt, i) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i);
+            optCont.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(index) {
+        const d = quizData[current];
+        const isCorrect = (index === d.correct);
+        
+        if (isCorrect) {
+            fbTitle.innerText = "✓ Analysis Verified";
+            fbTitle.style.color = "#2e7d32"; // Green
+            fbText.innerHTML = `<strong>Accurate.</strong><br><br>${d.note}`;
+        } else {
+            fbTitle.innerText = "✗ Flawed Reasoning";
+            fbTitle.style.color = "#b71c1c"; // Dark Red
+            fbText.innerHTML = `<strong>Not quite.</strong> Review your Interaction Triangle.<br><br>${d.note}`;
+        }
+
+        modal.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+        overlay.style.display = "none";
+        current++;
+        if (current < quizData.length) {
+            loadQuestion();
+        } else {
+            showEnd();
+        }
+    }
+
+    function showEnd() {
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 20px;">
+                <h2 style="color:#3e2b14">Investigation Concluded</h2>
+                <p>You have successfully analyzed the interactions of Salem, 1692.</p>
+                <p style="font-family: 'Special Elite', monospace; font-size: 0.8rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:20px;">
+                    RECORDS ARCHIVED: VERIFICATION CODE [S-1692-7ELA]
+                </p>
+                <button class="close-btn" onclick="location.reload()">Reset Records</button>
+            </div>
+        `;
+    }
+
+    loadQuestion();
+</script>
 
 </body>
 </html>
