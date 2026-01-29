@@ -42,18 +42,33 @@
             padding: 3px 7px;
         }
 
-        .hub-link:hover {
-            background: #8b5a2b;
-            color: #3d2b1f;
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #8b5a2b;
+            margin-top: 10px;
+            letter-spacing: 2px;
         }
 
         .word-plate {
             font-family: 'UnifrakturMaguntia', serif;
-            font-size: 3rem;
+            font-size: 2.8rem;
             text-align: center;
             margin: 20px 0;
             color: #e9c46a;
             text-shadow: 2px 2px 2px #000;
+        }
+
+        .context-plate {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid #8b5a2b;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #fefae0;
+            line-height: 1.5;
+            text-align: center;
+            font-style: italic;
         }
 
         .gear-btn {
@@ -66,15 +81,11 @@
             width: 100%;
             text-align: left;
             font-family: inherit;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: 0.3s;
         }
 
-        .gear-btn:hover {
-            background: #bc6c25;
-            color: #fff;
-            transform: scale(1.02);
-        }
+        .gear-btn:hover { background: #bc6c25; color: #fff; }
 
         #blueprints {
             margin-top: 30px;
@@ -97,7 +108,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -109,7 +120,6 @@
             color: #fff;
             border: 2px solid #8b5a2b;
             padding: 12px 30px;
-            font-family: 'Special Elite', cursive;
             cursor: pointer;
             margin-top: 20px;
         }
@@ -119,15 +129,16 @@
 
 <div id="workshop-container">
     <a href="index.html" class="hub-link">Return to Hub</a>
-    <h2 style="text-align:center; text-transform:uppercase; letter-spacing:3px; color:#8b5a2b;">The Clockwork Lab: Wk 11</h2>
+    <p id="q-type">WORKSHOP: CALIBRATING</p>
     
     <div id="quiz-content">
+        <div id="sentence-box" class="context-plate" style="display:none;"></div>
         <div id="word-box" class="word-plate">MACHINERY...</div>
         <div id="options"></div>
     </div>
 
     <div id="blueprints">
-        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Workshop Blueprints (Affixes)</p>
+        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Active Blueprint Decipher</p>
         <div class="blueprint-grid">
             <div class="blueprint-item"><b>AUTO-</b> SELF</div>
             <div class="blueprint-item"><b>DIS-</b> AWAY</div>
@@ -138,27 +149,27 @@
 
 <div id="steam-modal">
     <h1 id="fb-status" style="font-family:'UnifrakturMaguntia'; font-size: 3rem;"></h1>
-    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #d4a373; text-align:center;"></p>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #d4a373; text-align:center; padding: 10px;"></p>
     <button class="steam-btn" onclick="nextWord()">CRANK THE LEVER</button>
 </div>
 
 <script>
     const wordBank = [
-        { word: "Autonomy", def: "Political independence" },
-        { word: "Distant", def: "To stand apart" },
-        { word: "Cooperate", def: "To work with or together" },
-        { word: "Disassemble", def: "To take apart" },
-        { word: "Correct", def: "To make right" },
-        { word: "Conformist", def: "One who acts the same as others" },
-        { word: "Discount", def: "A markdown on price" },
-        { word: "Disingenuous", def: "Not straightforward or honest" },
-        { word: "Automatic", def: "Working by itself; Self-regulating" },
-        { word: "Combat", def: "To fight with" },
-        { word: "Autobiography", def: "A book about someone's life written by that person" },
-        { word: "Dislocate", def: "To put out of place, especially a bone or joint" },
-        { word: "Complete", def: "Having all necessary parts; finished" },
-        { word: "Distract", def: "To draw attention away from" },
-        { word: "Autograph", def: "A person's own signature" }
+        { word: "Autonomy", def: "Political independence", sent: "The small nation desired ________ to make its own laws and decisions." },
+        { word: "Distant", def: "To stand apart; far away", sent: "The sound of the train was so ________ that I could barely hear it." },
+        { word: "Cooperate", def: "To work with or together", sent: "If we don't ________, we will never finish this group project on time." },
+        { word: "Disassemble", def: "To take apart", sent: "My dad had to ________ the lawnmower to find the broken spark plug." },
+        { word: "Correct", def: "To make right", sent: "Please use a red pen to ________ your mistakes on the practice test." },
+        { word: "Conformist", def: "One who acts the same as others", sent: "She was never a ________; she always wore unique clothes that she made herself." },
+        { word: "Discount", def: "A markdown on price", sent: "The store offered a 50% ________ on all winter coats in March." },
+        { word: "Disingenuous", def: "Not straightforward or honest", sent: "It was ________ of him to claim he was sick just to avoid the meeting." },
+        { word: "Automatic", def: "Working by itself; Self-regulating", sent: "The sprinkler system is ________ and turns on every morning at 6 AM." },
+        { word: "Combat", def: "To fight with", sent: "Scientists are working on new ways to ________ pollution in our oceans." },
+        { word: "Autobiography", def: "A book about someone's life written by that person", sent: "I am writing my own ________ to share my life story with my grandkids." },
+        { word: "Dislocate", def: "To put out of place, especially a bone or joint", sent: "A hard fall during the game caused him to ________ his elbow." },
+        { word: "Complete", def: "Having all necessary parts; finished", sent: "You need one more stamp to ________ your collection." },
+        { word: "Distract", def: "To draw attention away from", sent: "The loud construction noise outside began to ________ me from my reading." },
+        { word: "Autograph", def: "A person's own signature", sent: "The author was happy to ________ copies of her new book for fans." }
     ];
 
     let current = 0;
@@ -166,35 +177,58 @@
 
     function loadWord() {
         const d = wordBank[current];
-        document.getElementById("word-box").innerText = d.word;
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-box");
+        const wordBox = document.getElementById("word-box");
         const optCont = document.getElementById("options");
+
         optCont.innerHTML = "";
 
-        let choices = [
-            { text: d.def, correct: true },
-            { text: "Moving away from others quickly", correct: false },
-            { text: "Something that is broken or messy", correct: false }
-        ].sort(() => Math.random() - 0.5);
+        if (isBlankType) {
+            qType.innerText = "WORKSHOP: PART PLACEMENT";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [{ text: d.word, correct: true }, 
+                           { text: wordBank[(current + 2) % 15].word, correct: false },
+                           { text: wordBank[(current + 4) % 15].word, correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "WORKSHOP: LOG SPECIFICATION";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [{ text: d.def, correct: true }, 
+                           { text: "To increase in power or force", correct: false },
+                           { text: "To hide away from view", correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
 
+    function renderButtons(choices, correctVal) {
         choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "gear-btn";
             btn.innerText = c.text;
             btn.onclick = () => {
+                const modal = document.getElementById("steam-modal");
                 const fbStatus = document.getElementById("fb-status");
                 if (c.correct) {
                     score++;
                     fbStatus.innerText = "Mechanized!";
                     fbStatus.style.color = "#e9c46a";
-                    document.getElementById("fb-info").innerText = "The gears mesh perfectly. The machine hums.";
+                    document.getElementById("fb-info").innerText = "The gears mesh perfectly.";
                 } else {
                     fbStatus.innerText = "Malfunction!";
                     fbStatus.style.color = "#bc6c25";
-                    document.getElementById("fb-info").innerText = "A gear snapped. The correct definition: " + d.def;
+                    document.getElementById("fb-info").innerText = "Correct entry: " + correctVal;
                 }
-                document.getElementById("steam-modal").style.display = "flex";
+                modal.style.display = "flex";
             };
-            optCont.appendChild(btn);
+            document.getElementById("options").appendChild(btn);
         });
     }
 
@@ -202,16 +236,18 @@
         document.getElementById("steam-modal").style.display = "none";
         current++;
         if (current < wordBank.length) loadWord();
-        else {
-            const finalPercent = Math.round((score/wordBank.length)*100);
-            document.getElementById("quiz-content").innerHTML = `
-                <div style="text-align:center; padding: 30px 0;">
-                    <h2 style='font-family:UnifrakturMaguntia; color:#e9c46a;'>ENGINE COMPLETE</h2>
-                    <p style="font-size:3.5rem; margin:10px 0;">${finalPercent}%</p>
-                    <p>The device is fully assembled. Report back to the hub.</p>
-                    <a href="index.html" class="steam-btn" style="text-decoration:none; display:inline-block; margin-top:10px;">RETURN TO HUB</a>
-                </div>`;
-        }
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:UnifrakturMaguntia; color:#e9c46a;">WORKSHOP FINALIZED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>Blueprint mastery achieved. Returning to hub.</p>
+                <a href="index.html" class="steam-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
     }
 
     loadWord();
