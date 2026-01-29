@@ -42,22 +42,37 @@
             border: 1px solid #52ffcc;
             padding: 5px 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .hub-btn:hover {
-            background: #52ffcc;
-            color: #0b1311;
+        .hub-btn:hover { background: #52ffcc; color: #0b1311; }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 20px;
+            letter-spacing: 2px;
         }
 
         .sample-display {
             font-family: 'Audiowide', cursive;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-align: center;
-            margin: 25px 0;
+            margin: 20px 0;
             color: #fff;
             text-shadow: 0 0 10px #52ffcc;
-            letter-spacing: 2px;
+        }
+
+        .context-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed #52ffcc;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            text-align: center;
         }
 
         .protocol-btn {
@@ -70,38 +85,17 @@
             width: 100%;
             text-align: left;
             font-family: inherit;
-            font-size: 1.05rem;
+            font-size: 1rem;
             transition: 0.3s;
         }
 
-        .protocol-btn:hover {
-            background: #52ffcc;
-            color: #0b1311;
-            box-shadow: 0 0 15px #52ffcc;
-        }
-
-        #lab-manual {
-            margin-top: 30px;
-            border-top: 1px solid #52ffcc;
-            padding-top: 15px;
-        }
-
-        .manual-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: #888;
-            text-align: center;
-        }
-
-        .manual-item b { color: #fff; display: block; font-size: 0.9rem; }
+        .protocol-btn:hover { background: #52ffcc; color: #0b1311; }
 
         #containment-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -114,7 +108,6 @@
             color: #0b1311;
             border: none;
             padding: 15px 40px;
-            border-radius: 4px;
             font-family: 'Audiowide', cursive;
             cursor: pointer;
             margin-top: 20px;
@@ -124,47 +117,39 @@
 <body>
 
 <div id="lab-container">
-    <a href="index.html" class="hub-btn">Exit to Base</a>
-    <h2 style="text-align:center; text-transform:uppercase; font-size: 1rem; color:#52ffcc;">Bio-Hazard Level: Week 10</h2>
+    <a href="index.html" class="hub-btn">_EXIT_TO_HUB</a>
+    <p id="q-type">PROTOCOL: INITIALIZING</p>
     
     <div id="quiz-content">
-        <div id="word-box" class="sample-display">ANALYZING...</div>
+        <div id="sentence-display" class="context-box" style="display:none;"></div>
+        <div id="word-display" class="sample-display">SCANNING...</div>
         <div id="options"></div>
-    </div>
-
-    <div id="lab-manual">
-        <p style="font-size:0.65rem; text-transform:uppercase; margin-bottom:10px;">> Affix Containment Codes</p>
-        <div class="manual-grid">
-            <div class="manual-item"><b>ANTI-</b> AGAINST</div>
-            <div class="manual-item"><b>CIRCUM-</b> AROUND</div>
-            <div class="manual-item"><b>DE-</b> AWAY/OPPOSITE</div>
-        </div>
     </div>
 </div>
 
 <div id="containment-modal">
     <h1 id="fb-status" style="font-family:'Audiowide'; font-size: 2.5rem;"></h1>
     <p id="fb-info" style="font-size: 1.1rem; max-width: 500px; color: #52ffcc; padding: 20px;"></p>
-    <button class="action-btn" onclick="nextWord()">NEXT SAMPLE</button>
+    <button class="action-btn" onclick="nextWord()">PROCEED</button>
 </div>
 
 <script>
     const wordBank = [
-        { word: "Antiseptic", def: "Clean, sterile; substance that prevents infection" },
-        { word: "Antifreeze", def: "Substance added to liquid to lower its freezing point" },
-        { word: "Antisocial", def: "Unsociable; unfriendly; avoiding company" },
-        { word: "Antidepressant", def: "Used or tending to relieve or prevent depression" },
-        { word: "Antidote", def: "A remedy to counteract the effects of poison" },
-        { word: "Deflate", def: "To reduce in size, importance, or effectiveness" },
-        { word: "Deactivate", def: "To make inactive or ineffective" },
-        { word: "Decaffeinated", def: "Having the caffeine removed" },
-        { word: "Decelerate", def: "To slow down or cause to slow down" },
-        { word: "Decrease", def: "To grow progressively less in size or amount" },
-        { word: "Circumstance", def: "A condition or fact accompanying an event" },
-        { word: "Circumvent", def: "To get around; to bypass" },
-        { word: "Circumference", def: "The external boundary or perimeter of a circle" },
-        { word: "Circumnavigate", def: "To go completely around, especially by water" },
-        { word: "Circumspect", def: "Careful to consider all circumstances and consequences" }
+        { word: "Antiseptic", def: "Clean, sterile; substance that prevents infection", sent: "The nurse applied an ________ to the cut to keep it from getting infected." },
+        { word: "Antifreeze", def: "Substance added to liquid to lower its freezing point", sent: "In the winter, cars need ________ so their engines don't freeze up." },
+        { word: "Antisocial", def: "Unsociable; unfriendly; avoiding company", sent: "He wasn't being mean, he was just feeling ________ and wanted to stay home." },
+        { word: "Antidepressant", def: "Used or tending to relieve or prevent depression", sent: "The doctor prescribed an ________ to help the patient feel more balanced." },
+        { word: "Antidote", def: "A remedy to counteract the effects of poison", sent: "We need to find the ________ before the snake's venom spreads!" },
+        { word: "Deflate", def: "To reduce in size, importance, or effectiveness", sent: "The loss of the game helped ________ the team's overconfidence." },
+        { word: "Deactivate", def: "To make inactive or ineffective", sent: "You must ________ the security code before you open the vault." },
+        { word: "Decaffeinated", def: "Having the caffeine removed", sent: "I prefer ________ coffee late at night so I can still sleep." },
+        { word: "Decelerate", def: "To slow down or cause to slow down", sent: "The pilot had to ________ as the plane approached the landing strip." },
+        { word: "Decrease", def: "To grow progressively less in size, amount, or intensity", sent: "We hope the number of errors will ________ as you practice more." },
+        { word: "Circumstance", def: "A condition or fact accompanying an event", sent: "Due to a change in ________, the meeting has been rescheduled." },
+        { word: "Circumvent", def: "To get around; to bypass", sent: "The clever cat found a way to ________ the fence and get into the garden." },
+        { word: "Circumference", def: "The external boundary or surface of a figure; the perimeter", sent: "We used a string to measure the ________ of the giant pumpkin." },
+        { word: "Circumnavigate", def: "To go completely around especially by water", sent: "Magellan's crew was the first to ________ the entire globe." },
+        { word: "Circumspect", def: "Careful to consider all circumstances and consequences", sent: "The diplomat was very ________ with his words to avoid a conflict." }
     ];
 
     let current = 0;
@@ -172,35 +157,64 @@
 
     function loadWord() {
         const d = wordBank[current];
-        document.getElementById("word-box").innerText = d.word;
+        const isBlankType = current % 2 === 1; // Alternates Identification and Context
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
         const optCont = document.getElementById("options");
+
         optCont.innerHTML = "";
 
-        let choices = [
-            { text: d.def, correct: true },
-            { text: "To increase speed or intensity rapidly", correct: false },
-            { text: "Moving directly through the center of an object", correct: false }
-        ].sort(() => Math.random() - 0.5);
+        if (isBlankType) {
+            qType.innerText = "PROTOCOL: CONTEXTUAL FILL";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "SEARCHING...";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "PROTOCOL: DEFINITION IDENT";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "To increase in volume or intensity rapidly", correct: false },
+                { text: "Moving directly through the center of a mass", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
 
+    function renderButtons(choices, correctValue) {
         choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "protocol-btn";
             btn.innerText = c.text;
             btn.onclick = () => {
+                const modal = document.getElementById("containment-modal");
                 const fbStatus = document.getElementById("fb-status");
-                if (c.correct) {
+                const fbInfo = document.getElementById("fb-info");
+                
+                if(c.correct) {
                     score++;
                     fbStatus.innerText = "STABILIZED";
                     fbStatus.style.color = "#52ffcc";
-                    document.getElementById("fb-info").innerText = "Containment successful. Sample data verified.";
+                    fbInfo.innerText = "Entry verified. Sample remains secure.";
                 } else {
-                    fbStatus.innerText = "CONTAMINATED";
+                    fbStatus.innerText = "BREACH!";
                     fbStatus.style.color = "#ff5252";
-                    document.getElementById("fb-info").innerText = "Protocol error. Correct definition: " + d.def;
+                    fbInfo.innerText = "Incorrect data. The correct value was: " + correctValue;
                 }
-                document.getElementById("containment-modal").style.display = "flex";
+                modal.style.display = "flex";
             };
-            optCont.appendChild(btn);
+            document.getElementById("options").appendChild(btn);
         });
     }
 
@@ -208,16 +222,18 @@
         document.getElementById("containment-modal").style.display = "none";
         current++;
         if (current < wordBank.length) loadWord();
-        else {
-            const finalPercent = Math.round((score/wordBank.length)*100);
-            document.getElementById("quiz-content").innerHTML = `
-                <div style="text-align:center; padding: 30px 0;">
-                    <h2 style='font-family:Audiowide; color:#fff;'>LAB REPORT FINALIZED</h2>
-                    <p style="font-size:3.5rem; margin:10px 0;">${finalPercent}%</p>
-                    <p>All samples processed. Returning to command.</p>
-                    <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block; margin-top:10px;">BACK TO HUB</a>
-                </div>`;
-        }
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:Audiowide; color:#fff;">LAB ANALYSIS COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All biological data has been cross-referenced.</p>
+                <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
     }
 
     loadWord();
