@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE CLOCKWORK WORKSHOP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=UnifrakturMaguntia&display=swap');
+
+        body {
+            background-color: #2c1e16;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: #d4a373;
+            font-family: 'Special Elite', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #workshop-container {
+            background: #3d2b1f;
+            border: 8px double #8b5a2b;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.7), inset 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b5a2b;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 1px solid #8b5a2b;
+            padding: 3px 7px;
+        }
+
+        .hub-link:hover {
+            background: #8b5a2b;
+            color: #3d2b1f;
+        }
+
+        .word-plate {
+            font-family: 'UnifrakturMaguntia', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin: 20px 0;
+            color: #e9c46a;
+            text-shadow: 2px 2px 2px #000;
+        }
+
+        .gear-btn {
+            background: #4e3629;
+            border: 2px solid #8b5a2b;
+            color: #fefae0;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .gear-btn:hover {
+            background: #bc6c25;
+            color: #fff;
+            transform: scale(1.02);
+        }
+
+        #blueprints {
+            margin-top: 30px;
+            border-top: 2px dashed #8b5a2b;
+            padding-top: 15px;
+        }
+
+        .blueprint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #a68a64;
+            text-align: center;
+        }
+
+        .blueprint-item b { color: #e9c46a; display: block; }
+
+        #steam-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .steam-btn {
+            background: #bc6c25;
+            color: #fff;
+            border: 2px solid #8b5a2b;
+            padding: 12px 30px;
+            font-family: 'Special Elite', cursive;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="workshop-container">
+    <a href="index.html" class="hub-link">Return to Hub</a>
+    <h2 style="text-align:center; text-transform:uppercase; letter-spacing:3px; color:#8b5a2b;">The Clockwork Lab: Wk 11</h2>
+    
+    <div id="quiz-content">
+        <div id="word-box" class="word-plate">MACHINERY...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="blueprints">
+        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Workshop Blueprints (Affixes)</p>
+        <div class="blueprint-grid">
+            <div class="blueprint-item"><b>AUTO-</b> SELF</div>
+            <div class="blueprint-item"><b>DIS-</b> AWAY</div>
+            <div class="blueprint-item"><b>CO/CON-</b> TOGETHER</div>
+        </div>
+    </div>
+</div>
+
+<div id="steam-modal">
+    <h1 id="fb-status" style="font-family:'UnifrakturMaguntia'; font-size: 3rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #d4a373; text-align:center;"></p>
+    <button class="steam-btn" onclick="nextWord()">CRANK THE LEVER</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Autonomy", def: "Political independence" },
+        { word: "Distant", def: "To stand apart" },
+        { word: "Cooperate", def: "To work with or together" },
+        { word: "Disassemble", def: "To take apart" },
+        { word: "Correct", def: "To make right" },
+        { word: "Conformist", def: "One who acts the same as others" },
+        { word: "Discount", def: "A markdown on price" },
+        { word: "Disingenuous", def: "Not straightforward or honest" },
+        { word: "Automatic", def: "Working by itself; Self-regulating" },
+        { word: "Combat", def: "To fight with" },
+        { word: "Autobiography", def: "A book about someone's life written by that person" },
+        { word: "Dislocate", def: "To put out of place, especially a bone or joint" },
+        { word: "Complete", def: "Having all necessary parts; finished" },
+        { word: "Distract", def: "To draw attention away from" },
+        { word: "Autograph", def: "A person's own signature" }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        document.getElementById("word-box").innerText = d.word;
+        const optCont = document.getElementById("options");
+        optCont.innerHTML = "";
+
+        let choices = [
+            { text: d.def, correct: true },
+            { text: "Moving away from others quickly", correct: false },
+            { text: "Something that is broken or messy", correct: false }
+        ].sort(() => Math.random() - 0.5);
+
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "gear-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const fbStatus = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    fbStatus.innerText = "Mechanized!";
+                    fbStatus.style.color = "#e9c46a";
+                    document.getElementById("fb-info").innerText = "The gears mesh perfectly. The machine hums.";
+                } else {
+                    fbStatus.innerText = "Malfunction!";
+                    fbStatus.style.color = "#bc6c25";
+                    document.getElementById("fb-info").innerText = "A gear snapped. The correct definition: " + d.def;
+                }
+                document.getElementById("steam-modal").style.display = "flex";
+            };
+            optCont.appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("steam-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else {
+            const finalPercent = Math.round((score/wordBank.length)*100);
+            document.getElementById("quiz-content").innerHTML = `
+                <div style="text-align:center; padding: 30px 0;">
+                    <h2 style='font-family:UnifrakturMaguntia; color:#e9c46a;'>ENGINE COMPLETE</h2>
+                    <p style="font-size:3.5rem; margin:10px 0;">${finalPercent}%</p>
+                    <p>The device is fully assembled. Report back to the hub.</p>
+                    <a href="index.html" class="steam-btn" style="text-decoration:none; display:inline-block; margin-top:10px;">RETURN TO HUB</a>
+                </div>`;
+        }
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
