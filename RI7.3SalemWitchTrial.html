@@ -276,4 +276,81 @@
             options: [
                 "The girls admitted they were lying for attention.",
                 "The 'Spectral Evidence' was used to accuse the Governor's own wife, forcing him to intervene.",
-                "The British government ordered him to stop the trials immediately
+                "The British government ordered him to stop the trials immediately."
+            ],
+            correct: 1,
+            note: "When the idea of 'Spectral Evidence' interacted with an individual of high power (the Governor's wife), it finally forced a change in the legal event."
+        }
+    ];
+
+    function loadQuestion() {
+        const d = quizData[current];
+        document.getElementById("progress").innerText = `Entry ${current + 1} of ${quizData.length}`;
+        document.getElementById("question-text").innerText = d.q;
+        const optCont = document.getElementById("options");
+        optCont.innerHTML = "";
+
+        d.options.forEach((opt, i) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i);
+            optCont.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(index) {
+        const d = quizData[current];
+        const isCorrect = (index === d.correct);
+        if (isCorrect) {
+            score++;
+            document.getElementById("feedback-title").innerText = "✓ Analysis Verified";
+            document.getElementById("feedback-title").style.color = "#2e7d32";
+        } else {
+            document.getElementById("feedback-title").innerText = "✗ Flawed Reasoning";
+            document.getElementById("feedback-title").style.color = "#b71c1c";
+        }
+        document.getElementById("feedback-text").innerHTML = d.note;
+        document.getElementById("feedback-modal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("feedback-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        current++;
+        if (current < quizData.length) {
+            loadQuestion();
+        } else {
+            showEnd();
+        }
+    }
+
+    function showEnd() {
+        const finalScore = Math.round((score / quizData.length) * 100);
+        const entryID = "1211047074"; 
+        const formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSd-glvVAJGNDvunL1ziEaZkMtZvpnZNQ_JNo720134QHLXS7A/viewform";
+        const preFilledURL = `${formBaseURL}?usp=pp_url&entry.${entryID}=${finalScore}%25`;
+
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 20px;">
+                <h2 style="color:#3e2b14">Investigation Concluded</h2>
+                <p style="font-size: 1.5rem; margin: 20px 0;">Final Analysis Score: <br><strong>${finalScore}%</strong></p>
+                <p>To record your grade in the archives, click the button below to submit your score to Mr. Anderson.</p>
+                
+                <a href="${preFilledURL}" target="_blank" class="close-btn" style="margin-top:20px;">
+                    Submit Score
+                </a>
+                
+                <p style="font-family: 'Special Elite', monospace; font-size: 0.7rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:40px;">
+                    VERIFICATION CODE: [S-1692-7ELA-PRO]
+                </p>
+            </div>
+        `;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
