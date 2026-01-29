@@ -23,7 +23,6 @@
         #longship-container {
             background: rgba(43, 34, 26, 0.95);
             border: 4px solid #8b4513;
-            border-image: url('https://www.transparenttextures.com/patterns/iron-grip.png') 30 round;
             padding: 40px;
             width: 95%;
             max-width: 650px;
@@ -40,7 +39,14 @@
             text-decoration: none;
             font-size: 0.9rem;
             text-transform: uppercase;
+        }
+
+        #q-type {
+            font-size: 0.8rem;
+            color: #8b4513;
+            text-transform: uppercase;
             letter-spacing: 2px;
+            margin-top: 10px;
         }
 
         .word-stone {
@@ -49,7 +55,16 @@
             margin: 20px 0;
             color: #d4af37;
             text-shadow: 2px 2px 4px #000;
-            letter-spacing: 5px;
+        }
+
+        .saga-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #5d4037;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #fefae0;
+            line-height: 1.5;
         }
 
         .rune-btn {
@@ -66,19 +81,12 @@
             transition: 0.3s;
         }
 
-        .rune-btn:hover {
-            background: #d4af37;
-            color: #000;
-            border-color: #fff;
-        }
+        .rune-btn:hover { background: #d4af37; color: #000; }
 
-        /* Root Reference Section */
         #rune-decoder {
             margin-top: 30px;
             border-top: 2px solid #5d4037;
             padding-top: 15px;
-            font-style: italic;
-            color: #a08a70;
         }
 
         .decoder-grid {
@@ -106,10 +114,8 @@
             color: #000;
             border: none;
             padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
             font-family: 'Metamorphous', serif;
+            cursor: pointer;
             margin-top: 20px;
         }
     </style>
@@ -117,15 +123,17 @@
 <body>
 
 <div id="longship-container">
-    <a href="index.html" class="home-link">← Return to Village</a>
-    <h2 style="font-family:'Metamorphous'; color:#8b4513; margin-top:10px;">DECODING WEEK 13</h2>
+    <a href="index.html" class="home-link">← VILLAGE HUB</a>
+    <p id="q-type">EXPEDITION: STARTING</p>
     
     <div id="quiz-content">
-        <div id="word-box" class="word-stone">RUNES...</div>
+        <div id="sentence-display" class="saga-box" style="display:none;"></div>
+        <div id="word-display" class="word-stone">RUNES...</div>
         <div id="options"></div>
     </div>
 
     <div id="rune-decoder">
+        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px; color:#8b4513;">> Ancient Root Decipher</p>
         <div class="decoder-grid">
             <div class="decoder-item"><b>EX-</b> OUT</div>
             <div class="decoder-item"><b>MIS-</b> WRONGLY</div>
@@ -136,27 +144,27 @@
 
 <div id="valhalla-modal">
     <h1 id="fb-status" style="font-family:'Metamorphous'; font-size: 3rem;"></h1>
-    <p id="fb-info" style="font-size: 1.3rem; max-width: 500px; color: #e2d1b3; margin-top: 10px;"></p>
+    <p id="fb-info" style="font-size: 1.3rem; max-width: 500px; color: #e2d1b3; text-align:center; padding:10px;"></p>
     <button class="valhalla-btn" onclick="nextWord()">ONWARD</button>
 </div>
 
 <script>
     const wordBank = [
-        { word: "Exit", def: "To go out" },
-        { word: "Extinguisher", def: "A device used to put out fires" },
-        { word: "Exterminate", def: "To kill or destroy completely" },
-        { word: "Examine", def: "To look at closely; to inspect" },
-        { word: "Exchange", def: "To part with, give, or transfer in consideration of something received" },
-        { word: "Macroscale", def: "Largest scale used by meteorologists" },
-        { word: "Macrobiosis", def: "Longevity; long life" },
-        { word: "Macrocosm", def: "The entire complex structure of something; the universe as a whole" },
-        { word: "Macroeconomics", def: "Study of the economy as a whole (inflation, growth, etc.)" },
-        { word: "Macroscopic", def: "Large enough to be visible to the naked eye" },
-        { word: "Misinterpret", def: "To understand incorrectly" },
-        { word: "Misunderstood", def: "Wrongly or imperfectly understood" },
-        { word: "Misguided", def: "Led by wrong or inappropriate motives; mistaken" },
-        { word: "Misdemeanor", def: "A crime less serious than a felony; minor misconduct" },
-        { word: "Misnomer", def: "An unsuitable or misleading name" }
+        { word: "Exit", def: "To go out", sent: "We needed to find the nearest emergency ________ to leave the building." },
+        { word: "Extinguisher", def: "A device used to put out fires", sent: "He grabbed the fire ________ when the stovetop started to smoke." },
+        { word: "Exterminate", def: "To kill or destroy completely", sent: "The landlord hired a professional to ________ the pests in the basement." },
+        { word: "Examine", def: "To look at closely; to inspect", sent: "The detective used a magnifying glass to ________ the evidence." },
+        { word: "Exchange", def: "To part with, give, or transfer in consideration of something received", sent: "I'd like to ________ this shirt for a larger size, please." },
+        { word: "Macroscale", def: "Largest scale used by meteorologists", sent: "Weather patterns like hurricanes are viewed on a ________ by scientists." },
+        { word: "Macrobiosis", def: "Longevity; long life", sent: "Healthy eating and low stress are often linked to ________." },
+        { word: "Macrocosm", def: "The universe considered as a whole; the entire complex structure", sent: "A single atom can be seen as a tiny version of the massive ________." },
+        { word: "Macroeconomics", def: "The study of the economy as a whole", sent: "In college, he studied ________ to understand how national debt affects trade." },
+        { word: "Macroscopic", def: "Large enough to be visible to the naked eye", sent: "Unlike bacteria, these insects are ________ and easy to see." },
+        { word: "Misinterpret", def: "To understand incorrectly", sent: "Be careful not to ________ my silence as agreement." },
+        { word: "Misunderstood", def: "Wrongly or imperfectly understood", sent: "The complex poem was often ________ by the younger students." },
+        { word: "Misguided", def: "Led by wrong or inappropriate motives; mistaken", sent: "Her plan to fix the engine with tape was well-intentioned but ________." },
+        { word: "Misdemeanor", def: "A crime less serious than a felony; minor misconduct", sent: "The teenager was charged with a ________ for the minor prank." },
+        { word: "Misnomer", def: "An unsuitable or misleading name", sent: "Calling a 'killer whale' a whale is a ________; it's actually a dolphin." }
     ];
 
     let current = 0;
@@ -164,35 +172,58 @@
 
     function loadWord() {
         const d = wordBank[current];
-        document.getElementById("word-box").innerText = d.word;
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
         const optCont = document.getElementById("options");
+
         optCont.innerHTML = "";
 
-        let choices = [
-            { text: d.def, correct: true },
-            { text: "To stay perfectly still and hidden", correct: false },
-            { text: "Something small and hard to find", correct: false }
-        ].sort(() => Math.random() - 0.5);
+        if (isBlankType) {
+            qType.innerText = "EXPEDITION: SAGA COMPLETION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [{ text: d.word, correct: true }, 
+                           { text: wordBank[(current + 2) % 15].word, correct: false },
+                           { text: wordBank[(current + 4) % 15].word, correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "EXPEDITION: RUNE READING";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [{ text: d.def, correct: true }, 
+                           { text: "To stay within or hide deep inside", correct: false },
+                           { text: "Something microscopic and hidden", correct: false }].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
 
+    function renderButtons(choices, correctVal) {
         choices.forEach(c => {
             const btn = document.createElement("button");
             btn.className = "rune-btn";
             btn.innerText = c.text;
             btn.onclick = () => {
+                const modal = document.getElementById("valhalla-modal");
                 const fbStatus = document.getElementById("fb-status");
                 if (c.correct) {
                     score++;
                     fbStatus.innerText = "SKOL!";
                     fbStatus.style.color = "#d4af37";
-                    document.getElementById("fb-info").innerText = "The runes are clear. The longship moves forward.";
+                    document.getElementById("fb-info").innerText = "The saga remains true.";
                 } else {
                     fbStatus.innerText = "SUNK!";
                     fbStatus.style.color = "#ff4b2b";
-                    document.getElementById("fb-info").innerText = "The path is blocked. Correct: " + d.def;
+                    document.getElementById("fb-info").innerText = "Correct path: " + correctVal;
                 }
-                document.getElementById("valhalla-modal").style.display = "flex";
+                modal.style.display = "flex";
             };
-            optCont.appendChild(btn);
+            document.getElementById("options").appendChild(btn);
         });
     }
 
@@ -200,16 +231,18 @@
         document.getElementById("valhalla-modal").style.display = "none";
         current++;
         if (current < wordBank.length) loadWord();
-        else {
-            const finalPercent = Math.round((score/wordBank.length)*100);
-            document.getElementById("quiz-content").innerHTML = `
-                <div style="text-align:center; padding: 40px 0;">
-                    <h2 style='font-family:Metamorphous; color:#d4af37;'>JOURNEY ENDED</h2>
-                    <p style="font-size:3.5rem; margin:10px 0;">${finalPercent}%</p>
-                    <p>The saga is written. Return to the village.</p>
-                    <a href="index.html" class="valhalla-btn" style="text-decoration:none; display:inline-block; margin-top:20px;">BACK TO HUB</a>
-                </div>`;
-        }
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:Metamorphous; color:#d4af37;">SAGA COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>The journey is written in the stars.</p>
+                <a href="index.html" class="valhalla-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
     }
 
     loadWord();
