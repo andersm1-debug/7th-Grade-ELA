@@ -20,7 +20,7 @@
         }
 
         #quiz-container {
-            background: #e9dcc9; /* Parchment Color */
+            background: #e9dcc9;
             border: 8px double #3e2b14;
             padding: 40px;
             width: 100%;
@@ -212,14 +212,14 @@
             note: "This idea (spectral evidence) interacted with the legal system (event) to make justice impossible."
         },
         {
-            q: "How did the strict religious setting interact with the girls' fear of being caught dancing?",
+            q: "How did the location of the first 'afflicted' girls (the home of Minister Samuel Parris) interact with the community's reaction?",
             options: [
-                "It encouraged them to tell the truth and ask for forgiveness.",
-                "It created an environment where confessing to 'witchcraft' was safer than admitting to 'sin.'",
-                "It allowed the girls to create a new church for themselves."
+                "It caused the town to ignore the event because they disliked the Minister.",
+                "It gave the event immediate religious authority and sparked town-wide alarm.",
+                "It caused the girls to be sent away to a different town for treatment."
             ],
             correct: 1,
-            note: "Strict social ideas interacted with the girls' actions, forcing them to lie to avoid harsh punishment."
+            note: "RI.7.3: The high-profile status of the individuals (the Minister's family) interacted with the religious ideas of the town to accelerate the panic."
         },
         {
             q: "What happened when people finally started to question the use of spectral evidence?",
@@ -252,14 +252,14 @@
             note: "This shows an interaction between individuals (the girls) and the social structure (ideas) of the town."
         },
         {
-            q: "How did economic events, like paying the Minister's salary, interact with the trials?",
+            q: "How did the social status of the first three women accused interact with the town’s willingness to believe the charges?",
             options: [
-                "It provided the funding needed to pay for the lawyers.",
-                "It created deep divisions in the church that made neighbors more likely to accuse one another.",
-                "It had no effect on the community's behavior."
+                "They were social outcasts, which made it easier for the community to target them without guilt.",
+                "They were powerful leaders, which made the town afraid to question them.",
+                "They were wealthy landowners, which made the town jealous of their money."
             ],
-            correct: 1,
-            note: "Economic events often interact with social ideas to create the 'fuel' for a community crisis."
+            correct: 0,
+            note: "RI.7.3: The social standing of the individuals (outcasts) interacted with the community's fear to make the first accusations 'stick.'"
         },
         {
             q: "How did the isolated nature of Salem Village interact with the spread of rumors?",
@@ -272,85 +272,8 @@
             note: "The physical setting (isolation) interacted with the spread of a dangerous idea (rumors)."
         },
         {
-            q: "How did the final executions interact with the ideas of the surviving community members?",
+            q: "What specific interaction finally led Governor Phipps to stop the proceedings of the court?",
             options: [
-                "The hangings confirmed that the community was finally safe from witches.",
-                "The horror of the deaths eventually interacted with people's sense of justice, leading them to admit the court was wrong.",
-                "The community decided to move the town to a new location."
-            ],
-            correct: 1,
-            note: "New events (the deaths) eventually changed the community's ideas about the trials, ending the hysteria."
-        }
-    ];
-
-    function loadQuestion() {
-        const d = quizData[current];
-        document.getElementById("progress").innerText = `Entry ${current + 1} of ${quizData.length}`;
-        document.getElementById("question-text").innerText = d.q;
-        const optCont = document.getElementById("options");
-        optCont.innerHTML = "";
-
-        d.options.forEach((opt, i) => {
-            const btn = document.createElement("button");
-            btn.className = "option-btn";
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(i);
-            optCont.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(index) {
-        const d = quizData[current];
-        const isCorrect = (index === d.correct);
-        if (isCorrect) {
-            score++;
-            document.getElementById("feedback-title").innerText = "✓ Analysis Verified";
-            document.getElementById("feedback-title").style.color = "#2e7d32";
-        } else {
-            document.getElementById("feedback-title").innerText = "✗ Flawed Reasoning";
-            document.getElementById("feedback-title").style.color = "#b71c1c";
-        }
-        document.getElementById("feedback-text").innerHTML = d.note;
-        document.getElementById("feedback-modal").style.display = "block";
-        document.getElementById("overlay").style.display = "block";
-    }
-
-    function closeModal() {
-        document.getElementById("feedback-modal").style.display = "none";
-        document.getElementById("overlay").style.display = "none";
-        current++;
-        if (current < quizData.length) {
-            loadQuestion();
-        } else {
-            showEnd();
-        }
-    }
-
-    function showEnd() {
-        const finalScore = Math.round((score / quizData.length) * 100);
-        const entryID = "1211047074"; 
-        const formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSd-glvVAJGNDvunL1ziEaZkMtZvpnZNQ_JNo720134QHLXS7A/viewform";
-        const preFilledURL = `${formBaseURL}?usp=pp_url&entry.${entryID}=${finalScore}%25`;
-
-        document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 20px;">
-                <h2 style="color:#3e2b14">Investigation Concluded</h2>
-                <p style="font-size: 1.5rem; margin: 20px 0;">Final Analysis Score: <br><strong>${finalScore}%</strong></p>
-                <p>To record your grade in the archives, click the button below to submit your score to Mr. Anderson.</p>
-                
-                <a href="${preFilledURL}" target="_blank" class="close-btn" style="margin-top:20px;">
-                    Submit Score
-                </a>
-                
-                <p style="font-family: 'Special Elite', monospace; font-size: 0.7rem; border-top: 1px solid #3e2b14; padding-top:20px; margin-top:40px;">
-                    VERIFICATION CODE: [S-1692-7ELA-PRO]
-                </p>
-            </div>
-        `;
-    }
-
-    loadQuestion();
-</script>
-
-</body>
-</html>
+                "The girls admitted they were lying for attention.",
+                "The 'Spectral Evidence' was used to accuse the Governor's own wife, forcing him to intervene.",
+                "The British government ordered him to stop the trials immediately
