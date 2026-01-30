@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE GREAT ARCHIVE: WK 9</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English+SC&display=swap');
+
+        body {
+            background-color: #2b261d;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            color: #4a3728;
+            font-family: 'IM Fell English SC', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #archive-container {
+            background: rgba(244, 235, 217, 0.9);
+            border: 15px solid #3d2b1f;
+            border-image: url('https://www.transparenttextures.com/patterns/dark-leather.png') 30 round;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #7a5c41;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid #7a5c41;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #7a5c41;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .scroll-display {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 20px 0;
+            color: #2b261d;
+            text-shadow: 1px 1px 0px #fff;
+        }
+
+        .context-scroll {
+            background: rgba(0,0,0,0.05);
+            border-left: 5px solid #7a5c41;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .scribe-btn {
+            background: #f4ebd9;
+            border: 2px solid #7a5c41;
+            color: #2b261d;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .scribe-btn:hover {
+            background: #3d2b1f;
+            color: #f4ebd9;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 2px solid #7a5c41;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #3d2b1f; display: block; font-size: 1.1rem; }
+
+        #archive-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #3d2b1f;
+            color: #f4ebd9;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="archive-container">
+    <a href="index.html" class="hub-link">← Hub Archive</a>
+    <p id="q-type">KEEPERS: PREPARING SCROLLS</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="context-scroll" style="display:none;"></div>
+        <div id="word-display" class="scroll-display">CATALOGING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>OMNI-</b> ALL</div>
+            <div class="decoder-item"><b>PHON-</b> SOUND</div>
+            <div class="decoder-item"><b>SCRIB-</b> WRITE</div>
+        </div>
+    </div>
+</div>
+
+<div id="archive-modal">
+    <h1 id="fb-status" style="font-family:'Cinzel'; font-size: 3rem; color: #f4ebd9;"></h1>
+    <p id="fb-info" style="font-size: 1.3rem; max-width: 500px; color: #f4ebd9; text-align:center; padding: 10px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">ONWARD</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Omnivore", def: "Eating both plants and animals", sent: "Because the bear eats berries and fish, it is considered an ________." },
+        { word: "Omniscient", def: "Knowing the thoughts and feelings of all", sent: "The narrator of the story was ________, describing the secrets of every character." },
+        { word: "Phonetics", def: "The study of speech sounds", sent: "To improve my accent, I started studying ________ to understand how sounds are made." },
+        { word: "Inscribe", def: "To carve, cut, or scratch onto a material", sent: "The king ordered the mason to ________ his name into the stone monument." },
+        { word: "Prescribe", def: "To authorize a course of action in writing before it is carried out", sent: "The doctor will ________ a specific medicine to help you feel better." },
+        { word: "Microphone", def: "A device that converts sound waves into an electrical signal", sent: "The singer adjusted the ________ before starting the first song of the set." },
+        { word: "Omnipresent", def: "Existing everywhere at once", sent: "In some cultures, spirits are believed to be ________, watching over every home." },
+        { word: "Omnibus", def: "A vehicle carrying many passengers", sent: "The crowded ________ rumbled through the city streets at dawn." },
+        { word: "Phonograph", def: "A record player", sent: "My grandfather still listens to jazz on his vintage ________ from the 1940s." },
+        { word: "Scribble", def: "To write quickly without much detail", sent: "I had to ________ a quick note on the napkin before I forgot the phone number." },
+        { word: "Euphony", def: "Pleasing and harmonious sounds", sent: "The ________ of the rainforest—birds chirping and water falling—was very relaxing." },
+        { word: "Symphony", def: "A long, complex musical composition written for an orchestra", sent: "The crowd sat in silence as the orchestra began the famous ________." },
+        { word: "Transcript", def: "A written record", sent: "The lawyer requested a ________ of the witness's testimony." },
+        { word: "Polyphony", def: "Music arranged for many voices or instruments", sent: "The choir's ________ created a beautiful, layered sound in the cathedral." },
+        { word: "Conscription", def: "Required military service", sent: "During the war, the government used ________ to increase the size of the army." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "ARCHIVE: SCRIPT COMPLETION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "ARCHIVE: SCROLL TRANSLATION";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Moving in a large circle away from the center", correct: false },
+                { text: "The study of ancient writing on stone walls", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "scribe-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("archive-modal");
+                const fbStatus = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    fbStatus.innerText = "SCRIBED!";
+                    document.getElementById("fb-info").innerText = "The record is accurate.";
+                } else {
+                    fbStatus.innerText = "BLOTTED!";
+                    document.getElementById("fb-info").innerText = "Correct translation: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("archive-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:Cinzel; color:#3d2b1f;">COLLECTION ARCHIVED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>The library's knowledge grows. Return to the hub.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
