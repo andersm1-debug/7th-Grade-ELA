@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE GRAND MUSEUM: WK 5</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;700&display=swap');
+
+        body {
+            background-color: #f4f1ea;
+            background-image: url('https://www.transparenttextures.com/patterns/marble-similar.png');
+            color: #2c3e50;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #museum-crate {
+            background: #fff;
+            border: 2px solid #bdc3c7;
+            border-top: 10px solid #2c3e50;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #95a5a6;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        .exhibit-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #2c3e50;
+        }
+
+        .curator-note {
+            background: #fdfdfd;
+            border: 1px solid #ecf0f1;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .option-btn {
+            background: #fff;
+            border: 1px solid #bdc3c7;
+            color: #34495e;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #2c3e50;
+            color: #fff;
+            border-color: #2c3e50;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #2c3e50; display: block; font-size: 1rem; }
+
+        #museum-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .action-btn {
+            background: #fff;
+            color: #2c3e50;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="museum-crate">
+    <a href="index.html" class="hub-link">← Hub Archive</a>
+    <p id="q-type">CURATOR PROTOCOL: ACTIVE</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="curator-note" style="display:none;"></div>
+        <div id="word-display" class="exhibit-title">IDENTIFYING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>GENE</b> BIRTH / ORIGIN</div>
+            <div class="decoder-item"><b>LUC / LUM</b> LIGHT</div>
+            <div class="decoder-item"><b>GREG</b> GROUP / HERD</div>
+            <div class="decoder-item"><b>TELE</b> FAR OFF</div>
+        </div>
+    </div>
+</div>
+
+<div id="museum-modal">
+    <h1 id="fb-status" style="font-family:'Playfair Display'; font-size: 3rem; color:#fff;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #bdc3c7; padding: 20px;"></p>
+    <button class="action-btn" onclick="nextWord()">NEXT EXHIBIT</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Indigenous", def: "Born in; Grown naturally in the region", sent: "The kangaroo is ________ to Australia and is found nowhere else in the wild." },
+        { word: "Gregarious", def: "Outgoing; sociable; living with the herd", sent: "Because she is so ________, she is always surrounded by friends at parties." },
+        { word: "Illumination", def: "Creating light", sent: "The fireworks provided a brilliant ________ of the night sky." },
+        { word: "Desegregate", def: "To do away with separate groups; to bring together", sent: "The landmark ruling required the city to ________ its public schools." },
+        { word: "Egregious", def: "Standing out from the group in an unfavorable way", sent: "The player was ejected for an ________ foul that broke the rules of the game." },
+        { word: "Telephone", def: "To hear sounds from far away; an instrument for reproducing sounds", sent: "I used the ________ to call my grandmother who lives in another state." },
+        { word: "Translucent", def: "Allowing light to travel through", sent: "The frosted glass window was ________, letting in light but blurring the view." },
+        { word: "Aggregate", def: "Formed by the collection of units into a body or mass", sent: "The library is an ________ of thousands of different books and records." },
+        { word: "Luminary", def: "A natural light-giving body, especially the sun or moon", sent: "At night, the moon is the brightest ________ in our sky." },
+        { word: "Generic", def: "Typical of the original but not coming from the true source", sent: "I saved money by buying the ________ brand of cereal instead of the name brand." },
+        { word: "Telepathy", def: "Knowing how someone from far away is feeling", sent: "In the movie, the twins used ________ to share thoughts without speaking." },
+        { word: "Telescope", def: "A device for looking at objects that are far away", sent: "We used the ________ to get a clear view of the rings of Saturn." },
+        { word: "Generation", def: "A group of people born around the same time", sent: "My grandfather’s ________ grew up without the internet or cell phones." },
+        { word: "Telegraph", def: "Writing from a distance via electric transmission", sent: "Before the telephone, the ________ was the fastest way to send a message across the country." },
+        { word: "Generous", def: "Very giving; as if born with money", sent: "It was very ________ of him to donate his entire allowance to the charity." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "EXHIBIT LOG: CONTEXTUAL CHECK";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "EXHIBIT LOG: DEFINITION ARCHIVE";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Moving away from a group in a straight line", correct: false },
+                { text: "The study of how light creates shadows", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("museum-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "ARCHIVED";
+                    status.style.color = "#fff";
+                    document.getElementById("fb-info").innerText = "The record is accurate. Exhibit secured.";
+                } else {
+                    status.innerText = "ERROR";
+                    status.style.color = "#e74c3c";
+                    document.getElementById("fb-info").innerText = "Historical correction: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("museum-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Playfair Display'; color:#2c3e50;">COLLECTION COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All week 5 specimens have been cataloged.</p>
+                <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
