@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPLORER'S JOURNAL: WK 2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Cormorant+Garamond:wght@600&display=swap');
+
+        body {
+            background-color: #3d3122;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: #d4a373;
+            font-family: 'Special Elite', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #journal-container {
+            background: #e9d8a6;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            border: 12px solid #5c4033;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            position: relative;
+            color: #432818;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #5c4033;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #5c4033;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #5c4033;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .journal-entry {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #1b1510;
+        }
+
+        .map-box {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid #5c4033;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #432818;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .ink-btn {
+            background: transparent;
+            border: 2px solid #432818;
+            color: #432818;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .ink-btn:hover {
+            background: #432818;
+            color: #e9d8a6;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 2px solid #5c4033;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #8b0000; display: block; font-size: 1rem; }
+
+        #expedition-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #e9d8a6;
+            color: #432818;
+            border: 2px solid #5c4033;
+            padding: 15px 40px;
+            font-weight: bold;
+            font-family: 'Special Elite', cursive;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="journal-container">
+    <a href="index.html" class="hub-link">← Base Camp Hub</a>
+    <p id="q-type">EXPEDITION LOG: MAPPING THE UNKNOWN</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="map-box" style="display:none;"></div>
+        <div id="word-display" class="journal-entry">MAPPING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>AUTO</b> SELF</div>
+            <div class="decoder-item"><b>DUC</b> TO LEAD</div>
+            <div class="decoder-item"><b>CHRONO</b> TIME</div>
+            <div class="decoder-item"><b>TERR</b> EARTH</div>
+        </div>
+    </div>
+</div>
+
+<div id="expedition-modal">
+    <h1 id="fb-status" style="font-family:'Cormorant Garamond'; font-size: 3rem; color:#e9d8a6;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #d4a373; text-align:center; padding: 20px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">ONWARD</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Autobiography", def: "A book written about the author by the author", sent: "In her ________, the pilot described her first flight across the ocean." },
+        { word: "Chronometer", def: "A clock that keeps accurate time", sent: "The captain checked the ________ to calculate the ship's exact position." },
+        { word: "Terrarium", def: "A small enclosure where land animals are kept", sent: "We put moss and a small lizard inside the glass ________." },
+        { word: "Extraterrestrial", def: "From outside the earth's atmosphere", sent: "The scientists searched the sky for any signs of ________ life." },
+        { word: "Automotive", def: "Self-propelled; to move by oneself", sent: "Detroit is famous for being a hub of the ________ industry." },
+        { word: "Terrain", def: "Physical features of a stretch of land", sent: "The rocky ________ made it difficult for the hikers to climb the mountain." },
+        { word: "Aqueduct", def: "Structure that leads water", sent: "The ancient Romans built a massive ________ to bring water to the city." },
+        { word: "Terra cotta", def: "A reddish brown earthenware", sent: "We planted the flowers in beautiful ________ pots on the patio." },
+        { word: "Autograph", def: "One’s own signature", sent: "After the play, the actor stayed to give his ________ to the fans." },
+        { word: "Abduct", def: "To lead someone away; to kidnap", sent: "In the movie, the villains tried to ________ the prince for a ransom." },
+        { word: "Conduct", def: "To lead together", sent: "The maestro will ________ the orchestra during the final performance." },
+        { word: "Chronological", def: "In the order in which events occurred", sent: "Please list the history of the war in ________ order." },
+        { word: "Subterranean", def: "Under the earth’s surface", sent: "The miners spent all day working in the ________ tunnels." },
+        { word: "Viaduct", def: "To lead over (a long bridge)", sent: "The train crossed the valley on a towering stone ________." },
+        { word: "Automation", def: "Someone who acts in a mechanical way", sent: "He was so tired that he moved through his chores like an ________." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "EXPEDITION: LOG COMPLETION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "ENTRY PENDING...";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "EXPEDITION: MAP READING";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Moving away from a center point in a circle", correct: false },
+                { text: "The study of how light creates fire", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "ink-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("expedition-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "MAPPED!";
+                    status.style.color = "#2d6a4f";
+                    document.getElementById("fb-info").innerText = "The coordinates are correct. Onward!";
+                } else {
+                    status.innerText = "LOST!";
+                    status.style.color = "#8b0000";
+                    document.getElementById("fb-info").innerText = "Correction for the log: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("expedition-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Cormorant Garamond'; color:#1b1510;">EXPEDITION COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>The entire region has been mapped and recorded.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
