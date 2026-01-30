@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DISPATCH STATION: WK 8</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap');
+
+        body {
+            background-color: #3e3a36;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            color: #dcd0c0;
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #station-container {
+            background: #c0b283;
+            border: 10px double #373737;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            position: relative;
+            color: #373737;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #373737;
+            text-decoration: underline;
+            font-size: 0.8rem;
+            font-family: 'Special Elite', cursive;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-bottom: 2px solid #373737;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        .telegraph-display {
+            font-family: 'Special Elite', cursive;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .manifest-box {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid #373737;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .dispatch-btn {
+            background: #dcd0c0;
+            border: 2px solid #373737;
+            color: #373737;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .dispatch-btn:hover {
+            background: #373737;
+            color: #c0b283;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 2px solid #373737;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .decoder-item b { display: block; font-size: 1.1rem; }
+
+        #dispatch-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #c0b283;
+            color: #373737;
+            border: 2px solid #373737;
+            padding: 15px 40px;
+            font-family: 'Special Elite', cursive;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="station-container">
+    <a href="index.html" class="hub-link">← Hub Station</a>
+    <p id="q-type">TELEGRAPH STATUS: READY</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="manifest-box" style="display:none;"></div>
+        <div id="word-display" class="telegraph-display">INCOMING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>MIS / MIT</b> SEND</div>
+            <div class="decoder-item"><b>PHIL</b> LOVE</div>
+            <div class="decoder-item"><b>PORT</b> CARRY</div>
+        </div>
+    </div>
+</div>
+
+<div id="dispatch-modal">
+    <h1 id="fb-status" style="font-family:'Special Elite'; font-size: 3rem; color: #c0b283;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #dcd0c0; text-align:center; padding: 10px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">SEND NEXT</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Philosopher", def: "A person who studies ideas about knowledge, truth, and the nature of the universe", sent: "The ancient Greek ________ spent his life questioning the meaning of justice." },
+        { word: "Deport", def: "To expel a foreigner from a country, typically on grounds of illegal status", sent: "The government had to ________ the individual for violating his visa terms." },
+        { word: "Philanthropist", def: "A person who promotes the welfare of others, especially by generous donations", sent: "The wealthy ________ donated millions to build a new children's hospital." },
+        { word: "Permit", def: "To formally allow someone to do something; to give authorization", sent: "You must have a signed ________ to go on the field trip next week." },
+        { word: "Reporter", def: "A person who gathers and reports news for media", sent: "The ________ stood in the rain to give a live update on the hurricane." },
+        { word: "Remit", def: "To cancel a debt or punishment; to send money in payment", sent: "Please ________ your payment to the address listed on the invoice." },
+        { word: "Import", def: "To bring goods into a country from abroad for sale", sent: "The United States continues to ________ coffee from countries in South America." },
+        { word: "Philology", def: "The study of literary texts and written records to determine meaning", sent: "Her interest in ________ led her to translate ancient manuscripts from the Middle Ages." },
+        { word: "Mission", def: "An important assignment involving travel; a strong vocation", sent: "The astronauts were focused on their ________ to collect rock samples from Mars." },
+        { word: "Bibliophile", def: "A person who loves or collects books", sent: "As a true ________, she had floor-to-ceiling shelves in every room of her house." },
+        { word: "Remiss", def: "Lacking care or attention to duty; negligent", sent: "I would be ________ if I didn't thank everyone who helped me win this award." },
+        { word: "Submit", def: "To yield to authority; to present a proposal for judgment", sent: "Don't forget to ________ your final essay before the midnight deadline." },
+        { word: "Intermission", def: "A pause or break between parts of a play, movie, or concert", sent: "During the ________, the audience went to the lobby to buy snacks." },
+        { word: "Portable", def: "Able to be easily carried or moved", sent: "I bought a ________ charger so I wouldn't run out of battery during the hike." },
+        { word: "Commit", def: "To pledge or bind a person to a policy; to consign for safekeeping", sent: "If you want to make the team, you have to ________ to attending every practice." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "MANIFEST: CONTEXT VERIFICATION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "TELEGRAPH: SIGNAL DECODING";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "To carry a heavy burden across a long distance", correct: false },
+                { text: "The love of travel and exploring new countries", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "dispatch-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("dispatch-modal");
+                const fbStatus = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    fbStatus.innerText = "SENT!";
+                    fbStatus.style.color = "#c0b283";
+                    document.getElementById("fb-info").innerText = "The dispatch is correct. Signal clear.";
+                } else {
+                    fbStatus.innerText = "ERROR!";
+                    fbStatus.style.color = "#ff5252";
+                    document.getElementById("fb-info").innerText = "Correction required: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("dispatch-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Special Elite'; color:#373737;">LOGBOOK CLOSED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All dispatches managed. Return to base.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
