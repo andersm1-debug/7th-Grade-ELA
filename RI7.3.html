@@ -3,164 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson Plan: RI 7.3 Salem Witch Trials - M. Anderson</title>
+    <title>RI 7.3 Lesson Plan - M. Anderson</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #34495e;
-            --accent: #3498db;
-            --light: #f4f7f6;
+            --primary-blue: #1a5276;
+            --accent-orange: #d35400;
+            --bg-light: #f8f9fa;
             --white: #ffffff;
-            --border: #dcdde1;
+            --border-color: #ced4da;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            color: var(--secondary);
-            background-color: var(--light);
+            color: #333;
+            background-color: #e9ecef;
             margin: 0;
             padding: 20px;
         }
 
-        .container {
-            max-width: 900px;
+        .document-container {
+            max-width: 1100px;
             margin: 0 auto;
             background: var(--white);
-            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
         header {
-            border-bottom: 3px solid var(--accent);
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h1 { margin: 0; color: var(--primary); font-size: 2rem; }
-        .meta { color: #7f8c8d; font-style: italic; margin-top: 5px; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+        .home-btn {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
-        .card {
-            background: #f9f9f9;
+        .home-btn:hover { background-color: #d1d1d1; }
+
+        .section { padding: 30px 40px; border-bottom: 1px solid #eee; }
+        .section-title { 
+            color: var(--primary-blue); 
+            text-transform: uppercase; 
+            border-left: 5px solid var(--accent-orange); 
+            padding-left: 15px; 
+            margin-bottom: 20px;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        th { background-color: #f1f1f1; }
+
+        .logic-box {
+            background-color: #fff4e5;
+            border: 2px dashed var(--accent-orange);
             padding: 20px;
-            border-left: 5px solid var(--accent);
-            border-radius: 4px;
-        }
-
-        h2 { border-bottom: 1px solid var(--border); padding-bottom: 10px; color: var(--primary); }
-        h3 { color: var(--accent); margin-top: 25px; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+            border-radius: 8px;
             margin: 20px 0;
         }
 
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border: 1px solid var(--border);
-        }
-
-        th { background-color: var(--primary); color: white; }
-
-        .tag {
-            display: inline-block;
-            background: #e1f0fa;
-            color: #2980b9;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-
-        .strategy-box {
-            background: #fffef0;
-            border: 1px dashed #f1c40f;
-            padding: 15px;
-            margin: 15px 0;
-        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .tag { background: #e7f3ff; color: #007bff; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.9em; }
+        
+        .organizer-info { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 4px; font-size: 0.95em; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="document-container">
     <header>
-        <h1>Learning-Focused Lesson Plan</h1>
-        <div class="meta">Instructor: M. Anderson | Topic: RI7.3 / RL7.1 </div>
+        <div>
+            <h1 style="margin:0;">RI 7.3 Learning-Focused Lesson Plan</h1>
+            <p style="margin:5px 0 0 0;">Topic: Salem Witch Trials & Narrative Analysis | M. Anderson</p>
+        </div>
+        <a href="https://andersm1-debug.github.io/7th-Grade-ELA/ELATeacherPage.html" class="home-btn">🏠 Teacher Home</a>
     </header>
 
-    <section>
-        <h2>Standards & Goals</h2>
+    <div class="section">
         <div class="grid">
-            <div class="card">
-                <h3>Core Standards</h3>
+            <div>
+                <h2 class="section-title">Instructional Routine</h2>
+                <table>
+                    <tr><td><strong>Daily Free Writes</strong></td><td>7 min</td></tr>
+                    <tr><td><strong>DGP (Grammar)</strong></td><td>5-10 min</td></tr>
+                    <tr><td><strong>Mugshots</strong></td><td>3 min</td></tr>
+                    <tr><td><strong>Weekly Vocabulary</strong></td><td>5-20 min</td></tr>
+                </table>
+            </div>
+            <div>
+                <h2 class="section-title">Standards</h2>
                 <p><span class="tag">RI.7.3</span> Analyze interactions between individuals, events, and ideas.</p>
-                <p><span class="tag">RL.7.1</span> Cite textual evidence to support analysis and inferences.</p>
+                <p><span class="tag">RL.7.1</span> Cite several pieces of textual evidence to support analysis.</p>
                 <p><span class="tag">L.7.4</span> Determine meaning of unknown/multiple-meaning words.</p>
             </div>
-            <div class="card">
-                <h3>Essential Question</h3>
-                <p><strong>How do specific ideas and individuals interact to shape the events of a text?</strong></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Learning Goals</h2>
+        <div class="grid">
+            <div>
+                <h3>Students Will Know:</h3>
+                <ul>
+                    <li>Role of Context: How fear influences behavior.</li>
+                    <li>The Essential Question: How authors use literary elements to develop theme.</li>
+                    <li>Definitions of: <em>Infer, Scapegoat, Explicit, Cite.</em></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Students Will Be Able To:</h3>
+                <ul>
+                    <li>Map causal relationships between ideas and events.</li>
+                    <li>Apply "Interactive Reading" with digital pens/SmartBoard.</li>
+                    <li>Compare 1692 Salem interactions to modern Social Media trends.</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section>
-        <h2>Daily Routine</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Activity</th>
-                    <th>Time Allocation</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Daily Free Writes</td><td>7 Minutes</td></tr>
-                <tr><td>Daily Grammar Practice (DGP)</td><td>5-10 Minutes</td></tr>
-                <tr><td>Mugshots</td><td>3 Minutes</td></tr>
-                <tr><td>Weekly Vocabulary</td><td>5-20 Minutes</td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section>
-        <h2>Instructional Path</h2>
-        
-        <h3>Activating Strategy: "The Gossip Simulation"</h3>
-        <p>Similiar to the "Telephone game".  Students receive a "secret" and must quickly pass it around the room. We observe how the <strong>idea</strong> changes as it is passed along, influencing student <strong>actions</strong>.</p>
-
-        <h3>Learning Activity 1: Direct Instruction</h3>
-        <p><strong>Text:</strong> "Understanding the Salem Witch Trials" (PDF via Google Drive)</p>
-        <div class="strategy-box">
-            <strong>Modeling:</strong> Interactive reading using digital pens on the SmartBoard / TV to categorize Individuals, Events, and Ideas.
+    <div class="section">
+        <h2 class="section-title">The RI.7.3 Logic Strand</h2>
+        <div class="logic-box">
+            <strong>The Ripple Effect Formula:</strong> Individual/Idea + Action = Change in Event.
         </div>
-        <p><strong>Graphic Organizer:</strong> The Interaction Triangle (Idea, Individual, Event).Each line connecting the points of a triangle must "connect" using complete sentences.</p>
+        <h3>Essential Question:</h3>
+        <p>How do specific ideas and individuals interact to shape the events of the Salem Witch Trials?</p>
+    </div>
 
-        <h3>Learning Activity 2 & 3: The Ripple Effect</h3>
-        <p>Students use Google Slides to map causal relationships. Smaller inner circle = Idea, Slightly bigger circle = Indiviuals, Larger circle = Events.
-            <em>Prompt: "If the Idea of 'witchcraft' were replaced with 'illness,' would the Events have changed?"</em></p>
+    <div class="section">
+        <h2 class="section-title">Learning Activities</h2>
+        
+        <h3>1. Direct Instruction & Modeling</h3>
+        <p><strong>Activating Strategy:</strong> "Gossip" Simulation via Canvas digital sticky notes.</p>
+        <div class="organizer-info">
+            <strong>The Interaction Triangle:</strong> Modeling how <strong>Ideas</strong> (Fear) influence <strong>Individuals</strong> (Abigail) to create <strong>Events</strong> (The Accusations).
+        </div>
 
-        <h3>Day 4: The "Modern Hysteria" Connection</h3>
-        <p>Comparison between 1692 Salem and modern-day Social Media trends/rumors.</p>
-    </section>
+        <h3>2. Deep Analysis: "The Trial of Ideas"</h3>
+        <p><strong>The Courtroom Flip:</strong> Collaborative Google Slides activity. Groups find quotes where characters (Tituba, Judge, etc.) interacted with fear or religion to cause specific legal events.</p>
+        
+        <h3>3. Comparative Analysis</h3>
+        <p><strong>Modern Connection:</strong> Students research a viral rumor/trend and use a <strong>Ripple Effect Map</strong> to compare modern hysteria to 1692 Salem.</p>
+        <p><strong>Summarizing Strategy:</strong> 3-Sentence Summary (Individual -> Event -> Connecting Idea).</p>
+    </div>
 
-    <section>
-        <h2>Differentiation & Extensions</h2>
-        <ul>
-            <li><strong>Support:</strong> Provided "Word Bank" for graphic organizers (incited, feared, influenced).</li>
-            <li><strong>Extension:</strong> Independent research into modern viral rumors and the "ideas" fueling them.</li>
-        </ul>
-    </section>
+    <div class="section">
+        <h2 class="section-title">Scaffolding & Extension</h2>
+        <div class="grid">
+            <div style="background:#eef7ee; padding:15px; border-radius:8px;">
+                <strong>Support:</strong> Provided Word Bank for Interaction Triangle (e.g., <em>incited, feared, caused</em>).
+            </div>
+            <div style="background:#f4f1fb; padding:15px; border-radius:8px;">
+                <strong>Extension:</strong> Independent research on modern "Events" fueled by specific underlying "Ideas."
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
