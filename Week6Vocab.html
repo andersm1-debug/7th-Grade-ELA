@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DETECTIVE'S DESK: WK 6</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap');
+
+        body {
+            background-color: #1a1a1a;
+            background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
+            color: #dcdcdc;
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #case-file {
+            background: #e4e0d8; /* Manila folder color */
+            border-left: 15px solid #c2b280;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.7);
+            position: relative;
+            color: #2c2c2c;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #8b0000;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid #8b0000;
+            padding: 4px 8px;
+            font-family: 'Special Elite', cursive;
+        }
+
+        #q-type {
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            border-bottom: 2px solid #2c2c2c;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            font-family: 'Special Elite', cursive;
+        }
+
+        .evidence-label {
+            font-family: 'Special Elite', cursive;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 20px 0;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .witness-statement {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #999;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .investigate-btn {
+            background: #f5f5f5;
+            border: 1px solid #2c2c2c;
+            color: #2c2c2c;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .investigate-btn:hover {
+            background: #2c2c2c;
+            color: #e4e0d8;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 2px solid #2c2c2c;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.75rem;
+            text-align: center;
+            font-family: 'Special Elite', cursive;
+        }
+
+        .decoder-item b { display: block; font-size: 0.9rem; color: #8b0000; }
+
+        #case-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .next-btn {
+            background: #8b0000;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Special Elite', cursive;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="case-file">
+    <a href="index.html" class="hub-link">RETURN TO HUB</a>
+    <p id="q-type">CASE STATUS: OPEN INVESTIGATION</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="witness-statement" style="display:none;"></div>
+        <div id="word-display" class="evidence-label">EXAMINING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>JUR / JUS</b> LAW</div>
+            <div class="decoder-item"><b>MAN</b> HAND</div>
+            <div class="decoder-item)<b>VIS / VID</b> SEE</div>
+        </div>
+    </div>
+</div>
+
+<div id="case-modal">
+    <h1 id="fb-status" style="font-family:'Special Elite'; font-size: 3rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #fff; text-align:center; padding: 10px;"></p>
+    <button class="next-btn" onclick="nextWord()">CONTINUE CASE</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Jurisdiction", def: "The official power to make legal decisions and judgments", sent: "The local police do not have ________ over crimes committed on federal land." },
+        { word: "Visual", def: "Relating to seeing or sight", sent: "The presentation included several ________ aids to help the audience understand the data." },
+        { word: "Manicures", def: "A cosmetic treatment of the hands", sent: "She treats herself to regular ________ to keep her nails looking neat." },
+        { word: "Jurist", def: "A lawyer or judge", sent: "The respected ________ was known for her fair and balanced rulings." },
+        { word: "Videotape", def: "A device used for recording and showing audio sound and visual images", sent: "In the 90s, we used to ________ our favorite shows on VHS." },
+        { word: "Manuscript", def: "Something written by hand", sent: "The author spent years working on the ________ for his first novel." },
+        { word: "Perjure", def: "Willfully telling a lie while testifying in court", sent: "If you lie under oath, you ________ yourself and face legal trouble." },
+        { word: "Vivid", def: "Producing clear images in the mind", sent: "Her ________ description of the tropical island made me feel like I was there." },
+        { word: "Justice", def: "Being fair and reasonable", sent: "The judge's goal is to ensure that ________ is served for everyone involved." },
+        { word: "Manual", def: "Relating to or done with the hands", sent: "Farming used to require a lot of ________ labor before machines were invented." },
+        { word: "Jurors", def: "A group of people that take an oath and decide on the facts of trials", sent: "The ________ listened carefully to all the evidence before reaching a verdict." },
+        { word: "Manacle", def: "Handcuffs", sent: "The officer had to ________ the suspect to prevent him from escaping." },
+        { word: "Visionary", def: "Thinking about or planning the future with imagination or wisdom", sent: "The CEO was a ________ who predicted the rise of the internet years early." },
+        { word: "Invisible", def: "Not able to be seen", sent: "The ink was ________ until we held the paper up to a heat source." },
+        { word: "Maladjusted", def: "Unable to cope with the demands of a normal social environment", sent: "The puppy was ________ after being alone for so long and needed training." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "INVESTIGATION: WITNESS STATEMENT";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "INVESTIGATION: EVIDENCE DECODING";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Something moving quickly away from the law", correct: false },
+                { text: "A tool used for carving stone with hands", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "investigate-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("case-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "CASE SOLVED";
+                    status.style.color = "#228b22";
+                    document.getElementById("fb-info").innerText = "The evidence aligns. Moving to next lead.";
+                } else {
+                    status.innerText = "FALSE LEAD";
+                    status.style.color = "#8b0000";
+                    document.getElementById("fb-info").innerText = "The truth was: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("case-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Special Elite'; color:#8b0000;">CASE CLOSED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>Investigation complete. Filing report to hub.</p>
+                <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
