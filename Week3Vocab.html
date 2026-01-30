@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE IDENTITY VAULT: WK 3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d1117;
+            background-image: radial-gradient(#1f2937 1px, transparent 1px);
+            background-size: 25px 25px;
+            color: #d1d5db;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #vault-container {
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-top: 10px solid #f2e05a; /* Gold for Trust/Value */
+            border-radius: 4px;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #f2e05a;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        .data-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(242, 224, 90, 0.5);
+        }
+
+        .auth-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #c9d1d9;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .verify-btn {
+            background: transparent;
+            border: 1px solid #f2e05a;
+            color: #f2e05a;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .verify-btn:hover {
+            background: #f2e05a;
+            color: #0d1117;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #30363d;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #8b949e;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #f2e05a; display: block; font-size: 0.9rem; }
+
+        #vault-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #f2e05a;
+            color: #0d1117;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="vault-container">
+    <a href="index.html" class="hub-link">← VAULT HUB</a>
+    <p id="q-type">AGENT STATUS: VERIFYING IDENTITY</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="auth-box" style="display:none;"></div>
+        <div id="word-display" class="data-display">SCANNING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>BENE</b> GOOD</div>
+            <div class="decoder-item"><b>CRED</b> BELIEVE</div>
+            <div class="decoder-item"><b>FID</b> TRUST / FAITH</div>
+            <div class="decoder-item"><b>SPEC / SPIC</b> SEE / LOOK</div>
+        </div>
+    </div>
+</div>
+
+<div id="vault-modal">
+    <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 3rem; color:#f2e05a;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #8b949e; text-align:center; padding: 20px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">CONTINUE</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Spectacles", def: "Eyeglasses", sent: "I can't read the menu without my ________." },
+        { word: "Credentials", def: "A document proving someone’s identity", sent: "The reporter showed her ________ to get backstage at the concert." },
+        { word: "Accreditation", def: "Being recognized as having a particular status", sent: "The university received its ________ after a long review of its programs." },
+        { word: "Benefile", def: "A good person", sent: "The community looked up to him because he was a true ________." },
+        { word: "Fidelity", def: "Trustworthiness; faithfulness", sent: "The dog's ________ to its owner was clear when it refused to leave his side." },
+        { word: "Perspective", def: "Viewpoint; complete outlook", sent: "Traveling to other countries can give you a new ________ on the world." },
+        { word: "Credible", def: "Convincing; believable", sent: "The witness provided a ________ account of the events that night." },
+        { word: "Benefit", def: "An advantage; to be helpful", sent: "Eating vegetables provides a great ________ to your overall health." },
+        { word: "Retrospect", def: "To see or review the past", sent: "In ________, I should have studied more for the final exam." },
+        { word: "Benevolent", def: "Well meaning and kindly", sent: "The ________ donor gave enough money to build a new playground." },
+        { word: "Infidel", def: "A person who does not believe in religion", sent: "In the ancient story, the ________ was cast out of the village." },
+        { word: "Beneficial", def: "Favorable or advantageous", sent: "Learning a second language is ________ for your brain and your career." },
+        { word: "Confidant", def: "One to whom secrets or private matters are told", sent: "She told her ________ everything, knowing her secrets were safe." },
+        { word: "Suspicious", def: "Having distrust of someone or something", sent: "The guard became ________ when he saw the car circling the building twice." },
+        { word: "Spectator", def: "An observer", sent: "The ________ cheered loudly when the player hit the home run." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "AUTH: CONTEXTUAL RECOVERY";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "DECRYPTING...";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "AUTH: DEFINITION VERIFY";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Moving away from a center point quickly", correct: false },
+                { text: "The study of how light creates heat", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "verify-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("vault-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "ACCESS GRANTED";
+                    status.style.color = "#f2e05a";
+                    document.getElementById("fb-info").innerText = "Identity verified. File unlocked.";
+                } else {
+                    status.innerText = "ACCESS DENIED";
+                    status.style.color = "#f85149";
+                    document.getElementById("fb-info").innerText = "Security Override: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("vault-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Orbitron'; color:#fff;">VAULT SECURED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All week 3 identities have been confirmed.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">EXIT VAULT</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
