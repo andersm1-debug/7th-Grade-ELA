@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGISTICS HUB: WK 4</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d1117;
+            background-image: radial-gradient(#1f2937 1px, transparent 1px);
+            background-size: 25px 25px;
+            color: #58a6ff;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #hub-container {
+            background: rgba(22, 27, 34, 0.95);
+            border: 2px solid #30363d;
+            border-top: 8px solid #58a6ff;
+            border-radius: 4px;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #8b949e;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        .data-stream {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #fff;
+            text-shadow: 0 0 10px #58a6ff;
+        }
+
+        .transmission-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #c9d1d9;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .command-btn {
+            background: transparent;
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .command-btn:hover {
+            background: #58a6ff;
+            color: #0d1117;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #30363d;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.75rem;
+            color: #8b949e;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #58a6ff; display: block; font-size: 0.9rem; }
+
+        #hub-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #58a6ff;
+            color: #0d1117;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="hub-container">
+    <a href="index.html" class="hub-link">← Hub Network</a>
+    <p id="q-type">STATUS: MONITORING DATA GAPS</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="transmission-box" style="display:none;"></div>
+        <div id="word-display" class="data-stream">SYNCING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>FLEX</b> BEND</div>
+            <div class="decoder-item"><b>VAC</b> EMPTY</div>
+            <div class="decoder-item"><b>GRAPH</b> WRITE</div>
+            <div class="decoder-item"><b>BIO</b> LIFE</div>
+            <div class="decoder-item"><b>LOG</b> WORD/REASON</div>
+            <div class="decoder-item"><b>CHRONO</b> TIME</div>
+        </div>
+    </div>
+</div>
+
+<div id="hub-modal">
+    <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 3rem; color:#58a6ff;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #8b949e; text-align:center; padding: 20px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">PROCEED</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Graphology", def: "The study of written or printed symbols and of handwriting", sent: "The detective used ________ to see if the ransom note matched the suspect's writing." },
+        { word: "Flexible", def: "Capable of bending easily without breaking", sent: "The gymnast was incredibly ________, allowing her to perform amazing stunts." },
+        { word: "Vacant", def: "An area not filled with anything; empty", sent: "We found a ________ lot in the city where we could build a community garden." },
+        { word: "Biodiversity", def: "The existence of many different kinds of plants and animals in an environment", sent: "The rainforest is known for its incredible ________, hosting thousands of species." },
+        { word: "Reflex", def: "A response in a part of the body to stimulation of a specific point", sent: "The doctor tapped my knee to check my ________." },
+        { word: "Neologism", def: "The coining or use of new words", sent: "The rise of the internet led to the creation of many a ________ like 'blog' and 'wi-fi'." },
+        { word: "Chronometer", def: "An instrument used for measuring time", sent: "Sailors used a ________ to determine their longitude while at sea." },
+        { word: "Phonograph", def: "A record player", sent: "My great-grandfather used to listen to music on an old ________." },
+        { word: "Vacuum", def: "A space entirely devoid of matter", sent: "Sound cannot travel through a ________ because there are no particles to carry it." },
+        { word: "Flexuous", def: "Full of bends and curves", sent: "The ________ mountain road was difficult to navigate in the dark." },
+        { word: "Prologue", def: "A separate introductory section of a literary or musical work", sent: "The ________ of the book provided important background information about the war." },
+        { word: "Antibiotic", def: "A medicine that inhibits or destroys the growth of microorganisms", sent: "The doctor prescribed an ________ to clear up the infection." },
+        { word: "Evacuate", def: "To remove someone from a place of danger to somewhere safer", sent: "The town had to ________ its residents before the hurricane made landfall." },
+        { word: "Telegraph", def: "A system of transmitting messages across a distance with a wire", sent: "Before the telephone, the ________ was the primary way to send long-distance messages." },
+        { word: "Logic", def: "A reasonable way of thinking about or understanding something", sent: "You need to use ________ to solve this complex math puzzle." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "HUB SCAN: CONTEXTUAL FILL";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "MISSING DATA";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "HUB SCAN: DEFINITION DECODE";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "A sudden and violent movement of the Earth's crust", correct: false },
+                { text: "The study of stars and their movement in the sky", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "command-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("hub-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "SYNCED";
+                    status.style.color = "#58a6ff";
+                    document.getElementById("fb-info").innerText = "Data verified. Transmission complete.";
+                } else {
+                    status.innerText = "FAILED";
+                    status.style.color = "#f85149";
+                    document.getElementById("fb-info").innerText = "Manual correction: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("hub-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Orbitron'; color:#fff;">SYSTEMS ANALYZED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All week 4 data points have been secured.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">BACK TO NETWORK</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
