@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBSERVATORY LAB: WK 7</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap');
+
+        body {
+            background-color: #0a0b10;
+            background-image: radial-gradient(circle, #1a1c2c 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #00e5ff;
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #lab-container {
+            background: rgba(16, 18, 32, 0.9);
+            border: 2px solid #00e5ff;
+            border-radius: 15px;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            position: relative;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #00e5ff;
+            text-decoration: none;
+            font-size: 0.7rem;
+            border: 1px solid #00e5ff;
+            padding: 5px 10px;
+            text-transform: uppercase;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #556b2f; /* Scientific olive */
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        .term-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #fff;
+            text-shadow: 0 0 10px #00e5ff;
+        }
+
+        .data-box {
+            background: rgba(0, 229, 255, 0.05);
+            border-left: 4px solid #00e5ff;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .logic-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00e5ff;
+            color: #00e5ff;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .logic-btn:hover {
+            background: #00e5ff;
+            color: #0a0b10;
+            box-shadow: 0 0 15px #00e5ff;
+        }
+
+        #ref-grid {
+            margin-top: 30px;
+            border-top: 1px solid #00e5ff;
+            padding-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .ref-item b { color: #fff; display: block; }
+
+        #result-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .action-btn {
+            background: #00e5ff;
+            color: #0a0b10;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="nav-btn">_HUB_SYSTEM</a>
+    <p id="q-type">RESEARCH PROTOCOL: ACTIVE</p>
+    
+    <div id="quiz-content">
+        <div id="context-display" class="data-box" style="display:none;"></div>
+        <div id="word-display" class="term-display">CALIBRATING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="ref-grid">
+        <div class="ref-item"><b>MAND</b> ORDER</div>
+        <div class="ref-item"><b>PHOTO</b> LIGHT</div>
+        <div class="ref-item"><b>SOPH</b> WISDOM</div>
+        <div class="ref-item"><b>PATH</b> FEEL/DISEASE</div>
+        <div class="ref-item"><b>CENTRI</b> CENTER</div>
+    </div>
+</div>
+
+<div id="result-modal">
+    <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 2.5rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; padding: 20px;"></p>
+    <button class="action-btn" onclick="nextWord()">PROCEED</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Command", def: "To give an authoritative order", sent: "The captain had to ________ the crew to prepare for the storm." },
+        { word: "Demand", def: "To ask for something forcefully and as if it is your right", sent: "The customers began to ________ a refund when the product failed to work." },
+        { word: "Mandatory", def: "Required by laws or rules; something that must be done", sent: "Wearing a seatbelt is ________ in almost every state for safety reasons." },
+        { word: "Empathy", def: "The ability to understand and share the feelings of another", sent: "Because she had been through it too, she felt great ________ for her friend." },
+        { word: "Photography", def: "Production of an image by the action of light", sent: "She turned her hobby of ________ into a professional career." },
+        { word: "Heliocentric", def: "Relating to a model of the solar system where the sun is at the center", sent: "The ________ theory changed how humans viewed our place in the universe." },
+        { word: "Sympathy", def: "Feelings of pity and sorrow for someone else’s misfortune", sent: "We sent a card to express our ________ after the loss of their pet." },
+        { word: "Geocentric", def: "Earth as the center of the universe", sent: "Ancient civilizations once believed in a ________ model of the sky." },
+        { word: "Centrist", def: "A person whose political opinions are moderate or in the middle", sent: "The candidate hoped to win over the ________ voters by avoiding extreme views." },
+        { word: "Philosopher", def: "A person who studies ideas about knowledge, truth, and right and wrong", sent: "The ancient ________ Plato wrote about the ideal form of government." },
+        { word: "Pathology", def: "The scientific study of the causes and effects of diseases", sent: "The lab results were sent to the ________ department for further testing." },
+        { word: "Sophisticated", def: "Highly complex or advanced; having great worldly experience", sent: "The new AI system is incredibly ________ and can solve complex math in seconds." },
+        { word: "Photophobia", def: "An extreme sensitivity to light", sent: "The migraine caused him to suffer from ________, so he stayed in a dark room." },
+        { word: "Photocopy", def: "A duplicate of a document or image made by a machine", sent: "I need to make a ________ of my ID for the application." },
+        { word: "Photosynthesis", def: "The process used by plants to convert light energy into chemical energy", sent: "Without ________, plants would not be able to create the food they need to grow." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlank = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const contextBox = document.getElementById("context-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlank) {
+            qType.innerText = "RESEARCH PROTOCOL: CONTEXTUAL GAP";
+            contextBox.style.display = "block";
+            contextBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "SCANNING...";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "RESEARCH PROTOCOL: TERM DEFINITION";
+            contextBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "The study of ancient light from distant stars", correct: false },
+                { text: "To forcefully push something away from the center", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "logic-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("result-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "✓ SYNCED";
+                    status.style.color = "#00e5ff";
+                    document.getElementById("fb-info").innerText = "Data point successfully archived.";
+                } else {
+                    status.innerText = "✗ ERROR";
+                    status.style.color = "#ff3d00";
+                    document.getElementById("fb-info").innerText = "Correct sequence: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("result-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else {
+            const pct = Math.round((score/wordBank.length)*100);
+            document.getElementById("quiz-content").innerHTML = `
+                <div style="text-align:center; padding: 20px;">
+                    <h2 style="font-family:Orbitron; color:#fff;">ANALYSIS COMPLETE</h2>
+                    <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                    <p>All week 7 data points recorded.</p>
+                    <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN_TO_HUB</a>
+                </div>`;
+        }
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
