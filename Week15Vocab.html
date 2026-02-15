@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEACE SUMMIT: WEEK 15</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+        body {
+            background-color: #e5e7eb;
+            background-image: url('https://www.transparenttextures.com/patterns/padded-light.png');
+            color: #374151;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #summit-container {
+            background: #ffffff;
+            border-top: 12px solid #1e40af; /* Diplomatic Blue */
+            border-radius: 8px;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #1e40af;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .treaty-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #111827;
+            font-style: italic;
+        }
+
+        .summit-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #4b5563;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .diplomat-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #1f2937;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .diplomat-btn:hover {
+            background: #1e40af;
+            color: #ffffff;
+            border-color: #1e40af;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #1e40af; display: block; font-size: 0.9rem; }
+
+        #negotiation-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 24, 39, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .proceed-btn {
+            background: #1e40af;
+            color: #ffffff;
+            border: none;
+            padding: 15px 40px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="summit-container">
+    <a href="index.html" class="hub-link">← Hub Headquarters</a>
+    <p id="q-type">STATUS: FACILITATING DIALOGUE</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="summit-box" style="display:none;"></div>
+        <div id="word-display" class="treaty-display">TRANSLATING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>INTER-</b> BETWEEN</div>
+            <div class="decoder-item"><b>NON-</b> NOT</div>
+            <div class="decoder-item"><b>MID/MEDI-</b> MIDDLE</div>
+        </div>
+    </div>
+</div>
+
+<div id="negotiation-modal">
+    <h1 id="fb-status" style="font-family:'Playfair Display'; font-size: 2.5rem; color:#ffffff;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #e5e7eb; text-align:center; padding: 20px;"></p>
+    <button class="proceed-btn" onclick="nextWord()">NEXT RESOLUTION</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Interfere", def: "To get involved so as to hinder an action", sent: "Please do not ________ with the ongoing investigation." },
+        { word: "Interim", def: "The time between one process, person, or event", sent: "In the ________ between presidents, the vice president managed the office." },
+        { word: "Interrupt", def: "Unexpectedly cause a person to stop what they are doing", sent: "It is rude to ________ someone while they are giving a speech." },
+        { word: "Intermittent", def: "Happening at irregular intervals", sent: "The radio signal was ________ because of the heavy thunderstorm." },
+        { word: "International", def: "Between other countries", sent: "The ________ airport serves travelers from all over the world." },
+        { word: "Midterms", def: "Middle of an academic term", sent: "I need to study all weekend for my history ________." },
+        { word: "Mediocre", def: "Only moderate quality; not very good", sent: "The food at the new restaurant was only ________; I've had much better." },
+        { word: "Mediation", def: "Negotiation to solve a dispute conducted by an impartial party", sent: "The two companies went to ________ to avoid a costly lawsuit." },
+        { word: "Midrange", def: "Middle of a series", sent: "The car is priced in the ________, making it affordable for many families." },
+        { word: "Midiron", def: "Golf club used for middle distance shots", sent: "The golfer selected a ________ for his second shot on the par four." },
+        { word: "Nonfiction", def: "Writing based on facts, real events, and real people", sent: "I enjoy reading ________ about historical figures and scientific discoveries." },
+        { word: "Noncombatants", def: "Used to describe citizens in times of war", sent: "International law is designed to protect ________ during military conflicts." },
+        { word: "Nonpartisan", def: "Does not support the ideas of any political party", sent: "The group is ________ and focuses on voting rights for all citizens." },
+        { word: "Nondescript", def: "Appearance is ordinary, dull, and not attractive", sent: "The spy lived in a ________ house that blended in with the rest of the street." },
+        { word: "Nonentity", def: "The state of not existing", sent: "The ghost in the story was a ________ that could not be seen or felt." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "DIPLOMACY: TREATY FILL";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "DIPLOMACY: TERM VERIFICATION";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Something that only exists in the very center of the earth", correct: false },
+                { text: "To increase the speed of a process by removing obstacles", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "diplomat-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("negotiation-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "AGREEMENT REACHED";
+                    status.style.color = "#ffffff";
+                    document.getElementById("fb-info").innerText = "The terms have been verified and accepted.";
+                } else {
+                    status.innerText = "DIPLOMATIC FAIL";
+                    status.style.color = "#ef4444";
+                    document.getElementById("fb-info").innerText = "The correct term was: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("negotiation-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Playfair Display'; color:#111827;">SUMMIT CONCLUDED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>All resolutions for Week 15 have been signed.</p>
+                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
