@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSMIC PANTHEON: WK 16</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Quicksand:wght@300;500&display=swap');
+
+        body {
+            background-color: #0c0c1e;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            color: #e0e1dd;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #pantheon-vault {
+            background: rgba(13, 27, 42, 0.9);
+            border: 2px solid #778da9;
+            border-top: 10px solid #e0e1dd;
+            border-radius: 20px 0 20px 0;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 30px rgba(119, 141, 169, 0.3);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #778da9;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #415a77;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        .godly-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #e0e1dd;
+            text-shadow: 0 0 15px rgba(224, 225, 221, 0.5);
+        }
+
+        .trial-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #415a77;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+            font-size: 1.15rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .choice-btn {
+            background: transparent;
+            border: 1px solid #778da9;
+            color: #e0e1dd;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        .choice-btn:hover {
+            background: #e0e1dd;
+            color: #0d1b2a;
+            box-shadow: 0 0 10px #e0e1dd;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid #415a77;
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            font-size: 0.7rem;
+            color: #778da9;
+            text-align: center;
+        }
+
+        .decoder-item b { color: #e0e1dd; display: block; font-size: 0.85rem; }
+
+        #trial-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 27, 42, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .next-trial-btn {
+            background: #e0e1dd;
+            color: #0d1b2a;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="pantheon-vault">
+    <a href="index.html" class="hub-link">← HUB_CENTRAL</a>
+    <p id="q-type">TRIAL STATUS: DIVINING ROOTS</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="trial-box" style="display:none;"></div>
+        <div id="word-display" class="godly-title">ASCENDING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>POLY</b> MANY</div>
+            <div class="decoder-item"><b>RE</b> AGAIN</div>
+            <div class="decoder-item"><b>SUPER</b> ABOVE</div>
+            <div class="decoder-item"><b>TRI</b> THREE</div>
+        </div>
+    </div>
+</div>
+
+<div id="trial-modal">
+    <h1 id="fb-status" style="font-family:'Cinzel'; font-size: 2.5rem; color:#e0e1dd;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #778da9; text-align:center; padding: 20px;"></p>
+    <button class="next-trial-btn" onclick="nextWord()">ONWARD</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Polygamy", def: "Having more than one spouse at a time", sent: "In some ancient cultures, ________ was a common practice among leaders." },
+        { word: "Polytheism", def: "The belief in many Gods", sent: "Greek mythology is a famous example of ________, with gods like Zeus and Hera." },
+        { word: "Polynomial", def: "An expression of two or more algebraic terms", sent: "In math class, we learned how to simplify a complex ________." },
+        { word: "Polychromatic", def: "Consisting of two or more colors", sent: "The artist used a ________ palette to make the mural look vibrant and alive." },
+        { word: "Refrain", def: "To stop or not do again", sent: "Please ________ from talking while the teacher is giving instructions." },
+        { word: "Rejuvenate", def: "To feel young and strong again", sent: "A week at the beach helped to ________ her spirit after a busy semester." },
+        { word: "Revert", def: "To go back to a previous state", sent: "If you don't save your work, the document might ________ to an older version." },
+        { word: "Superb", def: "Excellent", sent: "The steak was ________, cooked exactly the way I liked it." },
+        { word: "Superintendent", def: "A person who oversees and manages an organization", sent: "The school ________ announced a snow day for the entire county." },
+        { word: "Supernatural", def: "Not existing in nature", sent: "The movie was about ghosts and other ________ creatures." },
+        { word: "Superimposed", def: "Two or more things stacked on top of each other to appear as one", sent: "The photographer ________ the moon over the city skyline in the final image." },
+        { word: "Triangle", def: "Geometric figure with three angles", sent: "A right ________ has one angle that is exactly 90 degrees." },
+        { word: "Trilingual", def: "Knowing three languages", sent: "Being ________ made it easy for him to travel through Europe and Asia." },
+        { word: "Trident", def: "A spear with three prongs", sent: "Poseidon, the god of the sea, is often shown holding a powerful ________." },
+        { word: "Trilogy", def: "A set of three literary works", sent: "The 'Lord of the Rings' is one of the most famous fantasy ________ ever written." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "TRIAL: ORACLE'S GAP";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "???";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "TRIAL: SACRED DEFINITION";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Relating to a single point in space and time", correct: false },
+                { text: "To fall forward into a deep sleep", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "choice-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("trial-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "BLESSING GRANTED";
+                    status.style.color = "#e0e1dd";
+                    document.getElementById("fb-info").innerText = "The Oracle is pleased with your wisdom.";
+                } else {
+                    status.innerText = "TRIAL FAILED";
+                    status.style.color = "#778da9";
+                    document.getElementById("fb-info").innerText = "The path was: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("trial-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Cinzel'; color:#e0e1dd;">PANTHEON ASCENDED</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>Your knowledge of the roots is legendary.</p>
+                <a href="index.html" class="next-trial-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
