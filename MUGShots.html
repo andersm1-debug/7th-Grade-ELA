@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.U.G. Shots Interactive</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Your M.U.G. Shot Database
+        const mugShots = [
+            {
+                id: 1,
+                incorrect: "The lady hornets played good in the semifinal but the dirt devils played even more better.",
+                hints: [
+                    "Capitalization (Proper Nouns)",
+                    "Using the right word (Adverb vs. Adjective)",
+                    "Comma to separate independent clauses",
+                    "Adjective (Comparative)"
+                ],
+                correct: "The Lady Hornets played well in the semifinal, but the Dirt Devils played even better."
+            },
+            {
+                id: 2,
+                incorrect: "Running track playing basketball and to swim are my favorite activities however I am the most fast at swimming.",
+                hints: [
+                    "Parallelism (Verb forms)",
+                    "Commas in a series",
+                    "Punctuation around a conjunctive adverb (however)",
+                    "Adjective (Superlative)"
+                ],
+                correct: "Running track, playing basketball, and swimming are my favorite activities; however, I am the fastest at swimming."
+            },
+            {
+                id: 3,
+                incorrect: "Their going to the game tonight, I hope they win.",
+                hints: [
+                    "Using the right word (There/Their/They're)",
+                    "Comma Splice"
+                ],
+                // Note: For comma splices, you can choose how you want them to fix it. 
+                // Here, we'll look for a period and capital letter.
+                correct: "They're going to the game tonight. I hope they win." 
+            }
+        ];
+
+        function MugShotApp() {
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [userInput, setUserInput] = useState("");
+            const [status, setStatus] = useState("idle"); // 'idle', 'correct', 'incorrect'
+            const [showAnswer, setShowAnswer] = useState(false);
+
+            const currentMug = mugShots[currentIndex];
+
+            // Reset state when switching questions
+            useEffect(() => {
+                setUserInput("");
+                setStatus("idle");
+                setShowAnswer(false);
+            }, [currentIndex]);
+
+            const checkSentence = () => {
+                // Normalize strings by removing extra spaces before comparing
+                const cleanInput = userInput.trim().replace(/\s+/g, ' ');
+                const cleanCorrect = currentMug.correct.trim().replace(/\s+/g, ' ');
+
+                if (cleanInput === cleanCorrect) {
+                    setStatus("correct");
+                } else {
+                    setStatus("incorrect");
+                }
+            };
+
+            const nextMugShot = () => {
+                if (currentIndex < mugShots.length - 1) {
+                    setCurrentIndex(currentIndex + 1);
+                }
+            };
+
+            const prevMugShot = () => {
+                if (currentIndex > 0) {
+                    setCurrentIndex(currentIndex - 1);
+                }
+            };
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full min-h-[500px]">
+                    
+                    {/* Header */}
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <button 
+                            onClick={prevMugShot} 
+                            disabled={currentIndex === 0}
+                            className={`px-4 py-2 rounded font-bold ${currentIndex === 0 ? 'text-slate-500 cursor-not-allowed' : 'text-blue-300 hover:bg-slate-700'}`}
+                        >
+                            &laquo; Previous
+                        </button>
+                        <h2 className="text-xl font-bold tracking-wider">M.U.G. SHOT #{currentMug.id}</h2>
+                        <button 
+                            onClick={nextMugShot} 
+                            disabled={currentIndex === mugShots.length - 1}
+                            className={`px-4 py-2 rounded font-bold ${currentIndex === mugShots.length - 1 ? 'text-slate-500 cursor-not-allowed' : 'text-blue-300 hover:bg-slate-700'}`}
+                        >
+                            Next &raquo;
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row flex-1">
+                        
+                        {/* Left Side: The Problem & Hints */}
+                        <div className="md:w-1/2 p-8 bg-slate-50 border-r border-slate-200">
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-2">Broken Sentence</h3>
+                            <div className="bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-sm mb-8">
+                                <p className="text-xl text-slate-800 font-medium font-serif leading-relaxed">
+                                    "{currentMug.incorrect}"
+                                </p>
+                            </div>
+
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Corrections Needed:</h3>
+                            <ul className="space-y-2">
+                                {currentMug.hints.map((hint, index) => (
+                                    <li key={index} className="flex items-center text-slate-700 font-medium">
+                                        <svg className="w-5 h-5 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        {hint}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Right Side: The Editor */}
+                        <div className="md:w-1/2 p-8 bg-white flex flex-col">
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-2">Your Correction</h3>
+                            <p className="text-slate-500 mb-4 text-sm">Rewrite the sentence perfectly below. Watch your capitalization, punctuation, and spelling!</p>
+                            
+                            <textarea
+                                value={userInput}
+                                onChange={(e) => {
+                                    setUserInput(e.target.value);
+                                    if(status !== 'idle') setStatus('idle'); // clear error when typing
+                                }}
+                                className={`w-full p-4 border-2 rounded-lg text-lg font-serif resize-none h-40 focus:outline-none focus:ring-4 transition-colors ${status === 'correct' ? 'border-green-500 bg-green-50 focus:ring-green-200' : status === 'incorrect' ? 'border-red-500 bg-red-50 focus:ring-red-200' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-100'}`}
+                                placeholder="Type your perfected sentence here..."
+                            ></textarea>
+
+                            {/* Status Messages */}
+                            <div className="h-12 mt-4 flex items-center justify-between">
+                                {status === 'incorrect' && (
+                                    <span className="text-red-600 font-bold animate-pulse">Not quite perfect yet. Check the hints!</span>
+                                )}
+                                {status === 'correct' && (
+                                    <span className="text-green-600 font-bold text-lg">✨ Perfect! Great job! ✨</span>
+                                )}
+                                
+                                {status === 'idle' && <span></span>}
+
+                                <button 
+                                    onClick={checkSentence}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow-md transition-colors"
+                                >
+                                    Check Sentence
+                                </button>
+                            </div>
+
+                            {/* Reveal Answer Toggle */}
+                            <div className="mt-auto pt-6 border-t border-slate-100">
+                                <button 
+                                    onClick={() => setShowAnswer(!showAnswer)}
+                                    className="text-slate-400 hover:text-slate-600 text-sm font-semibold transition-colors"
+                                >
+                                    {showAnswer ? "Hide Teacher's Answer" : "Stuck? Reveal Teacher's Answer"}
+                                </button>
+                                
+                                {showAnswer && (
+                                    <div className="mt-3 p-4 bg-slate-100 rounded border border-slate-200 text-slate-700 font-serif italic">
+                                        "{currentMug.correct}"
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<MugShotApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
