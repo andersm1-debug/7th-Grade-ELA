@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNTHETIC CENTER: WK 17</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;700&family=Rajdhani:wght@500;700&display=swap');
+
+        body {
+            background-color: #0d0e12;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(32, 255, 128, .05) 25%, rgba(32, 255, 128, .05) 26%, transparent 27%, transparent 74%, rgba(32, 255, 128, .05) 75%, rgba(32, 255, 128, .05) 76%, transparent 77%, transparent),
+                              linear-gradient(90deg, transparent 24%, rgba(32, 255, 128, .05) 25%, rgba(32, 255, 128, .05) 26%, transparent 27%, transparent 74%, rgba(32, 255, 128, .05) 75%, rgba(32, 255, 128, .05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            color: #20ff80;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #center-terminal {
+            background: rgba(20, 22, 28, 0.95);
+            border: 1px solid #20ff80;
+            border-top: 6px solid #20ff80;
+            padding: 40px;
+            width: 95%;
+            max-width: 650px;
+            box-shadow: 0 0 20px rgba(32, 255, 128, 0.2);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #20ff80;
+            text-decoration: none;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .hub-link:hover { opacity: 1; }
+
+        #q-type {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #20ff80;
+            margin-top: 10px;
+            opacity: 0.5;
+        }
+
+        .data-header {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(32, 255, 128, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed #20ff80;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #a0aec0;
+            font-size: 1.1rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .input-btn {
+            background: transparent;
+            border: 1px solid #20ff80;
+            color: #20ff80;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .input-btn:hover {
+            background: #20ff80;
+            color: #0d0e12;
+        }
+
+        #root-decoder {
+            margin-top: 30px;
+            border-top: 1px solid rgba(32, 255, 128, 0.3);
+            padding-top: 15px;
+        }
+
+        .decoder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #20ff80;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .decoder-item b { color: #fff; display: block; font-size: 0.9rem; }
+
+        #system-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .action-btn {
+            background: #20ff80;
+            color: #0d0e12;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            font-family: 'Rajdhani', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div id="center-terminal">
+    <a href="index.html" class="hub-link">← HUB_CENTRAL</a>
+    <p id="q-type">PROCESSOR: ACTIVE</p>
+    
+    <div id="quiz-content">
+        <div id="sentence-display" class="terminal-box" style="display:none;"></div>
+        <div id="word-display" class="data-header">SCANNING...</div>
+        <div id="options"></div>
+    </div>
+
+    <div id="root-decoder">
+        <div class="decoder-grid">
+            <div class="decoder-item"><b>POST</b> AFTER</div>
+            <div class="decoder-item"><b>SEMI</b> PARTLY</div>
+            <div class="decoder-item"><b>UN</b> NOT</div>
+            <div class="decoder-item"><b>SYN</b> SAME TIME / TOGETHER</div>
+        </div>
+    </div>
+</div>
+
+<div id="system-modal">
+    <h1 id="fb-status" style="font-family:'Rajdhani'; font-size: 3rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #20ff80; padding: 20px;"></p>
+    <button class="action-btn" onclick="nextWord()">EXECUTE_NEXT</button>
+</div>
+
+<script>
+    const wordBank = [
+        { word: "Syntax", def: "The grammatical arrangement of words in a sentence", sent: "If you change the ________ of the sentence, the meaning might change too." },
+        { word: "Syndicate", def: "A group combined to promote a common interest", sent: "A local ________ of business owners worked together to improve the downtown area." },
+        { word: "Synonym", def: "Words that mean the same", sent: "'Large' is a ________ for the word 'big'." },
+        { word: "Synthetic", def: "Formed together from artificial parts; not genuine", sent: "Many modern fabrics are made from ________ materials like polyester." },
+        { word: "Posterity", def: "Descendants who come after you", sent: "We must protect the environment for ________, so our grandchildren can enjoy it." },
+        { word: "Postnatal", def: "After birth", sent: "The mother and baby went to the clinic for a ________ checkup." },
+        { word: "Postmortem", def: "After death", sent: "The medical examiner performed a ________ examination to find the cause of death." },
+        { word: "Posterior", def: "Near the back of something", sent: "The anatomy diagram labeled the ________ side of the heart." },
+        { word: "Semiterrestrial", def: "Not growing or living entirely on land", sent: "Crabs are ________ creatures that spend time in both water and on the beach." },
+        { word: "Semi-translucent", def: "Allowing light to partially pass through", sent: "The ________ curtains let in some morning light but still provided privacy." },
+        { word: "Semi-parasitic", def: "Obtaining some food from a host but also undergoing photosynthesis", sent: "Mistletoe is ________ because it takes nutrients from trees but still has green leaves." },
+        { word: "Semifinal", def: "A match or competition that precedes the final one", sent: "Our team won the ________ and will play for the championship tomorrow." },
+        { word: "Unaware", def: "To not know something", sent: "He was completely ________ that a surprise party was being planned for him." },
+        { word: "Unreliable", def: "Cannot be trusted", sent: "The old car was ________ and often broke down on the way to work." },
+        { word: "Unemployment", def: "The number of people that do not have jobs", sent: "When the factory closed, the town's ________ rate began to rise." }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadWord() {
+        const d = wordBank[current];
+        const isBlankType = current % 2 === 1;
+        
+        const qType = document.getElementById("q-type");
+        const sentBox = document.getElementById("sentence-display");
+        const wordBox = document.getElementById("word-display");
+        const optCont = document.getElementById("options");
+
+        optCont.innerHTML = "";
+
+        if (isBlankType) {
+            qType.innerText = "CENTER: CONTEXTUAL INJECTION";
+            sentBox.style.display = "block";
+            sentBox.innerText = d.sent.replace(d.word, "__________");
+            wordBox.innerText = "DATA_PENDING";
+            
+            let choices = [
+                { text: d.word, correct: true },
+                { text: wordBank[(current + 2) % 15].word, correct: false },
+                { text: wordBank[(current + 4) % 15].word, correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.word);
+        } else {
+            qType.innerText = "CENTER: DEFINITION_DECODE";
+            sentBox.style.display = "none";
+            wordBox.innerText = d.word;
+            
+            let choices = [
+                { text: d.def, correct: true },
+                { text: "Occurring before the primary event in a sequence", correct: false },
+                { text: "The study of how animals move across Earth", correct: false }
+            ].sort(() => Math.random() - 0.5);
+            renderButtons(choices, d.def);
+        }
+    }
+
+    function renderButtons(choices, correctVal) {
+        choices.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className = "input-btn";
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                const modal = document.getElementById("system-modal");
+                const status = document.getElementById("fb-status");
+                if (c.correct) {
+                    score++;
+                    status.innerText = "DATA_VERIFIED";
+                    status.style.color = "#20ff80";
+                    document.getElementById("fb-info").innerText = "Transmission clear. System integrity maintained.";
+                } else {
+                    status.innerText = "DATA_ERR";
+                    status.style.color = "#ff4b2b";
+                    document.getElementById("fb-info").innerText = "Manual correction: " + correctVal;
+                }
+                modal.style.display = "flex";
+            };
+            document.getElementById("options").appendChild(btn);
+        });
+    }
+
+    function nextWord() {
+        document.getElementById("system-modal").style.display = "none";
+        current++;
+        if (current < wordBank.length) loadWord();
+        else showFinal();
+    }
+
+    function showFinal() {
+        const pct = Math.round((score/wordBank.length)*100);
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Rajdhani'; color:#fff;">SYSTEM_SYNC_COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
+                <p>Week 17 analytical data has been successfully compiled.</p>
+                <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN_TO_HUB</a>
+            </div>`;
+    }
+
+    loadWord();
+</script>
+</body>
+</html>
