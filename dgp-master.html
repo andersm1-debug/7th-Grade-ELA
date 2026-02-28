@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNTAX SURGERY: DGP MASTER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d1117;
+            background-image: linear-gradient(rgba(88, 166, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(88, 166, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #lab-container {
+            background: rgba(22, 27, 34, 0.95);
+            border: 2px solid #30363d;
+            border-top: 6px solid #58a6ff;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .hub-link:hover { color: #58a6ff; }
+
+        .lab-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin: 25px 0 10px 0;
+            color: #58a6ff;
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        /* Input Section */
+        #input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #sentence-input {
+            flex-grow: 1;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            padding: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            border-radius: 4px;
+        }
+
+        #sentence-input:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        #analyze-btn {
+            background: #58a6ff;
+            color: #0d1117;
+            border: none;
+            padding: 0 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        #analyze-btn:hover { background: #79b8ff; }
+
+        /* Workspace Section */
+        #workspace {
+            background: #0d1117;
+            border: 1px dashed #30363d;
+            padding: 40px 20px;
+            min-height: 150px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .word-token {
+            position: relative;
+            background: transparent;
+            border: none;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .word-token:hover { background: rgba(88, 166, 255, 0.1); border-radius: 4px; }
+
+        .tag-label {
+            font-size: 0.75rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            height: 15px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Legend */
+        #legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            border-top: 1px solid #30363d;
+            padding-top: 20px;
+        }
+
+        .legend-item {
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #0d1117;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="lab-title">SYNTAX SURGERY</h1>
+    <p class="instructions">STEP 1: Load a sentence. STEP 2: Click words to cycle through Parts of Speech.</p>
+    
+    <div id="input-section">
+        <input type="text" id="sentence-input" placeholder="Enter this week's DGP sentence here..." autocomplete="off">
+        <button id="analyze-btn" onclick="processSentence()">LOAD</button>
+    </div>
+
+    <div id="workspace">
+        <p style="color: #484f58; font-style: italic;">Awaiting sentence data...</p>
+    </div>
+
+    <div id="legend">
+        </div>
+</div>
+
+<script>
+    // The "Engine" for Parts of Speech Colors and Tags
+    const posEngine = [
+        { id: 'NONE', tag: '', color: '#c9d1d9', bg: 'transparent' }, // Default
+        { id: 'NOUN', tag: 'N', color: '#58a6ff', bg: '#58a6ff' }, // Blue
+        { id: 'VERB', tag: 'V', color: '#3fb950', bg: '#3fb950' }, // Green
+        { id: 'ADJ', tag: 'ADJ', color: '#d2a8ff', bg: '#d2a8ff' }, // Purple
+        { id: 'ADV', tag: 'ADV', color: '#f0883e', bg: '#f0883e' }, // Orange
+        { id: 'PRON', tag: 'PRON', color: '#ff7b72', bg: '#ff7b72' }, // Red
+        { id: 'PREP', tag: 'PREP', color: '#e3b341', bg: '#e3b341' }, // Yellow
+        { id: 'CONJ', tag: 'CONJ', color: '#a5d6ff', bg: '#a5d6ff' }, // Light Blue
+        { id: 'INT', tag: 'INT', color: '#f85149', bg: '#f85149' }  // Bright Red
+    ];
+
+    // Build the Legend
+    const legendContainer = document.getElementById('legend');
+    posEngine.forEach(pos => {
+        if(pos.id !== 'NONE') {
+            const span = document.createElement('span');
+            span.className = 'legend-item';
+            span.style.backgroundColor = pos.bg;
+            span.innerText = pos.id + " (" + pos.tag + ")";
+            legendContainer.appendChild(span);
+        }
+    });
+
+    function processSentence() {
+        const inputStr = document.getElementById('sentence-input').value.trim();
+        const workspace = document.getElementById('workspace');
+        
+        if (!inputStr) {
+            workspace.innerHTML = '<p style="color: #f85149;">Error: No sentence detected.</p>';
+            return;
+        }
+
+        workspace.innerHTML = ''; // Clear workspace
+        
+        // Split by spaces to isolate words
+        const words = inputStr.split(/\s+/);
+
+        words.forEach(word => {
+            // Create the clickable token container
+            const tokenBtn = document.createElement('button');
+            tokenBtn.className = 'word-token';
+            tokenBtn.dataset.stateIndex = 0; // Starts at 0 (NONE)
+
+            // Create the tag label (sits above the word)
+            const tagLabel = document.createElement('div');
+            tagLabel.className = 'tag-label';
+            tagLabel.innerText = ''; // Starts empty
+
+            // Create the word text
+            const wordText = document.createElement('div');
+            wordText.innerText = word;
+
+            // Assemble
+            tokenBtn.appendChild(tagLabel);
+            tokenBtn.appendChild(wordText);
+
+            // Add Click Logic
+            tokenBtn.onclick = function() {
+                // Advance the state index, loop back to 0 if at the end
+                let currIdx = parseInt(this.dataset.stateIndex);
+                let nextIdx = (currIdx + 1) % posEngine.length;
+                this.dataset.stateIndex = nextIdx;
+
+                // Apply new colors and tags
+                const newState = posEngine[nextIdx];
+                tagLabel.innerText = newState.tag;
+                tagLabel.style.color = newState.color;
+                wordText.style.color = newState.tag === '' ? '#c9d1d9' : newState.color;
+            };
+
+            workspace.appendChild(tokenBtn);
+        });
+    }
+
+    // Allow pressing "Enter" in the input box to load
+    document.getElementById("sentence-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            processSentence();
+        }
+    });
+</script>
+</body>
+</html>
