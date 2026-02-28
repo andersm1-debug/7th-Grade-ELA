@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYNTAX SURGERY: DGP MASTER</title>
+    <title>SYNTAX SURGERY: ADVANCED DGP</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
 
@@ -29,7 +29,7 @@
             border-radius: 8px;
             padding: 30px;
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             position: relative;
         }
@@ -42,10 +42,7 @@
             text-decoration: none;
             font-size: 0.8rem;
             text-transform: uppercase;
-            transition: 0.2s;
         }
-
-        .hub-link:hover { color: #58a6ff; }
 
         .lab-title {
             font-family: 'Orbitron', sans-serif;
@@ -56,18 +53,10 @@
             letter-spacing: 2px;
         }
 
-        .instructions {
-            text-align: center;
-            color: #8b949e;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        /* Input Section */
         #input-section {
             display: flex;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         #sentence-input {
@@ -81,11 +70,6 @@
             border-radius: 4px;
         }
 
-        #sentence-input:focus {
-            outline: none;
-            border-color: #58a6ff;
-        }
-
         #analyze-btn {
             background: #58a6ff;
             color: #0d1117;
@@ -95,42 +79,42 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
-            transition: 0.2s;
         }
 
-        #analyze-btn:hover { background: #79b8ff; }
-
-        /* Workspace Section */
         #workspace {
             background: #0d1117;
             border: 1px dashed #30363d;
             padding: 40px 20px;
-            min-height: 150px;
+            min-height: 120px;
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             justify-content: center;
             align-items: center;
             border-radius: 4px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .word-token {
             position: relative;
             background: transparent;
-            border: none;
+            border: 2px solid transparent;
             color: #c9d1d9;
             font-family: 'Share Tech Mono', monospace;
             font-size: 1.4rem;
             cursor: pointer;
             padding: 5px 10px;
+            border-radius: 4px;
             transition: 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .word-token:hover { background: rgba(88, 166, 255, 0.1); border-radius: 4px; }
+        .word-token.selected {
+            border-color: #f2e05a;
+            background: rgba(242, 224, 90, 0.1);
+        }
 
         .tag-label {
             font-size: 0.75rem;
@@ -138,127 +122,205 @@
             font-weight: bold;
             height: 15px;
             margin-bottom: 5px;
+        }
+
+        /* The Tagging Dashboard */
+        #tag-dashboard {
+            display: none;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .dash-header {
+            color: #f2e05a;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .category-group {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .category-title {
+            font-size: 0.8rem;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
             text-transform: uppercase;
-        }
-
-        /* Legend */
-        #legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            border-top: 1px solid #30363d;
-            padding-top: 20px;
-        }
-
-        .legend-item {
-            font-size: 0.75rem;
-            padding: 5px 10px;
-            border-radius: 3px;
-            color: #0d1117;
             font-weight: bold;
         }
+
+        .tag-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 5px 8px;
+            margin: 2px;
+            font-size: 0.75rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 0.2s;
+        }
+
+        .tag-btn:hover { filter: brightness(1.5); }
+        .clear-btn { width: 100%; margin-top: 15px; background: #f85149; color: #fff; text-align:center; padding: 10px; cursor: pointer; border: none; font-weight: bold;}
 
     </style>
 </head>
 <body>
 
 <div id="lab-container">
-    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <a href="index.html" class="hub-link">← Hub Network</a>
     <h1 class="lab-title">SYNTAX SURGERY</h1>
-    <p class="instructions">STEP 1: Load a sentence. STEP 2: Click words to cycle through Parts of Speech.</p>
     
     <div id="input-section">
-        <input type="text" id="sentence-input" placeholder="Enter this week's DGP sentence here..." autocomplete="off">
+        <input type="text" id="sentence-input" placeholder="Initialize sentence data..." autocomplete="off">
         <button id="analyze-btn" onclick="processSentence()">LOAD</button>
     </div>
 
     <div id="workspace">
-        <p style="color: #484f58; font-style: italic;">Awaiting sentence data...</p>
+        <p style="color: #484f58; font-style: italic;">Awaiting structural input...</p>
     </div>
 
-    <div id="legend">
-        </div>
+    <div id="tag-dashboard">
+        <h3 class="dash-header" id="selected-word-display">SELECT A WORD TO TAG</h3>
+        <div class="category-grid" id="tag-grid">
+            </div>
+        <button class="clear-btn" onclick="applyTag('', '#c9d1d9')">CLEAR TAG</button>
+    </div>
 </div>
 
 <script>
-    // The "Engine" for Parts of Speech Colors and Tags
-    const posEngine = [
-        { id: 'NONE', tag: '', color: '#c9d1d9', bg: 'transparent' }, // Default
-        { id: 'NOUN', tag: 'N', color: '#58a6ff', bg: '#58a6ff' }, // Blue
-        { id: 'VERB', tag: 'V', color: '#3fb950', bg: '#3fb950' }, // Green
-        { id: 'ADJ', tag: 'ADJ', color: '#d2a8ff', bg: '#d2a8ff' }, // Purple
-        { id: 'ADV', tag: 'ADV', color: '#f0883e', bg: '#f0883e' }, // Orange
-        { id: 'PRON', tag: 'PRON', color: '#ff7b72', bg: '#ff7b72' }, // Red
-        { id: 'PREP', tag: 'PREP', color: '#e3b341', bg: '#e3b341' }, // Yellow
-        { id: 'CONJ', tag: 'CONJ', color: '#a5d6ff', bg: '#a5d6ff' }, // Light Blue
-        { id: 'INT', tag: 'INT', color: '#f85149', bg: '#f85149' }  // Bright Red
+    // Advanced Tag Database based on 9 Steps
+    const grammarData = [
+        { cat: "1. Nouns", color: "#58a6ff", tags: [
+            { id: "n", name: "Common" }, { id: "N", name: "Proper" }, { id: "pos n", name: "Possessive Common" }, { id: "pos N", name: "Possessive Proper" }
+        ]},
+        { cat: "2. Pronouns", color: "#ff7b72", tags: [
+            { id: "nom pro", name: "Nominative" }, { id: "obj pro", name: "Objective" }, { id: "pos pro", name: "Possessive" },
+            { id: "ref pro", name: "Reflexive" }, { id: "rp", name: "Relative" }, { id: "int pro", name: "Interrogative" },
+            { id: "dem pro", name: "Demonstrative" }, { id: "ind pro", name: "Indefinite" }
+        ]},
+        { cat: "3. Adjectives", color: "#d2a8ff", tags: [
+            { id: "adj", name: "Adjective" }, { id: "art", name: "Article" }, { id: "Adj", name: "Proper Adjective" }
+        ]},
+        { cat: "4. Verbs", color: "#3fb950", tags: [
+            { id: "av", name: "Action Verb" }, { id: "lv", name: "Linking Verb" }, { id: "hv", name: "Helping Verb" }
+        ]},
+        { cat: "5. Verbals", color: "#238636", tags: [
+            { id: "ger", name: "Gerund" }, { id: "part", name: "Participle" }, { id: "inf", name: "Infinitive" }
+        ]},
+        { cat: "6. Adverbs", color: "#f0883e", tags: [
+            { id: "adv", name: "Adverb" }
+        ]},
+        { cat: "7. Prepositions", color: "#e3b341", tags: [
+            { id: "prep", name: "Preposition" }
+        ]},
+        { cat: "8. Conjunctions", color: "#a5d6ff", tags: [
+            { id: "cc", name: "Coordinating" }, { id: "cor conj", name: "Correlative" }, { id: "sc", name: "Subordinating" }
+        ]},
+        { cat: "9. Interjections", color: "#f85149", tags: [
+            { id: "int", name: "Interjection" }
+        ]}
     ];
 
-    // Build the Legend
-    const legendContainer = document.getElementById('legend');
-    posEngine.forEach(pos => {
-        if(pos.id !== 'NONE') {
-            const span = document.createElement('span');
-            span.className = 'legend-item';
-            span.style.backgroundColor = pos.bg;
-            span.innerText = pos.id + " (" + pos.tag + ")";
-            legendContainer.appendChild(span);
-        }
+    let selectedToken = null;
+
+    // Build the Dashboard
+    const tagGrid = document.getElementById('tag-grid');
+    grammarData.forEach(group => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'category-group';
+        
+        const title = document.createElement('div');
+        title.className = 'category-title';
+        title.innerText = group.cat;
+        groupDiv.appendChild(title);
+
+        group.tags.forEach(t => {
+            const btn = document.createElement('button');
+            btn.className = 'tag-btn';
+            btn.innerText = t.id;
+            btn.title = t.name;
+            btn.onclick = () => applyTag(t.id, group.color);
+            groupDiv.appendChild(btn);
+        });
+        tagGrid.appendChild(groupDiv);
     });
 
     function processSentence() {
         const inputStr = document.getElementById('sentence-input').value.trim();
         const workspace = document.getElementById('workspace');
         
-        if (!inputStr) {
-            workspace.innerHTML = '<p style="color: #f85149;">Error: No sentence detected.</p>';
-            return;
-        }
-
-        workspace.innerHTML = ''; // Clear workspace
+        if (!inputStr) return;
         
-        // Split by spaces to isolate words
+        workspace.innerHTML = ''; 
+        document.getElementById('tag-dashboard').style.display = 'block'; // Reveal dashboard
+        
         const words = inputStr.split(/\s+/);
 
-        words.forEach(word => {
-            // Create the clickable token container
+        words.forEach((word, index) => {
             const tokenBtn = document.createElement('button');
             tokenBtn.className = 'word-token';
-            tokenBtn.dataset.stateIndex = 0; // Starts at 0 (NONE)
+            tokenBtn.id = 'token-' + index;
 
-            // Create the tag label (sits above the word)
             const tagLabel = document.createElement('div');
             tagLabel.className = 'tag-label';
-            tagLabel.innerText = ''; // Starts empty
-
-            // Create the word text
+            
             const wordText = document.createElement('div');
             wordText.innerText = word;
+            wordText.className = 'word-text';
 
-            // Assemble
             tokenBtn.appendChild(tagLabel);
             tokenBtn.appendChild(wordText);
 
-            // Add Click Logic
-            tokenBtn.onclick = function() {
-                // Advance the state index, loop back to 0 if at the end
-                let currIdx = parseInt(this.dataset.stateIndex);
-                let nextIdx = (currIdx + 1) % posEngine.length;
-                this.dataset.stateIndex = nextIdx;
-
-                // Apply new colors and tags
-                const newState = posEngine[nextIdx];
-                tagLabel.innerText = newState.tag;
-                tagLabel.style.color = newState.color;
-                wordText.style.color = newState.tag === '' ? '#c9d1d9' : newState.color;
-            };
-
+            tokenBtn.onclick = () => selectToken(tokenBtn, word);
             workspace.appendChild(tokenBtn);
         });
     }
 
-    // Allow pressing "Enter" in the input box to load
+    function selectToken(tokenElement, wordString) {
+        // Remove highlight from previous
+        if(selectedToken) selectedToken.classList.remove('selected');
+        
+        selectedToken = tokenElement;
+        selectedToken.classList.add('selected');
+        
+        document.getElementById('selected-word-display').innerText = "TARGET: " + wordString.toUpperCase();
+    }
+
+    function applyTag(tagId, colorCode) {
+        if(!selectedToken) return;
+
+        const label = selectedToken.querySelector('.tag-label');
+        const text = selectedToken.querySelector('.word-text');
+
+        label.innerText = tagId;
+        label.style.color = colorCode;
+        text.style.color = tagId === '' ? '#c9d1d9' : colorCode;
+        
+        // Auto-deselect after tagging for speed
+        selectedToken.classList.remove('selected');
+        selectedToken = null;
+        document.getElementById('selected-word-display').innerText = "SELECT NEXT WORD";
+    }
+
     document.getElementById("sentence-input").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
