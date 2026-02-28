@@ -1,148 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOTHIC SOUNDSCAPE: POE</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Special+Elite&family=Metamorphous&display=swap');
-
-        body {
-            background-color: #0a0a0c;
-            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
-            color: #b8b8b8;
-            font-family: 'Special Elite', cursive;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        #lab-container {
-            background: rgba(20, 20, 25, 0.95);
-            border: 2px solid #4a4e69;
-            border-top: 10px solid #8e94f2;
-            padding: 40px;
-            width: 95%;
-            max-width: 700px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
-            position: relative;
-        }
-
-        .hub-link {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            color: #8e94f2;
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        #q-type {
-            text-align: center;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-top: 10px;
-            letter-spacing: 3px;
-        }
-
-        .poem-title {
-            font-family: 'UnifrakturMaguntia', serif;
-            font-size: 3rem;
-            text-align: center;
-            margin: 20px 0;
-            color: #fefae0;
-            text-shadow: 2px 2px 10px rgba(142, 148, 242, 0.5);
-        }
-
-        .excerpt-box {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px dashed #4a4e69;
-            padding: 25px;
-            margin-bottom: 25px;
-            color: #e0e0e0;
-            font-family: 'Metamorphous', serif;
-            line-height: 1.8;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        .choice-btn {
-            background: transparent;
-            border: 1px solid #4a4e69;
-            color: #b8b8b8;
-            padding: 15px;
-            margin: 10px 0;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            font-family: 'Special Elite', cursive;
-            font-size: 1.05rem;
-            transition: 0.3s;
-        }
-
-        .choice-btn:hover {
-            background: #8e94f2;
-            color: #0a0a0c;
-            border-color: #fefae0;
-        }
-
-        #feedback-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .next-btn {
-            background: #8e94f2;
-            color: #0a0a0c;
-            border: none;
-            padding: 15px 40px;
-            font-family: 'Special Elite', cursive;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .highlight { color: #8e94f2; text-decoration: underline; }
-    </style>
-</head>
-<body>
-
-<div id="lab-container">
-    <a href="index.html" class="hub-link">← HUB_SYSTEM</a>
-    <p id="q-type">ACOUSTIC ANALYSIS: RL.7.4</p>
-    
-    <div id="quiz-content">
-        <div id="text-display" class="excerpt-box">ANALYZING SOUND WAVES...</div>
-        <div id="options"></div>
-    </div>
-</div>
-
-<div id="feedback-modal">
-    <h1 id="fb-status" style="font-family:'UnifrakturMaguntia'; font-size: 3.5rem;"></h1>
-    <p id="fb-info" style="font-size: 1.2rem; max-width: 500px; color: #b8b8b8; padding: 20px;"></p>
-    <button class="next-btn" onclick="nextQuestion()">DECODE NEXT PATTERN</button>
-</div>
-
-<script>
-    const questions = [
+const questions = [
         {
             text: "Poe repeats the phrase <span class='highlight'>'In this kingdom by the sea'</span> many times. How does this repetition affect the <b>tone</b>?",
             choices: [
-                { text: "It creates a fairytale-like, hypnotic rhythm that feels haunting.", correct: true },
                 { text: "It makes the poem feel happy and lighthearted.", correct: false },
+                { text: "It creates a fairytale-like, hypnotic rhythm that feels haunting.", correct: true },
                 { text: "It shows that the narrator is confused about where he is.", correct: false }
             ],
             explanation: "Repetition in 'Annabel Lee' creates a 'refrain' that mimics the sound of ocean waves, adding to the poem's haunting, legendary tone."
@@ -150,9 +11,9 @@
         {
             text: "...But our love it was stronger by far than the love<br>Of those who were <span class='highlight'>older</span> than we—<br>Of many far <span class='highlight'>wiser</span> than we—<br><br>What is the impact of this repetition?",
             choices: [
-                { text: "It emphasizes the narrator's belief that their young love was superior to everyone else's.", correct: true },
+                { text: "It creates a fast-paced rhythm to show excitement.", correct: false },
                 { text: "It shows that the narrator is looking for advice from older people.", correct: false },
-                { text: "It creates a fast-paced rhythm to show excitement.", correct: false }
+                { text: "It emphasizes the narrator's belief that their young love was superior to everyone else's.", correct: true }
             ],
             explanation: "The parallel structure ('older than we' / 'wiser than we') emphasizes the intensity and 'us against the world' mentality of the narrator."
         },
@@ -164,58 +25,41 @@
                 { text: "It makes the poem sound messy and disorganized.", correct: false }
             ],
             explanation: "Rhyme often links two ideas together. Here, the moon and his dreams are inseparable, showing his obsession."
+        },
+        {
+            text: "Read this line: 'The angels, not <span class='highlight'>half so happy in heaven</span>...' Poe uses alliteration (repeating the 'h' sound). What is the impact?",
+            choices: [
+                { text: "It makes the line sound cheerful and bright, like angels singing.", correct: false },
+                { text: "It creates a heavy, breathless sound that emphasizes the angels' jealousy and the narrator's anger.", correct: true },
+                { text: "It slows the poem down so the reader can understand the plot.", correct: false }
+            ],
+            explanation: "The repeated, breathy 'h' sound mimics a huff or sigh, adding bitterness to his accusation that the angels were jealous of their love."
+        },
+        {
+            text: "Poe writes: 'To shut her up in a <span class='highlight'>sepulchre</span> / In this kingdom by the sea.' Why use the word 'sepulchre' instead of 'grave'?",
+            choices: [
+                { text: "It rhymes perfectly with 'sea'.", correct: false },
+                { text: "It is a happier word that makes her death seem peaceful.", correct: false },
+                { text: "It has a darker, colder connotation that implies she is trapped or imprisoned in stone.", correct: true }
+            ],
+            explanation: "Connotation matters! A 'sepulchre' is a large, cold stone vault. It emphasizes the cruelty of the relatives taking her away and 'shutting her up'."
+        },
+        {
+            text: "Look at this figurative language: 'That the <span class='highlight'>wind came out of the cloud by night, / Chilling and killing</span> my Annabel Lee.' What is the impact?",
+            choices: [
+                { text: "It shows that Annabel Lee should have worn a warmer coat.", correct: false },
+                { text: "It personifies nature as a jealous, active enemy that murdered his love.", correct: true },
+                { text: "It simply explains the weather report for that evening.", correct: false }
+            ],
+            explanation: "By combining personification (the wind) with the harsh internal rhyme ('chilling and killing'), Poe makes the disease that took her seem like a targeted assassination."
+        },
+        {
+            text: "Listen to the rhythm: 'And so, all the <span class='highlight'>night-tide</span>, I lie down by the <span class='highlight'>side</span> / Of my darling—my darling—my life and my <span class='highlight'>bride</span>.' What does this internal rhyme do?",
+            choices: [
+                { text: "It makes the poem sound like a nursery rhyme for children.", correct: false },
+                { text: "It proves that the narrator has moved on and is happy.", correct: false },
+                { text: "It mimics the rocking, crashing sound of the ocean waves against the shore.", correct: true }
+            ],
+            explanation: "The long 'i' sounds (tide, side, bride) roll together, creating a hypnotic, rhythmic soundscape that mimics the very ocean he is sleeping beside."
         }
     ];
-
-    let current = 0;
-    let score = 0;
-
-    function loadQuestion() {
-        const q = questions[current];
-        document.getElementById("text-display").innerHTML = q.text;
-        const optCont = document.getElementById("options");
-        optCont.innerHTML = "";
-
-        q.choices.forEach(c => {
-            const btn = document.createElement("button");
-            btn.className = "choice-btn";
-            btn.innerHTML = c.text;
-            btn.onclick = () => {
-                const modal = document.getElementById("feedback-modal");
-                const status = document.getElementById("fb-status");
-                if (c.correct) {
-                    score++;
-                    status.innerText = "Pattern Verified";
-                    status.style.color = "#8e94f2";
-                } else {
-                    status.innerText = "Frequency Error";
-                    status.style.color = "#ff4b2b";
-                }
-                document.getElementById("fb-info").innerText = q.explanation;
-                modal.style.display = "flex";
-            };
-            optCont.appendChild(btn);
-        });
-    }
-
-    function nextQuestion() {
-        document.getElementById("feedback-modal").style.display = "none";
-        current++;
-        if (current < questions.length) loadQuestion();
-        else showFinal();
-    }
-
-    function showFinal() {
-        document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'UnifrakturMaguntia'; font-size: 3rem;">SOUNDSCAPE COMPLETE</h2>
-                <p style="font-size:3.5rem; margin:10px 0; color: #8e94f2;">${Math.round((score/questions.length)*100)}%</p>
-                <p>You have successfully decoded the impact of Poe's rhythm and rhyme.</p>
-                <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
-            </div>`;
-    }
-
-    loadQuestion();
-</script>
-</body>
-</html>
