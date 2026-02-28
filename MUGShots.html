@@ -22,52 +22,301 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Your M.U.G. Shot Database
         const mugShots = [
             {
                 id: 1,
-                incorrect: "The lady hornets played good in the semifinal but the dirt devils played even more better.",
+                incorrect: "The minnesota vikings play good however the dirt devils are the most best team in Greenville.",
                 hints: [
-                    "Capitalization (Proper Nouns)",
-                    "Using the right word (Adverb vs. Adjective)",
-                    "Comma to separate independent clauses",
-                    "Adjective (Comparative)"
+                    "Capitalization",
+                    "Using the Right Word",
+                    "Semicolon and Comma (Conjunctive Adverb)",
+                    "Adjective (Comparative/Superlative)"
                 ],
-                correct: "The Lady Hornets played well in the semifinal, but the Dirt Devils played even better."
+                correct: "The Minnesota Vikings play well; however, the Dirt Devils are the best team in Greenville."
             },
             {
                 id: 2,
-                incorrect: "Running track playing basketball and to swim are my favorite activities however I am the most fast at swimming.",
+                incorrect: "brandon sanderson is a author whom writes huge fantasy books and he is writing a new trilogy right now.",
                 hints: [
-                    "Parallelism (Verb forms)",
-                    "Commas in a series",
-                    "Punctuation around a conjunctive adverb (however)",
-                    "Adjective (Superlative)"
+                    "Capitalization",
+                    "Adjective (Articles)",
+                    "Using the Right Word",
+                    "Comma (Between Independent Clauses)"
                 ],
-                correct: "Running track, playing basketball, and swimming are my favorite activities; however, I am the fastest at swimming."
+                correct: "Brandon Sanderson is an author who writes huge fantasy books, and he is writing a new trilogy right now."
             },
             {
                 id: 3,
-                incorrect: "Their going to the game tonight, I hope they win.",
+                incorrect: "My dogs sara and jamie loves to go sailing on my sunfish sailboat but they dont like getting wet.",
                 hints: [
-                    "Using the right word (There/Their/They're)",
+                    "Capitalization",
+                    "Comma (Appositives)",
+                    "Subject-Verb Agreement",
+                    "Comma (Between Independent Clauses)",
+                    "Apostrophe"
+                ],
+                correct: "My dogs, Sara and Jamie, love to go sailing on my Sunfish sailboat, but they don't like getting wet."
+            },
+            {
+                id: 4,
+                incorrect: "When Jennifer cooks dinner in the instant pot I usually turns on the philips hue lights to.",
+                hints: [
+                    "Capitalization",
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Subject-Verb Agreement",
+                    "Using the Right Word"
+                ],
+                correct: "When Jennifer cooks dinner in the Instant Pot, I usually turn on the Philips Hue lights too."
+            },
+            {
+                id: 5,
+                incorrect: "The 7th grade students at chicod school they works extremely hard on there grammar.",
+                hints: [
+                    "Hyphen (Single-Thought Adjectives)",
+                    "Capitalization",
+                    "Double Subject",
+                    "Subject-Verb Agreement",
+                    "Using the Right Word"
+                ],
+                correct: "The 7th-grade students at Chicod School work extremely hard on their grammar."
+            },
+            {
+                id: 6,
+                incorrect: "Because they practiced everyday the chicod lady hornets won the championship.",
+                hints: [
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Using the Right Word",
+                    "Capitalization"
+                ],
+                correct: "Because they practiced every day, the Chicod Lady Hornets won the championship."
+            },
+            {
+                id: 7,
+                incorrect: "Me and him went to the store to by sum new softball bats.",
+                hints: [
+                    "Pronoun Case",
+                    "Using the Right Word"
+                ],
+                correct: "He and I went to the store to buy some new softball bats."
+            },
+            {
+                id: 8,
+                incorrect: "Their are to many people in this line, I want to go home.",
+                hints: [
+                    "Using the Right Word",
                     "Comma Splice"
                 ],
-                // Note: For comma splices, you can choose how you want them to fix it. 
-                // Here, we'll look for a period and capital letter.
-                correct: "They're going to the game tonight. I hope they win." 
+                correct: "There are too many people in this line. I want to go home."
+            },
+            {
+                id: 9,
+                incorrect: "If you want to play for the dirt devils you must practice pitching catching and hitting.",
+                hints: [
+                    "Capitalization",
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Comma (Series)"
+                ],
+                correct: "If you want to play for the Dirt Devils, you must practice pitching, catching, and hitting."
+            },
+            {
+                id: 10,
+                incorrect: "The students wouldn't never cheat on there vocabulary quiz.",
+                hints: [
+                    "Double Negative",
+                    "Using the Right Word"
+                ],
+                correct: "The students would never cheat on their vocabulary quiz."
+            },
+            {
+                id: 11,
+                incorrect: "In 1912 the titanic sinked in the freezing waters of the atlantic ocean.",
+                hints: [
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Capitalization",
+                    "Verb (Irregular)"
+                ],
+                correct: "In 1912, the Titanic sank in the freezing waters of the Atlantic Ocean."
+            },
+            {
+                id: 12,
+                incorrect: "My brother he plays video games all night and sleeps all day.",
+                hints: [
+                    "Double Subject"
+                ],
+                correct: "My brother plays video games all night and sleeps all day."
+            },
+            {
+                id: 13,
+                incorrect: "We seen a huge bear in the woods behind our house.",
+                hints: [
+                    "Verb (Irregular)"
+                ],
+                correct: "We saw a huge bear in the woods behind our house."
+            },
+            {
+                id: 14,
+                incorrect: "The girls softball team won they're first game of the season.",
+                hints: [
+                    "Apostrophe (Possessives)",
+                    "Using the Right Word"
+                ],
+                correct: "The girls' softball team won their first game of the season."
+            },
+            {
+                id: 15,
+                incorrect: "Neither the teacher nor the students is ready for the test.",
+                hints: [
+                    "Subject-Verb Agreement"
+                ],
+                correct: "Neither the teacher nor the students are ready for the test."
+            },
+            {
+                id: 16,
+                incorrect: "I need to buy eggs milk and bread from the grocery store.",
+                hints: [
+                    "Comma (Series)"
+                ],
+                correct: "I need to buy eggs, milk, and bread from the grocery store."
+            },
+            {
+                id: 17,
+                incorrect: "The new smart home system works good, it turns on the lights automatically.",
+                hints: [
+                    "Using the Right Word",
+                    "Comma Splice"
+                ],
+                correct: "The new smart home system works well. It turns on the lights automatically."
+            },
+            {
+                id: 18,
+                incorrect: "A octopus have eight arms and three hearts.",
+                hints: [
+                    "Adjective (Articles)",
+                    "Subject-Verb Agreement"
+                ],
+                correct: "An octopus has eight arms and three hearts."
+            },
+            {
+                id: 19,
+                incorrect: "When we went to Connecticut we drove threw New York.",
+                hints: [
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Using the Right Word"
+                ],
+                correct: "When we went to Connecticut, we drove through New York."
+            },
+            {
+                id: 20,
+                incorrect: "The dog wags it's tail when its happy.",
+                hints: [
+                    "Using the Right Word",
+                    "Apostrophe"
+                ],
+                correct: "The dog wags its tail when it's happy."
+            },
+            {
+                id: 21,
+                incorrect: "Because the weather was bad the game was postponed until next week.",
+                hints: [
+                    "Comma (To Separate Phrases and Clauses)"
+                ],
+                correct: "Because the weather was bad, the game was postponed until next week."
+            },
+            {
+                id: 22,
+                incorrect: "She is the most smartest student in the 7th grade.",
+                hints: [
+                    "Adjective (Comparative/Superlative)"
+                ],
+                correct: "She is the smartest student in the 7th grade."
+            },
+            {
+                id: 23,
+                incorrect: "The United States it has 50 states.",
+                hints: [
+                    "Double Subject",
+                    "Numbers"
+                ],
+                correct: "The United States has fifty states."
+            },
+            {
+                id: 24,
+                incorrect: "We was going to the movies but we decided to stay home.",
+                hints: [
+                    "Subject-Verb Agreement",
+                    "Comma (Between Independent Clauses)"
+                ],
+                correct: "We were going to the movies, but we decided to stay home."
+            },
+            {
+                id: 25,
+                incorrect: "Every one of the students have finished their homework.",
+                hints: [
+                    "Subject-Verb Agreement",
+                    "Pronoun-Antecedent Agreement"
+                ],
+                correct: "Every one of the students has finished his or her homework."
+            },
+            {
+                id: 26,
+                incorrect: "A disease called ichthyosis turn human skin scaly as a fishs this disease is hereditary.",
+                hints: [
+                    "Subject-Verb Agreement",
+                    "Apostrophe (Possessives)",
+                    "Run-On Sentence"
+                ],
+                correct: "A disease called ichthyosis turns human skin scaly as a fish's; this disease is hereditary."
+            },
+            {
+                id: 27,
+                incorrect: "If american's carpooled regularly more than 600,000 gallons of gas could be saved every day.",
+                hints: [
+                    "Capitalization",
+                    "Plurals",
+                    "Comma (To Separate Phrases and Clauses)"
+                ],
+                correct: "If Americans carpooled regularly, more than 600,000 gallons of gas could be saved every day."
+            },
+            {
+                id: 28,
+                incorrect: "The persian gulf contain extremely salty water and isn't hardly more than 100 feet deep at any point.",
+                hints: [
+                    "Capitalization",
+                    "Subject-Verb Agreement",
+                    "Double Negative"
+                ],
+                correct: "The Persian Gulf contains extremely salty water and is hardly more than 100 feet deep at any point."
+            },
+            {
+                id: 29,
+                incorrect: "In 1680 dodo birds they became extinct and were not seen or heard from again.",
+                hints: [
+                    "Comma (To Separate Phrases and Clauses)",
+                    "Double Subject",
+                    "Using the Right Word"
+                ],
+                correct: "In 1680, dodo birds became extinct and were not seen nor heard from again."
+            },
+            {
+                id: 30,
+                incorrect: "19 people were executed in 1692 four practicing witchcraft in Salem Massachusetts.",
+                hints: [
+                    "Numbers",
+                    "Using the Right Word",
+                    "Comma (Addresses)"
+                ],
+                correct: "Nineteen people were executed in 1692 for practicing witchcraft in Salem, Massachusetts."
             }
         ];
 
         function MugShotApp() {
             const [currentIndex, setCurrentIndex] = useState(0);
             const [userInput, setUserInput] = useState("");
-            const [status, setStatus] = useState("idle"); // 'idle', 'correct', 'incorrect'
+            const [status, setStatus] = useState("idle"); 
             const [showAnswer, setShowAnswer] = useState(false);
 
             const currentMug = mugShots[currentIndex];
 
-            // Reset state when switching questions
             useEffect(() => {
                 setUserInput("");
                 setStatus("idle");
@@ -75,7 +324,6 @@
             }, [currentIndex]);
 
             const checkSentence = () => {
-                // Normalize strings by removing extra spaces before comparing
                 const cleanInput = userInput.trim().replace(/\s+/g, ' ');
                 const cleanCorrect = currentMug.correct.trim().replace(/\s+/g, ' ');
 
@@ -100,8 +348,6 @@
 
             return (
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full min-h-[500px]">
-                    
-                    {/* Header */}
                     <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
                         <button 
                             onClick={prevMugShot} 
@@ -121,8 +367,6 @@
                     </div>
 
                     <div className="flex flex-col md:flex-row flex-1">
-                        
-                        {/* Left Side: The Problem & Hints */}
                         <div className="md:w-1/2 p-8 bg-slate-50 border-r border-slate-200">
                             <h3 className="text-sm font-bold uppercase tracking-wider text-red-600 mb-2">Broken Sentence</h3>
                             <div className="bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-sm mb-8">
@@ -142,7 +386,6 @@
                             </ul>
                         </div>
 
-                        {/* Right Side: The Editor */}
                         <div className="md:w-1/2 p-8 bg-white flex flex-col">
                             <h3 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-2">Your Correction</h3>
                             <p className="text-slate-500 mb-4 text-sm">Rewrite the sentence perfectly below. Watch your capitalization, punctuation, and spelling!</p>
@@ -151,13 +394,12 @@
                                 value={userInput}
                                 onChange={(e) => {
                                     setUserInput(e.target.value);
-                                    if(status !== 'idle') setStatus('idle'); // clear error when typing
+                                    if(status !== 'idle') setStatus('idle');
                                 }}
                                 className={`w-full p-4 border-2 rounded-lg text-lg font-serif resize-none h-40 focus:outline-none focus:ring-4 transition-colors ${status === 'correct' ? 'border-green-500 bg-green-50 focus:ring-green-200' : status === 'incorrect' ? 'border-red-500 bg-red-50 focus:ring-red-200' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-100'}`}
                                 placeholder="Type your perfected sentence here..."
                             ></textarea>
 
-                            {/* Status Messages */}
                             <div className="h-12 mt-4 flex items-center justify-between">
                                 {status === 'incorrect' && (
                                     <span className="text-red-600 font-bold animate-pulse">Not quite perfect yet. Check the hints!</span>
@@ -176,7 +418,6 @@
                                 </button>
                             </div>
 
-                            {/* Reveal Answer Toggle */}
                             <div className="mt-auto pt-6 border-t border-slate-100">
                                 <button 
                                     onClick={() => setShowAnswer(!showAnswer)}
@@ -192,7 +433,6 @@
                                 )}
                             </div>
                         </div>
-
                     </div>
                 </div>
             );
