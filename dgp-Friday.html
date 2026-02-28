@@ -113,7 +113,6 @@
 
         .base-line { border-bottom: 2px solid #c9d1d9; width: 100%; display: flex; justify-content: center; padding-bottom: 2px; }
 
-        /* Pointer events re-enabled on drop-slot so it can catch drops directly without bubbling */
         .drop-slot {
             width: 110px; height: 35px; border: 1px dashed #484f58; margin: 0 5px;
             display: flex; justify-content: center; align-items: center; color: #484f58; font-size: 0.8rem;
@@ -132,24 +131,19 @@
         .mod-line { width: 2px; background: #c9d1d9; height: 25px; transform: rotate(-30deg); transform-origin: top; margin-left: 15px; }
         .mod-slot { border: none; border-bottom: 1px dashed #484f58; height: 25px; margin-top: -5px; width: 90px;}
 
-        /* Prepositions */
-        .prep-phrase { display: flex; align-items: flex-end; margin-left: 10px; margin-top: 5px;}
-        .prep-line { width: 40px; border-bottom: 2px solid #c9d1d9; transform: rotate(30deg); transform-origin: left bottom; margin-bottom: 10px; margin-right: -5px; }
-        .prep-slot { border: none; transform: rotate(-30deg); position: relative; top: -15px; font-size: 0.7rem; height: 20px; width: 50px;}
-
     </style>
 </head>
 <body>
 
 <div id="lab-container">
     <a href="index.html" class="hub-link">← Return to Hub</a>
-    <h1 class="lab-title">FRIDAY: DIAGRAMMING V2.1</h1>
+    <h1 class="lab-title">FRIDAY: DIAGRAMMING V2.2</h1>
     
     <div id="instructions-panel">
         <h3 class="instructions-header">ASSEMBLY PROTOCOL:</h3>
         <ul class="instruction-steps">
             <li><b>Step 1:</b> Click the Toolbar to add your main baseline to the canvas.</li>
-            <li><b>Step 2 (Targeted Modifiers):</b> Click a specific slot (like Subject or DO) to target it. It will glow. Then click "Add Modifier" to attach a line directly under it!</li>
+            <li><b>Step 2 (Targeted Modifiers):</b> Click a specific slot (like Subject or Prep) to target it. It will glow. Then click "Add Modifier" to attach a line directly under it!</li>
             <li><b>Step 3:</b> Drag words from the Word Bank into the empty slots.</li>
         </ul>
     </div>
@@ -272,7 +266,7 @@
 
     function attachModifier(type) {
         if(!activeColumn) {
-            alert("Please click a Subject, Verb, or DO slot on the canvas first to attach the modifier!");
+            alert("Please click a Subject, Verb, DO, or Prep slot on the canvas first to attach the modifier!");
             return;
         }
 
@@ -288,16 +282,20 @@
                     <div class="mod-container"></div>
                 </div>`;
         } else if (type === 'prep') {
-            element.className = 'prep-phrase';
+            element.style.display = 'flex';
+            element.style.alignItems = 'flex-start';
+            element.style.marginLeft = '10px';
+            // The magic fix: Decoupled the slanted line from the container to prevent warping
             element.innerHTML = `
-                <div class="prep-line">
-                   <div class="diagram-column" style="min-width: 50px; padding:0;" onclick="selectColumn(this, 'Preposition'); event.stopPropagation();">
-                       <div class="drop-slot prep-slot" data-label="Prep">Prep</div>
-                       <div class="mod-container"></div>
-                   </div>
+                <div class="diagram-column" style="min-width: 50px; padding:0;" onclick="selectColumn(this, 'Preposition'); event.stopPropagation();">
+                    <div style="position: relative; width: 50px; height: 40px;">
+                        <div style="position: absolute; top: 0; left: 0; width: 60px; height: 2px; background: #c9d1d9; transform: rotate(40deg); transform-origin: top left;"></div>
+                        <div class="drop-slot" style="position: absolute; top: 5px; left: 10px; border: none; font-size: 0.75rem; width: 40px; height: 25px;" data-label="Prep">Prep</div>
+                    </div>
+                    <div class="mod-container" style="padding-left: 15px;"></div>
                 </div>
-                <div class="diagram-column" onclick="selectColumn(this, 'Object of Prep'); event.stopPropagation();">
-                    <div class="base-line" style="border-bottom: 2px solid #c9d1d9;"><div class="drop-slot" style="border:none; border-radius:0;">Object</div></div>
+                <div class="diagram-column" style="margin-top: 38px; margin-left: 2px;" onclick="selectColumn(this, 'Object of Prep'); event.stopPropagation();">
+                    <div class="base-line" style="border-bottom: 2px solid #c9d1d9;"><div class="drop-slot" style="border:none; border-radius:0; height: 25px;">Object</div></div>
                     <div class="mod-container"></div>
                 </div>`;
         }
@@ -312,13 +310,12 @@
     }
 
     function setupDropZone(col) {
-        // Target the specific drop-slot within the column, not the whole column
         const slot = col.querySelector('.drop-slot');
         if (!slot) return;
 
         slot.addEventListener('dragover', e => {
             e.preventDefault();
-            e.stopPropagation(); // Stop bubbling
+            e.stopPropagation(); 
             slot.classList.add('drag-over');
         });
         
@@ -329,14 +326,13 @@
         
         slot.addEventListener('drop', e => {
             e.preventDefault();
-            e.stopPropagation(); // Prevent parent slots from triggering!
+            e.stopPropagation(); 
             slot.classList.remove('drag-over');
             
             const id = e.dataTransfer.getData('text/plain');
             const draggable = document.getElementById(id);
             
             if(draggable) {
-                // Return existing word to bank if slot is occupied
                 const existingWord = slot.querySelector('.draggable-word');
                 if (existingWord) {
                     existingWord.style.border = '1px solid #f2e05a';
