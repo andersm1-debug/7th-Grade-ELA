@@ -65,9 +65,9 @@
             text-transform: uppercase;
         }
 
-        /* Live Word Bank */
+        /* Live Word Bank - Defaults to hidden until a Cloze question appears */
         #word-bank {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
@@ -261,11 +261,11 @@
     const rawMCQ = [
         { type: "mcq", text: "The prefix <span class='highlight'>SUB-</span> means 'under'. If scientists discover a <span class='highlight'>subterranean</span> cave system, where is it located?", choices: [ { text: "Under the Earth.", correct: true }, { text: "High in the mountains.", correct: false }, { text: "Across a large body of water.", correct: false } ], explanation: "'Sub' (under) + 'terra' (earth) = Under the Earth." },
         { type: "mcq", text: "The prefix <span class='highlight'>PRE-</span> means 'before'. What are you doing if you take a <span class='highlight'>precaution</span>?", choices: [ { text: "Fixing a mistake after it happens.", correct: false }, { text: "Taking a measure beforehand to prevent harm.", correct: true }, { text: "Acting together in a common belief.", correct: false } ], explanation: "You are being cautious BEFORE something bad can happen." },
-        { type: "mcq", text: "The prefix <span class='highlight'>UNI-</span> means 'one'. If a government makes a <span class='highlight'>unilateral</span> decision, what kind of decision is it?", choices: [ { text: "A decision that requires two teams to agree.", correct: false }, { text: "A decision that is rarely distinct.", correct: false }, { text: "An entirely one-sided decision.", correct: true } ], explanation: "'Uni' (one) + 'lateral' (side) = entirely one-sided." },
+        { type: "mcq", text: "The prefix <span class='highlight'>UNI-</span> means 'one'. If a leader makes a <span class='highlight'>unilateral</span> decision, what kind of decision is it?", choices: [ { text: "A decision that requires two teams to agree.", correct: false }, { text: "A decision that is rarely distinct.", correct: false }, { text: "An entirely one-sided decision.", correct: true } ], explanation: "'Uni' (one) + 'lateral' (side) = entirely one-sided." },
         { type: "mcq", text: "The prefix <span class='highlight'>TRANS-</span> means 'across'. Which of the following defines a <span class='highlight'>transcontinental</span> railroad?", choices: [ { text: "A train that goes under the skin.", correct: false }, { text: "A train that goes across a land mass.", correct: true }, { text: "A train that comes before another train.", correct: false } ], explanation: "It transmits passengers ACROSS a continent (land mass)." },
-        { type: "mcq", text: "If your <span class='highlight'>predecessor</span> left you a note at your new job, who wrote the note?", choices: [ { text: "Someone who comes before you in a job or family.", correct: true }, { text: "Someone in a position lower in rank than you.", correct: false }, { text: "An event that leads to a second event.", correct: false } ], explanation: "'Pre' means before. They held the job BEFORE you did." },
+        { type: "mcq", text: "If your <span class='highlight'>predecessor</span> left you a note at your new job, who wrote the note?", choices: [ { text: "Someone who comes before you in a job.", correct: true }, { text: "Someone in a position lower in rank than you.", correct: false }, { text: "An event that leads to a second event.", correct: false } ], explanation: "'Pre' means before. They held the job BEFORE you did." },
         { type: "mcq", text: "What is the best definition of a <span class='highlight'>subsidiary</span> role?", choices: [ { text: "The primary, most important role in a company.", correct: false }, { text: "To send across distances.", correct: false }, { text: "A secondary role of lesser importance, but still helpful.", correct: true } ], explanation: "Because it starts with 'Sub' (under), it sits underneath the major role in importance." },
-        { type: "mcq", text: "If students decide to <span class='highlight'>unite</span>, what are they doing?", choices: [ { text: "Acting together in a common belief or idea.", correct: true }, { text: "Seeing through a transparent window.", correct: false }, { text: "Coming back together once more.", correct: false } ], explanation: "They are joining together to become ONE ('Uni')." },
+        { type: "mcq", text: "If citizens decide to <span class='highlight'>unite</span>, what are they doing?", choices: [ { text: "Acting together in a common belief or idea.", correct: true }, { text: "Seeing through a transparent window.", correct: false }, { text: "Coming back together once more.", correct: false } ], explanation: "They are joining together to become ONE ('Uni')." },
         { type: "mcq", text: "Glass is described as <span class='highlight'>transparent</span> because it allows you to do what?", choices: [ { text: "Keep light trapped inside.", correct: false }, { text: "See through it.", correct: true }, { text: "Get out of a difficult predicament.", correct: false } ], explanation: "'Trans' means across. Light can pass across or through the glass." },
         { type: "mcq", text: "Dark clouds are often a <span class='highlight'>precursor</span> to a heavy storm. What does precursor mean?", choices: [ { text: "An entirely one-sided event.", correct: false }, { text: "An event that leads to and is responsible for a second event.", correct: true }, { text: "A measure taken to prevent harm.", correct: false } ], explanation: "The clouds come BEFORE ('Pre') the storm and lead to the rain." },
         { type: "mcq", text: "Where would a doctor place a <span class='highlight'>subdermal</span> tracker on a wild animal?", choices: [ { text: "Under the skin.", correct: true }, { text: "Under the Earth.", correct: false }, { text: "Across its back.", correct: false } ], explanation: "'Sub' (under) + 'dermal' (skin)." },
@@ -278,7 +278,7 @@
 
     const rawCloze = [
         { type: "cloze", word: "Precaution", sentence: "Before handling the dangerous chemicals, the scientist took a <span class='highlight-blank'></span> and put on safety goggles.", explanation: "'Pre' means before. You take a PRECAUTION to prevent harm before it happens." },
-        { type: "cloze", word: "Predecessor", sentence: "The new principal had big shoes to fill, as her <span class='highlight-blank'></span> was loved by all the students and teachers.", explanation: "'Pre' means before. A PREDECESSOR is the person who held the job before you." },
+        { type: "cloze", word: "Predecessor", sentence: "The new mayor had big shoes to fill, as her <span class='highlight-blank'></span> was loved by all the citizens.", explanation: "'Pre' means before. A PREDECESSOR is the person who held the position before you." },
         { type: "cloze", word: "Precursor", sentence: "Dark, gathering clouds are often a <span class='highlight-blank'></span> to a violent thunderstorm.", explanation: "'Pre' means before. A PRECURSOR is an event that comes before and leads to another event." },
         { type: "cloze", word: "Predicament", sentence: "When his boat sprang a leak in the middle of the lake, he found himself in a terrible <span class='highlight-blank'></span>.", explanation: "A PREDICAMENT is a difficult, sticky situation to get out of." },
         { type: "cloze", word: "Unilateral", sentence: "Without consulting the rest of the team, the captain made a <span class='highlight-blank'></span> decision to forfeit the game.", explanation: "'Uni' means one. A UNILATERAL decision is entirely one-sided." },
@@ -323,14 +323,16 @@
         const mcqArea = document.getElementById("mcq-options");
         const clozeArea = document.getElementById("cloze-input-area");
         const formatLabel = document.getElementById("format-label");
+        const wordBank = document.getElementById("word-bank");
 
         if (q.type === 'mcq') {
             formatLabel.innerText = "MODE: MULTIPLE CHOICE";
             display.innerHTML = `<b>FILE ${currentIdx + 1}/${allQuestions.length}:</b><br><br>${q.text}`;
             
-            // UI Toggle
-            mcqArea.style.display = "flex";
+            // UI Toggle: Hide word bank and cloze input, show MCQ buttons
+            wordBank.style.display = "none";
             clozeArea.style.display = "none";
+            mcqArea.style.display = "flex";
             
             mcqArea.innerHTML = "";
             const scrambledChoices = [...q.choices].sort(() => Math.random() - 0.5);
@@ -346,8 +348,9 @@
             formatLabel.innerText = "MODE: CLOZE DECRYPTION";
             display.innerHTML = `<b>FILE ${currentIdx + 1}/${allQuestions.length}:</b><br><br>${q.sentence}`;
             
-            // UI Toggle
+            // UI Toggle: Hide MCQ buttons, show word bank and cloze input
             mcqArea.style.display = "none";
+            wordBank.style.display = "flex";
             clozeArea.style.display = "flex";
             
             const input = document.getElementById("cloze-input");
