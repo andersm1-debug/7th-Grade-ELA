@@ -113,12 +113,13 @@
 
         .base-line { border-bottom: 2px solid #c9d1d9; width: 100%; display: flex; justify-content: center; padding-bottom: 2px; }
 
+        /* Pointer events re-enabled on drop-slot so it can catch drops directly without bubbling */
         .drop-slot {
             width: 110px; height: 35px; border: 1px dashed #484f58; margin: 0 5px;
-            display: flex; justify-content: center; align-items: center; color: #484f58; font-size: 0.8rem; pointer-events: none;
+            display: flex; justify-content: center; align-items: center; color: #484f58; font-size: 0.8rem;
         }
 
-        .diagram-column.drag-over .drop-slot { background: rgba(242, 224, 90, 0.2); border-color: #f2e05a; }
+        .drop-slot.drag-over { background: rgba(242, 224, 90, 0.2); border-color: #f2e05a; }
 
         .mod-container { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; width: 100%; margin-top: 2px; gap: 5px;}
 
@@ -142,7 +143,7 @@
 
 <div id="lab-container">
     <a href="index.html" class="hub-link">← Return to Hub</a>
-    <h1 class="lab-title">FRIDAY: DIAGRAMMING V2</h1>
+    <h1 class="lab-title">FRIDAY: DIAGRAMMING V2.1</h1>
     
     <div id="instructions-panel">
         <h3 class="instructions-header">ASSEMBLY PROTOCOL:</h3>
@@ -208,7 +209,6 @@
         });
     }
 
-    // --- Select Target Logic ---
     function selectColumn(colElement, labelName) {
         if(activeColumn) activeColumn.classList.remove('selected-col');
         activeColumn = colElement;
@@ -216,7 +216,6 @@
         document.getElementById('target-display').innerText = "TARGET: " + labelName.toUpperCase();
     }
 
-    // --- Blueprint Base Generators ---
     function addBase(type) {
         const canvas = document.getElementById('diagram-canvas');
         const section = document.createElement('div');
@@ -271,7 +270,6 @@
         canvas.appendChild(section);
     }
 
-    // --- Attach Modifiers to Targeted Column ---
     function attachModifier(type) {
         if(!activeColumn) {
             alert("Please click a Subject, Verb, or DO slot on the canvas first to attach the modifier!");
@@ -308,33 +306,48 @@
         modContainer.appendChild(element);
     }
 
-    // --- Drag and Drop Logic ---
     function dragStart(e) {
         e.dataTransfer.setData('text/plain', e.target.id);
         setTimeout(() => { e.target.style.opacity = '0.5'; }, 0);
     }
 
     function setupDropZone(col) {
-        // We add the drop listeners to the column itself so the user has a bigger target
-        col.addEventListener('dragover', e => {
+        // Target the specific drop-slot within the column, not the whole column
+        const slot = col.querySelector('.drop-slot');
+        if (!slot) return;
+
+        slot.addEventListener('dragover', e => {
             e.preventDefault();
-            col.classList.add('drag-over');
+            e.stopPropagation(); // Stop bubbling
+            slot.classList.add('drag-over');
         });
         
-        col.addEventListener('dragleave', () => {
-            col.classList.remove('drag-over');
+        slot.addEventListener('dragleave', e => {
+            e.stopPropagation();
+            slot.classList.remove('drag-over');
         });
         
-        col.addEventListener('drop', e => {
+        slot.addEventListener('drop', e => {
             e.preventDefault();
-            col.classList.remove('drag-over');
+            e.stopPropagation(); // Prevent parent slots from triggering!
+            slot.classList.remove('drag-over');
+            
             const id = e.dataTransfer.getData('text/plain');
             const draggable = document.getElementById(id);
+            
             if(draggable) {
+                // Return existing word to bank if slot is occupied
+                const existingWord = slot.querySelector('.draggable-word');
+                if (existingWord) {
+                    existingWord.style.border = '1px solid #f2e05a';
+                    existingWord.style.padding = '10px';
+                    existingWord.style.background = '#21262d';
+                    existingWord.style.color = '#fff';
+                    existingWord.style.fontSize = '1.1rem';
+                    document.getElementById('word-bank').appendChild(existingWord);
+                }
+
                 draggable.style.opacity = '1';
-                
-                // Find the drop slot inside this column to place the word
-                const slot = col.querySelector('.drop-slot');
                 slot.innerHTML = ''; 
                 slot.appendChild(draggable);
                 
