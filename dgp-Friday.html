@@ -26,7 +26,7 @@
         #lab-container {
             background: rgba(22, 27, 34, 0.95);
             border: 2px solid #30363d;
-            border-top: 6px solid #f2e05a; /* Gold theme for Friday */
+            border-top: 6px solid #f2e05a;
             border-radius: 8px;
             padding: 30px;
             width: 100%;
@@ -54,7 +54,6 @@
             letter-spacing: 2px;
         }
 
-        /* Instructions */
         #instructions-panel {
             background: #161b22;
             border: 1px solid #f2e05a;
@@ -64,213 +63,78 @@
             border-radius: 4px;
         }
 
-        .instructions-header {
-            color: #f2e05a;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
+        .instructions-header { color: #f2e05a; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; }
+        .instruction-steps { font-size: 0.9rem; color: #c9d1d9; margin: 0; padding-left: 20px; line-height: 1.6; }
 
-        .instruction-steps {
-            font-size: 0.9rem;
-            color: #c9d1d9;
-            margin: 0;
-            padding-left: 20px;
-            line-height: 1.6;
-        }
+        #input-section { display: flex; gap: 10px; margin-bottom: 20px; }
+        #sentence-input { flex-grow: 1; background: #0d1117; border: 1px solid #30363d; color: #f2e05a; padding: 15px; font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; border-radius: 4px; }
+        #analyze-btn { background: #f2e05a; color: #0d1117; border: none; padding: 0 25px; font-family: 'Orbitron', sans-serif; font-weight: bold; cursor: pointer; border-radius: 4px; }
 
-        #input-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        #sentence-input {
-            flex-grow: 1;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            color: #f2e05a;
-            padding: 15px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.1rem;
-            border-radius: 4px;
-        }
-
-        #analyze-btn {
-            background: #f2e05a;
-            color: #0d1117;
-            border: none;
-            padding: 0 25px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        /* Drag and Drop Workspaces */
-        #workspace-container {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            display: none; /* Hidden until loaded */
-        }
+        #workspace-container { display: none; gap: 20px; margin-bottom: 20px; }
 
         #word-bank {
-            width: 25%;
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 4px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-height: 300px;
+            width: 25%; background: #161b22; border: 1px solid #30363d; border-radius: 4px; padding: 15px;
+            display: flex; flex-direction: column; gap: 10px; min-height: 300px;
         }
 
-        .panel-header {
-            color: #8b949e;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-align: center;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
+        .panel-header { color: #8b949e; font-size: 0.85rem; text-transform: uppercase; font-weight: bold; text-align: center; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 10px; }
 
         #diagram-canvas {
-            width: 75%;
-            background: #0d1117;
-            border: 1px dashed #f2e05a;
-            border-radius: 4px;
-            padding: 20px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            overflow-x: auto;
+            width: 75%; background: #0d1117; border: 1px dashed #f2e05a; border-radius: 4px; padding: 20px;
+            min-height: 400px; display: flex; flex-direction: column; align-items: center; gap: 40px; overflow-x: auto;
         }
 
-        /* Draggable Words */
         .draggable-word {
-            background: #21262d;
-            border: 1px solid #f2e05a;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            cursor: grab;
-            border-radius: 4px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.1rem;
-            user-select: none;
+            background: #21262d; border: 1px solid #f2e05a; color: #fff; padding: 10px; text-align: center;
+            cursor: grab; border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; user-select: none;
         }
-        
         .draggable-word:active { cursor: grabbing; }
 
         /* Blueprint Toolbar */
         #blueprint-toolbar {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 4px;
-            padding: 15px;
-            display: none;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            background: #161b22; border: 1px solid #30363d; border-radius: 4px; padding: 15px;
+            display: none; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
         }
 
-        .blueprint-btn {
-            background: #0d1117;
-            border: 1px solid #8b949e;
-            color: #e6edf3;
-            padding: 8px 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
+        .blueprint-btn { background: #0d1117; border: 1px solid #8b949e; color: #e6edf3; padding: 8px 15px; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; cursor: pointer; border-radius: 3px; }
         .blueprint-btn:hover { background: #30363d; border-color: #f2e05a; }
+        
+        #target-display { width: 100%; text-align: center; color: #f2e05a; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; margin-top: 10px; font-weight: bold; }
 
-        /* Diagram Structures (The Drop Zones) */
-        .diagram-frame {
-            display: flex;
-            align-items: flex-end;
-            position: relative;
+        /* Diagram V2 Structures */
+        .diagram-section { display: flex; align-items: flex-start; justify-content: center; }
+        
+        .diagram-column {
+            display: flex; flex-direction: column; align-items: flex-start; min-width: 120px; cursor: pointer;
+            border-radius: 4px; transition: 0.2s; padding: 5px;
         }
+
+        .diagram-column.selected-col { background: rgba(242, 224, 90, 0.1); box-shadow: 0 0 10px rgba(242, 224, 90, 0.2); }
+
+        .base-line { border-bottom: 2px solid #c9d1d9; width: 100%; display: flex; justify-content: center; padding-bottom: 2px; }
 
         .drop-slot {
-            width: 120px;
-            height: 40px;
-            border: 1px dashed #484f58;
-            margin: 0 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #484f58;
-            font-size: 0.8rem;
+            width: 110px; height: 35px; border: 1px dashed #484f58; margin: 0 5px;
+            display: flex; justify-content: center; align-items: center; color: #484f58; font-size: 0.8rem; pointer-events: none;
         }
 
-        .drop-slot.drag-over { background: rgba(242, 224, 90, 0.2); border-color: #f2e05a; }
+        .diagram-column.drag-over .drop-slot { background: rgba(242, 224, 90, 0.2); border-color: #f2e05a; }
 
-        /* CSS Drawing for Diagram Lines */
-        .base-line {
-            border-bottom: 2px solid #c9d1d9;
-            display: flex;
-            padding-bottom: 5px;
-        }
+        .mod-container { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; width: 100%; margin-top: 2px; gap: 5px;}
 
-        .vert-divider {
-            width: 2px;
-            background: #c9d1d9;
-            height: 50px;
-            margin: 0 10px;
-            position: relative;
-            top: 10px;
-        }
+        /* Dividers */
+        .vert-divider { width: 2px; background: #c9d1d9; height: 50px; margin: 0 5px; position: relative; top: 10px; }
+        .slash-divider { width: 2px; background: #c9d1d9; height: 45px; margin: 0 5px; transform: rotate(30deg); position: relative; top: 5px; }
 
-        .slash-divider {
-            width: 2px;
-            background: #c9d1d9;
-            height: 45px;
-            margin: 0 10px;
-            transform: rotate(30deg);
-            position: relative;
-            top: 5px;
-        }
+        /* Modifiers */
+        .modifier-branch { display: flex; flex-direction: column; align-items: flex-start; margin-left: 10px;}
+        .mod-line { width: 2px; background: #c9d1d9; height: 25px; transform: rotate(-30deg); transform-origin: top; margin-left: 15px; }
+        .mod-slot { border: none; border-bottom: 1px dashed #484f58; height: 25px; margin-top: -5px; width: 90px;}
 
-        .modifier-branch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .mod-line {
-            width: 2px;
-            background: #c9d1d9;
-            height: 30px;
-            transform: rotate(-45deg);
-            margin-bottom: -10px;
-        }
-
-        .prep-phrase {
-            display: flex;
-            align-items: flex-end;
-            margin-top: 5px;
-        }
-
-        .prep-line {
-            width: 60px;
-            border-bottom: 2px solid #c9d1d9;
-            transform: rotate(30deg);
-            transform-origin: left bottom;
-            margin-bottom: 15px;
-            margin-right: -10px;
-        }
+        /* Prepositions */
+        .prep-phrase { display: flex; align-items: flex-end; margin-left: 10px; margin-top: 5px;}
+        .prep-line { width: 40px; border-bottom: 2px solid #c9d1d9; transform: rotate(30deg); transform-origin: left bottom; margin-bottom: 10px; margin-right: -5px; }
+        .prep-slot { border: none; transform: rotate(-30deg); position: relative; top: -15px; font-size: 0.7rem; height: 20px; width: 50px;}
 
     </style>
 </head>
@@ -278,14 +142,14 @@
 
 <div id="lab-container">
     <a href="index.html" class="hub-link">← Return to Hub</a>
-    <h1 class="lab-title">FRIDAY: DIAGRAMMING</h1>
+    <h1 class="lab-title">FRIDAY: DIAGRAMMING V2</h1>
     
     <div id="instructions-panel">
         <h3 class="instructions-header">ASSEMBLY PROTOCOL:</h3>
         <ul class="instruction-steps">
-            <li><b>Step 1 (Base Line):</b> Use the Blueprint Toolbar to add your main Subject/Verb baseline to the canvas.</li>
-            <li><b>Step 2 (Modifiers):</b> Add hanging modifier lines for adjectives, adverbs, and prepositional phrases.</li>
-            <li><b>Step 3 (Assemble):</b> Drag words from the Word Bank on the left and drop them into the correct slots in your diagram puzzle!</li>
+            <li><b>Step 1:</b> Click the Toolbar to add your main baseline to the canvas.</li>
+            <li><b>Step 2 (Targeted Modifiers):</b> Click a specific slot (like Subject or DO) to target it. It will glow. Then click "Add Modifier" to attach a line directly under it!</li>
+            <li><b>Step 3:</b> Drag words from the Word Bank into the empty slots.</li>
         </ul>
     </div>
 
@@ -295,39 +159,41 @@
     </div>
 
     <div id="blueprint-toolbar">
-        <button class="blueprint-btn" onclick="addStructure('sv')">Add [S | V]</button>
-        <button class="blueprint-btn" onclick="addStructure('svdo')">Add [S | V | DO]</button>
-        <button class="blueprint-btn" onclick="addStructure('svpn')">Add [S | V \ PA/PN]</button>
-        <button class="blueprint-btn" onclick="addStructure('mod')">Add Hanging Modifier</button>
-        <button class="blueprint-btn" onclick="addStructure('prep')">Add Prep Phrase \__</button>
-        <button class="blueprint-btn" style="border-color: #f85149; color: #f85149;" onclick="clearCanvas()">Clear Canvas</button>
+        <button class="blueprint-btn" onclick="addBase('sv')">Add [S | V]</button>
+        <button class="blueprint-btn" onclick="addBase('svdo')">Add [S | V | DO]</button>
+        <button class="blueprint-btn" onclick="addBase('svpn')">Add [S | V \ PA/PN]</button>
+        <span style="border-left: 1px solid #30363d; margin: 0 10px;"></span>
+        <button class="blueprint-btn" style="color: #f2e05a;" onclick="attachModifier('mod')">+ Attach Modifier</button>
+        <button class="blueprint-btn" style="color: #f2e05a;" onclick="attachModifier('prep')">+ Attach Prep Phrase</button>
+        <button class="blueprint-btn" style="border-color: #f85149; color: #f85149; margin-left: auto;" onclick="clearCanvas()">Clear Canvas</button>
+        <div id="target-display">TARGET: NONE (Click a slot on the canvas to attach modifiers)</div>
     </div>
 
     <div id="workspace-container">
         <div id="word-bank">
             <div class="panel-header">WORD BANK</div>
-            </div>
+        </div>
         <div id="diagram-canvas">
             <div class="panel-header" style="width: 100%; border:none;">DIAGRAM CANVAS</div>
-            </div>
+        </div>
     </div>
 </div>
 
 <script>
     let wordIdCounter = 0;
+    let activeColumn = null;
 
     function processSentence() {
         const inputStr = document.getElementById('sentence-input').value.trim();
         if (!inputStr) return;
         
         const wordBank = document.getElementById('word-bank');
-        wordBank.innerHTML = '<div class="panel-header">WORD BANK</div>'; // Reset
+        wordBank.innerHTML = '<div class="panel-header">WORD BANK</div>'; 
         
         document.getElementById('workspace-container').style.display = 'flex';
         document.getElementById('blueprint-toolbar').style.display = 'flex';
-        clearCanvas(); // Clear previous diagram
+        clearCanvas(); 
         
-        // Remove punctuation for clean diagramming
         const cleanStr = inputStr.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
         const words = cleanStr.split(/\s+/);
 
@@ -337,11 +203,109 @@
             wordDiv.innerText = word;
             wordDiv.draggable = true;
             wordDiv.id = 'word-' + wordIdCounter++;
-            
-            // Drag Events
             wordDiv.addEventListener('dragstart', dragStart);
             wordBank.appendChild(wordDiv);
         });
+    }
+
+    // --- Select Target Logic ---
+    function selectColumn(colElement, labelName) {
+        if(activeColumn) activeColumn.classList.remove('selected-col');
+        activeColumn = colElement;
+        activeColumn.classList.add('selected-col');
+        document.getElementById('target-display').innerText = "TARGET: " + labelName.toUpperCase();
+    }
+
+    // --- Blueprint Base Generators ---
+    function addBase(type) {
+        const canvas = document.getElementById('diagram-canvas');
+        const section = document.createElement('div');
+        section.className = 'diagram-section';
+
+        if (type === 'sv') {
+            section.innerHTML = `
+                <div class="diagram-column" onclick="selectColumn(this, 'Subject')">
+                    <div class="base-line"><div class="drop-slot" data-label="Subject">Subject</div></div>
+                    <div class="mod-container"></div>
+                </div>
+                <div class="vert-divider"></div>
+                <div class="diagram-column" onclick="selectColumn(this, 'Verb')">
+                    <div class="base-line"><div class="drop-slot" data-label="Verb">Verb</div></div>
+                    <div class="mod-container"></div>
+                </div>`;
+        } else if (type === 'svdo') {
+            section.innerHTML = `
+                <div class="diagram-column" onclick="selectColumn(this, 'Subject')">
+                    <div class="base-line"><div class="drop-slot" data-label="Subject">Subject</div></div>
+                    <div class="mod-container"></div>
+                </div>
+                <div class="vert-divider"></div>
+                <div class="diagram-column" onclick="selectColumn(this, 'Verb')">
+                    <div class="base-line"><div class="drop-slot" data-label="Verb">Verb</div></div>
+                    <div class="mod-container"></div>
+                </div>
+                <div class="vert-divider" style="height:30px; top:0;"></div>
+                <div class="diagram-column" onclick="selectColumn(this, 'Direct Object')">
+                    <div class="base-line"><div class="drop-slot" data-label="Direct Obj">DO</div></div>
+                    <div class="mod-container"></div>
+                </div>`;
+        } else if (type === 'svpn') {
+            section.innerHTML = `
+                <div class="diagram-column" onclick="selectColumn(this, 'Subject')">
+                    <div class="base-line"><div class="drop-slot" data-label="Subject">Subject</div></div>
+                    <div class="mod-container"></div>
+                </div>
+                <div class="vert-divider"></div>
+                <div class="diagram-column" onclick="selectColumn(this, 'Verb')">
+                    <div class="base-line"><div class="drop-slot" data-label="Verb">Verb</div></div>
+                    <div class="mod-container"></div>
+                </div>
+                <div class="slash-divider"></div>
+                <div class="diagram-column" onclick="selectColumn(this, 'PA/PN')">
+                    <div class="base-line"><div class="drop-slot" data-label="PA/PN">PA / PN</div></div>
+                    <div class="mod-container"></div>
+                </div>`;
+        }
+
+        section.querySelectorAll('.diagram-column').forEach(setupDropZone);
+        canvas.appendChild(section);
+    }
+
+    // --- Attach Modifiers to Targeted Column ---
+    function attachModifier(type) {
+        if(!activeColumn) {
+            alert("Please click a Subject, Verb, or DO slot on the canvas first to attach the modifier!");
+            return;
+        }
+
+        const modContainer = activeColumn.querySelector('.mod-container');
+        const element = document.createElement('div');
+
+        if (type === 'mod') {
+            element.className = 'modifier-branch';
+            element.innerHTML = `
+                <div class="mod-line"></div>
+                <div class="diagram-column" style="min-width: 90px; padding:0;" onclick="selectColumn(this, 'Modifier'); event.stopPropagation();">
+                    <div class="drop-slot mod-slot" data-label="Modifier">Mod</div>
+                    <div class="mod-container"></div>
+                </div>`;
+        } else if (type === 'prep') {
+            element.className = 'prep-phrase';
+            element.innerHTML = `
+                <div class="prep-line">
+                   <div class="diagram-column" style="min-width: 50px; padding:0;" onclick="selectColumn(this, 'Preposition'); event.stopPropagation();">
+                       <div class="drop-slot prep-slot" data-label="Prep">Prep</div>
+                       <div class="mod-container"></div>
+                   </div>
+                </div>
+                <div class="diagram-column" onclick="selectColumn(this, 'Object of Prep'); event.stopPropagation();">
+                    <div class="base-line" style="border-bottom: 2px solid #c9d1d9;"><div class="drop-slot" style="border:none; border-radius:0;">Object</div></div>
+                    <div class="mod-container"></div>
+                </div>`;
+        }
+
+        element.querySelectorAll('.diagram-column').forEach(setupDropZone);
+        modContainer.appendChild(element);
     }
 
     // --- Drag and Drop Logic ---
@@ -350,90 +314,44 @@
         setTimeout(() => { e.target.style.opacity = '0.5'; }, 0);
     }
 
-    function setupDropZone(zone) {
-        zone.addEventListener('dragover', e => {
+    function setupDropZone(col) {
+        // We add the drop listeners to the column itself so the user has a bigger target
+        col.addEventListener('dragover', e => {
             e.preventDefault();
-            zone.classList.add('drag-over');
+            col.classList.add('drag-over');
         });
         
-        zone.addEventListener('dragleave', () => {
-            zone.classList.remove('drag-over');
+        col.addEventListener('dragleave', () => {
+            col.classList.remove('drag-over');
         });
         
-        zone.addEventListener('drop', e => {
+        col.addEventListener('drop', e => {
             e.preventDefault();
-            zone.classList.remove('drag-over');
+            col.classList.remove('drag-over');
             const id = e.dataTransfer.getData('text/plain');
             const draggable = document.getElementById(id);
             if(draggable) {
                 draggable.style.opacity = '1';
-                zone.innerHTML = ''; // Clear placeholder text
-                zone.appendChild(draggable);
+                
+                // Find the drop slot inside this column to place the word
+                const slot = col.querySelector('.drop-slot');
+                slot.innerHTML = ''; 
+                slot.appendChild(draggable);
+                
                 draggable.style.border = 'none';
                 draggable.style.padding = '0';
                 draggable.style.background = 'transparent';
-                draggable.style.color = '#f2e05a'; // Turn gold when dropped
+                draggable.style.color = '#f2e05a';
+                draggable.style.fontSize = '1.2rem';
             }
         });
-    }
-
-    // --- Blueprint Structure Generators ---
-    function addStructure(type) {
-        const canvas = document.getElementById('diagram-canvas');
-        const frame = document.createElement('div');
-        frame.className = 'diagram-frame';
-
-        if (type === 'sv') {
-            frame.innerHTML = `
-                <div class="base-line">
-                    <div class="drop-slot" data-label="Subject">Subject</div>
-                    <div class="vert-divider"></div>
-                    <div class="drop-slot" data-label="Verb">Verb</div>
-                </div>`;
-        } else if (type === 'svdo') {
-            frame.innerHTML = `
-                <div class="base-line">
-                    <div class="drop-slot" data-label="Subject">Subject</div>
-                    <div class="vert-divider"></div>
-                    <div class="drop-slot" data-label="Verb">Verb</div>
-                    <div class="vert-divider" style="height:30px; top:0;"></div>
-                    <div class="drop-slot" data-label="Direct Obj">DO</div>
-                </div>`;
-        } else if (type === 'svpn') {
-            frame.innerHTML = `
-                <div class="base-line">
-                    <div class="drop-slot" data-label="Subject">Subject</div>
-                    <div class="vert-divider"></div>
-                    <div class="drop-slot" data-label="Verb">Verb</div>
-                    <div class="slash-divider"></div>
-                    <div class="drop-slot" data-label="PA/PN">PA / PN</div>
-                </div>`;
-        } else if (type === 'mod') {
-            frame.innerHTML = `
-                <div class="modifier-branch">
-                    <div class="mod-line"></div>
-                    <div class="drop-slot" style="border:none; border-bottom:1px dashed #484f58;" data-label="Modifier">Mod</div>
-                </div>`;
-        } else if (type === 'prep') {
-            frame.innerHTML = `
-                <div class="prep-phrase">
-                    <div class="prep-line">
-                       <div class="drop-slot" style="border:none; transform:rotate(-30deg); position:relative; top:-20px; font-size:0.7rem;" data-label="Prep">Prep</div>
-                    </div>
-                    <div class="drop-slot" style="border:none; border-bottom:2px solid #c9d1d9; border-radius:0;" data-label="Object">Object</div>
-                </div>`;
-        }
-
-        // Initialize drop zones for new frame
-        const slots = frame.querySelectorAll('.drop-slot');
-        slots.forEach(setupDropZone);
-
-        canvas.appendChild(frame);
     }
 
     function clearCanvas() {
         const canvas = document.getElementById('diagram-canvas');
         canvas.innerHTML = '<div class="panel-header" style="width: 100%; border:none;">DIAGRAM CANVAS</div>';
+        activeColumn = null;
+        document.getElementById('target-display').innerText = "TARGET: NONE (Click a slot on the canvas to attach modifiers)";
     }
 
     document.getElementById("sentence-input").addEventListener("keypress", function(event) {
