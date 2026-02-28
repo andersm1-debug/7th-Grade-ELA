@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEEK 18: PREFIX PROTOCOL</title>
+    <title>WEEK 18: PREFIX PROTOCOL (CLOZE)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
 
@@ -20,15 +20,16 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         #lab-container {
             background: rgba(11, 15, 25, 0.95);
             border: 2px solid #212d40;
-            border-top: 8px solid #ffb703; /* Gold Theme */
-            padding: 40px;
-            width: 95%;
-            max-width: 800px;
+            border-top: 8px solid #ffb703;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
             position: relative;
         }
@@ -48,7 +49,7 @@
 
         .lab-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-align: center;
             margin: 20px 0 5px 0;
             color: #ffb703;
@@ -59,45 +60,96 @@
             text-align: center;
             color: #8b949e;
             font-size: 0.9rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
         }
 
-        .question-box {
+        /* Live Word Bank */
+        #word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             background: #111827;
-            border: 1px dashed #374151;
-            padding: 25px;
+            border: 1px solid #374151;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .bank-word {
+            background: #1f2937;
+            color: #ffb703;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            border: 1px solid #374151;
+            transition: 0.3s;
+        }
+
+        .bank-word.used {
+            text-decoration: line-through;
+            color: #4b5563;
+            border-color: #1f2937;
+            background: transparent;
+        }
+
+        .question-box {
+            background: transparent;
+            padding: 20px;
             margin-bottom: 25px;
             color: #e5e7eb;
-            font-size: 1.3rem;
-            line-height: 1.6;
+            font-size: 1.4rem;
+            line-height: 1.8;
             text-align: center;
         }
 
-        .highlight { color: #ffb703; font-weight: bold; }
+        .highlight-blank {
+            display: inline-block;
+            width: 150px;
+            border-bottom: 2px dashed #ffb703;
+            margin: 0 10px;
+            color: #ffb703;
+        }
 
-        .choice-btn {
-            background: #1f2937;
-            border: 1px solid #374151;
-            color: #d1d5db;
-            padding: 18px;
-            margin: 10px 0;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
+        /* Terminal Input Area */
+        #input-area {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #cloze-input {
+            background: #0b0f19;
+            border: 1px solid #ffb703;
+            color: #ffb703;
+            padding: 15px;
             font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            width: 50%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        #cloze-input:focus { outline: none; box-shadow: 0 0 10px rgba(255, 183, 3, 0.3); }
+
+        #submit-btn {
+            background: #ffb703;
+            color: #0b0f19;
+            border: none;
+            padding: 0 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
             font-size: 1.1rem;
+            cursor: pointer;
             border-radius: 4px;
             transition: 0.2s;
         }
+        #submit-btn:hover { filter: brightness(1.2); }
 
-        .choice-btn:hover {
-            background: #ffb703;
-            color: #0b0f19;
-            border-color: #ffb703;
-            transform: translateX(5px);
-        }
-
+        /* Feedback Modal */
         #feedback-modal {
             display: none;
             position: fixed;
@@ -121,25 +173,10 @@
             margin-top: 25px;
             border-radius: 4px;
             font-weight: bold;
-            transition: 0.2s;
         }
-        
-        .next-btn:hover { filter: brightness(1.2); }
 
-        #progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #1f2937;
-            margin-bottom: 20px;
-            border-radius: 3px;
-        }
-        
-        #progress-fill {
-            height: 100%;
-            background: #ffb703;
-            width: 0%;
-            transition: width 0.3s;
-        }
+        #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 3px; }
+        #progress-fill { height: 100%; background: #ffb703; width: 0%; transition: width 0.3s; }
 
     </style>
 </head>
@@ -148,13 +185,19 @@
 <div id="lab-container">
     <a href="index.html" class="hub-link">← Return to Hub</a>
     <h1 class="lab-title">PREFIX PROTOCOL</h1>
-    <p class="sub-title">WEEK 18: PRE | TRANS | SUB | UNI</p>
+    <p class="sub-title">CLOZE DECRYPTION: PRE | TRANS | SUB | UNI</p>
     
     <div id="progress-bar"><div id="progress-fill"></div></div>
 
+    <div id="word-bank">
+        </div>
+
     <div id="quiz-content">
         <div id="text-display" class="question-box">INITIALIZING...</div>
-        <div id="options"></div>
+        <div id="input-area">
+            <input type="text" id="cloze-input" placeholder="ENTER OVERRIDE CODE..." autocomplete="off">
+            <button id="submit-btn" onclick="checkAnswer()">SUBMIT</button>
+        </div>
     </div>
 </div>
 
@@ -165,147 +208,108 @@
 </div>
 
 <script>
-    // Answer choices are fully scrambled (A, B, and C) to prevent pattern guessing.
-    const questions = [
+    const allWords = [
+        "Precaution", "Predecessor", "Precursor", "Predicament", 
+        "Unilateral", "Unite", "Reunion", "Unique", 
+        "Subterranean", "Subordinate", "Subsidiary", "Subdermal", 
+        "Transmit", "Transparent", "Transcontinental"
+    ];
+
+    const rawQuestions = [
         {
-            text: "The prefix <span class='highlight'>SUB-</span> means 'under'. If scientists discover a <span class='highlight'>subterranean</span> cave system, where is it located?",
-            choices: [
-                { text: "Under the Earth.", correct: true },
-                { text: "High in the mountains.", correct: false },
-                { text: "Across a large body of water.", correct: false }
-            ],
-            explanation: "Correct! 'Sub' (under) + 'terra' (earth) = Under the Earth."
+            word: "Precaution",
+            sentence: "Before handling the dangerous chemicals, the scientist took a <span class='highlight-blank'></span> and put on safety goggles.",
+            explanation: "'Pre' means before. You take a PRECAUTION to prevent harm before it happens."
         },
         {
-            text: "The prefix <span class='highlight'>PRE-</span> means 'before'. What are you doing if you take a <span class='highlight'>precaution</span> in the science lab?",
-            choices: [
-                { text: "Fixing a mistake after it happens.", correct: false },
-                { text: "Taking a measure beforehand to prevent harm.", correct: true },
-                { text: "Acting together in a common belief.", correct: false }
-            ],
-            explanation: "Correct! You are being cautious BEFORE something bad can happen."
+            word: "Predecessor",
+            sentence: "The new principal had big shoes to fill, as her <span class='highlight-blank'></span> was loved by all the students and teachers.",
+            explanation: "'Pre' means before. A PREDECESSOR is the person who held the job before you."
         },
         {
-            text: "The prefix <span class='highlight'>UNI-</span> means 'one'. If a government makes a <span class='highlight'>unilateral</span> decision, what kind of decision is it?",
-            choices: [
-                { text: "A decision that requires two teams to agree.", correct: false },
-                { text: "A decision that is rarely distinct.", correct: false },
-                { text: "An entirely one-sided decision.", correct: true }
-            ],
-            explanation: "Correct! 'Uni' (one) + 'lateral' (side) = entirely one-sided."
+            word: "Precursor",
+            sentence: "Dark, gathering clouds are often a <span class='highlight-blank'></span> to a violent thunderstorm.",
+            explanation: "'Pre' means before. A PRECURSOR is an event that comes before and leads to another event."
         },
         {
-            text: "The prefix <span class='highlight'>TRANS-</span> means 'across'. Which of the following defines a <span class='highlight'>transcontinental</span> railroad?",
-            choices: [
-                { text: "A train that goes under the skin.", correct: false },
-                { text: "A train that goes across a land mass.", correct: true },
-                { text: "A train that comes before another train.", correct: false }
-            ],
-            explanation: "Correct! It transmits passengers ACROSS a continent (land mass)."
+            word: "Predicament",
+            sentence: "When his boat sprang a leak in the middle of the lake, he found himself in a terrible <span class='highlight-blank'></span>.",
+            explanation: "A PREDICAMENT is a difficult, sticky situation to get out of."
         },
         {
-            text: "If your <span class='highlight'>predecessor</span> left you a note at your new job, who wrote the note?",
-            choices: [
-                { text: "Someone who comes before you in a job or family.", correct: true },
-                { text: "Someone in a position lower in rank than you.", correct: false },
-                { text: "An event that leads to a second event.", correct: false }
-            ],
-            explanation: "Correct! 'Pre' means before. They held the job BEFORE you did."
+            word: "Unilateral",
+            sentence: "Without consulting the rest of the team, the captain made a <span class='highlight-blank'></span> decision to forfeit the game.",
+            explanation: "'Uni' means one. A UNILATERAL decision is entirely one-sided."
         },
         {
-            text: "What is the best definition of a <span class='highlight'>subsidiary</span> role?",
-            choices: [
-                { text: "The primary, most important role in a company.", correct: false },
-                { text: "To send across distances.", correct: false },
-                { text: "A secondary role of lesser importance, but still helpful.", correct: true }
-            ],
-            explanation: "Correct! Because it starts with 'Sub' (under), it sits underneath the major role in importance."
+            word: "Unite",
+            sentence: "In times of crisis, communities often <span class='highlight-blank'></span> to help those in need.",
+            explanation: "'Uni' means one. To UNITE is to join together as one in a common belief or action."
         },
         {
-            text: "If students decide to <span class='highlight'>unite</span>, what are they doing?",
-            choices: [
-                { text: "Acting together in a common belief or idea.", correct: true },
-                { text: "Seeing through a transparent window.", correct: false },
-                { text: "Coming back together once more.", correct: false }
-            ],
-            explanation: "Correct! They are joining together to become ONE ('Uni')."
+            word: "Reunion",
+            sentence: "After ten years apart, the extended family gathered at the park for a joyful summer <span class='highlight-blank'></span>.",
+            explanation: "'Re' means again, and 'Uni' means one. A REUNION is coming back together as one."
         },
         {
-            text: "Glass is described as <span class='highlight'>transparent</span> because it allows you to do what?",
-            choices: [
-                { text: "Keep light trapped inside.", correct: false },
-                { text: "See through it.", correct: true },
-                { text: "Get out of a difficult predicament.", correct: false }
-            ],
-            explanation: "Correct! 'Trans' means across. Light can pass across or through the glass."
+            word: "Unique",
+            sentence: "The antique vase was completely <span class='highlight-blank'></span>; there was not another one like it in the entire world.",
+            explanation: "'Uni' means one. Something UNIQUE is one of a kind and rarely distinct."
         },
         {
-            text: "Dark clouds are often a <span class='highlight'>precursor</span> to a heavy storm. What does precursor mean?",
-            choices: [
-                { text: "An entirely one-sided event.", correct: false },
-                { text: "An event that leads to and is responsible for a second event.", correct: true },
-                { text: "A measure taken to prevent harm.", correct: false }
-            ],
-            explanation: "Correct! The clouds come BEFORE ('Pre') the storm and lead to the rain."
+            word: "Subterranean",
+            sentence: "The explorers mapped a massive <span class='highlight-blank'></span> cave system hidden deep below the surface of the earth.",
+            explanation: "'Sub' means under. SUBTERRANEAN means under the Earth (terra)."
         },
         {
-            text: "Where would a doctor place a <span class='highlight'>subdermal</span> tracker on a wild animal?",
-            choices: [
-                { text: "Under the skin.", correct: true },
-                { text: "Under the Earth.", correct: false },
-                { text: "Across its back.", correct: false }
-            ],
-            explanation: "Correct! 'Sub' (under) + 'dermal' (skin)."
+            word: "Subordinate",
+            sentence: "The general gave clear instructions to his <span class='highlight-blank'></span> officers to follow the new rules immediately.",
+            explanation: "'Sub' means under. A SUBORDINATE is someone in a lower rank or position."
         },
         {
-            text: "What happens at a family <span class='highlight'>reunion</span>?",
-            choices: [
-                { text: "They get into a difficult situation.", correct: false },
-                { text: "They come back together once more.", correct: true },
-                { text: "They act together to become rarely distinct.", correct: false }
-            ],
-            explanation: "Correct! They unite (become one) again."
+            word: "Subsidiary",
+            sentence: "The massive tech company bought a smaller <span class='highlight-blank'></span> company to handle all of its shipping needs.",
+            explanation: "'Sub' means under. A SUBSIDIARY is a secondary role of lesser importance, but helpful to the major role."
         },
         {
-            text: "How would you describe a <span class='highlight'>subordinate</span> worker in an office?",
-            choices: [
-                { text: "They hold a position lower in rank.", correct: true },
-                { text: "They are entirely one-sided.", correct: false },
-                { text: "They are the person who had the job before you.", correct: false }
-            ],
-            explanation: "Correct! 'Sub' means under. They work under the manager."
+            word: "Subdermal",
+            sentence: "The veterinarian inserted a tiny <span class='highlight-blank'></span> microchip beneath the puppy's skin so it could be tracked if lost.",
+            explanation: "'Sub' means under. SUBDERMAL means under the skin (dermis)."
         },
         {
-            text: "A cell tower's job is to <span class='highlight'>transmit</span> data. What does this mean?",
-            choices: [
-                { text: "To take a measure beforehand.", correct: false },
-                { text: "To see through.", correct: false },
-                { text: "To send across.", correct: true }
-            ],
-            explanation: "Correct! 'Trans' means across. It sends signals across the city."
+            word: "Transmit",
+            sentence: "The radio tower was built to <span class='highlight-blank'></span> emergency signals across the entire mountain valley.",
+            explanation: "'Trans' means across. To TRANSMIT is to send something across a distance."
         },
         {
-            text: "If a piece of art is truly <span class='highlight'>unique</span>, it is...",
-            choices: [
-                { text: "Secondary and of lesser importance.", correct: false },
-                { text: "Rarely distinct (one of a kind).", correct: true },
-                { text: "A difficult situation to get out of.", correct: false }
-            ],
-            explanation: "Correct! 'Uni' means one. There is only one of it."
+            word: "Transparent",
+            sentence: "The water in the tropical lagoon was so <span class='highlight-blank'></span> that we could clearly see the fish swimming at the bottom.",
+            explanation: "'Trans' means across/through. TRANSPARENT means you can see right through it."
         },
         {
-            text: "If you lose your keys and lock yourself out of your car, you are in a <span class='highlight'>predicament</span>. What is that?",
-            choices: [
-                { text: "An event that leads to a second event.", correct: false },
-                { text: "A position lower in rank.", correct: false },
-                { text: "A difficult situation to get out of.", correct: true }
-            ],
-            explanation: "Correct! You are stuck in a tough spot."
+            word: "Transcontinental",
+            sentence: "The completion of the <span class='highlight-blank'></span> railroad allowed people to travel across the entire country in just a few days.",
+            explanation: "'Trans' means across. TRANSCONTINENTAL means to go across a land mass (continent)."
         }
     ];
 
+    // Scramble the questions for every user!
+    let questions = [...rawQuestions].sort(() => Math.random() - 0.5);
+
     let current = 0;
     let score = 0;
+
+    // Build the Word Bank
+    const bankContainer = document.getElementById("word-bank");
+    // Sort words alphabetically for easier searching
+    const sortedWords = [...allWords].sort();
+    sortedWords.forEach(w => {
+        const span = document.createElement("span");
+        span.className = "bank-word";
+        span.id = "bank-" + w.toLowerCase();
+        span.innerText = w;
+        bankContainer.appendChild(span);
+    });
 
     function updateProgress() {
         const fill = document.getElementById("progress-fill");
@@ -316,30 +320,36 @@
     function loadQuestion() {
         updateProgress();
         const q = questions[current];
-        document.getElementById("text-display").innerHTML = `<b>WORD ${current + 1} of ${questions.length}:</b><br><br>${q.text}`;
-        const optCont = document.getElementById("options");
-        optCont.innerHTML = "";
+        document.getElementById("text-display").innerHTML = `<b>FILE ${current + 1}/${questions.length}:</b><br><br>${q.sentence}`;
+        const input = document.getElementById("cloze-input");
+        input.value = "";
+        input.focus();
+    }
 
-        q.choices.forEach(c => {
-            const btn = document.createElement("button");
-            btn.className = "choice-btn";
-            btn.innerHTML = c.text;
-            btn.onclick = () => {
-                const modal = document.getElementById("feedback-modal");
-                const status = document.getElementById("fb-status");
-                if (c.correct) {
-                    score++;
-                    status.innerText = "ACCESS GRANTED";
-                    status.style.color = "#3fb950"; // Green for correct
-                } else {
-                    status.innerText = "ACCESS DENIED";
-                    status.style.color = "#f85149"; // Red for incorrect
-                }
-                document.getElementById("fb-info").innerText = q.explanation;
-                modal.style.display = "flex";
-            };
-            optCont.appendChild(btn);
-        });
+    function checkAnswer() {
+        const inputVal = document.getElementById("cloze-input").value.trim().toLowerCase();
+        const correctAns = questions[current].word.toLowerCase();
+        
+        const modal = document.getElementById("feedback-modal");
+        const status = document.getElementById("fb-status");
+
+        if (inputVal === correctAns) {
+            score++;
+            status.innerText = "ACCESS GRANTED";
+            status.style.color = "#3fb950"; 
+            
+            // Cross off word in bank
+            const bankWord = document.getElementById("bank-" + correctAns);
+            if(bankWord) bankWord.classList.add("used");
+            
+            document.getElementById("fb-info").innerText = "Correct! " + questions[current].explanation;
+        } else {
+            status.innerText = "ACCESS DENIED";
+            status.style.color = "#f85149"; 
+            document.getElementById("fb-info").innerHTML = `Target sequence was: <b style="color:#ffb703;">${questions[current].word}</b>.<br><br>${questions[current].explanation}`;
+        }
+        
+        modal.style.display = "flex";
     }
 
     function nextQuestion() {
@@ -354,16 +364,24 @@
 
     function showFinal() {
         document.getElementById("progress-fill").style.width = "100%";
+        document.getElementById("input-area").style.display = "none";
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center; padding: 30px 0;">
                 <h2 style="font-family:'Orbitron'; font-size: 2.5rem; color: #ffb703;">PROTOCOL COMPLETE</h2>
                 <p style="font-size:3.5rem; margin:10px 0; font-family:'Share Tech Mono';">${Math.round((score/questions.length)*100)}%</p>
-                <p style="font-size: 1.2rem; color: #8b949e;">You have successfully navigated Week 18.</p>
+                <p style="font-size: 1.2rem; color: #8b949e;">Decryption sequence finished.</p>
                 <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO DASHBOARD</a>
             </div>`;
     }
 
-    // Initialize the first question
+    // Allow pressing "Enter" to submit
+    document.getElementById("cloze-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            checkAnswer();
+        }
+    });
+
     loadQuestion();
 </script>
 </body>
