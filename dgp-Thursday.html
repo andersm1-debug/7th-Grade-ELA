@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNTAX SURGERY: THURSDAY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d1117;
+            background-image: linear-gradient(rgba(248, 81, 73, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(248, 81, 73, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #lab-container {
+            background: rgba(22, 27, 34, 0.95);
+            border: 2px solid #30363d;
+            border-top: 6px solid #f85149; /* Red theme for editing/errors */
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 950px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .lab-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin: 15px 0 10px 0;
+            color: #f85149;
+            letter-spacing: 2px;
+        }
+
+        /* Instructions Section */
+        #instructions-panel {
+            background: #161b22;
+            border: 1px solid #f85149;
+            border-left: 4px solid #f85149;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .instructions-header {
+            color: #f85149;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .instruction-steps {
+            font-size: 0.9rem;
+            color: #c9d1d9;
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        #input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #sentence-input {
+            flex-grow: 1;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #f85149;
+            padding: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            border-radius: 4px;
+        }
+
+        #analyze-btn {
+            background: #f85149;
+            color: #0d1117;
+            border: none;
+            padding: 0 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #workspace {
+            background: #0d1117;
+            border: 1px dashed #30363d;
+            padding: 40px 20px;
+            min-height: 120px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        /* Thursday Editing Mechanics */
+        .edit-token {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 5px 2px;
+            color: #c9d1d9;
+            transition: 0.2s;
+            border-radius: 3px;
+        }
+
+        .edit-token:hover { background: rgba(248, 81, 73, 0.2); }
+        .edit-token.italicized { font-style: italic; color: #58a6ff; }
+        .edit-token.underlined { text-decoration: underline; color: #58a6ff; }
+
+        .insert-node {
+            color: #484f58;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 5px;
+            transition: 0.2s;
+            user-select: none;
+        }
+
+        .insert-node:hover { color: #f85149; transform: scale(1.2); }
+        .insert-node.has-punctuation { color: #f2e05a; font-weight: bold; font-size: 1.6rem; }
+
+        /* Punctuation Payload Menu */
+        #punctuation-menu {
+            display: none;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .menu-header {
+            color: #f2e05a;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .punct-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #f2e05a;
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .punct-btn:hover { background: #f2e05a; color: #0d1117; }
+        .format-toggle-btn { background: #58a6ff; color: #0d1117; border:none; margin-top: 15px; padding: 10px; font-weight:bold; cursor:pointer;}
+        .clear-btn { width: 100%; margin-top: 15px; background: #30363d; color: #8b949e; text-align:center; padding: 10px; cursor: pointer; border: none; font-weight: bold;}
+
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="lab-title">THURSDAY: MECHANICS</h1>
+    
+    <div id="instructions-panel">
+        <h3 class="instructions-header">ERROR CORRECTION PROTOCOL:</h3>
+        <ul class="instruction-steps">
+            <li><b>Step 1 (Capitalization):</b> Click directly on a word to toggle the capitalization of the first letter (e.g., proper nouns, start of a sentence).</li>
+            <li><b>Step 2-5 & 7 (Punctuation):</b> Click the small <b>+</b> nodes between words to open the Punctuation Menu. Insert commas, apostrophes, semicolons, quotation marks, and end punctuation.</li>
+            <li><b>Step 6 (Formatting):</b> Click a word to highlight it, then use the blue "Toggle Italics/Underline" button below if it is a title.</li>
+        </ul>
+    </div>
+
+    <div id="input-section">
+        <input type="text" id="sentence-input" placeholder="Initialize raw text data without punctuation..." autocomplete="off">
+        <button id="analyze-btn" onclick="processSentence()">LOAD</button>
+    </div>
+
+    <div id="workspace">
+        <p style="color: #484f58; font-style: italic;" id="placeholder-text">Awaiting unedited string...</p>
+    </div>
+
+    <div id="punctuation-menu">
+        <h3 class="menu-header" id="active-node-display">INSERT PUNCTUATION</h3>
+        <div id="punct-options">
+            <button class="punct-btn" onclick="insertPunctuation('.')">.</button>
+            <button class="punct-btn" onclick="insertPunctuation('?')">?</button>
+            <button class="punct-btn" onclick="insertPunctuation('!')">!</button>
+            <button class="punct-btn" onclick="insertPunctuation(',')">,</button>
+            <button class="punct-btn" onclick="insertPunctuation(';')">;</button>
+            <button class="punct-btn" onclick="insertPunctuation(':')">:</button>
+            <button class="punct-btn" onclick="insertPunctuation('\'')">'</button>
+            <button class="punct-btn" onclick="insertPunctuation('&quot;')">"</button>
+        </div>
+        <button class="format-toggle-btn" onclick="toggleFormat()">Toggle Italics/Underline on Selected Word</button>
+        <button class="clear-btn" onclick="insertPunctuation('+')">CLEAR PUNCTUATION FROM NODE</button>
+    </div>
+</div>
+
+<script>
+    let activeNode = null;
+    let selectedWord = null;
+
+    function processSentence() {
+        const inputStr = document.getElementById('sentence-input').value.trim();
+        const workspace = document.getElementById('workspace');
+        
+        if (!inputStr) return;
+        
+        workspace.innerHTML = ''; 
+        document.getElementById('punctuation-menu').style.display = 'block'; 
+        
+        const words = inputStr.split(/\s+/);
+
+        // Initial Insert Node before the first word
+        workspace.appendChild(createInsertNode(0));
+
+        words.forEach((word, index) => {
+            // Create the editable word
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'edit-token';
+            wordSpan.innerText = word;
+            wordSpan.onclick = function() {
+                toggleCapitalization(this);
+                selectWord(this);
+            };
+            workspace.appendChild(wordSpan);
+
+            // Create the Insert Node after the word
+            workspace.appendChild(createInsertNode(index + 1));
+        });
+    }
+
+    function createInsertNode(index) {
+        const node = document.createElement('span');
+        node.className = 'insert-node';
+        node.innerText = '+';
+        node.dataset.index = index;
+        node.onclick = () => selectNode(node);
+        return node;
+    }
+
+    function toggleCapitalization(element) {
+        let text = element.innerText;
+        let firstChar = text.charAt(0);
+        
+        if (firstChar === firstChar.toUpperCase()) {
+            element.innerText = firstChar.toLowerCase() + text.slice(1);
+        } else {
+            element.innerText = firstChar.toUpperCase() + text.slice(1);
+        }
+    }
+
+    function selectWord(element) {
+        // Clear previous word selection styling if needed, but for now just track it for formatting
+        selectedWord = element;
+    }
+
+    function toggleFormat() {
+        if(!selectedWord) return;
+        
+        if(selectedWord.classList.contains('italicized')) {
+            selectedWord.classList.remove('italicized');
+            selectedWord.classList.add('underlined');
+        } else if (selectedWord.classList.contains('underlined')) {
+            selectedWord.classList.remove('underlined');
+        } else {
+            selectedWord.classList.add('italicized');
+        }
+    }
+
+    function selectNode(nodeElement) {
+        // Reset old node color
+        if(activeNode && !activeNode.classList.contains('has-punctuation')) {
+            activeNode.style.color = '#484f58';
+        }
+        
+        activeNode = nodeElement;
+        
+        if(!activeNode.classList.contains('has-punctuation')) {
+            activeNode.style.color = '#f85149'; // Highlight active node
+        }
+        
+        document.getElementById('active-node-display').innerText = "MODIFYING NODE " + activeNode.dataset.index;
+    }
+
+    function insertPunctuation(char) {
+        if(!activeNode) return;
+
+        if (char === '+') {
+            activeNode.innerText = '+';
+            activeNode.classList.remove('has-punctuation');
+        } else {
+            // If it already has punctuation, append it (e.g., for ," )
+            if(activeNode.classList.contains('has-punctuation')) {
+                 activeNode.innerText += char;
+            } else {
+                 activeNode.innerText = char;
+            }
+            activeNode.classList.add('has-punctuation');
+        }
+    }
+
+    document.getElementById("sentence-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            processSentence();
+        }
+    });
+</script>
+</body>
+</html>
