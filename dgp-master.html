@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYNTAX SURGERY: ADVANCED DGP</title>
+    <title>SYNTAX SURGERY: MONDAY</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
 
@@ -16,10 +16,11 @@
             font-family: 'Share Tech Mono', monospace;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         #lab-container {
@@ -48,9 +49,35 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
             text-align: center;
-            margin: 25px 0 10px 0;
+            margin: 15px 0 10px 0;
             color: #58a6ff;
             letter-spacing: 2px;
+        }
+
+        /* Instructions Section */
+        #instructions-panel {
+            background: #161b22;
+            border: 1px solid #58a6ff;
+            border-left: 4px solid #58a6ff;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .instructions-header {
+            color: #58a6ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .instruction-steps {
+            font-size: 0.95rem;
+            color: #c9d1d9;
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.5;
         }
 
         #input-section {
@@ -117,7 +144,7 @@
         }
 
         .tag-label {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             height: 15px;
@@ -186,9 +213,19 @@
 <body>
 
 <div id="lab-container">
-    <a href="index.html" class="hub-link">← Hub Network</a>
-    <h1 class="lab-title">SYNTAX SURGERY</h1>
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="lab-title">MONDAY: PARTS OF SPEECH</h1>
     
+    <div id="instructions-panel">
+        <h3 class="instructions-header">MISSION BRIEFING:</h3>
+        <ol class="instruction-steps">
+            <li><b>Load the Sentence:</b> Type this week's DGP sentence into the scanner below and click LOAD.</li>
+            <li><b>Target a Word:</b> Click on a word in the workspace to highlight it.</li>
+            <li><b>Apply the Tag:</b> Using your 9-Step DGP rules, select the correct Part of Speech from the dashboard below to tag the word.</li>
+            <li><b>Follow the Order:</b> Always start by finding Nouns (Step 1) and Pronouns (Step 2) before moving on to Verbs and Modifiers!</li>
+        </ol>
+    </div>
+
     <div id="input-section">
         <input type="text" id="sentence-input" placeholder="Initialize sentence data..." autocomplete="off">
         <button id="analyze-btn" onclick="processSentence()">LOAD</button>
@@ -202,12 +239,12 @@
         <h3 class="dash-header" id="selected-word-display">SELECT A WORD TO TAG</h3>
         <div class="category-grid" id="tag-grid">
             </div>
-        <button class="clear-btn" onclick="applyTag('', '#c9d1d9')">CLEAR TAG</button>
+        <button class="clear-btn" onclick="applyTag('', '#c9d1d9')">CLEAR TAG FROM SELECTED WORD</button>
     </div>
 </div>
 
 <script>
-    // Advanced Tag Database based on 9 Steps
+    // Tag Database based on Monday's 9 Steps
     const grammarData = [
         { cat: "1. Nouns", color: "#58a6ff", tags: [
             { id: "n", name: "Common" }, { id: "N", name: "Proper" }, { id: "pos n", name: "Possessive Common" }, { id: "pos N", name: "Possessive Proper" }
@@ -271,7 +308,7 @@
         if (!inputStr) return;
         
         workspace.innerHTML = ''; 
-        document.getElementById('tag-dashboard').style.display = 'block'; // Reveal dashboard
+        document.getElementById('tag-dashboard').style.display = 'block'; 
         
         const words = inputStr.split(/\s+/);
 
@@ -296,7 +333,6 @@
     }
 
     function selectToken(tokenElement, wordString) {
-        // Remove highlight from previous
         if(selectedToken) selectedToken.classList.remove('selected');
         
         selectedToken = tokenElement;
@@ -315,7 +351,6 @@
         label.style.color = colorCode;
         text.style.color = tagId === '' ? '#c9d1d9' : colorCode;
         
-        // Auto-deselect after tagging for speed
         selectedToken.classList.remove('selected');
         selectedToken = null;
         document.getElementById('selected-word-display').innerText = "SELECT NEXT WORD";
