@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEEK 19: SUFFIX PROTOCOL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(255, 183, 3, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 183, 3, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #lab-container {
+            background: rgba(11, 15, 25, 0.95);
+            border: 2px solid #212d40;
+            border-top: 8px solid #ffb703;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .hub-link:hover { color: #ffb703; }
+
+        .lab-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 20px 0 5px 0;
+            color: #ffb703;
+            letter-spacing: 2px;
+        }
+        
+        .sub-title {
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Live Word Bank - Defaults to hidden until a Cloze question appears */
+        #word-bank {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            background: #111827;
+            border: 1px solid #374151;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .bank-word {
+            background: #1f2937;
+            color: #ffb703;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            border: 1px solid #374151;
+            transition: 0.3s;
+        }
+
+        .bank-word.used {
+            text-decoration: line-through;
+            color: #4b5563;
+            border-color: #1f2937;
+            background: transparent;
+        }
+
+        #format-label {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #ffb703;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .question-box {
+            background: transparent;
+            padding: 10px 20px 20px 20px;
+            margin-bottom: 20px;
+            color: #e5e7eb;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .highlight-blank {
+            display: inline-block;
+            width: 150px;
+            border-bottom: 2px dashed #ffb703;
+            margin: 0 10px;
+            color: #ffb703;
+        }
+
+        /* Multiple Choice Options */
+        #mcq-options {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #d1d5db;
+            padding: 18px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .choice-btn:hover {
+            background: #ffb703;
+            color: #0b0f19;
+            border-color: #ffb703;
+            transform: translateX(5px);
+        }
+
+        /* Terminal Input Area */
+        #cloze-input-area {
+            display: none;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        #cloze-input {
+            background: #0b0f19;
+            border: 1px solid #ffb703;
+            color: #ffb703;
+            padding: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            width: 50%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        #cloze-input:focus { outline: none; box-shadow: 0 0 10px rgba(255, 183, 3, 0.3); }
+
+        #submit-btn {
+            background: #ffb703;
+            color: #0b0f19;
+            border: none;
+            padding: 0 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        #submit-btn:hover { filter: brightness(1.2); }
+
+        /* Feedback Modal */
+        #feedback-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .next-btn {
+            background: #ffb703;
+            color: #0b0f19;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 25px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 3px; }
+        #progress-fill { height: 100%; background: #ffb703; width: 0%; transition: width 0.3s; }
+
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="lab-title">SUFFIX PROTOCOL</h1>
+    <p class="sub-title">WEEK 19: -ABLE | -IBLE | -Y | -SHIP | -NESS</p>
+    
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    
+    <div id="word-bank">
+        </div>
+
+    <div id="quiz-content">
+        <div id="format-label">MODE: INITIALIZING...</div>
+        <div id="text-display" class="question-box">LOADING DATA...</div>
+        
+        <div id="mcq-options"></div>
+
+        <div id="cloze-input-area">
+            <input type="text" id="cloze-input" placeholder="ENTER OVERRIDE CODE..." autocomplete="off">
+            <button id="submit-btn" onclick="checkClozeAnswer()">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+<div id="feedback-modal">
+    <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 3rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 600px; color: #d1d5db; padding: 20px; line-height: 1.6;"></p>
+    <button class="next-btn" onclick="nextQuestion()">CONTINUE</button>
+</div>
+
+<script>
+    const allWords = [
+        "Capable", "Sensible", "Reliable", "Healthy", "Wealthy", 
+        "Trendy", "Relationship", "Hardship", "Leadership", "Happiness", 
+        "Loneliness", "Bitterness", "Debatable", "Farsightedness", "Feasible"
+    ];
+
+    // 20 Multiple Choice Questions
+    const rawMCQ = [
+        { type: "mcq", text: "What does it mean if someone is <b>capable</b>?", choices: [ { text: "They have the power and ability to do something.", correct: true }, { text: "They are completely unable to learn.", correct: false }, { text: "They are always tired and sluggish.", correct: false } ], explanation: "To be capable means you are ABLE to do something successfully." },
+        { type: "mcq", text: "Which of the following is an example of a <b>sensible</b> action?", choices: [ { text: "Bringing an umbrella when the forecast predicts heavy rain.", correct: true }, { text: "Leaving your front door wide open overnight.", correct: false }, { text: "Eating a rock you found on the ground.", correct: false } ], explanation: "A sensible choice is one made with wisdom and prudence; it just makes sense!" },
+        { type: "mcq", text: "A machine that is <b>reliable</b> is...", choices: [ { text: "Deserving of trust and dependable.", correct: true }, { text: "Constantly breaking down.", correct: false }, { text: "Open to intense argument.", correct: false } ], explanation: "If something is reliable, you can rely on it to work every time." },
+        { type: "mcq", text: "Which choice represents a <b>healthy</b> habit?", choices: [ { text: "Sleeping 8 hours a night and eating vegetables.", correct: true }, { text: "Drinking soda for every single meal.", correct: false }, { text: "Never washing your hands.", correct: false } ], explanation: "To be healthy means to be in a state of good physical and mental health." },
+        { type: "mcq", text: "What is another word for <b>wealthy</b>?", choices: [ { text: "Rich.", correct: true }, { text: "Poor.", correct: false }, { text: "Angry.", correct: false } ], explanation: "Wealthy simply means having a great deal of money, resources, or assets." },
+        { type: "mcq", text: "If a new song or outfit is described as <b>trendy</b>, it is...", choices: [ { text: "Relating to the latest style or very popular right now.", correct: true }, { text: "Written over 200 years ago.", correct: false }, { text: "Something that causes immense difficulty to bear.", correct: false } ], explanation: "Trendy things are following the current 'trend' or fad." },
+        { type: "mcq", text: "The way in which two or more concepts or people are connected is called a...", choices: [ { text: "Relationship.", correct: true }, { text: "Hardship.", correct: false }, { text: "Farsightedness.", correct: false } ], explanation: "A relationship defines the connection between two entities." },
+        { type: "mcq", text: "Which of the following is an example of a <b>hardship</b>?", choices: [ { text: "Enduring a long, severe drought with no access to clean water.", correct: true }, { text: "Winning the grand prize in a lottery.", correct: false }, { text: "Going to a fun party with your best friends.", correct: false } ], explanation: "A hardship is something that causes deep suffering or difficulty." },
+        { type: "mcq", text: "The use of power and influence to direct followers toward a goal is called...", choices: [ { text: "Leadership.", correct: true }, { text: "Loneliness.", correct: false }, { text: "Bitterness.", correct: false } ], explanation: "Leadership is the ability to guide and direct others successfully." },
+        { type: "mcq", text: "The state of being joyful and content is known as...", choices: [ { text: "Happiness.", correct: true }, { text: "Farsightedness.", correct: false }, { text: "Debatable.", correct: false } ], explanation: "Happiness is the emotional state of being happy." },
+        { type: "mcq", text: "When might someone experience intense <b>loneliness</b>?", choices: [ { text: "When they have absolutely no friends or company around them.", correct: true }, { text: "When they are at a crowded concert with their closest friends.", correct: false }, { text: "When they are eating their favorite dessert.", correct: false } ], explanation: "Loneliness is the specific sadness that comes from being alone." },
+        { type: "mcq", text: "A lingering feeling of disgust, resentment, or anger over a past wrong is known as...", choices: [ { text: "Bitterness.", correct: true }, { text: "Leadership.", correct: false }, { text: "Sensible.", correct: false } ], explanation: "Bitterness is a harsh, resentful feeling that is hard to let go of." },
+        { type: "mcq", text: "If a fact or topic is <b>debatable</b>, it means...", choices: [ { text: "It is open to discussion
