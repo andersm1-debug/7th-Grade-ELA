@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PROMPT REPOSITORY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(88, 166, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(88, 166, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        #repo-container {
+            background: rgba(11, 15, 25, 0.95);
+            border: 2px solid #212d40;
+            border-top: 8px solid #58a6ff;
+            padding: 40px;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .hub-link:hover { color: #58a6ff; }
+
+        .repo-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin: 10px 0 5px 0;
+            color: #58a6ff;
+            letter-spacing: 2px;
+        }
+        
+        .sub-title {
+            text-align: center;
+            color: #8b949e;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-header {
+            font-family: 'Orbitron', sans-serif;
+            color: #f2e05a;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Individual Prompt Cards */
+        .prompt-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.2s;
+        }
+
+        .prompt-card:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.1);
+        }
+
+        .prompt-title {
+            color: #e6edf3;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .prompt-text {
+            color: #8b949e;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px dashed #484f58;
+            flex-grow: 1;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background: #21262d;
+            color: #58a6ff;
+            border: 1px solid #30363d;
+            padding: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .copy-btn:hover {
+            background: #58a6ff;
+            color: #0d1117;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #3fb950;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="repo-title">AI PROMPT REPOSITORY</h1>
+    <p class="sub-title">FACULTY RESOURCE DIRECTORY</p>
+
+    <div class="category-section">
+        <div class="category-header">Instructional Planning & WIN Blocks</div>
+        <div class="prompt-grid">
+            <div class="prompt-card">
+                <div class="prompt-title">WIN Block Intervention Planner</div>
+                <div class="prompt-text" id="prompt-1">Act as an expert middle school teacher. I need a 3-day WIN (What I Need) block intervention plan for a small group of students who are struggling with [Insert Standard/Topic]. Provide specific, 20-minute daily activities that are highly engaging and do not rely on standard worksheets.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-1')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Standard Alignment Breakdown</div>
+                <div class="prompt-text" id="prompt-2">Break down the following state standard into clear, measurable learning targets for students. Then, suggest 3 distinct ways I can assess if students have mastered these specific targets: [Paste Standard Here]</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-2')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Engaging Lesson Hooks</div>
+                <div class="prompt-text" id="prompt-3">I am teaching a lesson about [Insert Topic] to middle schoolers tomorrow. Give me 5 highly engaging "lesson hooks" to start the class. They should take under 5 minutes, require no special materials, and immediately grab their attention.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-3')">Copy Prompt</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header">Differentiation & Scaffolding</div>
+        <div class="prompt-grid">
+            <div class="prompt-card">
+                <div class="prompt-title">Leveling a Reading Text</div>
+                <div class="prompt-text" id="prompt-4">Take the text provided below and rewrite it to a [Insert Lexile/Grade Level] reading level. Maintain the core concepts, tone, and crucial vocabulary, but simplify the sentence structures and provide brief context clues for the hardest words: [Paste Text]</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-4')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Vocabulary Extractor</div>
+                <div class="prompt-text" id="prompt-5">Analyze the following text and extract the top 10 most challenging Tier 2 academic vocabulary words. For each word, provide a middle-school-friendly definition and a short, relatable example sentence: [Paste Text]</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-5')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Sentence Starters Generator</div>
+                <div class="prompt-text" id="prompt-6">I am asking my students to write a paragraph answering the following prompt: [Paste Prompt]. Please generate 5 differentiated sentence starters I can provide to my struggling writers to help them begin their paragraphs.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-6')">Copy Prompt</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header">Communication & Feedback</div>
+        <div class="prompt-grid">
+            <div class="prompt-card">
+                <div class="prompt-title">Positive Parent Email</div>
+                <div class="prompt-text" id="prompt-7">Draft a short, positive email to a parent. Their student, [Student Name], has been struggling recently but showed massive improvement today during our lesson on [Topic]. Keep the tone professional, warm, and encouraging.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-7')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Rubric Generator</div>
+                <div class="prompt-text" id="prompt-8">Create a 4-point grading rubric for a middle school assignment where students must [Describe Assignment]. The rubric should evaluate 3 categories: [Category 1], [Category 2], and [Category 3]. Make the language student-friendly.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-8')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Behavior Redirection Script</div>
+                <div class="prompt-text" id="prompt-9">Provide a script for a 1-on-1 hallway conversation with a student who is repeatedly [Insert Behavior, e.g., talking over others]. The script should focus on restorative practices, empathy, and getting the student back on track without escalating the situation.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-9')">Copy Prompt</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast">Prompt copied to clipboard!</div>
+
+<script>
+    function copyPrompt(elementId) {
+        // Get the text from the specified prompt element
+        const promptText = document.getElementById(elementId).innerText;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(promptText).then(() => {
+            // Show the toast notification
+            showToast();
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            alert("Clipboard access denied. Please manually copy the text.");
+        });
+    }
+
+    function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "show";
+        
+        // Hide the toast after 3 seconds
+        setTimeout(function(){
+            toast.className = toast.className.replace("show", "");
+        }, 3000);
+    }
+</script>
+</body>
+</html>
