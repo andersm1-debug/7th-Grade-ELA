@@ -29,7 +29,7 @@
             border-top: 8px solid #58a6ff;
             padding: 40px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
             position: relative;
             border-radius: 8px;
@@ -69,7 +69,7 @@
 
         /* Category Sections */
         .category-section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .category-header {
@@ -83,7 +83,7 @@
 
         .prompt-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
         }
 
@@ -112,7 +112,7 @@
 
         .prompt-text {
             color: #8b949e;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.5;
             background: #0d1117;
             padding: 15px;
@@ -121,7 +121,15 @@
             flex-grow: 1;
             margin-bottom: 15px;
             white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 250px;
         }
+
+        /* Custom Scrollbar for Prompt Text */
+        .prompt-text::-webkit-scrollbar { width: 6px; }
+        .prompt-text::-webkit-scrollbar-track { background: #0d1117; }
+        .prompt-text::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+        .prompt-text::-webkit-scrollbar-thumb:hover { background: #58a6ff; }
 
         .copy-btn {
             background: #21262d;
@@ -182,18 +190,23 @@
         <div class="category-header">Instructional Planning & WIN Blocks</div>
         <div class="prompt-grid">
             <div class="prompt-card">
-                <div class="prompt-title">WIN Block Intervention Planner</div>
-                <div class="prompt-text" id="prompt-1">Act as an expert middle school teacher. I need a 3-day WIN (What I Need) block intervention plan for a small group of students who are struggling with [Insert Standard/Topic]. Provide specific, 20-minute daily activities that are highly engaging and do not rely on standard worksheets.</div>
+                <div class="prompt-title">Passage & Vocabulary Generator</div>
+                <div class="prompt-text" id="prompt-1">Act as an expert [Insert Grade Level] teacher. I am teaching [Insert Standard] to my students.
+
+Generate a core passage of about 300 words.
+Include a tiered vocabulary list (Tier 1, 2, and 3 words). [Insert key vocabulary if you have words you would like to be used]
+Suggest two ways to differentiate the Process for struggling vs. advanced readers.
+Suggest three Product options (low-prep, medium-prep, and high-prep) that all prove the student met the objective: [Insert Standard]</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-1')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
-                <div class="prompt-title">Standard Alignment Breakdown</div>
-                <div class="prompt-text" id="prompt-2">Break down the following state standard into clear, measurable learning targets for students. Then, suggest 3 distinct ways I can assess if students have mastered these specific targets: [Paste Standard Here]</div>
+                <div class="prompt-title">WIN Block Intervention Planner</div>
+                <div class="prompt-text" id="prompt-2">Act as an expert middle school teacher. I need a 3-day WIN (What I Need) block intervention plan for a small group of students who are struggling with [Insert Standard/Topic]. Provide specific, 20-minute daily activities that are highly engaging and do not rely on standard worksheets.</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-2')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
                 <div class="prompt-title">Engaging Lesson Hooks</div>
-                <div class="prompt-text" id="prompt-3">I am teaching a lesson about [Insert Topic] to middle schoolers tomorrow. Give me 5 highly engaging "lesson hooks" to start the class. They should take under 5 minutes, require no special materials, and immediately grab their attention.</div>
+                <div class="prompt-text" id="prompt-3">I am teaching a lesson about [Insert Topic] tomorrow. Give me 5 highly engaging "lesson hooks" to start the class. They should take under 5 minutes, require no special materials, and immediately grab their attention.</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-3')">Copy Prompt</button>
             </div>
         </div>
@@ -203,40 +216,135 @@
         <div class="category-header">Differentiation & Scaffolding</div>
         <div class="prompt-grid">
             <div class="prompt-card">
-                <div class="prompt-title">Leveling a Reading Text</div>
-                <div class="prompt-text" id="prompt-4">Take the text provided below and rewrite it to a [Insert Lexile/Grade Level] reading level. Maintain the core concepts, tone, and crucial vocabulary, but simplify the sentence structures and provide brief context clues for the hardest words: [Paste Text]</div>
+                <div class="prompt-title">Choice Board Architect</div>
+                <div class="prompt-text" id="prompt-4">Act as an expert [Insert Grade Level] teacher. Using the text/topic [Insert Name of Text or Topic] and the learning standard [Insert Standard Code], create a 3x3 Student Choice Board.
+
+Ensure the board follows these requirements:
+Focus: Every task must directly assess the student's ability to [Insert Specific Learning Goal].
+Variety: Include a mix of 'Write,' 'Visual/Design,' 'Analyze,' and 'Interactive/Perform' tasks.
+Cognitive Depth: Organize rows by Bloom’s Taxonomy:
+Row 1: Knowledge & Comprehension (Lower difficulty)
+Row 2: Application & Analysis (Moderate difficulty)
+Row 3: Synthesis & Evaluation (Higher difficulty)
+Vocabulary: Include a requirement to use the following key terms: [Insert 3-5 Vocabulary Words].
+Formatting: Present the final output in a clear 3x3 table.</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-4')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
-                <div class="prompt-title">Vocabulary Extractor</div>
-                <div class="prompt-text" id="prompt-5">Analyze the following text and extract the top 10 most challenging Tier 2 academic vocabulary words. For each word, provide a middle-school-friendly definition and a short, relatable example sentence: [Paste Text]</div>
+                <div class="prompt-title">Master Differentiation Strategist</div>
+                <div class="prompt-text" id="prompt-5">Act as an expert [Insert Grade Level] teacher. Provide differentiation strategies for a lesson based on the following:
+Standard/Objective: [Paste your standard or learning goal]
+Current Lesson Context: [e.g., Intro to Ecosystems]
+
+Requirements - Please provide actionable ideas for:
+Content (The Input): Suggest 3 ways to present the material to accommodate different reading levels or learning preferences.
+Process (The Sense-Making): Suggest 2-3 different activities students can do to grapple with the content.
+Product (The Output): Provide 3 options for how students can demonstrate mastery.
+Constraint: Ensure all options remain strictly aligned to the core standard provided.</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-5')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
-                <div class="prompt-title">Sentence Starters Generator</div>
-                <div class="prompt-text" id="prompt-6">I am asking my students to write a paragraph answering the following prompt: [Paste Prompt]. Please generate 5 differentiated sentence starters I can provide to my struggling writers to help them begin their paragraphs.</div>
+                <div class="prompt-title">Leveling a Reading Text</div>
+                <div class="prompt-text" id="prompt-6">Take the text provided below and rewrite it to a [Insert Lexile/Grade Level] reading level. Maintain the core concepts, tone, and crucial vocabulary, but simplify the sentence structures and provide brief context clues for the hardest words: [Paste Text]</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-6')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Vocabulary Extractor</div>
+                <div class="prompt-text" id="prompt-15">Analyze the following text and extract the top 10 most challenging Tier 2 academic vocabulary words. For each word, provide a middle-school-friendly definition and a short, relatable example sentence: [Paste Text]</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-15')">Copy Prompt</button>
             </div>
         </div>
     </div>
 
     <div class="category-section">
-        <div class="category-header">Communication & Feedback</div>
+        <div class="category-header">Interactive & Multimedia Learning</div>
         <div class="prompt-grid">
             <div class="prompt-card">
-                <div class="prompt-title">Positive Parent Email</div>
-                <div class="prompt-text" id="prompt-7">Draft a short, positive email to a parent. Their student, [Student Name], has been struggling recently but showed massive improvement today during our lesson on [Topic]. Keep the tone professional, warm, and encouraging.</div>
+                <div class="prompt-title">Digital Escape Room Coder</div>
+                <div class="prompt-text" id="prompt-7">I am a [Insert Grade Level] teacher looking to create an interactive digital breakout room for my students. I need a single-file HTML/JavaScript web application that they can run in any browser.
+
+1. Topic & Standards: The topic is [Insert Topic]. Specific concepts to cover: [List 3-5 concepts].
+2. Structure: 4 'Rooms' or 'Vaults'. Each room presents a challenge related to the concepts.
+Room 1: Focus on [Concept 1].
+Room 2: Focus on [Concept 2].
+Room 3: Focus on [Concept 3].
+Room 4: A final challenge combining all concepts.
+3. Technical: Single self-contained HTML file (all CSS/JS included). Use modern responsive design. Include a progress bar, 'lock status' indicator, and clear feedback (e.g., 'Access Denied'). Include a 'Success Screen' summary.
+4. Aesthetic Theme: The theme should be [Insert Theme, e.g., Space Exploration, Cyberpunk Hacker].</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-7')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
-                <div class="prompt-title">Rubric Generator</div>
-                <div class="prompt-text" id="prompt-8">Create a 4-point grading rubric for a middle school assignment where students must [Describe Assignment]. The rubric should evaluate 3 categories: [Category 1], [Category 2], and [Category 3]. Make the language student-friendly.</div>
+                <div class="prompt-title">Educational Podcast Scriptwriter</div>
+                <div class="prompt-text" id="prompt-8">Role: Act as a world-class educational podcaster and subject matter expert in [Insert Subject].
+Task: Write a compelling, high-energy podcast script titled "[Insert Unit Name]" designed for [Insert Grade Level] students.
+Narrator Persona: Use a [Insert Tone, e.g., "enthusiastic science explorer"] voice. Speak directly to the students.
+
+Requirements:
+The Hook: Start with a "What if?" scenario or a surprising fact.
+Core Content: Explain the following key concepts simply but accurately: [List 3-4 Bullet Points].
+The "Why it Matters": Connect the topic to a real-world application or modern mystery.
+Call to Action: End with a "Research Challenge" where students have to find specific information.
+Formatting: Include stage directions for the AI voice (e.g., Say in a whisper).
+Tone: Keep sentences short and rhythmic. Avoid jargon unless defined with a relatable comparison.</div>
                 <button class="copy-btn" onclick="copyPrompt('prompt-8')">Copy Prompt</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header">Assessment & Evaluation</div>
+        <div class="prompt-grid">
+            <div class="prompt-card">
+                <div class="prompt-title">High-Quality Quiz Designer</div>
+                <div class="prompt-text" id="prompt-9">Role: You are an expert Instructional Designer and Subject Matter Expert in [Insert Grade level, Subject Area].
+Task: Create a high-quality quiz for [Insert Grade Level] students.
+
+Quiz Parameters:
+Topic: [Specific Unit or Lesson Topic]
+Standard/Objective: [Insert Standard]
+Question Count: [e.g., 10 questions]
+Format: [e.g., Multiple Choice, Mix]
+
+Requirements:
+DOK Variety: Include questions ranging from recall (DOK 1) to strategic thinking/application (DOK 2/3).
+Plausible Distractors: For multiple-choice, ensure wrong answers represent common student misconceptions.
+Source Material: [Paste text here or ask AI to generate based on general grade-level knowledge].
+
+Output Requirements:
+Provide a Student Version (questions only).
+Provide a Teacher Answer Key that includes the correct answer, a brief "Rationale," and an "Explanation for Distractors" to help me address student errors.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-9')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Standard Alignment Breakdown</div>
+                <div class="prompt-text" id="prompt-10">Break down the following state standard into clear, measurable learning targets for students. Then, suggest 3 distinct ways I can assess if students have mastered these specific targets: [Paste Standard Here]</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-10')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Rubric Generator</div>
+                <div class="prompt-text" id="prompt-11">Create a 4-point grading rubric for a middle school assignment where students must [Describe Assignment]. The rubric should evaluate 3 categories: [Category 1], [Category 2], and [Category 3]. Make the language student-friendly.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-11')">Copy Prompt</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-header">Communication & Management</div>
+        <div class="prompt-grid">
+            <div class="prompt-card">
+                <div class="prompt-title">Positive Parent Email</div>
+                <div class="prompt-text" id="prompt-12">Draft a short, positive email to a parent. Their student, [Student Name], has been struggling recently but showed massive improvement today during our lesson on [Topic]. Keep the tone professional, warm, and encouraging.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-12')">Copy Prompt</button>
             </div>
             <div class="prompt-card">
                 <div class="prompt-title">Behavior Redirection Script</div>
-                <div class="prompt-text" id="prompt-9">Provide a script for a 1-on-1 hallway conversation with a student who is repeatedly [Insert Behavior, e.g., talking over others]. The script should focus on restorative practices, empathy, and getting the student back on track without escalating the situation.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-9')">Copy Prompt</button>
+                <div class="prompt-text" id="prompt-13">Provide a script for a 1-on-1 hallway conversation with a student who is repeatedly [Insert Behavior, e.g., talking over others]. The script should focus on restorative practices, empathy, and getting the student back on track without escalating the situation.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-13')">Copy Prompt</button>
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-title">Sentence Starters Generator</div>
+                <div class="prompt-text" id="prompt-14">I am asking my students to write a paragraph answering the following prompt: [Paste Prompt]. Please generate 5 differentiated sentence starters I can provide to my struggling writers to help them begin their paragraphs.</div>
+                <button class="copy-btn" onclick="copyPrompt('prompt-14')">Copy Prompt</button>
             </div>
         </div>
     </div>
@@ -247,12 +355,9 @@
 
 <script>
     function copyPrompt(elementId) {
-        // Get the text from the specified prompt element
         const promptText = document.getElementById(elementId).innerText;
         
-        // Copy to clipboard
         navigator.clipboard.writeText(promptText).then(() => {
-            // Show the toast notification
             showToast();
         }).catch(err => {
             console.error('Failed to copy text: ', err);
@@ -264,7 +369,6 @@
         const toast = document.getElementById("toast");
         toast.className = "show";
         
-        // Hide the toast after 3 seconds
         setTimeout(function(){
             toast.className = toast.className.replace("show", "");
         }, 3000);
