@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 21 Vocabulary Quiz</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Professional", hint: "Suffix: -al (act or process of)", definition: "One who claims to be an expert.", sentence: "The photographer hired to take the Chicod School yearbook pictures was a true ______ who brought all his own lighting equipment.", options: ["Receptionist", "Lethal", "Professional", "Compromise"] },
+            { word: "Lethal", hint: "Suffix: -al (act or process of)", definition: "Causing, or capable of causing, death.", sentence: "In the fantasy novel, the assassin's dagger was coated in a ______ poison that could take down a troll in seconds.", options: ["Cardiologist", "Lethal", "Biologist", "Vocal"] },
+            { word: "Vocal", hint: "Suffix: -al (act or process of)", definition: "Relating to the voice.", sentence: "The chorus at the winter concert had incredible ______ talent, filling the auditorium with beautiful harmony.", options: ["Paleontologist", "Vocal", "Individualize", "Chastise"] },
+            { word: "Biologist", hint: "Suffix: -ist (one who)", definition: "A person who studies living things.", sentence: "The ______ traveled to the Amazon rainforest to study how the rare tree frogs adapted to their environment.", options: ["Biologist", "Chemist", "Revolutionize", "Comprise"] },
+            { word: "Chemist", hint: "Suffix: -ist (one who)", definition: "A person engaged in chemical research or experiments.", sentence: "In the laboratory, the ______ carefully mixed two brightly colored liquids together to observe their reaction.", options: ["Socialize", "Professional", "Chemist", "Pathologist"] },
+            { word: "Receptionist", hint: "Suffix: -ist (one who)", definition: "The person who greets visitors as they walk into an office or building.", sentence: "When we walked into the dentist's office, the friendly ______ greeted us and asked us to sign in.", options: ["Compromise", "Receptionist", "Lethal", "Paleontologist"] },
+            { word: "Pathologist", hint: "Suffix: -ist (one who)", definition: "Specialist in the study of disease.", sentence: "The medical ______ looked at the blood samples under a microscope to figure out exactly what virus was making the patient sick.", options: ["Individualize", "Biologist", "Cardiologist", "Pathologist"] },
+            { word: "Cardiologist", hint: "Suffix: -ist (one who)", definition: "Doctor specializing in ailments of the heart.", sentence: "After his grandfather started having mild chest pains, the family took him to see a skilled ______.", options: ["Cardiologist", "Chastise", "Chemist", "Vocal"] },
+            { word: "Socialize", hint: "Suffix: -ize (make or become)", definition: "To participate in a group, talking to many people at an event.", sentence: "Jamie and Sara, our two dogs, love to go to the dog park so they can ______ with all the other puppies.", options: ["Socialize", "Comprise", "Revolutionize", "Professional"] },
+            { word: "Revolutionize", hint: "Suffix: -ize (make or become)", definition: "Completely change.", sentence: "The invention of smart-home devices like Google Home helped ______ the way people control the lights and thermostats in their houses.", options: ["Lethal", "Revolutionize", "Receptionist", "Compromise"] },
+            { word: "Individualize", hint: "Suffix: -ize (make or become)", definition: "Tailor (something) to suit the individual.", sentence: "Good teachers always try to ______ their lesson plans so that every single student gets the exact type of help they need.", options: ["Pathologist", "Socialize", "Individualize", "Cardiologist"] },
+            { word: "Comprise", hint: "Suffix: -ise (make or become)", definition: "To consist of.", sentence: "A standard deck of playing cards will ______ exactly fifty-two cards and four different suits.", options: ["Comprise", "Paleontologist", "Vocal", "Chemist"] },
+            { word: "Compromise", hint: "Suffix: -ise (make or become)", definition: "A settlement of differences in which each side gives up something.", sentence: "My sister wanted to watch a comedy and I wanted an action movie, so we reached a ______ and watched an action-comedy.", options: ["Professional", "Chastise", "Compromise", "Biologist"] },
+            { word: "Chastise", hint: "Suffix: -ise (make or become)", definition: "To inflict physical punishment as a means of correction; to scold severely.", sentence: "The strict librarian will quickly ______ anyone who talks too loudly in the quiet reading area.", options: ["Revolutionize", "Lethal", "Socialize", "Chastise"] },
+            { word: "Paleontologist", hint: "Suffix: -ist (one who)", definition: "A scientist who studies fossils.", sentence: "The ______ carefully brushed the dirt away from the massive T-Rex bone they discovered hidden in the desert rock.", options: ["Paleontologist", "Comprise", "Receptionist", "Individualize"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        Hint: {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
