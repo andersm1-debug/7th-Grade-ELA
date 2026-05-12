@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEEK 22: SUFFIX PROTOCOL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(255, 183, 3, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 183, 3, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #lab-container {
+            background: rgba(11, 15, 25, 0.95);
+            border: 2px solid #212d40;
+            border-top: 8px solid #ffb703;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .hub-link {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .hub-link:hover { color: #ffb703; }
+
+        .lab-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 20px 0 5px 0;
+            color: #ffb703;
+            letter-spacing: 2px;
+        }
+        
+        .sub-title {
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Live Word Bank - Defaults to hidden until a Cloze question appears */
+        #word-bank {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            background: #111827;
+            border: 1px solid #374151;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .bank-word {
+            background: #1f2937;
+            color: #ffb703;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            border: 1px solid #374151;
+            transition: 0.3s;
+        }
+
+        .bank-word.used {
+            text-decoration: line-through;
+            color: #4b5563;
+            border-color: #1f2937;
+            background: transparent;
+        }
+
+        #format-label {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #ffb703;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .question-box {
+            background: transparent;
+            padding: 10px 20px 20px 20px;
+            margin-bottom: 20px;
+            color: #e5e7eb;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .highlight { color: #ffb703; font-weight: bold; }
+        .highlight-blank {
+            display: inline-block;
+            width: 150px;
+            border-bottom: 2px dashed #ffb703;
+            margin: 0 10px;
+            color: #ffb703;
+        }
+
+        /* Multiple Choice Options */
+        #mcq-options {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #d1d5db;
+            padding: 18px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .choice-btn:hover {
+            background: #ffb703;
+            color: #0b0f19;
+            border-color: #ffb703;
+            transform: translateX(5px);
+        }
+
+        /* Terminal Input Area */
+        #cloze-input-area {
+            display: none;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        #cloze-input {
+            background: #0b0f19;
+            border: 1px solid #ffb703;
+            color: #ffb703;
+            padding: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            width: 50%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        #cloze-input:focus { outline: none; box-shadow: 0 0 10px rgba(255, 183, 3, 0.3); }
+
+        #submit-btn {
+            background: #ffb703;
+            color: #0b0f19;
+            border: none;
+            padding: 0 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        #submit-btn:hover { filter: brightness(1.2); }
+
+        /* Feedback Modal */
+        #feedback-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .next-btn {
+            background: #ffb703;
+            color: #0b0f19;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 25px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        #progress-bar { width: 100%; height: 6px; background: #1f2937; margin-bottom: 20px; border-radius: 3px; }
+        #progress-fill { height: 100%; background: #ffb703; width: 0%; transition: width 0.3s; }
+
+    </style>
+</head>
+<body>
+
+<div id="lab-container">
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <h1 class="lab-title">SUFFIX PROTOCOL</h1>
+    <p class="sub-title">WEEK 22: -AL | -MENT | -ES | -IAL | -S | -ISM</p>
+    
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    
+    <div id="word-bank">
+        </div>
+
+    <div id="quiz-content">
+        <div id="format-label">MODE: INITIALIZING...</div>
+        <div id="text-display" class="question-box">LOADING DATA...</div>
+        
+        <div id="mcq-options"></div>
+
+        <div id="cloze-input-area">
+            <input type="text" id="cloze-input" placeholder="ENTER OVERRIDE CODE..." autocomplete="off">
+            <button id="submit-btn" onclick="checkClozeAnswer()">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+<div id="feedback-modal">
+    <h1 id="fb-status" style="font-family:'Orbitron'; font-size: 3rem;"></h1>
+    <p id="fb-info" style="font-size: 1.2rem; max-width: 600px; color: #d1d5db; padding: 20px; line-height: 1.6;"></p>
+    <button class="next-btn" onclick="nextQuestion()">CONTINUE</button>
+</div>
+
+<script>
+    const allWords = [
+        "Cordial", "Millennial", "Industrial", "Commitment", 
+        "Resentment", "Achievement", "Pendulums", "Chromosomes", 
+        "Doctrines", "Federalism", "Colonialism", "Capitalism", 
+        "Existentialism", "Enlightenment", "Counterproposal"
+    ];
+
+    // 25 Multiple Choice Questions
+    const rawMCQ = [
+        { type: "mcq", text: "What does it mean to be <span class='highlight'>cordial</span>?", choices: [ { text: "Warm and friendly.", correct: true }, { text: "Angry and hostile.", correct: false }, { text: "Relating to a thousand years.", correct: false } ], explanation: "The suffix -AL means 'pertaining to'. Cordial means pertaining to the heart, or being warm and friendly." },
+        { type: "mcq", text: "Which definition best fits the word <span class='highlight'>millennial</span>?", choices: [ { text: "Relating to a period of a thousand years.", correct: true }, { text: "A hanging weight inside a clock.", correct: false }, { text: "An economic system.", correct: false } ], explanation: "Mille means thousand, and -IAL means pertaining to." },
+        { type: "mcq", text: "If an area is described as <span class='highlight'>industrial</span>, it is...", choices: [ { text: "Of, relating to, or characterized by industry.", correct: true }, { text: "A political philosophy.", correct: false }, { text: "A pledge or promise.", correct: false } ], explanation: "The suffix -AL makes it mean 'pertaining to industry'." },
+        { type: "mcq", text: "What is a <span class='highlight'>commitment</span>?", choices: [ { text: "A pledge or promise.", correct: true }, { text: "A mistaken belief.", correct: false }, { text: "A hanging weight.", correct: false } ], explanation: "The suffix -MENT means 'the act of'. It is the act of committing to a pledge." },
+        { type: "mcq", text: "The word <span class='highlight'>resentment</span> means a feeling of...", choices: [ { text: "Anger or displeasure about something unfair.", correct: true }, { text: "Complete happiness and joy.", correct: false }, { text: "Deep connection with nature.", correct: false } ], explanation: "Resentment is the result (-MENT) of resenting someone or something." },
+        { type: "mcq", text: "Something done successfully through hard work is an <span class='highlight'>achievement</span>. The suffix -MENT means...", choices: [ { text: "The act of or result.", correct: true }, { text: "More than one.", correct: false }, { text: "Characteristic of.", correct: false } ], explanation: "An achievement is the result of achieving something." },
+        { type: "mcq", text: "What do <span class='highlight'>pendulums</span> do?", choices: [ { text: "They are hanging weights that swing back and forth to regulate old clocks.", correct: true }, { text: "They hold DNA in the nucleus.", correct: false }, { text: "They emphasize science and reason.", correct: false } ], explanation: "The suffix -S means there is more than one pendulum." },
+        { type: "mcq", text: "What are <span class='highlight'>chromosomes</span>?", choices: [ { text: "Threadlike structures made of DNA molecules that contain genes.", correct: true }, { text: "Hanging weights inside a clock.", correct: false }, { text: "Settlements established in another territory.", correct: false } ], explanation: "The suffix -S indicates plural structures containing DNA." },
+        { type: "mcq", text: "What are <span class='highlight'>doctrines</span>?", choices: [ { text: "Principles, teachings, or beliefs.", correct: true }, { text: "Movements emphasizing science.", correct: false }, { text: "The plural of an economic system.", correct: false } ], explanation: "The suffix -ES means there is more than one doctrine or teaching." },
+        { type: "mcq", text: "In <span class='highlight'>federalism</span>, power is...", choices: [ { text: "Divided between the national and state governments.", correct: true }, { text: "Held completely by one king or queen.", correct: false }, { text: "Given entirely to private businesses.", correct: false } ], explanation: "The suffix -ISM means a characteristic or system. It is the system of a divided federation." },
+        { type: "mcq", text: "What is <span class='highlight'>colonialism</span>?", choices: [ { text: "An attempt by one country to establish settlements in another territory.", correct: true }, { text: "A promise to do something.", correct: false }, { text: "Threadlike DNA structures.", correct: false } ], explanation: "It is the system (-ISM) of establishing colonies." },
+        { type: "mcq", text: "An economic system based on private property and free enterprise is...", choices: [ { text: "Capitalism.", correct: true }, { text: "Existentialism.", correct: false }, { text: "Federalism.", correct: false } ], explanation: "Capitalism allows individuals to own capital (property and money)." },
+        { type: "mcq", text: "The philosophy that people give meaning to their lives through choices is called...", choices: [ { text: "Existentialism.", correct: true }, { text: "Colonialism.", correct: false }, { text: "Capitalism.", correct: false } ], explanation: "Existentialism focuses on individual existence and choices." },
+        { type: "mcq", text: "The movement that emphasized science and reason as guides to see the world more clearly was the...", choices: [ { text: "Enlightenment.", correct: true }, { text: "Resentment.", correct: false }, { text: "Millennial.", correct: false } ], explanation: "The Enlightenment brought 'light' (reason and science) to the world." },
+        { type: "mcq", text: "A <span class='highlight'>counterproposal</span> is used to...", choices: [ { text: "Amend the terms and conditions of a proposed contract.", correct: true }, { text: "Study living things in an ecosystem.", correct: false }, { text: "Swing back and forth to keep time.", correct: false } ], explanation: "It is a proposal made against (counter) an original proposal." },
+        { type: "mcq", text: "The suffix <b>-ISM</b> generally means...", choices: [ { text: "Characteristic of or a system of.", correct: true }, { text: "More than one (plural).", correct: false }, { text: "The act of doing something.", correct: false } ], explanation: "Words ending in -ISM are usually philosophies, systems, or characteristics." },
+        { type: "mcq", text: "The suffix <b>-MENT</b> generally means...", choices: [ { text: "The act of, or the result.", correct: true }, { text: "Pertaining to.", correct: false }, { text: "A person who does something.", correct: false } ], explanation: "Examples include achieveMENT (result of achieving) and resenTMENT." },
+        { type: "mcq", text: "If a word ends in <b>-AL</b> or <b>-IAL</b>, it most likely means...", choices: [ { text: "Pertaining to or relating to.", correct: true }, { text: "More than one.", correct: false }, { text: "A state of being.", correct: false } ], explanation: "Industrial means 'pertaining to industry'." },
+        { type: "mcq", text: "The suffixes <b>-S</b> and <b>-ES</b> indicate that a noun is...", choices: [ { text: "Plural (more than one).", correct: true }, { text: "A complex philosophy.", correct: false }, { text: "An action or result.", correct: false } ], explanation: "Chromosomes, pendulums, and doctrines are all plural." },
+        { type: "mcq", text: "Which word is an antonym (opposite) of <span class='highlight'>cordial</span>?", choices: [ { text: "Hostile", correct: true }, { text: "Friendly", correct: false }, { text: "Industrial", correct: false } ], explanation: "Cordial means warm and friendly, so hostile is the opposite." },
+        { type: "mcq", text: "Which word is a synonym (same) for <span class='highlight'>commitment</span>?", choices: [ { text: "Promise", correct: true }, { text: "Resentment", correct: false }, { text: "Philosophy", correct: false } ], explanation: "A commitment is a pledge or a promise." },
+        { type: "mcq", text: "While capitalism is an economic system, <span class='highlight'>federalism</span> is...", choices: [ { text: "A political system dividing government power.", correct: true }, { text: "A philosophy of personal choices.", correct: false }, { text: "A scientific movement.", correct: false } ], explanation: "Federalism divides power between national and state governments." },
+        { type: "mcq", text: "The <span class='highlight'>Enlightenment</span> period heavily relied on what two concepts?", choices: [ { text: "Science and reason.", correct: true }, { text: "Fear and anger.", correct: false }, { text: "Private property and free enterprise.", correct: false } ], explanation: "It was an intellectual movement focused on science and reason." },
+        { type: "mcq", text: "A church, political party, or government is most likely to publish its...", choices: [ { text: "Doctrines.", correct: true }, { text: "Pendulums.", correct: false }, { text: "Chromosomes.", correct: false } ], explanation: "Doctrines are the official principles, teachings, or beliefs." },
+        { type: "mcq", text: "
