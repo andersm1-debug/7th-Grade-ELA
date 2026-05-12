@@ -284,4 +284,172 @@
         { type: "mcq", text: "While capitalism is an economic system, <span class='highlight'>federalism</span> is...", choices: [ { text: "A political system dividing government power.", correct: true }, { text: "A philosophy of personal choices.", correct: false }, { text: "A scientific movement.", correct: false } ], explanation: "Federalism divides power between national and state governments." },
         { type: "mcq", text: "The <span class='highlight'>Enlightenment</span> period heavily relied on what two concepts?", choices: [ { text: "Science and reason.", correct: true }, { text: "Fear and anger.", correct: false }, { text: "Private property and free enterprise.", correct: false } ], explanation: "It was an intellectual movement focused on science and reason." },
         { type: "mcq", text: "A church, political party, or government is most likely to publish its...", choices: [ { text: "Doctrines.", correct: true }, { text: "Pendulums.", correct: false }, { text: "Chromosomes.", correct: false } ], explanation: "Doctrines are the official principles, teachings, or beliefs." },
-        { type: "mcq", text: "
+        { type: "mcq", text: "The philosophy of <span class='highlight'>existentialism</span> focuses heavily on...", choices: [ { text: "Personal choices, actions, and finding one's own meaning.", correct: true }, { text: "Splitting government power between states.", correct: false }, { text: "Establishing settlements in other territories.", correct: false } ], explanation: "Existentialism states that people give meaning to their own lives." }
+    ];
+
+    // 15 Cloze Questions (Exactly one for every word in the Word Bank)
+    const rawCloze = [
+        { type: "cloze", word: "Cordial", sentence: "The host offered a very <span class='highlight-blank'></span> greeting, making all the guests feel instantly welcome.", explanation: "Warm and friendly behavior is CORDIAL." },
+        { type: "cloze", word: "Millennial", sentence: "The ancient tree had a <span class='highlight-blank'></span> history, standing in the forest for over a thousand years.", explanation: "Relating to a thousand years is MILLENNIAL." },
+        { type: "cloze", word: "Industrial", sentence: "The city's <span class='highlight-blank'></span> district was filled with large factories, warehouses, and manufacturing plants.", explanation: "Characterized by industry and factories is INDUSTRIAL." },
+        { type: "cloze", word: "Commitment", sentence: "Joining the military requires a serious <span class='highlight-blank'></span> to serve and protect your country.", explanation: "A pledge or promise is a COMMITMENT." },
+        { type: "cloze", word: "Resentment", sentence: "She felt deep <span class='highlight-blank'></span> after her coworker unfairly took credit for her brilliant idea.", explanation: "A feeling of anger or displeasure about unfairness is RESENTMENT." },
+        { type: "cloze", word: "Achievement", sentence: "Winning the state championship was a massive <span class='highlight-blank'></span> for the underdog team.", explanation: "Something done successfully through hard work is an ACHIEVEMENT." },
+        { type: "cloze", word: "Pendulums", sentence: "The antique clock shop was filled with the ticking sounds of swinging <span class='highlight-blank'></span>.", explanation: "Hanging weights that regulate old clocks are PENDULUMS." },
+        { type: "cloze", word: "Chromosomes", sentence: "Humans typically have 46 <span class='highlight-blank'></span> inside the nucleus of their cells, holding their genetic information.", explanation: "Threadlike structures made of DNA are CHROMOSOMES." },
+        { type: "cloze", word: "Doctrines", sentence: "The strict religious <span class='highlight-blank'></span> were taught to the followers every week at the temple.", explanation: "Principles, teachings, and beliefs are DOCTRINES." },
+        { type: "cloze", word: "Federalism", sentence: "The United States uses a system of <span class='highlight-blank'></span> to balance power between Washington D.C. and the individual states.", explanation: "A system dividing power between national and state governments is FEDERALISM." },
+        { type: "cloze", word: "Colonialism", sentence: "Historically, European powers used <span class='highlight-blank'></span> to take control of territories across the globe.", explanation: "Attempting to establish settlements in another territory is COLONIALISM." },
+        { type: "cloze", word: "Capitalism", sentence: "In a system of <span class='highlight-blank'></span>, businesses are privately owned and operate in a free market.", explanation: "An economic system based on private property and free enterprise is CAPITALISM." },
+        { type: "cloze", word: "Existentialism", sentence: "The philosophy professor spent the semester teaching <span class='highlight-blank'></span>, arguing that our choices define our meaning in life.", explanation: "The philosophy that people give meaning to their lives through choices is EXISTENTIALISM." },
+        { type: "cloze", word: "Enlightenment", sentence: "Thinkers during the <span class='highlight-blank'></span> relied on science and logic rather than old superstitions to understand the world.", explanation: "The movement emphasizing science and reason was the ENLIGHTENMENT." },
+        { type: "cloze", word: "Counterproposal", sentence: "When the buyer offered too little money, the seller rejected it and issued a <span class='highlight-blank'></span> with a higher price.", explanation: "Amending the terms of a proposed contract creates a COUNTERPROPOSAL." }
+    ];
+
+    // Combine BOTH arrays and shuffle them into a massive 40-question gauntlet
+    let allQuestions = [...rawMCQ, ...rawCloze].sort(() => Math.random() - 0.5);
+
+    let currentIdx = 0;
+    let score = 0;
+
+    // Build the Word Bank
+    const bankContainer = document.getElementById("word-bank");
+    const sortedWords = [...allWords].sort();
+    sortedWords.forEach(w => {
+        const span = document.createElement("span");
+        span.className = "bank-word";
+        span.id = "bank-" + w.toLowerCase();
+        span.innerText = w;
+        bankContainer.appendChild(span);
+    });
+
+    function updateProgress() {
+        const percentage = (currentIdx / allQuestions.length) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+    }
+
+    function loadQuestion() {
+        updateProgress();
+        const q = allQuestions[currentIdx];
+        const display = document.getElementById("text-display");
+        const mcqArea = document.getElementById("mcq-options");
+        const clozeArea = document.getElementById("cloze-input-area");
+        const formatLabel = document.getElementById("format-label");
+        const wordBank = document.getElementById("word-bank");
+
+        if (q.type === 'mcq') {
+            formatLabel.innerText = "MODE: MULTIPLE CHOICE";
+            formatLabel.style.color = "#8b949e";
+            display.innerHTML = `<b>FILE ${currentIdx + 1}/${allQuestions.length}:</b><br><br>${q.text}`;
+            
+            // Hide word bank and cloze input, show MCQ buttons
+            wordBank.style.display = "none";
+            clozeArea.style.display = "none";
+            mcqArea.style.display = "flex";
+            
+            mcqArea.innerHTML = "";
+            const scrambledChoices = [...q.choices].sort(() => Math.random() - 0.5);
+            scrambledChoices.forEach(c => {
+                const btn = document.createElement("button");
+                btn.className = "choice-btn";
+                btn.innerHTML = c.text;
+                btn.onclick = () => checkMCQAnswer(c.correct, q.explanation);
+                mcqArea.appendChild(btn);
+            });
+
+        } else if (q.type === 'cloze') {
+            formatLabel.innerText = "MODE: CLOZE DECRYPTION";
+            formatLabel.style.color = "#ffb703";
+            display.innerHTML = `<b>FILE ${currentIdx + 1}/${allQuestions.length}:</b><br><br>${q.sentence}`;
+            
+            // Hide MCQ buttons, show word bank and cloze input
+            mcqArea.style.display = "none";
+            wordBank.style.display = "flex";
+            clozeArea.style.display = "flex";
+            
+            const input = document.getElementById("cloze-input");
+            input.value = "";
+            setTimeout(() => input.focus(), 100); 
+        }
+    }
+
+    function checkMCQAnswer(isCorrect, explanation) {
+        const modal = document.getElementById("feedback-modal");
+        const status = document.getElementById("fb-status");
+
+        if (isCorrect) {
+            score++;
+            status.innerText = "VERIFIED";
+            status.style.color = "#3fb950"; 
+        } else {
+            status.innerText = "ERROR";
+            status.style.color = "#f85149"; 
+        }
+        document.getElementById("fb-info").innerText = explanation;
+        modal.style.display = "flex";
+    }
+
+    function checkClozeAnswer() {
+        const inputVal = document.getElementById("cloze-input").value.trim().toLowerCase();
+        const correctAns = allQuestions[currentIdx].word.toLowerCase();
+        
+        const modal = document.getElementById("feedback-modal");
+        const status = document.getElementById("fb-status");
+
+        if (inputVal === correctAns) {
+            score++;
+            status.innerText = "ACCESS GRANTED";
+            status.style.color = "#3fb950"; 
+            
+            // Cross off the specific word in the bank
+            const bankWord = document.getElementById("bank-" + correctAns);
+            if(bankWord) bankWord.classList.add("used");
+            
+            document.getElementById("fb-info").innerText = "Correct! " + allQuestions[currentIdx].explanation;
+        } else {
+            status.innerText = "ACCESS DENIED";
+            status.style.color = "#f85149"; 
+            document.getElementById("fb-info").innerHTML = `Target sequence was: <b style="color:#ffb703;">${allQuestions[currentIdx].word}</b>.<br><br>${allQuestions[currentIdx].explanation}`;
+        }
+        
+        modal.style.display = "flex";
+    }
+
+    function nextQuestion() {
+        document.getElementById("feedback-modal").style.display = "none";
+        currentIdx++;
+
+        if (currentIdx < allQuestions.length) {
+            loadQuestion();
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById("progress-fill").style.width = "100%";
+        document.getElementById("format-label").style.display = "none";
+        document.getElementById("cloze-input-area").style.display = "none";
+        document.getElementById("mcq-options").style.display = "none";
+        document.getElementById("word-bank").style.display = "none";
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 30px 0;">
+                <h2 style="font-family:'Orbitron'; font-size: 2.5rem; color: #ffb703;">PROTOCOL COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0; font-family:'Share Tech Mono';">${Math.round((score/allQuestions.length)*100)}%</p>
+                <p style="font-size: 1.2rem; color: #8b949e;">You scored ${score} out of ${allQuestions.length}.</p>
+                <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO DASHBOARD</a>
+            </div>`;
+    }
+
+    // Allow "Enter" key for submission, but ONLY on Cloze questions
+    document.getElementById("cloze-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter" && allQuestions[currentIdx].type === 'cloze') {
+            event.preventDefault();
+            checkClozeAnswer();
+        }
+    });
+
+    loadQuestion();
+</script>
+</body>
+</html>
