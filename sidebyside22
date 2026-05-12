@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 22 Vocabulary Quiz</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Cordial", hint: "Suffix: -al / -ial (pertaining to)", definition: "Warm and friendly.", sentence: "Even though the two chess players were rivals, they were always ______ and shook hands before every match.", options: ["Industrial", "Cordial", "Doctrines", "Resentment"] },
+            { word: "Millennial", hint: "Suffix: -al / -ial (pertaining to)", definition: "Relating to a period of a thousand years.", sentence: "The discovery of the ancient ruins was a ______ event, uncovering secrets that had been buried for over a thousand years.", options: ["Millennial", "Capitalism", "Enlightenment", "Pendulums"] },
+            { word: "Industrial", hint: "Suffix: -al / -ial (pertaining to)", definition: "Of, relating, or characterized by industry.", sentence: "During the ______ Revolution, many people moved to the city to work in large factories.", options: ["Chromosomes", "Commitment", "Federalism", "Industrial"] },
+            { word: "Commitment", hint: "Suffix: -ment (act of, result)", definition: "A pledge or promise.", sentence: "Practicing your instrument every single day shows a strong ______ to becoming a better musician.", options: ["Colonialism", "Commitment", "Cordial", "Existentialism"] },
+            { word: "Resentment", hint: "Suffix: -ment (act of, result)", definition: "A feeling of anger or displeasure about someone or something unfair.", sentence: "She felt a deep sense of ______ after her brother ate the last piece of cake without asking.", options: ["Resentment", "Counterproposal", "Doctrines", "Capitalism"] },
+            { word: "Achievement", hint: "Suffix: -ment (act of, result)", definition: "Something done successfully; something gained by working or trying hard.", sentence: "Finishing the massive Brandon Sanderson fantasy novel in just one week was a huge ______.", options: ["Pendulums", "Enlightenment", "Achievement", "Millennial"] },
+            { word: "Pendulums", hint: "Suffix: -s (more than one, plural)", definition: "Hanging weights that swing back and forth; used to regulate the movement of old-fashioned clocks.", sentence: "The grandfather clocks in the museum all had large brass ______ swinging back and forth.", options: ["Industrial", "Resentment", "Colonialism", "Pendulums"] },
+            { word: "Chromosomes", hint: "Suffix: -s (more than one, plural)", definition: "Threadlike structures made of DNA molecules that contain the genes.", sentence: "In science class, we learned that ______ carry the genetic information that determines our physical traits.", options: ["Commitment", "Chromosomes", "Federalism", "Cordial"] },
+            { word: "Doctrines", hint: "Suffix: -es (more than one, plural)", definition: "Principles; teachings; beliefs.", sentence: "The ancient temple was built by a secret society that followed very strict ______ and rules.", options: ["Existentialism", "Achievement", "Doctrines", "Counterproposal"] },
+            { word: "Federalism", hint: "Suffix: -ism (characteristic of)", definition: "A system in which power is divided between the national and state governments.", sentence: "In social studies, the 7th-grade students learned how ______ divides power between the national government and the individual states.", options: ["Federalism", "Capitalism", "Resentment", "Industrial"] },
+            { word: "Colonialism", hint: "Suffix: -ism (characteristic of)", definition: "An attempt by one country to establish settlements and to impose its political, economic, and cultural principles in another territory.", sentence: "The history book explained how ______ led to European countries taking control of lands in the Americas.", options: ["Chromosomes", "Enlightenment", "Colonialism", "Commitment"] },
+            { word: "Capitalism", hint: "Suffix: -ism (characteristic of)", definition: "An economic system based on private property and free enterprise.", sentence: "Under ______, businesses are owned by private citizens rather than by the government.", options: ["Pendulums", "Capitalism", "Millennial", "Existentialism"] },
+            { word: "Existentialism", hint: "Suffix: -ism (characteristic of)", definition: "A philosophy based on the idea that people give meaning to their lives through their choices and actions.", sentence: "The complex book discussed ______, arguing that every person must find their own meaning in life.", options: ["Existentialism", "Doctrines", "Achievement", "Federalism"] },
+            { word: "Enlightenment", hint: "Suffix: -ment (act of, result)", definition: "A movement that emphasized science and reason as guides to help see the world more clearly.", sentence: "The ______ was an era when thinkers emphasized using logic and science to understand the world.", options: ["Colonialism", "Cordial", "Counterproposal", "Enlightenment"] },
+            { word: "Counterproposal", hint: "Suffix: -al / -ial (pertaining to)", definition: "Amends the terms and conditions of a proposed contract to buy/sell.", sentence: "When Taylor asked for a later curfew, her parents made a ______ that she could stay out late if she finished all her chores first.", options: ["Capitalism", "Counterproposal", "Chromosomes", "Resentment"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        Hint: {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
