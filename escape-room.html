@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOG Escape Room: The Locked Library</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --panel-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #00d2ff;
+            --error-color: #ff4c4c;
+            --success-color: #00e676;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .level-card {
+            background: var(--panel-bg);
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            display: none; /* Hidden by default */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .level-card.active {
+            display: block; /* Show current level */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Shake animation for wrong answers */
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .clue-box {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2rem;
+            background: #111;
+            border: 2px solid #555;
+            color: var(--accent-color);
+            text-align: center;
+            width: 200px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background-color: #333;
+            color: var(--text-color);
+            border: 2px solid #555;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        .feedback {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .success-screen {
+            text-align: center;
+            color: var(--success-color);
+        }
+        
+        .success-screen h2 {
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🔒 EOG Breakout: The Locked Library</h1>
+
+<div class="container">
+
+    <!-- LEVEL 1 -->
+    <div id="level-1" class="level-card active">
+        <h2>Lock 1: The Word Smith</h2>
+        <div class="story-text">
+            You are locked in the archives. The only way out is through the main door, which is secured by three digital padlocks. To open the first lock, you must decipher the structural code of a word.
+        </div>
+        <div class="clue-box">
+            "I am a word made of two parts. My prefix means 'against' or 'opposite'. My root word means 'poison'. What word am I?"<br><br>
+            <em>Hint: Think of what a doctor gives you if you are bitten by a venomous snake.</em>
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-1" placeholder="ENTER CODE" autocomplete="off">
+            <button onclick="checkLock(1, 'ANTIDOTE')">UNLOCK</button>
+        </div>
+        <div id="feedback-1" class="feedback"></div>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div id="level-2" class="level-card">
+        <h2>Lock 2: The Multiple Choice Combo</h2>
+        <div class="story-text">
+            The first padlock clicks open. The second padlock requires a 3-letter combination based on your knowledge of plot elements. 
+        </div>
+        <div class="clue-box">
+            Read the clues and select the correct letter for each to form your 3-letter code.<br><br>
+            <strong>1. The turning point or most exciting moment of a story is the:</strong><br>
+            A) Exposition &nbsp;&nbsp; B) Climax &nbsp;&nbsp; C) Resolution<br><br>
+            
+            <strong>2. The perspective from which a story is told is the:</strong><br>
+            X) Point of View &nbsp;&nbsp; Y) Main Idea &nbsp;&nbsp; Z) Theme<br><br>
+            
+            <strong>3. An internal conflict takes place:</strong><br>
+            D) Between two characters &nbsp;&nbsp; E) Against nature &nbsp;&nbsp; F) Inside a character's mind
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-2" placeholder="e.g. AXD" maxlength="3" autocomplete="off">
+            <button onclick="checkLock(2, 'BXF')">UNLOCK</button>
+        </div>
+        <div id="feedback-2" class="feedback"></div>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div id="level-3" class="level-card">
+        <h2>Lock 3: The Figurative Formula</h2>
+        <div class="story-text">
+            Only one lock remains. This padlock requires a 3-digit numeric code. You must analyze the paragraph below to find the numbers.
+        </div>
+        <div class="clue-box">
+            "The classroom was a freezer. The wind howled outside the window, begging to come in. The students sat as still as statues, waiting for the bell to ring."<br><br>
+            <strong>Digit 1:</strong> How many Metaphors are in the text?<br>
+            <strong>Digit 2:</strong> How many examples of Personification are in the text?<br>
+            <strong>Digit 3:</strong> How many Similes are in the text?
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-3" placeholder="000" maxlength="3" autocomplete="off">
+            <button onclick="checkLock(3, '111')">UNLOCK</button>
+        </div>
+        <div id="feedback-3" class="feedback"></div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="level-4" class="level-card success-screen">
+        <h2>🔓 ESCAPED!</h2>
+        <p>Congratulations! You have successfully deciphered all the codes and escaped the library. You are officially ready for the EOG.</p>
+        <button onclick="location.reload()" style="margin-top: 20px;">Play Again</button>
+    </div>
+
+</div>
+
+<script>
+    function checkLock(level, correctCode) {
+        const inputField = document.getElementById(`input-${level}`);
+        const userCode = inputField.value.trim().toUpperCase();
+        const feedback = document.getElementById(`feedback-${level}`);
+        const card = document.getElementById(`level-${level}`);
+
+        if (userCode === correctCode) {
+            // Correct Code
+            feedback.style.color = "var(--success-color)";
+            feedback.innerText = "ACCESS GRANTED.";
+            
+            // Wait a second, then transition to next level
+            setTimeout(() => {
+                card.classList.remove('active');
+                document.getElementById(`level-${level + 1}`).classList.add('active');
+            }, 1000);
+            
+        } else {
+            // Wrong Code
+            feedback.style.color = "var(--error-color)";
+            feedback.innerText = "ACCESS DENIED. INCORRECT CODE.";
+            
+            // Add shake animation
+            card.classList.remove('shake');
+            void card.offsetWidth; // trigger reflow
+            card.classList.add('shake');
+            
+            // Clear input
+            inputField.value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
