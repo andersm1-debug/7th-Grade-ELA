@@ -1,26 +1,166 @@
-<div class="rationale-locker">
-            <span class="standard-tag">RI.7.5: Text Structure</span>
-            <h3>🗝️ Locker #2: "Walking Through the World of Math"</h3>
-            
-            <div class="excerpt-box">
-                <p><strong>Context Excerpt:</strong> "...The golden ratio is found in the arrangement of seeds in a sunflower. <strong>But wait, there’s more.</strong> This ratio is also related to another famous concept: the Fibonacci sequence. <strong>Ready for even more?</strong> This sequence doesn't just show up in nature; it's also found in music and architecture..."</p>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locker #2: Math Structure | Mr. Anderson's ELA Hub</title>
+    <style>
+        /* --- CORE HUB STYLING --- */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #fdfdfd; 
+            color: #333; 
+            line-height: 1.6; 
+            padding: 20px; 
+            margin: 0;
+        }
+        .container { 
+            max-width: 850px; 
+            margin: 40px auto; 
+            padding: 20px;
+        }
+        header { 
+            text-align: center; 
+            border-bottom: 3px solid #2c3e50; 
+            margin-bottom: 30px; 
+            padding-bottom: 10px;
+        }
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        
+        /* --- NAVIGATION --- */
+        .back-btn { 
+            display: inline-block; 
+            padding: 10px 20px; 
+            background: #2c3e50; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: #34495e; }
 
-            <div class="question-box">
-                <p><strong>Question:</strong> How does the author’s use of the phrases “But wait, there’s more” and “Ready for even more?” affect the structure of the selection?</p>
-                <ul class="options">
-                    <li>A. They emphasize that the author thinks math can be exhausting.</li>
-                    <li>B. They signal that the author is about to change the topic.</li>
-                    <li class="correct-answer">C. They provide a transition to the next idea in the selection. (Correct)</li>
-                    <li>D. They highlight the author’s opinion that math is a difficult subject.</li>
-                </ul>
-            </div>
+        /* --- THE RATIONALE LOCKER (RI.7.5) --- */
+        .rationale-locker { 
+            background: #f4f4f9; 
+            border-left: 10px solid #2c3e50; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        .standard-tag { 
+            display: inline-block; 
+            background: #e67e22; 
+            color: white; 
+            padding: 4px 12px; 
+            border-radius: 4px; 
+            font-size: 0.85em; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+        }
 
-            <details>
-                <summary>🔓 Unlock the Test-Maker's Rationale</summary>
-                <div class="rationale-content">
-                    <p><strong>The Trap:</strong> Options <strong>A</strong> and <strong>D</strong> are "Tone Traps." They try to trick you into picking a negative feeling. However, the author is actually excited about math! Option <strong>B</strong> is wrong because the author stays on the same topic—math in the real world.</p>
-                    <p><strong>The Win:</strong> These phrases are <strong>Road Signs</strong>. They prepare your brain for a new example that builds on the one before it. In Standard <strong>RI.7.5</strong>, we call these structural transitions.</p>
-                </div>
-            </details>
+        /* --- CONTENT BLOCKS --- */
+        .excerpt-box { 
+            background: #fffbe6; 
+            border: 1px dashed #f39c12; 
+            padding: 20px; 
+            margin: 20px 0; 
+            font-style: italic; 
+            border-radius: 6px; 
+            font-size: 1em;
+            color: #5d4037;
+        }
+        .question-box { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 6px; 
+            margin: 20px 0; 
+            border: 1px solid #ddd; 
+        }
+        .options { list-style-type: none; padding: 0; }
+        .options li { 
+            padding: 12px 15px; 
+            border-bottom: 1px solid #f0f0f0; 
+            font-size: 1.05em;
+        }
+        .options li:last-child { border-bottom: none; }
+        .correct-answer { 
+            color: #27ae60; 
+            font-weight: bold; 
+            background: #f0fff4; 
+            border-radius: 4px;
+        }
+
+        /* --- INTERACTIVE REVEAL --- */
+        summary { 
+            cursor: pointer; 
+            background: #2c3e50; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 6px; 
+            text-align: center; 
+            list-style: none; 
+            font-weight: bold; 
+            font-size: 1.1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        summary:hover { background: #34495e; }
+        details[open] summary { border-radius: 6px 6px 0 0; background: #34495e; }
+        .rationale-content { 
+            padding: 25px; 
+            background: #fff; 
+            border: 3px solid #2c3e50; 
+            border-top: none; 
+            border-radius: 0 0 6px 6px; 
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        strong { color: #2c3e50; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">⬅ Return to Hub</a>
+    
+    <header>
+        <h1>🎯 EOG Strategy: The Rationale Locker</h1>
+        <p>Analyze how text-makers build a passage to trick your brain.</p>
+    </header>
+
+    <div class="rationale-locker">
+        <span class="standard-tag">Target Standard: RI.7.5 (Text Structure)</span>
+        <h3>🗝️ Locker #2: "Walking Through the World of Math"</h3>
+        
+        <div class="excerpt-box">
+            <p><strong>Context Excerpt:</strong> "...The golden ratio is found in the arrangement of seeds in a sunflower. <strong>But wait, there’s more.</strong> This ratio is also related to another famous concept: the Fibonacci sequence. <strong>Ready for even more?</strong> This sequence doesn't just show up in nature; it's also found in music and architecture..."</p>
         </div>
+
+        <div class="question-box">
+            <p><strong>The Question:</strong> How does the author’s use of the phrases “But wait, there’s more” and “Ready for even more?” affect the structure of the selection?</p>
+            <ul class="options">
+                <li>A. They emphasize that the author thinks math can be exhausting.</li>
+                <li>B. They signal that the author is about to change the topic.</li>
+                <li class="correct-answer">C. They provide a transition to the next idea in the selection. (Correct)</li>
+                <li>D. They highlight the author’s opinion that math is a difficult subject.</li>
+            </ul>
+        </div>
+
+        <details>
+            <summary>🔓 Unlock the Test-Maker's Rationale</summary>
+            <div class="rationale-content">
+                <p><strong>The Trap:</strong> Options <strong>A</strong> and <strong>D</strong> are "Tone Traps." They try to trick you into picking a negative feeling (exhausting/difficult) because many people find math hard. However, the author’s tone is actually enthusiastic!</p>
+                <p><strong>The Distractor:</strong> Option <strong>B</strong> is wrong because the author isn't changing the topic; they are staying on the same topic and simply adding more examples.</p>
+                <p><strong>The Win:</strong> These phrases are <strong>"Road Signs."</strong> Just like a sign on the highway tells you what's coming, these phrases prepare your brain for a new piece of info that builds on the last one. In Standard <strong>RI.7.5</strong>, we call these <strong>structural transitions</strong>.</p>
+            </div>
+        </details>
+    </div>
+</div>
+
+</body>
+</html>
