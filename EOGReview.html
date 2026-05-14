@@ -3,80 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOG Strategy Room | Mr. Anderson's ELA Hub</title>
+    <title>Mr. Anderson's ELA Hub</title>
     <style>
-        /* General Page Styling to match your Hub */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fdfdfd; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        header { text-align: center; border-bottom: 3px solid #2c3e50; margin-bottom: 30px; padding-bottom: 20px; }
-        h1 { color: #2c3e50; margin: 0; }
-        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px 15px; background: #2c3e50; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        
-        /* The Locker Grid (Similar to your Vault layout) */
-        .locker-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
 
-        /* Individual Locker Card */
-        .rationale-locker { background: #f4f4f9; border-left: 8px solid #2c3e50; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .standard-tag { display: inline-block; background: #e67e22; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
-        
-        /* Content Sections */
-        .excerpt-box { background: #fffbe6; border: 1px dashed #f39c12; padding: 15px; margin: 15px 0; font-style: italic; border-radius: 5px; font-size: 0.95em; }
-        .question-box { background: white; padding: 20px; border-radius: 5px; margin: 15px 0; border: 1px solid #ddd; }
-        .options { list-style-type: none; padding: 0; }
-        .options li { padding: 10px 0; border-bottom: 1px solid #eee; }
-        .options li:last-child { border-bottom: none; }
-        .correct-answer { color: #27ae60; font-weight: bold; }
-        
-        /* The Reveal Mechanism */
-        summary { cursor: pointer; background: #2c3e50; color: white; padding: 12px; border-radius: 5px; text-align: center; list-style: none; font-weight: bold; transition: 0.3s; }
-        summary:hover { background: #34495e; }
-        details[open] summary { border-radius: 5px 5px 0 0; background: #34495e; }
-        .rationale-content { padding: 20px; background: #fff; border: 2px solid #2c3e50; border-top: none; border-radius: 0 0 5px 5px; animation: fadeIn 0.5s; }
+        :root {
+            --vikings-purple: #4F2683;
+            --vikings-gold: #FFC62F;
+            --pure-white: #FFFFFF;
+            --soft-grey: #f4f4f4;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--soft-grey);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: var(--vikings-purple);
+            color: var(--pure-white);
+            width: 100%;
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 8px solid var(--vikings-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--pure-white);
+            border-radius: 12px;
+            border-left: 10px solid var(--vikings-purple);
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            border-left-color: var(--vikings-gold);
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            color: var(--vikings-purple);
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .active { background-color: #e8f5e9; color: #2e7d32; }
+        .placeholder { background-color: #fff3e0; color: #ef6c00; }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
+<header>
+    <h1>EOG Rational Locker</h1>
+</header>
+<p>On the Reading EOG, picking the right answer is about more than just reading—it's about <strong>attacking the distractors</strong>. Use these lockers to see how the test-makers think.</p>
 <div class="container">
-    <a href="index.html" class="back-btn">⬅ Return to Hub</a>
+
+<a href="index.html" class="card">
+        <div>
+            <h2>Return to Hub</h2>
+            <p>Return to the home page!</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+     <a href="locker1.html" class="card">
+        <div>
+             <h2>Target Standard: RL.7.3 (Plot & Character Interaction)</h2>
+            <p>🗝️ Locker #1: "Rocks in My Pocket"</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+    <a href="sidebyside22.html" class="card">
+        <div>
+             <h2>L 7.4: Week 22 Vocabulary Side by Side</h2>
+            <p>AL, -Ial, Ment, S, Es, Ism</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
     
-    <header>
-        <h1>🎯 EOG Strategy Room</h1>
-        <p>Don't just pick an answer—<strong>attack the distractors</strong>. Unlock the lockers below to see how the test-makers think.</p>
-    </header>
-
-    <div class="locker-grid">
-
-        <div class="rationale-locker">
-            <span class="standard-tag">RL.7.3: Character Interaction</span>
-            <h3>🗝️ Locker #1: "Rocks in My Pocket"</h3>
-            
-            <div class="excerpt-box">
-                <p><strong>Context:</strong> "...The official shook his head. 'I'm sorry, young lady, but you don't meet the weight requirement. No permit today.' Sophie's heart sank. She turned away from the desk without a word. Sophie walked dejectedly homeward, depositing rocks in each trash can that she passed. When she told the family what had happened, Papa was shocked." [cite: 1]</p>
-            </div>
-
-            <div class="question-box">
-                <p><strong>Question:</strong> Sophie feels defeated after the official denies her request for a work permit. Which sentence from the selection supports this statement? [cite: 1]</p>
-                <ul class="options">
-                    <li>A. "Sophie was nervous when she and Judith entered the City Hall..."</li>
-                    <li>B. "She was glad that he did not seem to take much interest in her."</li>
-                    <li class="correct-answer">C. "Sophie walked dejectedly homeward, depositing rocks in each trash can that she passed." (Correct)</li>
-                    <li>D. "When she told the family what had happened, Papa was shocked."</li>
-                </ul>
-            </div>
-
-            <details>
-                <summary>🔓 Unlock the Rationale</summary>
-                <div class="rationale-content">
-                    <p><strong>The Trap:</strong> Option <strong>A</strong> describes an emotion, but it’s how she felt <em>before</em> the interaction. Option <strong>D</strong> shows a reaction, but it belongs to <em>Papa</em>, not Sophie. [cite: 1]</p>
-                    <p><strong>The Win:</strong> According to the i-Ready Teacher Guide, the word <strong>"dejectedly"</strong> is the smoking gun. It directly links her physical action (walking home) to her internal feeling of defeat after being denied. [cite: 1]</p>
-                </div>
-            </details>
+ <a href="Week21Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 21 Vocabulary</h2>
+            <p>Al, Ist, Ize, Ise</p>
         </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
 
+    <a href="sidebyside21.html" class="card">
+        <div>
+             <h2>L 7.4: Week 21 Vocabulary Side by Side</h2>
+            <p>Al, Ist, Ize, Ise</p>
         </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+     <a href="Week20Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 20 Vocabulary</h2>
+            <p>Less, Acy, Ess, Ish</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+    <a href="sidebyside20.html" class="card">
+        <div>
+             <h2>L 7.4: Week 20 Vocabulary Side by Side</h2>
+            <p>Less, Acy, Ess, Ish</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+    <a href="Week19Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 19 Vocabulary</h2>
+            <p>Able / Ible, -Y, Ship, Ness</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+    <a href="sidebyside19.html" class="card">
+        <div>
+             <h2>L 7.4: Week 19 Vocabulary Side by Side</h2>
+            <p>Able / Ible, -Y, Ship, Ness</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+     <a href="Week18Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 18 Vocabulary</h2>
+            <p>Pre, Trans, Sub, Uni</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+      <a href="sidebyside18.html" class="card">
+        <div>
+             <h2>L 7.4: Week 18 Vocabulary Side by Side</h2>
+            <p>Pre, Trans, Sub, Uni</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+  <a href="Week17Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 17 Vocabulary</h2>
+            <p>Post, Semi, Un, Syn</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+      <a href="sidebyside17.html" class="card">
+        <div>
+             <h2>L 7.4: Week 17 Vocabulary Side by Side</h2>
+            <p>Post, Semi, Un, Syn</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+  <a href="Week16Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 16 Vocabulary</h2>
+            <p>Poly, Re, Super, Tri</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+      <a href="sidebyside16.html" class="card">
+        <div>
+             <h2>L 7.4: Week 16 Vocabulary Side by Side</h2>
+            <p>Poly, Re, Super, Tri</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+<a href="Week15Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 15 Vocabulary</h2>
+            <p>Inter, Mid/Medi, Non</p>
+        </div>
+         <span class="status-badge active">Live Interaction</span>
+    </a>
+    
+     <a href="Week14Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 14 Vocabulary</h2>
+            <p>In/Im/Il/IR, Micro, Mono</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week13Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 13 Vocabulary</h2>
+            <p>Ex, Macro, Mis</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week12Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 12 Vocabulary</h2>
+            <p>Bi, Contra, En/Em</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week11Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 11 Vocabulary</h2>
+            <p>Auto, Co/Con/Com, Dis</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week10Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 10 Vocabulary</h2>
+            <p>Anti, De, Circum</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week9Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 9 Vocabulary</h2>
+            <p>Omni, Phon, Scrib</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week8Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 8 Vocabulary</h2>
+            <p>Phil, Port, Mis/Mit</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week7Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 7 Vocabulary</h2>
+            <p>Mand, Photo, Soph, Path, Centri</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week6Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 6 Vocabulary</h2>
+            <p>Jur/Jus, Man, Vis/Vid</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week5Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 5 Vocabulary</h2>
+            <p>Gene, Luc/Lum, Greg, Tele</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week4Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 4 Vocabulary</h2>
+            <p>Flex, Vac, Graph(y), Bio, Chrono</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week3Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 3 Vocabulary</h2>
+            <p>Bene, Cred, Fid, Spec/Spic/Spect</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week2Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 2 Vocabulary</h2>
+            <p>Auto, Duc, Chrono, Terr</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="Week1Vocab.html" class="card">
+        <div>
+             <h2>L 7.4: Week 1 Vocabulary</h2>
+            <p>Audi, Bio, Dict, Sens/Sent, Graph(y)</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+    </a>
+
+<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+        <div>
+             <h2>L 7.4: Week 20 Vocabulary</h2>
+            <p>~</p>
+        </div>
+         <span class="status-badge placeholder">Under Construction</span>
+    </a>
+
+    <a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+        <div>
+             <h2>L 7.4: Week 20 Vocabulary Side by Side</h2>
+            <p>~</p>
+        </div>
+         <span class="status-badge placeholder">Under Construction</span>
+    </a>
+    
+<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+        <div>
+            <h2>Coming Soon</h2>
+            <p>Under Construction</p>
+        </div>
+        <span class="status-badge placeholder">Under Construction</span>
+    </a>
+    
 </div>
+ 
+<footer>
+    &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
+</footer>
 
 </body>
 </html>
