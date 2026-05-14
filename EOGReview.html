@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOG Strategy Room | Mr. Anderson's ELA Hub</title>
+    <style>
+        /* General Page Styling to match your Hub */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fdfdfd; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        header { text-align: center; border-bottom: 3px solid #2c3e50; margin-bottom: 30px; padding-bottom: 20px; }
+        h1 { color: #2c3e50; margin: 0; }
+        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px 15px; background: #2c3e50; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        
+        /* The Locker Grid (Similar to your Vault layout) */
+        .locker-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+
+        /* Individual Locker Card */
+        .rationale-locker { background: #f4f4f9; border-left: 8px solid #2c3e50; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .standard-tag { display: inline-block; background: #e67e22; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
+        
+        /* Content Sections */
+        .excerpt-box { background: #fffbe6; border: 1px dashed #f39c12; padding: 15px; margin: 15px 0; font-style: italic; border-radius: 5px; font-size: 0.95em; }
+        .question-box { background: white; padding: 20px; border-radius: 5px; margin: 15px 0; border: 1px solid #ddd; }
+        .options { list-style-type: none; padding: 0; }
+        .options li { padding: 10px 0; border-bottom: 1px solid #eee; }
+        .options li:last-child { border-bottom: none; }
+        .correct-answer { color: #27ae60; font-weight: bold; }
+        
+        /* The Reveal Mechanism */
+        summary { cursor: pointer; background: #2c3e50; color: white; padding: 12px; border-radius: 5px; text-align: center; list-style: none; font-weight: bold; transition: 0.3s; }
+        summary:hover { background: #34495e; }
+        details[open] summary { border-radius: 5px 5px 0 0; background: #34495e; }
+        .rationale-content { padding: 20px; background: #fff; border: 2px solid #2c3e50; border-top: none; border-radius: 0 0 5px 5px; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">⬅ Return to Hub</a>
+    
+    <header>
+        <h1>🎯 EOG Strategy Room</h1>
+        <p>Don't just pick an answer—<strong>attack the distractors</strong>. Unlock the lockers below to see how the test-makers think.</p>
+    </header>
+
+    <div class="locker-grid">
+
+        <div class="rationale-locker">
+            <span class="standard-tag">RL.7.3: Character Interaction</span>
+            <h3>🗝️ Locker #1: "Rocks in My Pocket"</h3>
+            
+            <div class="excerpt-box">
+                <p><strong>Context:</strong> "...The official shook his head. 'I'm sorry, young lady, but you don't meet the weight requirement. No permit today.' Sophie's heart sank. She turned away from the desk without a word. Sophie walked dejectedly homeward, depositing rocks in each trash can that she passed. When she told the family what had happened, Papa was shocked." [cite: 1]</p>
+            </div>
+
+            <div class="question-box">
+                <p><strong>Question:</strong> Sophie feels defeated after the official denies her request for a work permit. Which sentence from the selection supports this statement? [cite: 1]</p>
+                <ul class="options">
+                    <li>A. "Sophie was nervous when she and Judith entered the City Hall..."</li>
+                    <li>B. "She was glad that he did not seem to take much interest in her."</li>
+                    <li class="correct-answer">C. "Sophie walked dejectedly homeward, depositing rocks in each trash can that she passed." (Correct)</li>
+                    <li>D. "When she told the family what had happened, Papa was shocked."</li>
+                </ul>
+            </div>
+
+            <details>
+                <summary>🔓 Unlock the Rationale</summary>
+                <div class="rationale-content">
+                    <p><strong>The Trap:</strong> Option <strong>A</strong> describes an emotion, but it’s how she felt <em>before</em> the interaction. Option <strong>D</strong> shows a reaction, but it belongs to <em>Papa</em>, not Sophie. [cite: 1]</p>
+                    <p><strong>The Win:</strong> According to the i-Ready Teacher Guide, the word <strong>"dejectedly"</strong> is the smoking gun. It directly links her physical action (walking home) to her internal feeling of defeat after being denied. [cite: 1]</p>
+                </div>
+            </details>
+        </div>
+
+        </div>
+</div>
+
+</body>
+</html>
