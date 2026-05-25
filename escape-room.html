@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOG Strategy Room: The 60-Minute Outsmart Challenge</title>
+    <title>EOG Strategy Room: Outsmart the Test-Makers</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -15,533 +15,168 @@
             --text-muted: #94a3b8;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--card-bg);
-            padding-bottom: 20px;
-        }
-
-        h1 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .timer-container {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fbbf24;
-            background: #292524;
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 10px;
-            border: 1px dashed #fbbf24;
-        }
-
-        .essential-question {
-            background-color: #0369a1;
-            padding: 15px;
-            border-radius: 8px;
-            font-style: italic;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--accent-color);
-        }
-
-        .lock-stage {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            border: 1px solid #334155;
-            display: none;
-        }
-
-        .lock-stage.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .stage-badge {
-            background-color: #475569;
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 0.05em;
-        }
-
-        .excerpt-box {
-            background-color: #0f172a;
-            border-left: 4px solid var(--accent-color);
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-            font-size: 1.05rem;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .options-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .option-item {
-            background: #334155;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .option-item:hover {
-            background: #455a64;
-        }
-
-        .option-item.selected {
-            border-color: var(--accent-color);
-            background: #1e293b;
-        }
-
-        .input-group {
-            margin-top: 25px;
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        button {
-            background-color: #0284c7;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--accent-color);
-        }
-
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .feedback.error {
-            color: var(--error-color);
-            display: block;
-        }
-
-        .feedback.success {
-            color: var(--success-color);
-            display: block;
-        }
-
-        .rationale-panel {
-            background-color: #1e293b;
-            border: 1px solid var(--success-color);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        #victory-screen {
-            text-align: center;
-            display: none;
-            padding: 40px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            border: 2px solid var(--success-color);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        body { font-family: sans-serif; background-color: var(--bg-color); color: var(--text-main); padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid var(--card-bg); padding-bottom: 20px; }
+        h1 { color: var(--accent-color); }
+        .timer-container { font-size: 1.5rem; font-weight: bold; color: #fbbf24; background: #292524; padding: 10px 20px; border-radius: 8px; border: 1px dashed #fbbf24; }
+        .lock-stage { background-color: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 30px; display: none; }
+        .lock-stage.active { display: block; }
+        .stage-badge { background-color: #475569; padding: 4px 12px; border-radius: 9999px; font-size: 0.85rem; text-transform: uppercase; }
+        .excerpt-box { background-color: #0f172a; border-left: 4px solid var(--accent-color); padding: 15px 20px; margin: 20px 0; max-height: 250px; overflow-y: auto; }
+        .option-item { background: #334155; padding: 12px 15px; margin-bottom: 10px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; }
+        .option-item:hover { background: #455a64; }
+        .option-item.selected { border-color: var(--accent-color); background: #1e293b; }
+        .input-group { margin-top: 25px; display: flex; gap: 10px; }
+        input[type="text"] { flex: 1; padding: 12px; border-radius: 6px; background-color: #0f172a; color: #fff; border: 1px solid #475569; }
+        button { background-color: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; }
+        .feedback { margin-top: 15px; font-weight: bold; display: none; }
+        .feedback.error { color: var(--error-color); display: block; }
+        .feedback.success { color: var(--success-color); display: block; }
+        .rationale-panel { background-color: #1e293b; border: 1px solid var(--success-color); padding: 15px; border-radius: 6px; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>🔐 EOG Strategy Escape Room (v2)</h1>
-        <p>Outsmart the Test-Makers • Use Rigorous Evidence • Break the Locks</p>
+        <h1>🔐 EOG Strategy Escape Room</h1>
         <div class="timer-container">⏳ Time Remaining: <span id="timer">60:00</span></div>
     </header>
 
-    <div class="essential-question">
-        <strong>💡 Essential Question:</strong> "How do I use evidence to outsmart the 'distractors' and uncover the author's true intent?"
-    </div>
-
     <div id="stage1" class="lock-stage active">
-        <span class="stage-badge">Lock 1: RI.7.5 (Text Structure)</span>
-        <h2>The Structural Domino Effect</h2>
-        <p><strong>Scenario:</strong> Evaluate structural transitions in informational text. Read the historical account of the Great Boston Disaster.</p>
-        
-        <div class="excerpt-box">
-            "...The holding tank was constructed hastily, completely lacking the necessary structural reinforcements. <strong>As a direct result</strong>, when the unseasonably warm weather caused the two million gallons of molasses to ferment and expand, the steel rivets violently popped, unleashing a 15-foot wave of heavy syrup through the neighborhood..."
-        </div>
-
-        <p><strong>The Mission Question:</strong> How does the phrase <strong>"As a direct result"</strong> affect the overall structure of the selection?</p>
-        
+        <span class="stage-badge">Lock 1: RI.7.5 (Structure)</span>
+        <div class="excerpt-box">"...As a direct result of poor construction, when warm weather caused the syrup to ferment, the rivets popped..."</div>
+        <p><strong>Mission:</strong> How does "As a direct result" affect the structure?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> It introduces a contrasting viewpoint about how safe industrial tanks were in the 1900s.</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> It establishes a clear cause-and-effect relationship between the poor construction and the eventual disaster.</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> It shifts the text into a chronological timeline of the neighborhood's history.</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> It reveals the author's personal opinion that warm weather is always dangerous to cities.</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: Contrast viewpoint.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: Cause-and-effect relationship.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: Chronological timeline.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: Personal opinion.</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter choice. Then, scan the excerpt to find the <strong>plural noun</strong> describing the small steel items that violently popped under pressure. Type that exact noun below.</p>
-
-        <div class="input-group">
-            <input type="text" id="code1" placeholder="Type your code keyword here...">
-            <button onclick="checkLock1()">Submit Key</button>
-        </div>
+        <input type="text" id="code1" placeholder="Type the plural noun for the metal fasteners...">
+        <button onclick="checkLock('stage1', 'B', 'rivets', 'stage2', 1)">Submit</button>
         <div id="feedback1" class="feedback"></div>
-        <div id="rationale1" class="rationale-panel"></div>
     </div>
 
     <div id="stage2" class="lock-stage">
-        <span class="stage-badge">Lock 2: RL.7.4 (Poetry Word Choice & Tone)</span>
-        <h2>The Dancing Field</h2>
-        <p><strong>Scenario:</strong> Evaluate how poets use specific verbs to completely shift the tone of a piece. Read the stanza from William Wordsworth.</p>
-
-        <div class="excerpt-box">
-            "I wandered lonely as a cloud<br>
-            That floats on high o'er vales and hills,<br>
-            When all at once I saw a crowd,<br>
-            A host, of golden daffodils;<br>
-            Beside the lake, beneath the trees,<br>
-            <strong>Fluttering</strong> and <strong>dancing</strong> in the breeze."
-        </div>
-
-        <p><strong>The Mission Question:</strong> How does the author's use of the words <strong>"fluttering"</strong> and <strong>"dancing"</strong> impact the meaning of the stanza?</p>
-        
+        <span class="stage-badge">Lock 2: RL.7.4 (Word Choice)</span>
+        <div class="excerpt-box">"A host, of golden daffodils... Fluttering and dancing in the breeze."</div>
+        <p><strong>Mission:</strong> How do "fluttering" and "dancing" impact the meaning?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> They prove that the flowers are being physically destroyed by a severe storm.</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> They assign active, joyous human traits to the flowers, shifting the poem's tone from lonely to lively.</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> They create a somber, depressing mood to match the speaker's isolation.</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> They explain the literal, scientific life cycle of a daffodil blowing in the wind.</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: They show destruction.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: They assign human traits, shifting to a lively tone.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: They create a somber mood.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: They explain the life cycle.</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct answer choice. Then, look at the fourth line of the poem. Locate the specific <strong>adjective</strong> used to describe the color or quality of the daffodils. Type that lowercase word to clear the lock.</p>
-
-        <div class="input-group">
-            <input type="text" id="code2" placeholder="Type your code keyword here...">
-            <button onclick="checkLock2()">Submit Key</button>
-        </div>
+        <input type="text" id="code2" placeholder="Type the color adjective in line 4...">
+        <button onclick="checkLock('stage2', 'B', 'golden', 'stage3', 2)">Submit</button>
         <div id="feedback2" class="feedback"></div>
-        <div id="rationale2" class="rationale-panel"></div>
     </div>
 
     <div id="stage3" class="lock-stage">
-        <span class="stage-badge">Lock 3: RI.7.3 (Interactions & Connections)</span>
-        <h2>The Agricultural Network</h2>
-        <p><strong>Scenario:</strong> Examine how specific individuals influence broader events. Read this excerpt about local business leader Bukuru Jean.</p>
-
-        <div class="excerpt-box">
-            "...Bukuru Jean recognized that the traditional farming methods used in his community yielded wildly inconsistent crops. Instead of abandoning the fields, he partnered with local agricultural scientists to introduce drought-resistant seed varieties. This strategic collaboration not only stabilized his own farm's output, but it also created a massive surplus that he could distribute to neighboring villages to prevent starvation..."
-        </div>
-
-        <p><strong>The Mission Question:</strong> Based on the selection, how does the author connect Bukuru Jean's individual actions to the broader community?</p>
-        
+        <span class="stage-badge">Lock 3: RI.7.3 (Connections)</span>
+        <div class="excerpt-box">"...Bukuru Jean partnered with scientists... creating a massive surplus that he could distribute to neighboring villages..."</div>
+        <p><strong>Mission:</strong> How does the author connect Jean's actions to the community?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> By demonstrating how his scientific partnership solved his own farm's issue and led to a shared agricultural benefit for others.</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> By explaining how he aggressively bought out his neighbors' failing farms to build his own wealth.</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> By outlining a chronological timeline of his childhood in the farming village.</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> By showing his deep criticism and rejection of modern scientific farming methods.</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: By showing how his partnership led to shared community benefit.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: By explaining how he monopolized the market.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: By outlining his childhood history.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: By showing his rejection of science.</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select your multiple-choice response. Then, identify the specific **noun** in the text that describes the extra agricultural amount Bukuru Jean was able to distribute to others. Type that exact word in lowercase.</p>
-
-        <div class="input-group">
-            <input type="text" id="code3" placeholder="Type your code keyword here...">
-            <button onclick="checkLock3()">Submit Key</button>
-        </div>
+        <input type="text" id="code3" placeholder="Type the noun for the extra food/wealth resources...">
+        <button onclick="checkLock('stage3', 'A', 'surplus', 'stage4', 3)">Submit</button>
         <div id="feedback3" class="feedback"></div>
-        <div id="rationale3" class="rationale-panel"></div>
     </div>
 
     <div id="stage4" class="lock-stage">
-        <span class="stage-badge">Lock 4: RL.7.6 (Point of View / Narrator Reliability)</span>
-        <h2>The Unreliable Confession</h2>
-        <p><strong>Scenario:</strong> Analyze how an author develops a narrator's point of view to manipulate the reader. Read the opening lines of Edgar Allan Poe's <em>"The Tell-Tale Heart."</em></p>
-
-        <div class="excerpt-box">
-            "True!—nervous—very, very dreadfully nervous I had been and am; but why will you say that I am mad? The disease had sharpened my senses—not destroyed—not dulled them. Above all was the sense of hearing acute. I heard all things in the heaven and in the earth. I heard many things in hell. How, then, am I mad? Hearken! and observe how healthily—how calmly I can tell you the whole story."
-        </div>
-
-        <p><strong>The Mission Question:</strong> How does the author most effectively develop the narrator's point of view in this opening paragraph?</p>
-        
+        <span class="stage-badge">Lock 4: RL.7.6 (POV)</span>
+        <div class="excerpt-box">"The disease had sharpened my senses... but why will you say that I am mad? ... Above all was the sense of hearing acute."</div>
+        <p><strong>Mission:</strong> How is the narrator's POV developed?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> By using a calm, objective tone to prove to the reader that the narrator is a reliable source of information.</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> By having the narrator insist on their sanity while simultaneously making wild, irrational claims, immediately causing the reader to distrust them.</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> By providing a clear, chronological summary of the narrator's recent medical history and hospital visits.</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> By introducing a second character to debate the narrator on whether or not they are actually sick.</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: By using a calm, objective tone.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: By insisting on sanity while making irrational claims, creating distrust.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: By summarizing medical history.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: By introducing a second character to debate him.</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Choose the correct option. Then, pinpoint the specific **adjective** in the text used to describe the narrator's highly sharpened, sharp sense of hearing. Type that single word below.</p>
-
-        <div class="input-group">
-            <input type="text" id="code4" placeholder="Type your code keyword here...">
-            <button onclick="checkLock4()">Submit Key</button>
-        </div>
+        <input type="text" id="code4" placeholder="Type the adjective for the narrator's hearing...">
+        <button onclick="checkLock('stage4', 'B', 'acute', 'stage5', 4)">Submit</button>
         <div id="feedback4" class="feedback"></div>
-        <div id="rationale4" class="rationale-panel"></div>
     </div>
 
     <div id="stage5" class="lock-stage">
-        <span class="stage-badge">Lock 5: L.7.4b (Morphology & Context)</span>
-        <h2>The Detective's Vocabulary Vault</h2>
-        <p><strong>Scenario:</strong> Unpack word morphology rather than relying on basic dictionary definitions. Read the excerpt below.</p>
-
-        <div class="excerpt-box">
-            "...The detective noticed a serious <strong>chronological</strong> error in the suspect's alibi. The suspect claimed to be eating at the local diner at noon, but the traffic camera footage proved otherwise. Furthermore, the suspect displayed total <strong>apathy</strong> when told about the stolen charity funds, acting as if the missing money didn't matter to him at all."
-        </div>
-
-        <p><strong>The Mission Question:</strong> Based on the morphological roots in the bolded academic vocabulary words above, which statement is completely accurate?</p>
-        
+        <span class="stage-badge">Lock 5: L.7.4b (Morphology)</span>
+        <div class="excerpt-box">"...The detective noticed a serious chronological error in the suspect's <strong>alibi</strong>... suspect displayed total <strong>apathy</strong>..."</div>
+        <p><strong>Mission:</strong> Which morphological analysis is accurate?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> <em>Apathy</em> combines a prefix meaning 'without' and the root <em>path-</em> (meaning 'feeling') to show a complete lack of emotion.</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> <em>Chronological</em> uses a root meaning 'color' to describe the exact shading of the traffic camera footage.</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> <em>Apathy</em> indicates that the suspect was highly energetic and nervous because of its action-based suffix.</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> Both words relate exclusively to the study of ancient geographic maps.</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: Apathy means 'without feeling' (a- + path-).</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: Chronological refers to color.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: Apathy means energetic.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: Both words describe land.</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct analysis choice. Then, locate the specific **noun** in the text that means the suspect's legal claim of being somewhere else during the crime. Type that exact word in lowercase.</p>
-
-        <div class="input-group">
-            <input type="text" id="code5" placeholder="Type your code keyword here...">
-            <button onclick="checkLock5()">Submit Key</button>
-        </div>
+        <input type="text" id="code5" placeholder="Type the noun for the legal excuse...">
+        <button onclick="checkLock('stage5', 'A', 'alibi', 'stage6', 5)">Submit</button>
         <div id="feedback5" class="feedback"></div>
-        <div id="rationale5" class="rationale-panel"></div>
     </div>
 
     <div id="stage6" class="lock-stage">
-        <span class="stage-badge">Lock 6: RL.8.1 / Grade 8 Vertical Bridge</span>
-        <h2>The "Smoking Gun" Evidence Locker</h2>
-        <p><strong>Scenario:</strong> To escape, execute **Grade 8 Vertical Alignment**. Identify the **absolute strongest piece of textual evidence**.</p>
-
-        <div class="excerpt-box">
-            <strong>[INTERROGATION SCENE]</strong><br>
-            (1) "I smiled,—for what had I to fear?"<br>
-            (2) "I bade the gentlemen welcome. The shriek, I said, was my own in a dream."<br>
-            (3) "I brought chairs into the room, and desired them here to rest from their fatigues..."<br>
-            (4) "But, ere long, I felt myself getting pale and wished them gone. My head ached, and I fancied a ringing in my ears: but still they sat and still chatted."
-        </div>
-
-        <p><strong>The Mission Question:</strong> Which specific segment of text provides the **absolute strongest, definitive turning point** where the narrator's confident, arrogant facade officially begins to crumble and fail?</p>
-        
+        <span class="stage-badge">Lock 6: RL.7.1 (Evidence Extraction)</span>
+        <div class="excerpt-box">"(1) I smiled... (2) The shriek was a dream. (3) I brought chairs... (4) But, ere long, I felt myself getting pale and wished them gone. My head ached..."</div>
+        <p><strong>Mission:</strong> Which text proves the narrator's facade is crumbling?</p>
         <ul class="options-list">
-            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> "I smiled,—for what had I to fear?"</li>
-            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> "The shriek, I said, was my own in a dream."</li>
-            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> "I brought chairs into the room, and desired them here to rest..."</li>
-            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> "But, ere long, I felt myself getting pale and wished them gone. My head ached..."</li>
+            <li class="option-item" data-letter="A" onclick="selectOption(this)">A: "I smiled..."</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)">B: "The shriek was a dream."</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)">C: "I brought chairs..."</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)">D: "But, ere long, I felt myself getting pale..."</li>
         </ul>
-
-        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the final correct option letter. Then, examine the final line of dialogue very carefully. Identify the **noun** used to describe the imaginary, repetitive sound the narrator hears in his ears. Type that word below.</p>
-
-        <div class="input-group">
-            <input type="text" id="code6" placeholder="Type your code keyword here...">
-            <button onclick="checkLock6()">Break Final Lock</button>
-        </div>
+        <input type="text" id="code6" placeholder="Type the noun for the imaginary sound...">
+        <button onclick="checkLock('stage6', 'D', 'ringing', 'victory', 6)">Submit</button>
         <div id="feedback6" class="feedback"></div>
-        <div id="rationale6" class="rationale-panel"></div>
     </div>
 
     <div id="victory-screen">
         <h2>🎉 Escape Successful!</h2>
-        <p>You completed the entire expanded EOG Strategy Gauntlet within the 60-minute window!</p>
-        <p>By breaking down distractor models, tracking cause/effect structures, and isolating textual evidence, you have unlocked the mastery level.</p>
-        <h3 id="final-time-display" style="color: var(--success-color); font-size: 1.8rem;"></h3>
+        <p>You completed the Gauntlet!</p>
     </div>
 </div>
 
 <script>
-    // 60-Minute Countdown
     let totalSeconds = 60 * 60;
     const timerElement = document.getElementById('timer');
-    
-    const countdown = setInterval(() => {
-        let minutes = Math.floor(totalSeconds / 60);
-        let seconds = totalSeconds % 60;
-        
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        
-        timerElement.textContent = `${minutes}:${seconds}`;
-        
-        if (totalSeconds <= 0) {
-            clearInterval(countdown);
-            timerElement.textContent = "TIME EXPIRED";
-            alert("The gauntlet clock has hit zero! Refresh to reset.");
-        }
-        totalSeconds--;
+    setInterval(() => {
+        let m = Math.floor(totalSeconds / 60);
+        let s = totalSeconds % 60;
+        timerElement.textContent = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        if(totalSeconds > 0) totalSeconds--;
     }, 1000);
 
-    // Completely purely visual selection - no hidden memory variables
     function selectOption(element) {
-        // Find all options within this specific stage and remove the highlight
-        const siblings = element.parentElement.querySelectorAll('.option-item');
-        siblings.forEach(item => item.classList.remove('selected'));
-        
-        // Highlight just the one that was clicked
+        element.parentElement.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
         element.classList.add('selected');
     }
 
-    // Checking functions that read directly from the screen
-    function getSelectedLetter(stageID) {
-        const selected = document.querySelector(`#${stageID} .option-item.selected`);
-        return selected ? selected.getAttribute('data-letter') : null;
-    }
-
-    function checkLock1() {
-        const input = document.getElementById('code1').value.trim().toLowerCase().replace(/\s+/g, '');
-        const feedback = document.getElementById('feedback1');
-        const rationale = document.getElementById('rationale1');
-        const answer = getSelectedLetter('stage1');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option (A, B, C, or D) before submitting!"; return; }
-        if (answer !== 'B') { feedback.className = "feedback error"; feedback.innerText = "❌ Incorrect selection. You fell for a 'Topic Change' or 'Tone' trap!"; return; }
+    function checkLock(currentStageID, correctLetter, correctWord, nextStageID, stageNum) {
+        const selected = document.querySelector(`#${currentStageID} .option-item.selected`);
+        const input = document.getElementById('code'+stageNum).value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback'+stageNum);
         
-        if (input === 'rivets') {
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Lock 1 Shattered! Proceeding...";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> Option B is right. The phrase 'As a direct result' is a classic structural marker that links a failure (poor construction) to an outcome (the disaster).`;
-            setTimeout(() => { document.getElementById('stage1').classList.remove('active'); document.getElementById('stage2').classList.add('active'); }, 3000);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Word key is incorrect. Find the plural noun describing the popped metal parts."; }
-    }
-
-    function checkLock2() {
-        const input = document.getElementById('code2').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback2');
-        const rationale = document.getElementById('rationale2');
-        const answer = getSelectedLetter('stage2');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option!"; return; }
-        if (answer !== 'B') { feedback.className = "feedback error"; feedback.innerText = "❌ Erroneous choice. You fell for a 'Literal Trap'!"; return; }
+        if (!selected || selected.getAttribute('data-letter') !== correctLetter) {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Incorrect selection or answer!";
+            return;
+        }
         
-        if (input === 'golden') {
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Lock 2 Shattered! Proceeding...";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> Option B is right. Word choices like 'dancing' are personification used structurally to inject a lively, joyful tone into the poem.`;
-            setTimeout(() => { document.getElementById('stage2').classList.remove('active'); document.getElementById('stage3').classList.add('active'); }, 3000);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Keyword is incorrect. Review the fourth line for the color adjective."; }
-    }
-
-    function checkLock3() {
-        const input = document.getElementById('code3').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback3');
-        const rationale = document.getElementById('rationale3');
-        const answer = getSelectedLetter('stage3');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option!"; return; }
-        if (answer !== 'A') { feedback.className = "feedback error"; feedback.innerText = "❌ Incorrect connection pattern selected."; return; }
-        
-        if (input === 'surplus') {
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Lock 3 Shattered! Proceeding...";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> Option A is correct. The text explicitly links his scientific partnership to the creation of resources that stabilized his neighbors.`;
-            setTimeout(() => { document.getElementById('stage3').classList.remove('active'); document.getElementById('stage4').classList.add('active'); }, 3000);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Target noun resource is misspelled or missing."; }
-    }
-
-    function checkLock4() {
-        const input = document.getElementById('code4').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback4');
-        const rationale = document.getElementById('rationale4');
-        const answer = getSelectedLetter('stage4');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option!"; return; }
-        if (answer !== 'B') { feedback.className = "feedback error"; feedback.innerText = "❌ Incorrect analysis. Does the narrator actually sound reliable?"; return; }
-        
-        if (input === 'acute') {
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Lock 4 Shattered! Proceeding...";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> Option B is right. The author creates an 'unreliable narrator' by having him insist he is calm while claiming he can hear things in heaven and hell.`;
-            setTimeout(() => { document.getElementById('stage4').classList.remove('active'); document.getElementById('stage5').classList.add('active'); }, 3000);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Adjective key is incorrect. Review sentence 3 of the text block."; }
-    }
-
-    function checkLock5() {
-        const input = document.getElementById('code5').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback5');
-        const rationale = document.getElementById('rationale5');
-        const answer = getSelectedLetter('stage5');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option!"; return; }
-        if (answer !== 'A') { feedback.className = "feedback error"; feedback.innerText = "❌ Locked out! Check your prefix data structures."; return; }
-        
-        if (input === 'alibi') {
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Lock 5 Shattered! Proceeding to the Final Gate...";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> Option A is right. The root 'path' means feeling, and the prefix 'a' means without. Apathy equals 'without feeling.'`;
-            setTimeout(() => { document.getElementById('stage5').classList.remove('active'); document.getElementById('stage6').classList.add('active'); }, 3000);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Vocabulary keyword is wrong. Find the noun that means his excuse/claim of whereabouts."; }
-    }
-
-    function checkLock6() {
-        const input = document.getElementById('code6').value.trim().toLowerCase();
-        const feedback = document.getElementById('feedback6');
-        const rationale = document.getElementById('rationale6');
-        const answer = getSelectedLetter('stage6');
-
-        if (!answer) { feedback.className = "feedback error"; feedback.innerText = "❌ Please select an option!"; return; }
-        if (answer !== 'D') { feedback.className = "feedback error"; feedback.innerText = "❌ Final lock jammed! Seek the vertical milestone element."; return; }
-        
-        if (input === 'ringing') {
-            clearInterval(countdown);
-            feedback.className = "feedback success"; feedback.innerText = "🔓 Final Gate Pulverized!";
-            rationale.style.display = "block"; rationale.innerHTML = `<strong>💡 Grade 8 Bridge Blueprint:</strong> Option D is the absolute 'strongest' piece of evidence. It is the exact moment his physical confidence breaks (turning pale, head aching) and his guilt begins.`;
-            setTimeout(() => {
-                document.getElementById('stage6').classList.remove('active');
-                document.getElementById('victory-screen').style.display = "block";
-                let finalSecondsSpent = (60 * 60) - totalSeconds;
-                let spentMin = Math.floor(finalSecondsSpent / 60);
-                let spentSec = finalSecondsSpent % 60;
-                document.getElementById('final-time-display').innerText = `⏱️ Performance Clock: ${spentMin} minutes and ${spentSec < 10 ? '0' + spentSec : spentSec} seconds!`;
-            }, 3500);
-        } else { feedback.className = "feedback error"; feedback.innerText = "❌ Noun key is wrong. Check the narrator's final sentence for the sound in his ears."; }
+        if (input === correctWord) {
+            feedback.className = "feedback success";
+            feedback.innerText = "🔓 Unlocked!";
+            document.getElementById(currentStageID).classList.remove('active');
+            if(nextStageID === 'victory') document.getElementById('victory-screen').style.display = 'block';
+            else document.getElementById(nextStageID).classList.add('active');
+        } else {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Password incorrect. Check spelling!";
+        }
     }
 </script>
-
 </body>
 </html>
