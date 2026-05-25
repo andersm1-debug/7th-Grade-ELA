@@ -119,6 +119,11 @@
             background: #455a64;
         }
 
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background: #1e293b;
+        }
+
         .input-group {
             margin-top: 25px;
             display: flex;
@@ -216,10 +221,10 @@
         <p><strong>The Mission Question:</strong> How does the author’s use of the phrases <strong>"But wait, there’s more"</strong> and <strong>"Ready for even more?"</strong> affect the overall structure of the selection?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(1, 'A')"><strong>A:</strong> They emphasize a biased opinion that studying advanced math is an exhausting process.</li>
-            <li class="option-item" onclick="selectOption(1, 'B')"><strong>B:</strong> They serve as an explicit structural signal that the text is about to switch to an entirely new topic.</li>
-            <li class="option-item" onclick="selectOption(1, 'C')"><strong>C:</strong> They provide direct transitions to link the next supportive concept in the selection.</li>
-            <li class="option-item" onclick="selectOption(1, 'D')"><strong>D:</strong> They highlight the author's personal viewpoint that math remains a difficult, complex subject.</li>
+            <li class="option-item" onclick="selectOption(1, 'A', this)"><strong>A:</strong> They emphasize a biased opinion that studying advanced math is an exhausting process.</li>
+            <li class="option-item" onclick="selectOption(1, 'B', this)"><strong>B:</strong> They serve as an explicit structural signal that the text is about to switch to an entirely new topic.</li>
+            <li class="option-item" onclick="selectOption(1, 'C', this)"><strong>C:</strong> They provide direct transitions to link the next supportive concept in the selection.</li>
+            <li class="option-item" onclick="selectOption(1, 'D', this)"><strong>D:</strong> They highlight the author's personal viewpoint that math remains a difficult, complex subject.</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -256,10 +261,10 @@
         <p><strong>The Mission Question:</strong> How does the repetition of referencing the <strong>"sea"</strong> throughout the structural progression of the poem contribute to its meaning?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(2, 'A')"><strong>A:</strong> It reveals that the narrator is making literal geographic plans to relocate away from dangerous coastal tides.</li>
-            <li class="option-item" onclick="selectOption(2, 'B')"><strong>B:</strong> It establishes that the primary external conflict of the plot is an active battle against nature.</li>
-            <li class="option-item" onclick="selectOption(2, 'C')"><strong>C:</strong> It creates a haunting, rhythmic refrain that reinforces a timeless, fairy-tale-like setting.</li>
-            <li class="option-item" onclick="selectOption(2, 'D')"><strong>D:</strong> It explicitly tracks the narrator's psychological confusion regarding where he initially met his love.</li>
+            <li class="option-item" onclick="selectOption(2, 'A', this)"><strong>A:</strong> It reveals that the narrator is making literal geographic plans to relocate away from dangerous coastal tides.</li>
+            <li class="option-item" onclick="selectOption(2, 'B', this)"><strong>B:</strong> It establishes that the primary external conflict of the plot is an active battle against nature.</li>
+            <li class="option-item" onclick="selectOption(2, 'C', this)"><strong>C:</strong> It creates a haunting, rhythmic refrain that reinforces a timeless, fairy-tale-like setting.</li>
+            <li class="option-item" onclick="selectOption(2, 'D', this)"><strong>D:</strong> It explicitly tracks the narrator's psychological confusion regarding where he initially met his love.</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -285,10 +290,10 @@
         <p><strong>The Mission Question:</strong> Based on the selection, how does the author structurally connect the actions of traditional commercial lenders with the actions of the USADF?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(3, 'A')"><strong>A:</strong> By outlining a chronological timeline where private banks funded the USADF's initial setup.</li>
-            <li class="option-item" onclick="selectOption(3, 'B')"><strong>B:</strong> By utilizing a clear contrast structure to highlight how the USADF actively targets the specific funding gaps ignored by banks.</li>
-            <li class="option-item" onclick="selectOption(3, 'C')"><strong>C:</strong> By presenting a cause-and-effect chain proving bank discrimination changed international laws.</li>
-            <li class="option-item" onclick="selectOption(3, 'D')"><strong>D:</strong> By offering an anecdote detailing a shared financial meeting between bank lenders and workers.</li>
+            <li class="option-item" onclick="selectOption(3, 'A', this)"><strong>A:</strong> By outlining a chronological timeline where private banks funded the USADF's initial setup.</li>
+            <li class="option-item" onclick="selectOption(3, 'B', this)"><strong>B:</strong> By utilizing a clear contrast structure to highlight how the USADF actively targets the specific funding gaps ignored by banks.</li>
+            <li class="option-item" onclick="selectOption(3, 'C', this)"><strong>C:</strong> By presenting a cause-and-effect chain proving bank discrimination changed international laws.</li>
+            <li class="option-item" onclick="selectOption(3, 'D', this)"><strong>D:</strong> By offering an anecdote detailing a shared financial meeting between bank lenders and workers.</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -315,10 +320,10 @@
         <p><strong>The Mission Question:</strong> In this opening segment, how do the initial setting cues and stage directions most contribute to the structural meaning of the play?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(4, 'A')"><strong>A:</strong> They provide a technical list of set directions to assist stage crews with lighting arrangements.</li>
-            <li class="option-item" onclick="selectOption(4, 'B')"><strong>B:</strong> They establish a deep sense of normalcy that is suddenly shattered, immediately producing suspense for the audience.</li>
-            <li class="option-item" onclick="selectOption(4, 'C')"><strong>C:</strong> They provide scientific calculations explaining why the electrical grid fails.</li>
-            <li class="option-item" onclick="selectOption(4, 'D')"><strong>D:</strong> They summarize the entire closing sequence of the plot.</li>
+            <li class="option-item" onclick="selectOption(4, 'A', this)"><strong>A:</strong> They provide a technical list of set directions to assist stage crews with lighting arrangements.</li>
+            <li class="option-item" onclick="selectOption(4, 'B', this)"><strong>B:</strong> They establish a deep sense of normalcy that is suddenly shattered, immediately producing suspense for the audience.</li>
+            <li class="option-item" onclick="selectOption(4, 'C', this)"><strong>C:</strong> They provide scientific calculations explaining why the electrical grid fails.</li>
+            <li class="option-item" onclick="selectOption(4, 'D', this)"><strong>D:</strong> They summarize the entire closing sequence of the plot.</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -344,10 +349,10 @@
         <p><strong>The Mission Question:</strong> Based on the roots and prefixes utilized in the bolded academic vocabulary items above, which statement is completely accurate?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(5, 'A')"><strong>A:</strong> <em>Remiss</em> indicates a complete state of careful perfection because its prefix means 'forward.'</li>
-            <li class="option-item" onclick="selectOption(5, 'B')"><strong>B:</strong> <em>Omnipresent</em> utilizes a root meaning 'rarely found' to suggest an isolated event.</li>
-            <li class="option-item" onclick="selectOption(5, 'C')"><strong>C:</strong> <em>Elucidate</em> relies on the Latin root <em>luc-</em> (meaning 'light' or 'clear') to show the act of making something thoroughly understandable.</li>
-            <li class="option-item" onclick="selectOption(5, 'D')"><strong>D:</strong> All three words function as literal descriptions of geographic land formations.</li>
+            <li class="option-item" onclick="selectOption(5, 'A', this)"><strong>A:</strong> <em>Remiss</em> indicates a complete state of careful perfection because its prefix means 'forward.'</li>
+            <li class="option-item" onclick="selectOption(5, 'B', this)"><strong>B:</strong> <em>Omnipresent</em> utilizes a root meaning 'rarely found' to suggest an isolated event.</li>
+            <li class="option-item" onclick="selectOption(5, 'C', this)"><strong>C:</strong> <em>Elucidate</em> relies on the Latin root <em>luc-</em> (meaning 'light' or 'clear') to show the act of making something thoroughly understandable.</li>
+            <li class="option-item" onclick="selectOption(5, 'D', this)"><strong>D:</strong> All three words function as literal descriptions of geographic land formations.</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -378,10 +383,10 @@
         <p><strong>The Mission Question:</strong> Which specific segment of text provides the **absolute strongest, definitive turning point** where the neighborhood paranoia officially shatters Steve's defense, proving the group has devolved into an uncontrollable mob?</p>
         
         <ul class="options-list">
-            <li class="option-item" onclick="selectOption(6, 'D')"><strong>A:</strong> "its a little look at things isn't it? A flash of light in the sky, a sudden power outage..."</li>
-            <li class="option-item" onclick="selectOption(6, 'B')"><strong>B:</strong> "How come you spend so many late hours out in your garage working on that strange radio set?"</li>
-            <li class="option-item" onclick="selectOption(6, 'C')"><strong>C:</strong> "Why is he keeping it a total secret?"</li>
-            <li class="option-item" onclick="selectOption(6, 'D')"><strong>D:</strong> "(His smile fading into absolute silence) I'm talking to monsters, Charlie."</li>
+            <li class="option-item" onclick="selectOption(6, 'A', this)"><strong>A:</strong> "its a little look at things isn't it? A flash of light in the sky, a sudden power outage..."</li>
+            <li class="option-item" onclick="selectOption(6, 'B', this)"><strong>B:</strong> "How come you spend so many late hours out in your garage working on that strange radio set?"</li>
+            <li class="option-item" onclick="selectOption(6, 'C', this)"><strong>C:</strong> "Why is he keeping it a total secret?"</li>
+            <li class="option-item" onclick="selectOption(6, 'D', this)"><strong>D:</strong> "(His smile fading into absolute silence) I'm talking to monsters, Charlie."</li>
         </ul>
 
         <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
@@ -398,7 +403,7 @@
     <div id="victory-screen">
         <h2>🎉 Escape Successful!</h2>
         <p>You completed the entire expanded EOG Strategy Gauntlet within the 60-minute window!</p>
-        <p>By breaking down distractor models, scanning for morphology structures, tracking poetic caesuras, and isolating textual evidence, you have unlocked mastery level.</p>
+        <p>By breaking down distractor models, scanning for morphology structures, tracking poetic refrains, and isolating textual evidence, you have unlocked mastery level.</p>
         <h3 id="final-time-display" style="color: var(--success-color); font-size: 1.8rem;"></h3>
     </div>
 </div>
@@ -426,15 +431,12 @@
 
     let selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
 
-    function selectOption(stage, letter) {
+    // Rewritten to look at CSS elements cleanly instead of relying on string filters
+    function selectOption(stage, letter, element) {
         selections[stage] = letter;
-        const items = document.querySelectorAll(`#stage${stage} .option-item`);
-        items.forEach(item => {
-            item.style.borderColor = 'transparent';
-            if(item.innerText.trim().startsWith(letter)) {
-                item.style.borderColor = 'var(--accent-color)';
-            }
-        });
+        const siblings = element.parentNode.querySelectorAll('.option-item');
+        siblings.forEach(item => item.classList.remove('selected'));
+        element.classList.add('selected');
     }
 
     function checkLock1() {
