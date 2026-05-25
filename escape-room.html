@@ -431,7 +431,6 @@
 
     let selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
 
-    // Rewritten to look at CSS elements cleanly instead of relying on string filters
     function selectOption(stage, letter, element) {
         selections[stage] = letter;
         const siblings = element.parentNode.querySelectorAll('.option-item');
