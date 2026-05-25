@@ -3,199 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOG Mega-Breakout</title>
+    <title>EOG Strategy Room: The 60-Minute Outsmart Challenge</title>
     <style>
         :root {
             --bg-color: #0f172a;
-            --panel-bg: #1e293b;
-            --text-color: #f8fafc;
+            --card-bg: #1e293b;
             --accent-color: #38bdf8;
+            --success-color: #10b981;
             --error-color: #ef4444;
-            --success-color: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            color: var(--text-main);
             margin: 0;
-            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
         }
 
-        .container { width: 95%; max-width: 900px; }
-        
-        .level-card {
-            background: var(--panel-bg);
-            border: 1px solid #334155;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .timer-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fbbf24;
+            background: #292524;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px dashed #fbbf24;
+        }
+
+        .essential-question {
+            background-color: #0369a1;
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .lock-stage {
+            background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border: 1px solid #334155;
             display: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
-        .level-card.active { display: block; animation: slideUp 0.4s ease-out; }
+        .lock-stage.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .shake { animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(8px); } 75% { transform: translateX(-8px); } }
+        .stage-badge {
+            background-color: #475569;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
 
-        .story-text { font-size: 1.1rem; border-left: 4px solid var(--accent-color); padding-left: 15px; margin-bottom: 25px; }
-        .clue-box { background: #0f172a; padding: 20px; border-radius: 8px; margin-bottom: 25px; line-height: 1.5; }
-        
-        .input-group { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        .excerpt-box {
+            background-color: #0f172a;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .option-item {
+            background: #334155;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .option-item:hover {
+            background: #455a64;
+        }
+
+        .input-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
         input[type="text"] {
-            padding: 12px; font-size: 1.3rem; background: #000; border: 2px solid #475569;
-            color: var(--accent-color); text-align: center; width: 250px; border-radius: 6px; text-transform: uppercase;
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            font-size: 1rem;
         }
 
         button {
-            padding: 12px 25px; font-size: 1.1rem; background-color: #334155; color: white;
-            border: none; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.3s;
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.2s;
         }
 
-        button:hover { background-color: var(--accent-color); color: #000; }
-        .feedback { text-align: center; margin-top: 20px; font-weight: bold; min-height: 24px; }
+        button:hover {
+            background-color: var(--accent-color);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.error {
+            color: var(--error-color);
+            display: block;
+        }
+
+        .feedback.success {
+            color: var(--success-color);
+            display: block;
+        }
+
+        .rationale-panel {
+            background-color: #1e293b;
+            border: 1px solid var(--success-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        #victory-screen {
+            text-align: center;
+            display: none;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 2px solid var(--success-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-<h1 style="color:var(--accent-color); text-transform: uppercase;">🔒 EOG Mega-Breakout: System Lockdown</h1>
-
 <div class="container">
+    <header>
+        <h1>🔐 EOG Strategy Escape Room</h1>
+        <p>Outsmart the Test-Makers • Use Rigorous Evidence • Break the Locks</p>
+        <div class="timer-container">⏳ Time Remaining: <span id="timer">60:00</span></div>
+    </header>
 
-    <!-- LOCK 1: MORPHOLOGY -->
-    <div id="level-1" class="level-card active">
-        <h2>Lock 1: The Root Scanner</h2>
-        <div class="story-text">The system has been locked. To initiate the bypass, you must identify the word that matches this morphological formula.</div>
-        <div class="clue-box">
-            "I have a prefix that means 'wrongly' or 'badly' and a root that means 'to lead' or 'to direct'. What word am I?"
+    <div class="essential-question">
+        <strong>💡 Essential Question:</strong> "How do I use evidence to outsmart the 'distractors' and uncover the author's true intent?" [cite: 2802, 2813]
+    </div>
+
+    <div id="stage1" class="lock-stage active">
+        <span class="stage-badge">Lock 1: RI.7.5 (Text Structure)</span> [cite: 2687]
+        <h2>The Informational Roadblocks</h2>
+        <p><strong>Scenario:</strong> You are analyzing a high-frequency structural pattern from the NC End-of-Grade test items[cite: 2688]. Read the section from <em>"Walking Through the World of Math"</em>[cite: 2686]. To find the password to clear this roadblock, look at how the author transitions between details[cite: 2693].</p>
+        
+        <div class="excerpt-box">
+            "...Nature is packed with hidden equations. Take a close look, and you will notice that the golden ratio is found explicitly in the arrangement of seeds inside a giant sunflower. <strong>But wait, there’s more.</strong> If you pull back and examine the spiral patterns of an entire pinecone, you will find the exact same mathematical symmetry at play. <strong>Ready for even more?</strong> This exact numerical ratio can also be mapped directly across the frets of a standard acoustic guitar to create flawless musical harmony..." [cite: 2712, 2718]
         </div>
+
+        <p><strong>The Mission Question:</strong> How does the author’s use of the phrases <strong>"But wait, there’s more"</strong> and <strong>"Ready for even more?"</strong> affect the overall structure of the selection? [cite: 2689, 2690]</p>
+        
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(1, 'A')"><strong>A:</strong> They emphasize a biased opinion that studying advanced math is an exhausting process. [cite: 2691, 2695]</li>
+            <li class="option-item" onclick="selectOption(1, 'B')"><strong>B:</strong> They serve as an explicit structural signal that the text is about to switch to an entirely new topic. [cite: 2692, 2719]</li>
+            <li class="option-item" onclick="selectOption(1, 'C')"><strong>C:</strong> They provide a direct transitions to link the next supportive concept in the selection. [cite: 2693]</li>
+            <li class="option-item" onclick="selectOption(1, 'D')"><strong>D:</strong> They highlight the author's personal viewpoint that math remains a difficult, complex subject. [cite: 2694, 2695]</li>
+        </ul>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem;">🔑 <strong>Lock Code Hint:</strong> Select the correct answer letter above. Then, look closely at the snippet. Find the <strong>compound word</strong> that describes a specific plant part mentioned right after the first transition phrase. Type that exact word below to release Lock 1.</p>
+
         <div class="input-group">
-            <input type="text" id="input-1" placeholder="ENTER WORD">
-            <button onclick="checkLock(1, 'MISGUIDE')">UNLOCK</button>
+            <input type="text" id="code1" placeholder="Enter the exact lowercase word...">
+            <button onclick="checkLock1()">Submit Key</button>
         </div>
-        <div id="feedback-1" class="feedback"></div>
+        <div id="feedback1" class="feedback"></div>
+        <div id="rationale1" class="rationale-panel"></div>
     </div>
 
-    <!-- LOCK 2: PLOT ELEMENTS -->
-    <div id="level-2" class="level-card">
-        <h2>Lock 2: The Plot Sequence</h2>
-        <div class="story-text">First lock cleared. This next padlock requires a 3-letter code based on story structure.</div>
-        <div class="clue-box">
-            <strong>1. The part of the story where the conflict is resolved:</strong><br>
-            R) Resolution &nbsp;&nbsp; S) Falling Action &nbsp;&nbsp; T) Exposition<br><br>
-            <strong>2. A scene that interrupts the narrative to show past events:</strong><br>
-            D) Foreshadowing &nbsp;&nbsp; E) Flashback &nbsp;&nbsp; F) Suspense<br><br>
-            <strong>3. The general atmosphere or feeling of a scene:</strong><br>
-            L) Tone &nbsp;&nbsp; M) Mood &nbsp;&nbsp; N) Theme
+    <div id="stage2" class="lock-stage">
+        <span class="stage-badge">Lock 2: RL.7.5 & L.7.4b (Poetry & Morphology)</span> [cite: 2335, 2724]
+        <h2>The Haunting Refrain</h2>
+        <p><strong>Scenario:</strong> You've cracked the first code, but now you are trapped in a poetic labyrinth. To chart your way out of Edgar Allan Poe's <em>"Annabel Lee,"</em> you must evaluate why poets repeat words structurally rather than just listing facts[cite: 2725, 2734].</p>
+
+        <div class="excerpt-box">
+            "It was many and many a year ago,<br>
+            &nbsp;&nbsp;&nbsp;In a kingdom by the sea,<br>
+            That a maiden there lived whom you may know<br>
+            &nbsp;&nbsp;&nbsp;By the name of Annabel Lee;—<br>
+            And this maiden she lived with no other thought<br>
+            &nbsp;&nbsp;&nbsp;Than to love and be loved by me...<br><br>
+            But our love it was stronger by far than the love<br>
+            &nbsp;&nbsp;&nbsp;Of those who were older than we—<br>
+            &nbsp;&nbsp;&nbsp;Of many far wiser than we—<br>
+            And neither the angels in Heaven above<br>
+            &nbsp;&nbsp;&nbsp;Nor the demons down under the sea<br>
+            Can ever dissever my soul from the soul<br>
+            &nbsp;&nbsp;&nbsp;Of the beautiful Annabel Lee."
         </div>
+
+        <p><strong>The Mission Question:</strong> How does the repetition of the phrase <strong>"In this kingdom by the sea"</strong> or referencing the <strong>"sea"</strong> throughout the structural progression of the poem contribute to its meaning? [cite: 2726, 2727]</p>
+        
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(2, 'A')"><strong>A:</strong> It reveals that the narrator is making literal geographic plans to relocate away from dangerous coastal tides. [cite: 2727, 2732]</li>
+            <li class="option-item" onclick="selectOption(2, 'B')"><strong>B:</strong> It establishes that the primary external conflict of the plot is an active battle against nature. [cite: 2728, 2732]</li>
+            <li class="option-item" onclick="selectOption(2, 'C')"><strong>C:</strong> It creates a haunting, rhythmic refrain that reinforces a timeless, fairy-tale-like setting. [cite: 2729]</li>
+            <li class="option-item" onclick="selectOption(2, 'D')"><strong>D:</strong> It explicitly tracks the narrator's psychological confusion regarding where he initially met his love. [cite: 2730, 2732]</li>
+        </ul>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem;">🔑 <strong>Lock Code Hint:</strong> Select the correct answer. Then, apply your <strong>Morphology skills</strong>[cite: 2239, 2334]. Look at the final lines of the text block above. Locate the complex word that contains a prefix meaning "apart/away" and a root that means "to separate or cut." Type that exact word in lowercase to unlock the mechanism.</p>
+
         <div class="input-group">
-            <input type="text" id="input-2" placeholder="3-LETTER CODE" maxlength="3">
-            <button onclick="checkLock(2, 'REM')">UNLOCK</button>
+            <input type="text" id="code2" placeholder="Enter the exact vocabulary word...">
+            <button onclick="checkLock2()">Submit Key</button>
         </div>
-        <div id="feedback-2" class="feedback"></div>
+        <div id="feedback2" class="feedback"></div>
+        <div id="rationale2" class="rationale-panel"></div>
     </div>
 
-    <!-- LOCK 3: TEXT STRUCTURE -->
-    <div id="level-3" class="level-card">
-        <h2>Lock 3: The Structure Scan</h2>
-        <div class="story-text">Accessing the mainframe... Identify the text structure for each passage to find the 3-letter code.</div>
-        <div class="clue-box">
-            <strong>Passage 1:</strong> "Because the storm destroyed the power lines, the entire town was in the dark for three days."<br>
-            <strong>Passage 2:</strong> "First, gather your materials. Next, preheat the oven to 350 degrees."<br>
-            <strong>Passage 3:</strong> "While both birds fly, the penguin spends most of its time in the water, whereas the eagle stays in the sky."<br><br>
-            <strong>Choices:</strong> C (Cause/Effect), S (Sequence), B (Compare/Contrast)
+    <div id="stage3" class="lock-stage">
+        <span class="stage-badge">Lock 3: RL.8.1 / Grade 8 Vertical Enrichment</span> [cite: 2148]
+        <h2>The "Smoking Gun" Evidence Locker</h2>
+        <p><strong>Scenario:</strong> This is where your time will be tested. To break this final lock, you are moving beyond standard 7th-grade extraction up to <strong>8th Grade Vertical Alignment</strong>[cite: 2148]. You cannot just find *any* logical quote; you must identify the **"most strong" or definitive piece of textual evidence** that seals an inference[cite: 2149, 2152]. Read this pivotal interaction snippet from Rod Serling's <em>"The Monsters Are Due on Maple Street."</em> [cite: 2520, 2742]</p>
+
+        <div class="excerpt-box">
+            <strong>[SCENE START]</strong><br>
+            <strong>STEVE:</strong> (Trying to laugh) its a little look at things isn't it? A flash of light in the sky, a sudden power outage, and look at us. We are turning into a panicked mob. [cite: 2494, 2548, 2563]<br>
+            <strong>CHARLIE:</strong> (With crisp narrow eyes) You're quick to make jokes, Steve. Too quick. How come you spend so many late hours out in your garage working on that strange radio set? Who are you talking to out there when the rest of Maple Street is asleep? [cite: 2120]<br>
+            <strong>STEVE:</strong> (His smile fading into absolute silence) I'm talking to monsters, Charlie. Or maybe I'm checking to see if our neighbors still have their minds.<br>
+            <strong>DON:</strong> (Pointing a shaking finger) He’s got a point about that radio. I’ve seen him out there myself. He never did show any of us what he was building inside that garage. Why is he keeping it a total secret? [cite: 2533]<br>
+            <strong>[SCENE END]</strong>
         </div>
+
+        <p><strong>The Mission Question:</strong> Steve is initially treating the neighborhood panic as a temporary, ridiculous overreaction. Which piece of dialogue provides the <strong>strongest, absolute turning point</strong> where the paranoia officially breaks his defense and captures the community's descent into a full mob mentality? [cite: 2152, 2563]</p>
+        
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(3, 'A')"><strong>A:</strong> "its a little look at things isn't it? A flash of light in the sky, a sudden power outage..." [cite: 2494, 2548]</li>
+            <li class="option-item" onclick="selectOption(3, 'B')"><strong>B:</strong> "How come you spend so many late hours out in your garage working on that strange radio set?"</li>
+            <li class="option-item" onclick="selectOption(3, 'C')"><strong>C:</strong> "He never did show any of us what he was building inside that garage. Why is he keeping it a total secret?"</li>
+            <li class="option-item" onclick="selectOption(3, 'D')"><strong>D:</strong> "(His smile fading into absolute silence) I'm talking to monsters, Charlie."</li>
+        </ul>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem;">🔑 <strong>Lock Code Hint:</strong> Once you determine the correct option, look closely at the stage directions inside the script text. Find the <strong>noun</strong> that describes the specific dangerous group of people Steve realizes his peaceful neighborhood is rapidly morphing into. Type that single word in lowercase to escape.</p>
+
         <div class="input-group">
-            <input type="text" id="input-3" placeholder="3-LETTER CODE" maxlength="3">
-            <button onclick="checkLock(3, 'CSB')">UNLOCK</button>
+            <input type="text" id="code3" placeholder="Enter the exact lowercase noun...">
+            <button onclick="checkLock3()">Break Final Lock</button>
         </div>
-        <div id="feedback-3" class="feedback"></div>
+        <div id="feedback3" class="feedback"></div>
+        <div id="rationale3" class="rationale-panel"></div>
     </div>
 
-    <!-- LOCK 4: CONTEXT CLUES -->
-    <div id="level-4" class="level-card">
-        <h2>Lock 4: The Vocab Vault</h2>
-        <div class="story-text">Warning: Encryption deepening. Use context clues to determine the meaning of the bolded word.</div>
-        <div class="clue-box">
-            "The teacher’s instructions were so **ambiguous** that half the class started the essay while the other half thought they were supposed to be reading quietly."<br><br>
-            <strong>What does 'ambiguous' mean?</strong><br>
-            A) Clear &nbsp;&nbsp; B) Unclear/Vague &nbsp;&nbsp; C) Loud &nbsp;&nbsp; D) Helpful
-        </div>
-        <div class="input-group">
-            <input type="text" id="input-4" placeholder="ENTER LETTER" maxlength="1">
-            <button onclick="checkLock(4, 'B')">UNLOCK</button>
-        </div>
-        <div id="feedback-4" class="feedback"></div>
+    <div id="victory-screen">
+        <h2>🎉 Escape Successful!</h2>
+        <p>You successfully completed the EOG Strategy Training within the 60-minute benchmark!</p>
+        <p>By bypassing the test distractors, tracking structural transitions, mapping root words, and selecting the absolute strongest evidence, you have proven your proficiency. Show this screen to your teacher to verify your completion time!</p>
+        <h3 id="final-time-display" style="color: var(--success-color); font-size: 1.8rem;"></h3>
     </div>
-
-    <!-- LOCK 5: GRAMMAR & MECHANICS -->
-    <div id="level-5" class="level-card">
-        <h2>Lock 5: The MUGshot Correction</h2>
-        <div class="story-text">The system is overheating! Find the number of errors (spelling, punctuation, or capitalization) in the sentence below.</div>
-        <div class="clue-box">
-            "its time for the students to go to mr. andersons classroom for there ELA lesson."
-        </div>
-        <div class="input-group">
-            <input type="text" id="input-5" placeholder="HOW MANY ERRORS?">
-            <button onclick="checkLock(5, '5')">UNLOCK</button>
-        </div>
-        <div id="feedback-5" class="feedback"></div>
-    </div>
-
-    <!-- LOCK 6: FIGURATIVE LANGUAGE -->
-    <div id="level-6" class="level-card">
-        <h2>Lock 6: The Final Cipher</h2>
-        <div class="story-text">Final override initiated. Match the sentence to its type. The code is the first letter of each type.</div>
-        <div class="clue-box">
-            1. "The sun was a golden coin in the sky."<br>
-            2. "Boom! The door slammed shut."<br>
-            3. "I have a million things to do today."<br><br>
-            <strong>Types:</strong> Metaphor, Onomatopoeia, Hyperbole, Simile, Personification
-        </div>
-        <div class="input-group">
-            <input type="text" id="input-6" placeholder="3-LETTER CODE" maxlength="3">
-            <button onclick="checkLock(6, 'MOH')">UNLOCK</button>
-        </div>
-        <div id="feedback-6" class="feedback"></div>
-    </div>
-
-    <!-- SUCCESS SCREEN -->
-    <div id="level-7" class="level-card" style="text-align:center; color:var(--success-color);">
-        <h2>🔓 SYSTEM UNLOCKED</h2>
-        <p style="color:white; font-size:1.2rem;">All EOG modules are fully operational. Excellent work, scholars!</p>
-        <button onclick="location.reload()" style="margin-top: 20px;">Restart Mission</button>
-    </div>
-
 </div>
 
 <script>
-    function checkLock(level, correctCode) {
-        const inputField = document.getElementById(`input-${level}`);
-        const userCode = inputField.value.trim().toUpperCase();
-        const feedback = document.getElementById(`feedback-${level}`);
-        const card = document.getElementById(`level-${level}`);
+    // 60-Minute Countdown Timer logic
+    let totalSeconds = 60 * 60;
+    const timerElement = document.getElementById('timer');
+    
+    const countdown = setInterval(() => {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        timerElement.textContent = `${minutes}:${seconds}`;
+        
+        if (totalSeconds <= 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "TIME EXPIRED";
+            alert("The locks have permanently seized! Refresh the page to reset your 60-minute training clock.");
+        }
+        totalSeconds--;
+    }, 1000);
 
-        if (userCode === correctCode) {
-            feedback.style.color = "var(--success-color)";
-            feedback.innerText = "ACCESS GRANTED.";
+    // Track active question option selections
+    let selections = { 1: null, 2: null, 3: null };
+
+    function selectOption(stage, letter) {
+        selections[stage] = letter;
+        const items = document.querySelectorAll(`#stage${stage} .option-item`);
+        items.forEach(item => {
+            item.style.borderColor = 'transparent';
+            if(item.innerText.startsWith(letter)) {
+                item.style.borderColor = 'var(--accent-color)';
+            }
+        });
+    }
+
+    // LOCK 1 VALIDATION
+    function checkLock1() {
+        const input = document.getElementById('code1').value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback1');
+        const rationale = document.getElementById('rationale1');
+
+        if (selections[1] !== 'C') {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Incorrect analysis. The test-makers trapped you with a 'Tone Trap' or 'Topic Change' distractor! Re-evaluate your answer selection."; [cite: 2695, 2719]
+            return;
+        }
+
+        if (input === 'pinecone') {
+            feedback.className = "feedback success";
+            feedback.innerText = "🔓 Lock 1 Shattered! Excellent work analyzing structural transitions."; [cite: 2693]
+            rationale.style.display = "block";
+            rationale.innerHTML = `<strong>💡 Test-Maker Rationale Unlocked:</strong> Option C is correct. The author uses phrases like 'But wait, there's more' as transitional 'road signs' to bridge distinct scientific math concepts (sunflowers to pinecones) without changing the core topic or complaining that math is exhausting. [cite: 2695, 2697, 2718, 2719]`;
+            
             setTimeout(() => {
-                card.classList.remove('active');
-                document.getElementById(`level-${level + 1}`).classList.add('active');
-            }, 800);
+                document.getElementById('stage1').classList.remove('active');
+                document.getElementById('stage2').classList.add('active');
+            }, 3500);
         } else {
-            feedback.style.color = "var(--error-color)";
-            feedback.innerText = "ACCESS DENIED. TRY AGAIN.";
-            card.classList.remove('shake');
-            void card.offsetWidth;
-            card.classList.add('shake');
-            inputField.value = "";
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Multiple choice selection is correct, but your text word key is incorrect. Check your spelling of the plant item.";
+        }
+    }
+
+    // LOCK 2 VALIDATION
+    function checkLock2() {
+        const input = document.getElementById('code2').value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback2');
+        const rationale = document.getElementById('rationale2');
+
+        if (selections[2] !== 'C') {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Incorrect selection. You fell for a 'Literal Trap' distractor that treats poetry like an ordinary news report! Try again."; [cite: 2731, 2732]
+            return;
+        }
+
+        if (input === 'dissever') {
+            feedback.className = "feedback success";
+            feedback.innerText = "🔓 Lock 2 Shattered! Your morphological tracking is spot on.";
+            rationale.style.display = "block";
+            rationale.innerHTML = `<strong>💡 Test-Maker Rationale Unlocked:</strong> Option C is correct. Repetition in poetry serves to establish a rhythmic musical refrain. [cite: 2729, 2735] The word 'dissever' combines the prefix <em>dis-</em> (apart) with the root word to demonstrate that nothing can separate his love.`;
+            
+            setTimeout(() => {
+                document.getElementById('stage2').classList.remove('active');
+                document.getElementById('stage3').classList.add('active');
+            }, 3500);
+        } else {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Option C is correct, but that is not the correct word from the text containing those morphological parts. Check the last stanza.";
+        }
+    }
+
+    // LOCK 3 VALIDATION
+    function checkLock3() {
+        const input = document.getElementById('code3').value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback3');
+        const rationale = document.getElementById('rationale3');
+
+        if (selections[3] !== 'D') {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Lock jammed. You selected a valid data point, but not the definitive 8th-grade 'most strong' turning point where Steve's casual mindset shatters. [cite: 2149, 2152] Try again!";
+            return;
+        }
+
+        if (input === 'mob') {
+            clearInterval(countdown);
+            feedback.className = "feedback success";
+            feedback.innerText = "🔓 Final Lock Pulverized! You have successfully escaped!";
+            rationale.style.display = "block";
+            rationale.innerHTML = `<strong>💡 Grade 8 Evidence Rationale Unlocked:</strong> Option D is the absolute 'smoking gun' piece of evidence.  While options B and C show the neighbors growing suspicious, Option D marks the exact moment Steve's defense cracks, and his humor stops as he matches their dark intensity.`;
+            
+            setTimeout(() => {
+                document.getElementById('stage3').classList.remove('active');
+                const victoryScreen = document.getElementById('victory-screen');
+                victoryScreen.style.display = "block";
+                
+                let remainingMin = Math.floor(totalSeconds / 60);
+                let remainingSec = totalSeconds % 60;
+                let finalSecondsSpent = (60 * 60) - totalSeconds;
+                let spentMin = Math.floor(finalSecondsSpent / 60);
+                let spentSec = finalSecondsSpent % 60;
+                
+                document.getElementById('final-time-display').innerText = 
+                    `⏱️ Completion Time: ${spentMin} minutes and ${spentSec < 10 ? '0' + spentSec : spentSec} seconds!`;
+            }, 4000);
+        } else {
+            feedback.className = "feedback error";
+            feedback.innerText = "❌ Multiple choice option is correct, but your text-dependent password word is incorrect. Review Steve's opening lines.";
         }
     }
 </script>
