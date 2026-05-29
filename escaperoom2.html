@@ -117,6 +117,10 @@
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+        /* New class to hide upcoming locks */
+        .hidden-lock {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -124,7 +128,7 @@
 <div class="container">
     <div class="header">
         <h1>🔐 Grammar & Syntax Escape Room</h1>
-        <p class="intro">Crack all 8 locks using your knowledge of the English language. Type your answers below and click "Unlock" to test your codes.</p>
+        <p class="intro">Crack all 8 locks using your knowledge of the English language. You must solve the current lock to reveal the next one!</p>
     </div>
 
     <!-- Lock 1 -->
@@ -144,7 +148,7 @@
     </div>
 
     <!-- Lock 2 -->
-    <div class="lock-box" id="box-2">
+    <div class="lock-box hidden-lock" id="box-2">
         <div class="lock-title">Lock 2: The Modifier Maze <span class="status-icon" id="icon-2">🔒</span></div>
         <div class="question-text">
             Read the sentence: "The student ate a warm slice of pizza wearing a heavy winter coat."<br><br>
@@ -158,7 +162,7 @@
     </div>
 
     <!-- Lock 3 -->
-    <div class="lock-box" id="box-3">
+    <div class="lock-box hidden-lock" id="box-3">
         <div class="lock-title">Lock 3: The Structure Safe <span class="status-icon" id="icon-3">🔒</span></div>
         <div class="question-text">
             Match the sentence type to the correct example to get a 3-letter code. (A) Simple, (B) Compound, (C) Complex.<br><br>
@@ -174,7 +178,7 @@
     </div>
 
     <!-- Lock 4 -->
-    <div class="lock-box" id="box-4">
+    <div class="lock-box hidden-lock" id="box-4">
         <div class="lock-title">Lock 4: The Syntax Cipher <span class="status-icon" id="icon-4">🔒</span></div>
         <div class="question-text">
             Read these two sentences: "The storm knocked out the power. We had to play board games by flashlight."<br><br>
@@ -188,7 +192,7 @@
     </div>
 
     <!-- Lock 5 -->
-    <div class="lock-box" id="box-5">
+    <div class="lock-box hidden-lock" id="box-5">
         <div class="lock-title">Lock 5: The Comma Code <span class="status-icon" id="icon-5">🔒</span></div>
         <div class="question-text">
             Which sentence uses commas correctly?<br><br>
@@ -204,7 +208,7 @@
     </div>
 
     <!-- Lock 6 -->
-    <div class="lock-box" id="box-6">
+    <div class="lock-box hidden-lock" id="box-6">
         <div class="lock-title">Lock 6: The "There" Trap <span class="status-icon" id="icon-6">🔒</span></div>
         <div class="question-text">
             "The students forgot to bring ____ Chromebooks, so ____ going to have to use the paper copies over ____."<br><br>
@@ -218,7 +222,7 @@
     </div>
 
     <!-- Lock 7 -->
-    <div class="lock-box" id="box-7">
+    <div class="lock-box hidden-lock" id="box-7">
         <div class="lock-title">Lock 7: The Parallel Puzzle <span class="status-icon" id="icon-7">🔒</span></div>
         <div class="question-text">
             Which sentence uses correct parallel structure?<br><br>
@@ -234,7 +238,7 @@
     </div>
 
     <!-- Lock 8 -->
-    <div class="lock-box" id="box-8">
+    <div class="lock-box hidden-lock" id="box-8">
         <div class="lock-title">Lock 8: The Plural/Possessive Safe <span class="status-icon" id="icon-8">🔒</span></div>
         <div class="question-text">
             "The two (boy's / boys) left their backpacks in the (coach's / coaches) office."<br><br>
@@ -257,10 +261,7 @@
     let unlockedCount = 0;
 
     function checkLock(lockNum, correctAns, errorMsgText) {
-        // Grab the student's input, make it lowercase, and remove extra spaces
         let userInput = document.getElementById('input-' + lockNum).value.toLowerCase().trim();
-        
-        // Remove multiple spaces in between words just in case they double-space
         userInput = userInput.replace(/\s+/g, ' ');
 
         let errorDiv = document.getElementById('error-' + lockNum);
@@ -270,7 +271,7 @@
         let btn = inputField.nextElementSibling;
 
         if (userInput === correctAns) {
-            // Success State
+            // Success State for current lock
             errorDiv.style.display = 'none';
             boxDiv.classList.add('unlocked');
             iconSpan.innerHTML = '🔓';
@@ -280,8 +281,19 @@
             btn.innerHTML = 'Unlocked!';
             
             unlockedCount++;
+            
+            // Reveal the next lock and smoothly scroll to it
+            let nextLock = document.getElementById('box-' + (lockNum + 1));
+            if (nextLock) {
+                nextLock.style.display = 'block';
+                nextLock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // Reveal victory message if all are done
             if (unlockedCount === 8) {
-                document.getElementById('victory-message').style.display = 'block';
+                let victoryMsg = document.getElementById('victory-message');
+                victoryMsg.style.display = 'block';
+                victoryMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         } else {
             // Error State
