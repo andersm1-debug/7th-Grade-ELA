@@ -3,22 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>25-Minute Grammar & Syntax Escape Room</title>
+  <title>7th Grade ELA Grammar Escape Room</title>
   <style>
     :root {
-      --bg: #08111f;
-      --bg-2: #0f172a;
-      --card: #172033;
-      --card-2: #1e293b;
-      --line: #334155;
-      --text: #f8fafc;
-      --muted: #cbd5e1;
+      --bg: #0f172a;
+      --panel: #111827;
+      --card: #1e293b;
+      --card-2: #24324a;
       --accent: #38bdf8;
-      --accent-2: #0284c7;
-      --success: #10b981;
-      --error: #ef4444;
-      --warning: #f59e0b;
-      --shadow: rgba(0, 0, 0, 0.35);
+      --accent-2: #facc15;
+      --good: #10b981;
+      --bad: #ef4444;
+      --muted: #cbd5e1;
+      --text: #f8fafc;
+      --border: #334155;
     }
 
     * { box-sizing: border-box; }
@@ -27,574 +25,559 @@
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 34rem),
-        linear-gradient(135deg, var(--bg), var(--bg-2));
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(250, 204, 21, 0.10), transparent 25%),
+        var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 24px;
-    }
-
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
     }
 
     .hero {
-      background: rgba(30, 41, 59, 0.92);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 30px;
-      box-shadow: 0 20px 40px var(--shadow);
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
+      padding: 34px 20px 24px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.82);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -80px;
-      top: -80px;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.13);
-    }
+    .wrap { max-width: 980px; margin: 0 auto; }
 
     h1 {
       margin: 0 0 8px;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-    }
-
-    .tagline {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      letter-spacing: -1px;
       color: var(--accent);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      margin: 0 0 18px;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.28);
     }
 
-    .essential-question {
-      background: rgba(15, 23, 42, 0.72);
-      border-left: 5px solid var(--accent);
-      padding: 16px 18px;
-      border-radius: 14px;
+    .subtitle {
       color: var(--muted);
-      line-height: 1.5;
-      max-width: 850px;
-    }
-
-    .top-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .status-card {
-      background: rgba(30, 41, 59, 0.88);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
-    }
-
-    .status-label {
-      display: block;
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 6px;
-    }
-
-    .status-value {
-      font-size: 1.3rem;
-      font-weight: 900;
-    }
-
-    #timer.warning { color: var(--warning); }
-    #timer.danger { color: var(--error); }
-
-    .progress-wrap {
-      background: rgba(15, 23, 42, 0.72);
-      height: 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      margin-bottom: 24px;
-    }
-
-    #progressBar {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-2), var(--accent));
-      transition: width 0.4s ease;
-    }
-
-    .lock-stage {
-      display: none;
-      background: rgba(30, 41, 59, 0.95);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 20px 42px var(--shadow);
-      animation: rise 0.3s ease;
-    }
-
-    .lock-stage.active { display: block; }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .lock-kicker {
-      color: var(--accent);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.82rem;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      margin: 0 0 10px;
-      font-size: clamp(1.6rem, 4vw, 2.25rem);
-    }
-
-    .skill {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.12);
-      color: #bae6fd;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 800;
-      margin: 4px 0 18px;
-    }
-
-    .scenario, .question, .task {
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: 16px;
-      padding: 18px;
-      margin: 16px 0;
+      margin: 0;
+      font-size: 1.05rem;
       line-height: 1.55;
     }
 
-    .question strong, .task strong { color: var(--accent); }
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      margin-top: 18px;
+      align-items: center;
+    }
+
+    .progress-shell {
+      height: 16px;
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 10%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 0.35s ease;
+    }
+
+    #timer {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid var(--border);
+      color: var(--accent-2);
+      font-weight: 800;
+      min-width: 175px;
+      text-align: center;
+    }
+
+    main { padding: 28px 20px 56px; }
+
+    .mission, .lock-card, .finish-card {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.96), rgba(17, 24, 39, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .mission {
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .mission h2, .lock-card h2, .finish-card h2 {
+      margin-top: 0;
+      color: var(--accent-2);
+    }
+
+    .mission p, .lock-card p, .finish-card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .lock-card {
+      display: none;
+      padding: 26px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .lock-card.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lock-label {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .skill {
+      color: var(--accent-2);
+      font-weight: 800;
+    }
+
+    .question-box {
+      background: rgba(2, 6, 23, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px 0;
+    }
 
     .sentence {
-      font-size: 1.2rem;
-      color: #e0f2fe;
-      font-weight: 800;
-      margin: 12px 0 0;
+      font-size: 1.08rem;
+      color: #fff;
+      line-height: 1.7;
+      margin: 0 0 12px;
     }
 
     .choices {
       display: grid;
       gap: 10px;
-      margin: 14px 0;
+      margin: 16px 0;
     }
 
     label.choice {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      background: rgba(8, 17, 31, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 13px;
-      border-radius: 13px;
+      display: block;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.88);
+      border-radius: 12px;
+      color: var(--text);
       cursor: pointer;
-      line-height: 1.35;
+      line-height: 1.5;
     }
 
-    label.choice:hover {
-      border-color: var(--accent);
-    }
+    label.choice:hover { border-color: var(--accent); }
 
-    input[type="radio"] {
-      margin-top: 2px;
-      accent-color: var(--accent-2);
+    .code-rule {
+      margin-top: 16px;
+      border-left: 4px solid var(--accent);
+      padding: 12px 14px;
+      background: rgba(56, 189, 248, 0.08);
+      color: #e0f2fe;
+      border-radius: 0 12px 12px 0;
+      line-height: 1.55;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 12px;
+      padding: 14px;
+      margin: 14px 0 8px;
+      border-radius: 10px;
       border: 1px solid #475569;
-      background: #0f172a;
-      color: var(--text);
+      background: #020617;
+      color: white;
       font-size: 1rem;
-      outline: none;
-      margin-top: 10px;
     }
 
-    input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
-    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
     button {
-      border: 0;
-      background: linear-gradient(135deg, var(--accent-2), #0369a1);
-      color: white;
-      padding: 14px 22px;
-      border-radius: 12px;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      font-weight: 800;
       cursor: pointer;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      box-shadow: 0 12px 22px rgba(2, 132, 199, 0.28);
-      margin-top: 12px;
+      font-size: 0.98rem;
     }
 
-    button:hover { transform: translateY(-1px); }
-    button:active { transform: translateY(0); }
+    button.secondary { background: #334155; }
+    button:hover { filter: brightness(1.08); }
 
     .feedback {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
       display: none;
-      margin-top: 15px;
-      padding: 14px 16px;
-      border-radius: 12px;
       font-weight: 800;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    .feedback.success {
+    .feedback.good {
       display: block;
-      background: rgba(16, 185, 129, 0.12);
+      color: #d1fae5;
+      background: rgba(16, 185, 129, 0.15);
       border: 1px solid rgba(16, 185, 129, 0.45);
-      color: #a7f3d0;
     }
 
-    .feedback.error {
+    .feedback.bad {
       display: block;
-      background: rgba(239, 68, 68, 0.12);
+      color: #fee2e2;
+      background: rgba(239, 68, 68, 0.15);
       border: 1px solid rgba(239, 68, 68, 0.45);
-      color: #fecaca;
     }
 
-    .success-screen {
+    .finish-card {
       display: none;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.45);
-      border-radius: 22px;
-      padding: 34px;
+      padding: 28px;
       text-align: center;
-      box-shadow: 0 20px 42px var(--shadow);
     }
 
-    .success-screen.active { display: block; }
-    .success-screen h2 { color: #a7f3d0; }
+    .finish-card.active { display: block; }
 
-    @media (max-width: 720px) {
-      body { padding: 14px; }
-      .hero, .lock-stage, .success-screen { padding: 22px; }
-      .top-bar { grid-template-columns: 1fr; }
+    .teacher-note {
+      margin-top: 20px;
+      font-size: 0.92rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 640px) {
+      .topbar { grid-template-columns: 1fr; }
+      #timer { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="hero">
-      <h1>25-Minute Grammar &amp; Syntax Escape Room</h1>
-      <p class="tagline">Outsmart the Errors • Master the Rules • Break the 10 Locks</p>
-      <div class="essential-question">
-        <strong>Essential Question:</strong> How do I use my knowledge of grammar and syntax to communicate with precision and style?
+  <header class="hero">
+    <div class="wrap">
+      <h1>The Syntax Vault</h1>
+      <p class="subtitle">A 25-minute 7th grade ELA escape room focused on sentence control, grammar reasoning, and revision choices.</p>
+      <div class="topbar">
+        <div class="progress-shell" aria-label="Escape room progress"><div id="progress" class="progress-bar"></div></div>
+        <div id="timer">Time Remaining: 25:00</div>
       </div>
-    </section>
-
-    <section class="top-bar" aria-label="Escape room status">
-      <div class="status-card">
-        <span class="status-label">Time Remaining</span>
-        <span id="timer" class="status-value">25:00</span>
-      </div>
-      <div class="status-card">
-        <span class="status-label">Current Lock</span>
-        <span id="currentLock" class="status-value">1 / 10</span>
-      </div>
-      <div class="status-card">
-        <span class="status-label">Unlocked</span>
-        <span id="unlocked" class="status-value">0</span>
-      </div>
-    </section>
-
-    <div class="progress-wrap" aria-label="Progress">
-      <div id="progressBar"></div>
     </div>
+  </header>
 
-    <section id="stage1" class="lock-stage active" data-answer="b" data-keyword="timeout">
-      <div class="lock-kicker">Lock 1</div>
-      <h2>The Active Voice Vault</h2>
-      <div class="skill">Skill: Active Voice</div>
-      <div class="scenario">
-        <strong>Scenario:</strong> Only one sentence is written in active voice.
-        <p class="sentence">The coach called a timeout.</p>
-      </div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which sentence is active voice?
+  <main class="wrap">
+    <section class="mission">
+      <h2>Mission Briefing</h2>
+      <p>The classroom archive has locked itself after detecting weak sentence construction. To reopen the vault, analyze each sentence carefully. Every lock requires two steps: choose the strongest grammar answer, then use the code rule to extract the keyword.</p>
+      <p><strong>Important:</strong> Spelling matters, but capitalization does not. Read every answer choice before entering a code.</p>
+    </section>
+
+    <section id="stage1" class="lock-card active" data-answer="coach">
+      <div class="lock-label">Lock 1 of 10</div>
+      <h2>Active Voice Under Pressure</h2>
+      <p><span class="skill">Skill:</span> Active voice vs. passive voice; clarity and emphasis</p>
+      <div class="question-box">
+        <p class="sentence">The school newspaper is revising a sports article. Which sentence uses active voice while keeping the sentence clear and direct?</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q1" value="a"> A. The timeout was called.</label>
-          <label class="choice"><input type="radio" name="q1" value="b"> B. The coach called a timeout.</label>
+          <label class="choice"><input type="radio" name="q1"> A. A timeout was called during the final minute by the coach.</label>
+          <label class="choice"><input type="radio" name="q1"> B. During the final minute, the coach called a timeout to stop the clock.</label>
+          <label class="choice"><input type="radio" name="q1"> C. The clock was stopped when a timeout was called.</label>
+          <label class="choice"><input type="radio" name="q1"> D. A timeout had been called because the clock needed to be stopped.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the subject of the correctly revised sentence.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the noun the coach called.<input id="key1" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(1)">Submit Key</button>
+      <input id="input1" type="text" placeholder="Enter Lock 1 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(1)">Unlock</button></div>
       <div id="feedback1" class="feedback"></div>
     </section>
 
-    <section id="stage2" class="lock-stage" data-answer="a" data-keyword="pizza">
-      <div class="lock-kicker">Lock 2</div>
-      <h2>The Modifier Maze</h2>
-      <div class="skill">Skill: Dangling Modifiers</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">The student ate pizza wearing a coat.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> What noun is the modifier accidentally attached to?
+    <section id="stage2" class="lock-card" data-answer="student">
+      <div class="lock-label">Lock 2 of 10</div>
+      <h2>The Dangling Modifier Trap</h2>
+      <p><span class="skill">Skill:</span> Dangling modifiers; revision for logical meaning</p>
+      <div class="question-box">
+        <p class="sentence">Original sentence: <em>Walking into the cafeteria, the pizza smelled delicious.</em></p>
+        <p>Which revision fixes the modifier error without changing the intended meaning?</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q2" value="a"> A. Pizza</label>
-          <label class="choice"><input type="radio" name="q2" value="b"> B. Student</label>
-          <label class="choice"><input type="radio" name="q2" value="c"> C. Coat</label>
+          <label class="choice"><input type="radio" name="q2"> A. Walking into the cafeteria, the pizza smelled delicious to the student.</label>
+          <label class="choice"><input type="radio" name="q2"> B. The pizza, walking into the cafeteria, smelled delicious.</label>
+          <label class="choice"><input type="radio" name="q2"> C. Walking into the cafeteria, the student smelled the delicious pizza.</label>
+          <label class="choice"><input type="radio" name="q2"> D. The delicious pizza was smelled while walking into the cafeteria.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the noun that is correctly doing the action in the introductory phrase.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the noun the modifier accidentally attaches to.<input id="key2" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(2)">Submit Key</button>
+      <input id="input2" type="text" placeholder="Enter Lock 2 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(2)">Unlock</button></div>
       <div id="feedback2" class="feedback"></div>
     </section>
 
-    <section id="stage3" class="lock-stage" data-answer="c" data-keyword="because">
-      <div class="lock-kicker">Lock 3</div>
-      <h2>The Complex Sentence Chamber</h2>
-      <div class="skill">Skill: Complex Sentences</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">Because the bell rang early, the students rushed into the hallway.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which conjunction starts this sentence?
+    <section id="stage3" class="lock-card" data-answer="because">
+      <div class="lock-label">Lock 3 of 10</div>
+      <h2>Complex Sentence Control</h2>
+      <p><span class="skill">Skill:</span> Subordinating conjunctions; dependent and independent clauses</p>
+      <div class="question-box">
+        <p class="sentence">Which sentence is complex and uses the dependent clause to explain the cause of the main action?</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q3" value="a"> A. Students</label>
-          <label class="choice"><input type="radio" name="q3" value="b"> B. Hallway</label>
-          <label class="choice"><input type="radio" name="q3" value="c"> C. Because</label>
+          <label class="choice"><input type="radio" name="q3"> A. The bell rang early, and the students rushed into the hallway.</label>
+          <label class="choice"><input type="radio" name="q3"> B. The bell rang early; the students rushed into the hallway.</label>
+          <label class="choice"><input type="radio" name="q3"> C. Because the bell rang early, the students rushed into the hallway.</label>
+          <label class="choice"><input type="radio" name="q3"> D. The students rushed into the hallway, but the bell rang early.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the subordinating conjunction that begins the dependent clause.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the conjunction that begins the sentence.<input id="key3" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(3)">Submit Key</button>
+      <input id="input3" type="text" placeholder="Enter Lock 3 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(3)">Unlock</button></div>
       <div id="feedback3" class="feedback"></div>
     </section>
 
-    <section id="stage4" class="lock-stage" data-answer="b" data-keyword="power">
-      <div class="lock-kicker">Lock 4</div>
-      <h2>The Cause-and-Effect Circuit</h2>
-      <div class="skill">Skill: Conjunctions and Relationships</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">The storm knocked out the ____. We played by flashlight.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which word best completes the cause-and-effect idea?
+    <section id="stage4" class="lock-card" data-answer="therefore">
+      <div class="lock-label">Lock 4 of 10</div>
+      <h2>Cause, Effect, and Transitions</h2>
+      <p><span class="skill">Skill:</span> Conjunctive adverbs; logical relationships between ideas</p>
+      <div class="question-box">
+        <p class="sentence">Choose the transition that best shows a cause-and-effect relationship between the two clauses.</p>
+        <p><em>The storm knocked out the power; ________, the class completed the activity by flashlight.</em></p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q4" value="a"> A. Homework</label>
-          <label class="choice"><input type="radio" name="q4" value="b"> B. Power</label>
-          <label class="choice"><input type="radio" name="q4" value="c"> C. Schedule</label>
+          <label class="choice"><input type="radio" name="q4"> A. however</label>
+          <label class="choice"><input type="radio" name="q4"> B. therefore</label>
+          <label class="choice"><input type="radio" name="q4"> C. meanwhile</label>
+          <label class="choice"><input type="radio" name="q4"> D. for example</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the transition that completes the sentence logically.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the missing cause-and-effect word.<input id="key4" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(4)">Submit Key</button>
+      <input id="input4" type="text" placeholder="Enter Lock 4 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(4)">Unlock</button></div>
       <div id="feedback4" class="feedback"></div>
     </section>
 
-    <section id="stage5" class="lock-stage" data-answer="a" data-keyword="cream">
-      <div class="lock-kicker">Lock 5</div>
-      <h2>The Comma Code</h2>
-      <div class="skill">Skill: Comma Usage</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">After the game, we got ice cream.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which dessert did they get?
+    <section id="stage5" class="lock-card" data-answer="game">
+      <div class="lock-label">Lock 5 of 10</div>
+      <h2>Comma Rule Challenge</h2>
+      <p><span class="skill">Skill:</span> Introductory phrases; comma placement and sentence fluency</p>
+      <div class="question-box">
+        <p class="sentence">Which sentence uses the comma correctly after an introductory phrase?</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q5" value="a"> A. Ice cream</label>
-          <label class="choice"><input type="radio" name="q5" value="b"> B. Cake</label>
-          <label class="choice"><input type="radio" name="q5" value="c"> C. Pie</label>
+          <label class="choice"><input type="radio" name="q5"> A. After the game we got ice cream with our teammates.</label>
+          <label class="choice"><input type="radio" name="q5"> B. After the game, we got ice cream with our teammates.</label>
+          <label class="choice"><input type="radio" name="q5"> C. After, the game we got ice cream with our teammates.</label>
+          <label class="choice"><input type="radio" name="q5"> D. After the game we got, ice cream with our teammates.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> In the correct sentence, enter the final noun of the introductory phrase.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the second word in the dessert name.<input id="key5" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(5)">Submit Key</button>
+      <input id="input5" type="text" placeholder="Enter Lock 5 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(5)">Unlock</button></div>
       <div id="feedback5" class="feedback"></div>
     </section>
 
-    <section id="stage6" class="lock-stage" data-answer="c" data-keyword="chromebooks">
-      <div class="lock-kicker">Lock 6</div>
-      <h2>The Homophone Hallway</h2>
-      <div class="skill">Skill: Homophones</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">The students forgot to bring ____ Chromebooks.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which homophone correctly completes the sentence?
+    <section id="stage6" class="lock-card" data-answer="their">
+      <div class="lock-label">Lock 6 of 10</div>
+      <h2>Homophone Precision</h2>
+      <p><span class="skill">Skill:</span> Homophones in context; possessive pronouns</p>
+      <div class="question-box">
+        <p class="sentence">Choose the sentence that uses the correct homophone and explains ownership clearly.</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q6" value="a"> A. There</label>
-          <label class="choice"><input type="radio" name="q6" value="b"> B. They're</label>
-          <label class="choice"><input type="radio" name="q6" value="c"> C. Their</label>
+          <label class="choice"><input type="radio" name="q6"> A. The students forgot to bring there Chromebooks to class.</label>
+          <label class="choice"><input type="radio" name="q6"> B. The students forgot to bring they're Chromebooks to class.</label>
+          <label class="choice"><input type="radio" name="q6"> C. The students forgot to bring their Chromebooks to class.</label>
+          <label class="choice"><input type="radio" name="q6"> D. The students forgot to bring them Chromebooks to class.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the homophone that correctly shows ownership.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the item students forgot to bring.<input id="key6" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(6)">Submit Key</button>
+      <input id="input6" type="text" placeholder="Enter Lock 6 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(6)">Unlock</button></div>
       <div id="feedback6" class="feedback"></div>
     </section>
 
-    <section id="stage7" class="lock-stage" data-answer="b" data-keyword="swimming">
-      <div class="lock-kicker">Lock 7</div>
-      <h2>The Parallel Path</h2>
-      <div class="skill">Skill: Parallel Structure</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">She likes hiking, swimming, and ____.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which option keeps the list parallel?
+    <section id="stage7" class="lock-card" data-answer="reading">
+      <div class="lock-label">Lock 7 of 10</div>
+      <h2>Parallel Structure Puzzle</h2>
+      <p><span class="skill">Skill:</span> Parallel structure; maintaining grammatical pattern</p>
+      <div class="question-box">
+        <p class="sentence">Which revision creates parallel structure in the sentence?</p>
+        <p><em>During summer break, Maya enjoys hiking, swimming, and to read mystery novels.</em></p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q7" value="a"> A. To run</label>
-          <label class="choice"><input type="radio" name="q7" value="b"> B. Biking</label>
-          <label class="choice"><input type="radio" name="q7" value="c"> C. A bicycle</label>
+          <label class="choice"><input type="radio" name="q7"> A. During summer break, Maya enjoys hiking, swimming, and reading mystery novels.</label>
+          <label class="choice"><input type="radio" name="q7"> B. During summer break, Maya enjoys to hike, swimming, and reading mystery novels.</label>
+          <label class="choice"><input type="radio" name="q7"> C. During summer break, Maya enjoys hiking, to swim, and reading mystery novels.</label>
+          <label class="choice"><input type="radio" name="q7"> D. During summer break, Maya enjoys hike, swim, and reading mystery novels.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the revised -ing verb that fixes the nonparallel part of the original sentence.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the water-sport verb already listed in the sentence.<input id="key7" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(7)">Submit Key</button>
+      <input id="input7" type="text" placeholder="Enter Lock 7 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(7)">Unlock</button></div>
       <div id="feedback7" class="feedback"></div>
     </section>
 
-    <section id="stage8" class="lock-stage" data-answer="b" data-keyword="backpacks">
-      <div class="lock-kicker">Lock 8</div>
-      <h2>The Plural-Possessive Portal</h2>
-      <div class="skill">Skill: Plural vs. Possessive</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">The boys left their ____ in the coach's office.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which form correctly names more than one bag?
+    <section id="stage8" class="lock-card" data-answer="boys">
+      <div class="lock-label">Lock 8 of 10</div>
+      <h2>Plural or Possessive?</h2>
+      <p><span class="skill">Skill:</span> Plurals, possessives, and apostrophe logic</p>
+      <div class="question-box">
+        <p class="sentence">Choose the sentence that correctly shows that more than one boy owns the backpacks.</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q8" value="a"> A. Backpack's</label>
-          <label class="choice"><input type="radio" name="q8" value="b"> B. Backpacks</label>
-          <label class="choice"><input type="radio" name="q8" value="c"> C. Backpacks'</label>
+          <label class="choice"><input type="radio" name="q8"> A. The boy's backpacks were left in the coach's office.</label>
+          <label class="choice"><input type="radio" name="q8"> B. The boys' backpacks were left in the coach's office.</label>
+          <label class="choice"><input type="radio" name="q8"> C. The boys backpacks were left in the coach's office.</label>
+          <label class="choice"><input type="radio" name="q8"> D. The boyes' backpacks were left in the coach's office.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the plural owner without the apostrophe.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the correct plural noun.<input id="key8" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(8)">Submit Key</button>
+      <input id="input8" type="text" placeholder="Enter Lock 8 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(8)">Unlock</button></div>
       <div id="feedback8" class="feedback"></div>
     </section>
 
-    <section id="stage9" class="lock-stage" data-answer="a" data-keyword="pencil">
-      <div class="lock-kicker">Lock 9</div>
-      <h2>The Pronoun Agreement Passage</h2>
-      <div class="skill">Skill: Pronoun Agreement</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">Everyone must bring ____ own pencil.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which pronoun agrees with everyone?
+    <section id="stage9" class="lock-card" data-answer="their">
+      <div class="lock-label">Lock 9 of 10</div>
+      <h2>Pronoun-Antecedent Agreement</h2>
+      <p><span class="skill">Skill:</span> Pronoun agreement; modern singular they</p>
+      <div class="question-box">
+        <p class="sentence">Which sentence uses a pronoun that agrees with an indefinite pronoun in a clear, natural way?</p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q9" value="a"> A. His or her</label>
-          <label class="choice"><input type="radio" name="q9" value="b"> B. Their</label>
-          <label class="choice"><input type="radio" name="q9" value="c"> C. Our</label>
+          <label class="choice"><input type="radio" name="q9"> A. Everyone must bring their own pencil to the assessment.</label>
+          <label class="choice"><input type="radio" name="q9"> B. Everyone must bring our own pencil to the assessment.</label>
+          <label class="choice"><input type="radio" name="q9"> C. Everyone must bring its own pencil to the assessment.</label>
+          <label class="choice"><input type="radio" name="q9"> D. Everyone must bring they own pencil to the assessment.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the pronoun that correctly refers back to everyone.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the object everyone must bring.<input id="key9" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(9)">Submit Key</button>
+      <input id="input9" type="text" placeholder="Enter Lock 9 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(9)">Unlock</button></div>
       <div id="feedback9" class="feedback"></div>
     </section>
 
-    <section id="stage10" class="lock-stage" data-answer="a" data-keyword="crowd">
-      <div class="lock-kicker">Lock 10</div>
-      <h2>The Verbal Vault</h2>
-      <div class="skill">Skill: Verbals</div>
-      <div class="scenario"><strong>Scenario:</strong><p class="sentence">The exhausted runner appreciated the cheering crowd.</p></div>
-      <div class="question">
-        <strong>Mission Question:</strong> Which word functions as a participle modifying a noun?
+    <section id="stage10" class="lock-card" data-answer="runner">
+      <div class="lock-label">Lock 10 of 10</div>
+      <h2>Verbals: The Final Vault</h2>
+      <p><span class="skill">Skill:</span> Participles; identifying what a verbal phrase modifies</p>
+      <div class="question-box">
+        <p class="sentence">In the sentence below, identify how the underlined verbal phrase functions.</p>
+        <p><em>The exhausted runner, <u>cheered on by the crowd</u>, sprinted across the finish line.</em></p>
         <div class="choices">
-          <label class="choice"><input type="radio" name="q10" value="a"> A. Exhausted</label>
-          <label class="choice"><input type="radio" name="q10" value="b"> B. Runner</label>
-          <label class="choice"><input type="radio" name="q10" value="c"> C. Appreciated</label>
+          <label class="choice"><input type="radio" name="q10"> A. The phrase is a gerund phrase acting as the subject.</label>
+          <label class="choice"><input type="radio" name="q10"> B. The phrase is a participial phrase modifying runner.</label>
+          <label class="choice"><input type="radio" name="q10"> C. The phrase is an infinitive phrase explaining purpose.</label>
+          <label class="choice"><input type="radio" name="q10"> D. The phrase is an independent clause joined by commas.</label>
         </div>
+        <div class="code-rule"><strong>Code Rule:</strong> Enter the noun modified by the participial phrase.</div>
       </div>
-      <div class="task"><strong>Lock Code Task:</strong> Type the noun that was cheering.<input id="key10" type="text" placeholder="Enter keyword"></div>
-      <button onclick="checkLock(10)">Submit Final Lock</button>
+      <input id="input10" type="text" placeholder="Enter Lock 10 code" autocomplete="off" />
+      <div class="actions"><button onclick="checkLock(10)">Open the Vault</button></div>
       <div id="feedback10" class="feedback"></div>
     </section>
 
-    <section id="success" class="success-screen">
-      <h2>Escape Successful!</h2>
-      <p>You completed the 25-Minute Grammar &amp; Syntax Room.</p>
-      <p>By mastering grammar, syntax, punctuation, pronouns, homophones, and verbals, you unlocked the mastery level.</p>
+    <section id="finish" class="finish-card">
+      <h2>Vault Opened!</h2>
+      <p>You escaped by using sentence analysis, revision reasoning, and grammar precision. Record your final time and be ready to explain which lock was the most challenging.</p>
+      <button onclick="location.reload()">Reset Escape Room</button>
     </section>
+
+    <p class="teacher-note">Teacher setup note: This page is self-contained. Upload it as an HTML file to your GitHub Pages repository.</p>
   </main>
 
   <script>
     const totalLocks = 10;
-    let currentStage = 1;
-    let unlocked = 0;
-    let timeLeft = 25 * 60;
-    let escaped = false;
+    let currentLock = 1;
+    let remainingSeconds = 25 * 60;
+    let timerStarted = false;
+    let timerInterval;
 
-    const timerEl = document.getElementById('timer');
-    const currentLockEl = document.getElementById('currentLock');
-    const unlockedEl = document.getElementById('unlocked');
-    const progressBar = document.getElementById('progressBar');
+    const hints = {
+      1: 'Focus on who performs the action. Active voice puts that person or thing near the front of the sentence.',
+      2: 'The introductory phrase must describe the noun that immediately follows it.',
+      3: 'A complex sentence contains a dependent clause and an independent clause.',
+      4: 'The second idea happens as a result of the first idea.',
+      5: 'Find the introductory phrase first. The comma should come after the whole phrase.',
+      6: 'Use the form that shows possession, not location or a contraction.',
+      7: 'Items in a list should follow the same grammatical pattern.',
+      8: 'More than one owner usually means the apostrophe comes after the plural s.',
+      9: 'The pronoun must refer clearly to everyone.',
+      10: 'A participial phrase acts like an adjective and modifies a noun.'
+    };
 
-    function normalize(value) {
-      return (value || '').trim().toLowerCase();
-    }
-
-    function showFeedback(stageNumber, message, type) {
-      const feedback = document.getElementById('feedback' + stageNumber);
-      feedback.textContent = message;
-      feedback.className = 'feedback ' + type;
-    }
-
-    function updateStatus() {
-      currentLockEl.textContent = Math.min(currentStage, totalLocks) + ' / ' + totalLocks;
-      unlockedEl.textContent = unlocked;
-      progressBar.style.width = (unlocked / totalLocks * 100) + '%';
-    }
-
-    function checkLock(stageNumber) {
-      const stage = document.getElementById('stage' + stageNumber);
-      const selected = document.querySelector('input[name="q' + stageNumber + '"]:checked');
-      const keyword = document.getElementById('key' + stageNumber).value;
-      const correctAnswer = stage.dataset.answer;
-      const correctKeyword = stage.dataset.keyword;
-
-      if (!selected || !normalize(keyword)) {
-        showFeedback(stageNumber, 'Choose an answer and type the keyword before submitting.', 'error');
-        return;
-      }
-
-      if (selected.value === correctAnswer && normalize(keyword) === correctKeyword) {
-        showFeedback(stageNumber, 'Correct! Lock ' + stageNumber + ' opened.', 'success');
-        unlocked++;
-        setTimeout(() => {
-          stage.classList.remove('active');
-          if (stageNumber < totalLocks) {
-            currentStage = stageNumber + 1;
-            document.getElementById('stage' + currentStage).classList.add('active');
-          } else {
-            escaped = true;
-            currentStage = totalLocks;
-            document.getElementById('success').classList.add('active');
-          }
-          updateStatus();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 650);
-      } else {
-        showFeedback(stageNumber, 'Incorrect. Recheck both the letter choice and the keyword.', 'error');
-      }
+    function startTimer() {
+      if (timerStarted) return;
+      timerStarted = true;
+      timerInterval = setInterval(() => {
+        remainingSeconds--;
+        updateTimer();
+        if (remainingSeconds <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('timer').textContent = 'Time Expired!';
+          alert('Time is up! Review your grammar choices and try again.');
+        }
+      }, 1000);
     }
 
     function updateTimer() {
-      if (escaped) return;
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      timerEl.textContent = minutes + ':' + String(seconds).padStart(2, '0');
-      timerEl.classList.toggle('warning', timeLeft <= 300 && timeLeft > 60);
-      timerEl.classList.toggle('danger', timeLeft <= 60);
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        timerEl.textContent = '0:00';
-        alert('Time is up! Review your answers and try the room again.');
-        return;
-      }
-      timeLeft--;
+      const minutes = Math.floor(remainingSeconds / 60);
+      const seconds = remainingSeconds % 60;
+      document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    updateStatus();
+    function normalize(text) {
+      return text.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+    }
+
+    function checkLock(lockNumber) {
+      startTimer();
+      const stage = document.getElementById(`stage${lockNumber}`);
+      const input = document.getElementById(`input${lockNumber}`);
+      const feedback = document.getElementById(`feedback${lockNumber}`);
+      const expected = normalize(stage.dataset.answer);
+      const actual = normalize(input.value);
+
+      if (!actual) {
+        feedback.className = 'feedback bad';
+        feedback.textContent = 'Enter a code word before trying to unlock this stage.';
+        return;
+      }
+
+      if (actual === expected) {
+        feedback.className = 'feedback good';
+        feedback.textContent = 'Unlocked. Strong grammar reasoning.';
+        setTimeout(() => advance(lockNumber), 550);
+      } else {
+        feedback.className = 'feedback bad';
+        feedback.textContent = `Still locked. Hint: ${hints[lockNumber]}`;
+      }
+    }
+
+    function advance(lockNumber) {
+      document.getElementById(`stage${lockNumber}`).classList.remove('active');
+      if (lockNumber < totalLocks) {
+        currentLock = lockNumber + 1;
+        document.getElementById(`stage${currentLock}`).classList.add('active');
+        document.getElementById('progress').style.width = `${(currentLock / totalLocks) * 100}%`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        clearInterval(timerInterval);
+        document.getElementById('progress').style.width = '100%';
+        document.getElementById('finish').classList.add('active');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const active = document.querySelector('.lock-card.active');
+        if (active) {
+          const n = Number(active.id.replace('stage', ''));
+          checkLock(n);
+        }
+      }
+    });
+
     updateTimer();
-    const timerInterval = setInterval(updateTimer, 1000);
   </script>
 </body>
 </html>
