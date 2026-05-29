@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar & Syntax Strategy Room</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .timer-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fbbf24;
+            background: #292524;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px dashed #fbbf24;
+        }
+
+        .essential-question {
+            background-color: #0369a1;
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .lock-stage {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border: 1px solid #334155;
+            display: none;
+        }
+
+        .lock-stage.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .stage-badge {
+            background-color: #475569;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .excerpt-box {
+            background-color: #0f172a;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .option-item {
+            background: #334155;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option-item:hover {
+            background: #455a64;
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background: #1e293b;
+        }
+
+        .input-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.error {
+            color: var(--error-color);
+            display: block;
+        }
+
+        .feedback.success {
+            color: var(--success-color);
+            display: block;
+        }
+
+        .rationale-panel {
+            background-color: #1e293b;
+            border: 1px solid var(--success-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        #victory-screen {
+            text-align: center;
+            display: none;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 2px solid var(--success-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🔐 25-Minute Grammar & Syntax Escape Room</h1>
+        <p>Outsmart the Errors • Master the Rules • Break the 6 Locks</p>
+        <div class="timer-container">⏳ Time Remaining: <span id="timer">25:00</span></div>
+    </header>
+
+    <div class="essential-question">
+        <strong>💡 Essential Question:</strong> "How do I use my knowledge of advanced grammar and syntax to communicate with precision and formal style?"
+    </div>
+
+    <!-- STAGE 1 -->
+    <div id="stage1" class="lock-stage active">
+        <span class="stage-badge">Lock 1: Active Voice</span>
+        <h2>The Voice Vault</h2>
+        <p><strong>Scenario:</strong> Read the three sentences below. The grammar continuum requires mastery of distinguishing active and passive voice. Only one sentence is written correctly in the Active Voice.</p>
+        
+        <div class="excerpt-box">
+            (1) The new district regulations were introduced by the principal.<br>
+            (2) The coach called a timeout with three seconds left on the clock.<br>
+            (3) Mistakes were made during the chaotic assembly.
+        </div>
+
+        <p><strong>The Mission Question:</strong> Which sentence is written in the Active Voice?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> Sentence 1</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> Sentence 2</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> Sentence 3</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter choice. Then, type the specific <strong>noun</strong> that the coach called with three seconds left.</p>
+
+        <div class="input-group">
+            <input type="text" id="code1" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(1, 'B', 'timeout', 'Option B is active because the subject (the coach) directly performs the action (called). Sentences 1 and 3 use passive constructions where the subject receives the action.', 'noun the coach called')">Submit Key</button>
+        </div>
+        <div id="feedback1" class="feedback"></div>
+        <div id="rationale1" class="rationale-panel"></div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div id="stage2" class="lock-stage">
+        <span class="stage-badge">Lock 2: Dangling Modifiers</span>
+        <h2>The Modifier Maze</h2>
+        <p><strong>Scenario:</strong> The 6th-8th grade grammar continuum specifically requires correcting misplaced or dangling modifiers. Identify the error in the sentence below.</p>
+
+        <div class="excerpt-box">
+            "The student ate a warm slice of pizza wearing a heavy winter coat."
+        </div>
+
+        <p><strong>The Mission Question:</strong> How does this sentence violate the rules of proper modification?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> It implies that the pizza is physically wearing the winter coat.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> It completely lacks a subject performing the action of eating.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> The adjectives "warm" and "heavy" contradict each other logically.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> There should be a comma immediately after the word pizza.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct answer choice. Then, type the exact <strong>noun</strong> in the sentence that the modifier is accidentally attached to.</p>
+
+        <div class="input-group">
+            <input type="text" id="code2" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(2, 'A', 'pizza', 'Option A is correct. Because the modifier phrase is placed directly next to pizza, the syntax suggests the food is wearing the coat, demonstrating a classic misplaced modifier error.', 'noun that is accidentally wearing the coat')">Submit Key</button>
+        </div>
+        <div id="feedback2" class="feedback"></div>
+        <div id="rationale2" class="rationale-panel"></div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div id="stage3" class="lock-stage">
+        <span class="stage-badge">Lock 3: Verbals</span>
+        <h2>The Verbal Vault</h2>
+        <p><strong>Scenario:</strong> There is a specific focus in middle school on mastering verbals, including gerunds and participles. Analyze the sentence below.</p>
+
+        <div class="excerpt-box">
+            "The exhausted runner deeply appreciated the cheering crowd at the finish line."
+        </div>
+
+        <p><strong>The Mission Question:</strong> Which word in the sentence functions as a participle (a verbal acting as an adjective) to modify a noun?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> exhausted</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> runner</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> appreciated</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> deeply</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct verbal. Then, type the specific <strong>noun</strong> at the end of the sentence that the runners appreciated.</p>
+
+        <div class="input-group">
+            <input type="text" id="code3" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(3, 'A', 'crowd', 'Option A is correct. Exhausted is a past participle functioning as an adjective to describe the runner, illustrating the use of verbals.', 'noun the runner appreciated')">Submit Key</button>
+        </div>
+        <div id="feedback3" class="feedback"></div>
+        <div id="rationale3" class="rationale-panel"></div>
+    </div>
+
+    <!-- STAGE 4 -->
+    <div id="stage4" class="lock-stage">
+        <span class="stage-badge">Lock 4: Formal Style & Vocabulary</span>
+        <h2>The Tone Translator</h2>
+        <p><strong>Scenario:</strong> Students must maintain a formal style and utilize domain-specific vocabulary expected at this academic level.</p>
+
+        <div class="excerpt-box">
+            "The researchers were totally bummed out when their science experiment messed up."
+        </div>
+
+        <p><strong>The Mission Question:</strong> Which revision best applies the formal style and domain-specific vocabulary required for an explanatory text?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> The researchers were super sad when it failed.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> The researchers expressed disappointment when the experiment yielded inconclusive results.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> The scientists felt really bad that the test didn't do what they wanted.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> The researchers were upset because their science thing broke down.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Choose the correct revision. Then, identify the final <strong>noun</strong> in the correct sentence that refers to the outcome of the experiment.</p>
+
+        <div class="input-group">
+            <input type="text" id="code4" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(4, 'B', 'results', 'Option B successfully replaces colloquial slang with precise, domain-specific vocabulary and establishes the formal style expected in 7th grade.', 'noun representing the outcome')">Submit Key</button>
+        </div>
+        <div id="feedback4" class="feedback"></div>
+        <div id="rationale4" class="rationale-panel"></div>
+    </div>
+
+    <!-- STAGE 5 -->
+    <div id="stage5" class="lock-stage">
+        <span class="stage-badge">Lock 5: Coordinate Adjectives</span>
+        <h2>The Comma Code</h2>
+        <p><strong>Scenario:</strong> Identify correct comma placement when utilizing coordinate adjectives.</p>
+
+        <div class="excerpt-box">
+            "The dark, stormy night scared the small, frightened dog."
+        </div>
+
+        <p><strong>The Mission Question:</strong> Based on punctuation rules, why are the commas placed between the adjectives in this sentence?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> They are separating coordinate adjectives that equally modify the nouns.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> They are marking nonrestrictive elements that can be removed.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> They are separating dependent clauses from the main independent clause.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> They are functioning as an interjection to slow the reader down.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct rule. Then, type the <strong>noun</strong> representing the animal that was frightened.</p>
+
+        <div class="input-group">
+            <input type="text" id="code5" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(5, 'A', 'dog', 'Option A is correct. Both pairs (dark/stormy and small/frightened) are coordinate adjectives because they equally modify their respective nouns and pass the “and” test.', 'noun representing the animal')">Submit Key</button>
+        </div>
+        <div id="feedback5" class="feedback"></div>
+        <div id="rationale5" class="rationale-panel"></div>
+    </div>
+
+    <!-- STAGE 6 -->
+    <div id="stage6" class="lock-stage">
+        <span class="stage-badge">Lock 6: Sentence Structure</span>
+        <h2>The Structure Safe</h2>
+        <p><strong>Scenario:</strong> Differentiate between simple, compound, and complex sentence structures.</p>
+
+        <div class="excerpt-box">
+            "Because the bell rang early, the students rushed into the hallway."
+        </div>
+
+        <p><strong>The Mission Question:</strong> Which sentence structure is utilized in the excerpt above?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> Simple Sentence</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> Compound Sentence</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> Complex Sentence</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> Compound-Complex Sentence</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select your multiple-choice response. Then, type the <strong>noun</strong> indicating where the students rushed.</p>
+
+        <div class="input-group">
+            <input type="text" id="code6" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(6, 'C', 'hallway', 'Option C is correct. The sentence contains one dependent clause (Because the bell rang early) attached to one independent clause (the students rushed into the hallway).', 'noun indicating the location')">Break Final Lock</button>
+        </div>
+        <div id="feedback6" class="feedback"></div>
+        <div id="rationale6" class="rationale-panel"></div>
+    </div>
+
+    <div id="victory-screen">
+        <h2>🎉 Escape Successful!</h2>
+        <p>You completed the 25-Minute Grammar & Syntax Gauntlet!</p>
+        <p>By mastering verbals, syntax, formal style, and voice, you have unlocked the mastery level.</p>
+        <h3 id="final-time-display" style="color: var(--success-color); font-size: 1.8rem;"></h3>
+    </div>
+</div>
+
+<script>
+    // 25-Minute Countdown
+    let totalSeconds = 25 * 60;
+    const timerElement = document.getElementById('timer');
+    
+    const countdown = setInterval(() => {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        timerElement.textContent = `${minutes}:${seconds}`;
+        
+        if (totalSeconds <= 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "TIME EXPIRED";
+            alert("The gauntlet clock has hit zero! Refresh to reset.");
+        }
+        totalSeconds--;
+    }, 1000);
+
+    // Visually select options
+    function selectOption(element) {
+        const siblings = element.parentElement.querySelectorAll('.option-item');
+        siblings.forEach(item => item.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    // Get selected letter for a stage
+    function getSelectedLetter(stageID) {
+        const selected = document.querySelector(`#${stageID} .option-item.selected`);
+        return selected ? selected.getAttribute('data-letter') : null;
+    }
+
+    // Universal Check function
+    function checkLock(stageNum, correctLetter, correctWord, rationaleText, errorHint) {
+        const input = document.getElementById(`code${stageNum}`).value.trim().toLowerCase().replace(/\s+/g, '');
+        const feedback = document.getElementById(`feedback${stageNum}`);
+        const rationale = document.getElementById(`rationale${stageNum}`);
+        const answer = getSelectedLetter(`stage${stageNum}`);
+
+        if (!answer) { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = "❌ Please select an option (A, B, C, or D) before submitting!"; 
+            return; 
+        }
+        if (answer !== correctLetter) { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = "❌ Incorrect selection. Review the grammar rules carefully and try again!"; 
+            return; 
+        }
+        
+        if (input === correctWord) {
+            if (stageNum < 6) {
+                feedback.className = "feedback success"; 
+                feedback.innerText = `🔓 Lock ${stageNum} Shattered! Proceeding...`;
+                rationale.style.display = "block"; 
+                rationale.innerHTML = `<strong>💡 Teacher Blueprint:</strong> ${rationaleText}`;
+                
+                setTimeout(() => { 
+                    document.getElementById(`stage${stageNum}`).classList.remove('active'); 
+                    document.getElementById(`stage${stageNum + 1}`).classList.add('active'); 
+                }, 4000);
+            } else {
+                // Final Lock
+                clearInterval(countdown);
+                feedback.className = "feedback success"; 
+                feedback.innerText = "🔓 Final Gate Pulverized!";
+                rationale.style.display = "block"; 
+                rationale.innerHTML = `<strong>💡 Teacher Blueprint:</strong> ${rationaleText}`;
+                
+                setTimeout(() => {
+                    document.getElementById(`stage${stageNum}`).classList.remove('active');
+                    document.getElementById('victory-screen').style.display = "block";
+                    let finalSecondsSpent = (25 * 60) - totalSeconds;
+                    let spentMin = Math.floor(finalSecondsSpent / 60);
+                    let spentSec = finalSecondsSpent % 60;
+                    document.getElementById('final-time-display').innerText = `⏱️ Performance Clock: ${spentMin} minutes and ${spentSec < 10 ? '0' + spentSec : spentSec} seconds!`;
+                }, 4000);
+            }
+        } else { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = `❌ Word key is incorrect. Find the ${errorHint}.`; 
+        }
+    }
+</script>
+
+</body>
+</html>
