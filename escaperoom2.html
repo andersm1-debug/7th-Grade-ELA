@@ -1,0 +1,339 @@
+Here is everything you need to execute both of these high-engagement activities. First is the quick-start guide for your teammate to run "The Bouncer" using the new 15-question deck, followed by the complete, standalone HTML code to build the Grammar & Syntax Escape Room directly into your ELA Hub.
+
+---
+
+### ⏱️ The "Bouncer" Relay Race (Teacher Guide)
+
+This turns the 15-question CFA mock test into a frantic, high-urgency team race. It requires almost zero prep for your teammate, but it forces students to debate and defend their answers under pressure.
+
+**The Setup (5 Minutes)**
+
+1. Print a few copies of the 15-question "The Brook & A Poison Tree" deck.
+2. Cut the questions into individual strips. Keep them in 15 separate piles at the teacher's desk.
+3. Group students into teams of 3 or 4. Each team needs one dry-erase whiteboard and a marker.
+4. The teacher sits at the front desk and acts as **"The Bouncer."**
+
+**The Rules of the Game**
+
+* **The Runner:** When the timer starts, each team sends one "Runner" up to the Bouncer to grab Question 1. The Runner takes it back to their group.
+* **The Debate:** The team reads the text, debates the answer, and writes the correct letter on their whiteboard.
+* **The Defense:** The Runner takes the whiteboard and the question strip back to the Bouncer. The Bouncer checks the answer.
+* *If it is WRONG:* The Bouncer simply says, "Try again," and sends the Runner back to their team.
+* *If it is RIGHT:* The Bouncer asks the Runner to explain *why* it is right or what the "trap" was. If the Runner can defend it, the Bouncer takes Question 1 and hands them Question 2.
+
+
+* **The Rotation:** Teams MUST rotate their Runner for every single question so one student doesn't do all the walking and talking.
+* **The Winner:** The first team to collect and solve all 15 questions wins the station.
+
+---
+
+### 🔐 The Grammar & Syntax Escape Room (HTML Code)
+
+This code takes all 8 locks from your original Google Form and turns them into a sleek, interactive Escape Room for your Canvas Hub.
+
+**Why this is better than a Google Form:**
+
+* **No "Spacebar" Traps:** I added JavaScript that automatically removes accidental spaces and converts everything to lowercase, so if a 7th grader types `Pizza` or `CAB`, they won't get locked out.
+* **Instant Feedback:** The inputs instantly turn green and lock in when correct, giving that satisfying "unlocked" feeling without needing to click through multiple form sections.
+
+**How to use it:**
+Create a new file in your GitHub repository named `EscapeRoom.html` and paste the following code exactly as it is. You can then link to this page from your Hub's main menu.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar & Syntax Escape Room</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e2f;
+            color: #f4f4f9;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a40;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #5c5cff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        p.intro {
+            color: #b0b0c0;
+            font-size: 1.1em;
+        }
+        .lock-box {
+            background-color: #353550;
+            border-left: 5px solid #ff5c5c;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .lock-box.unlocked {
+            border-left: 5px solid #28a745;
+            background-color: #2e4a36;
+        }
+        .lock-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+        }
+        .status-icon {
+            font-size: 1.2em;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #dcdcdc;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 1.1em;
+            border: 2px solid #5c5cff;
+            border-radius: 5px;
+            background-color: #1e1e2f;
+            color: #fff;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff5c5c;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            background-color: #5c5cff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #4a4ae0;
+        }
+        .error-msg {
+            color: #ff5c5c;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+        #victory-message {
+            display: none;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            animation: popIn 0.5s ease;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🔐 Grammar & Syntax Escape Room</h1>
+        <p class="intro">Crack all 8 locks using your knowledge of the English language. Type your answers below and click "Unlock" to test your codes.</p>
+    </div>
+
+    <!-- Lock 1 -->
+    <div class="lock-box" id="box-1">
+        <div class="lock-title">Lock 1: The Voice Vault <span class="status-icon" id="icon-1">🔒</span></div>
+        <div class="question-text">
+            Read the three sentences below. Only one is written in the Active Voice. What is the number of the active sentence?<br><br>
+            (1) The championship trophy was lifted by the captain.<br>
+            (2) The coach called a timeout with three seconds left on the clock.<br>
+            (3) The final shot of the game was missed by the point guard.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-1" placeholder="Enter number...">
+            <button onclick="checkLock(1, '2', 'Try again! Look for the sentence where the subject is DOING the action.')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-1"></div>
+    </div>
+
+    <!-- Lock 2 -->
+    <div class="lock-box" id="box-2">
+        <div class="lock-title">Lock 2: The Modifier Maze <span class="status-icon" id="icon-2">🔒</span></div>
+        <div class="question-text">
+            Read the sentence: "The student ate a warm slice of pizza wearing a heavy winter coat."<br><br>
+            Which word is the modifier "wearing a heavy winter coat" accidentally attached to?
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-2" placeholder="Enter the exact word...">
+            <button onclick="checkLock(2, 'pizza', 'Try again! Who or what is physically wearing the coat in this sentence?')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-2"></div>
+    </div>
+
+    <!-- Lock 3 -->
+    <div class="lock-box" id="box-3">
+        <div class="lock-title">Lock 3: The Structure Safe <span class="status-icon" id="icon-3">🔒</span></div>
+        <div class="question-text">
+            Match the sentence type to the correct example to get a 3-letter code. (A) Simple, (B) Compound, (C) Complex.<br><br>
+            (1) Because the bell rang early, the students rushed into the hallway.<br>
+            (2) The teacher handed out the tests, and the room went completely silent.<br>
+            (3) The heavy wooden door slammed shut.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-3" placeholder="Enter 3-letter code (e.g. ABC)...">
+            <button onclick="checkLock(3, 'cab', 'Try again! Look for your FANBOYS and subordinating conjunctions!')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-3"></div>
+    </div>
+
+    <!-- Lock 4 -->
+    <div class="lock-box" id="box-4">
+        <div class="lock-title">Lock 4: The Syntax Cipher <span class="status-icon" id="icon-4">🔒</span></div>
+        <div class="question-text">
+            Read these two sentences: "The storm knocked out the power. We had to play board games by flashlight."<br><br>
+            Which subordinating conjunction best combines these to show cause and effect? [ Although / Before / Because / Unless ]
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-4" placeholder="Enter conjunction...">
+            <button onclick="checkLock(4, 'because', 'Try again! Which word explains WHY you had to play by flashlight?')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-4"></div>
+    </div>
+
+    <!-- Lock 5 -->
+    <div class="lock-box" id="box-5">
+        <div class="lock-title">Lock 5: The Comma Code <span class="status-icon" id="icon-5">🔒</span></div>
+        <div class="question-text">
+            Which sentence uses commas correctly?<br><br>
+            (1) After the game, we went to get ice cream.<br>
+            (2) After the game we went, to get ice cream.<br>
+            (3) After, the game we went to get ice cream.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-5" placeholder="Enter number...">
+            <button onclick="checkLock(5, '1', 'Try again! Look for the introductory phrase.')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-5"></div>
+    </div>
+
+    <!-- Lock 6 -->
+    <div class="lock-box" id="box-6">
+        <div class="lock-title">Lock 6: The "There" Trap <span class="status-icon" id="icon-6">🔒</span></div>
+        <div class="question-text">
+            "The students forgot to bring ____ Chromebooks, so ____ going to have to use the paper copies over ____."<br><br>
+            Type the three missing words in order, separated by spaces.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-6" placeholder="word word word...">
+            <button onclick="checkLock(6, 'their they\'re there', 'Try again! Remember: Ownership, They are, Location.')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-6"></div>
+    </div>
+
+    <!-- Lock 7 -->
+    <div class="lock-box" id="box-7">
+        <div class="lock-title">Lock 7: The Parallel Puzzle <span class="status-icon" id="icon-7">🔒</span></div>
+        <div class="question-text">
+            Which sentence uses correct parallel structure?<br><br>
+            (1) She likes hiking, to swim, and riding bikes.<br>
+            (2) She likes hiking, swimming, and biking.<br>
+            (3) She likes to hike, swimming, and to ride bikes.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-7" placeholder="Enter number...">
+            <button onclick="checkLock(7, '2', 'Try again! The verb endings need to match completely.')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-7"></div>
+    </div>
+
+    <!-- Lock 8 -->
+    <div class="lock-box" id="box-8">
+        <div class="lock-title">Lock 8: The Plural/Possessive Safe <span class="status-icon" id="icon-8">🔒</span></div>
+        <div class="question-text">
+            "The two (boy's / boys) left their backpacks in the (coach's / coaches) office."<br><br>
+            Type the two correct words in order, separated by a space.
+        </div>
+        <div class="input-group">
+            <input type="text" id="input-8" placeholder="word word...">
+            <button onclick="checkLock(8, 'boys coach\'s', 'Try again! The first is plural (more than one), the second shows ownership (belongs to one coach).')">Unlock</button>
+        </div>
+        <div class="error-msg" id="error-8"></div>
+    </div>
+
+    <div id="victory-message">
+        🎉 ACCESS GRANTED! 🎉<br>You have successfully hacked all 8 syntax systems!
+    </div>
+
+</div>
+
+<script>
+    let unlockedCount = 0;
+
+    function checkLock(lockNum, correctAns, errorMsgText) {
+        // Grab the student's input, make it lowercase, and remove extra spaces
+        let userInput = document.getElementById('input-' + lockNum).value.toLowerCase().trim();
+        
+        // Remove multiple spaces in between words just in case they double-space
+        userInput = userInput.replace(/\s+/g, ' ');
+
+        let errorDiv = document.getElementById('error-' + lockNum);
+        let boxDiv = document.getElementById('box-' + lockNum);
+        let iconSpan = document.getElementById('icon-' + lockNum);
+        let inputField = document.getElementById('input-' + lockNum);
+        let btn = inputField.nextElementSibling;
+
+        if (userInput === correctAns) {
+            // Success State
+            errorDiv.style.display = 'none';
+            boxDiv.classList.add('unlocked');
+            iconSpan.innerHTML = '🔓';
+            inputField.disabled = true;
+            btn.disabled = true;
+            btn.style.backgroundColor = '#28a745';
+            btn.innerHTML = 'Unlocked!';
+            
+            unlockedCount++;
+            if (unlockedCount === 8) {
+                document.getElementById('victory-message').style.display = 'block';
+            }
+        } else {
+            // Error State
+            errorDiv.innerHTML = errorMsgText;
+            errorDiv.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
+
+```
