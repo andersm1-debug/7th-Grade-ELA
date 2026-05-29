@@ -64,9 +64,25 @@
             margin-bottom: 15px;
             color: #dcdcdc;
         }
+        .mc-options {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #2a2a40;
+            border-radius: 5px;
+        }
+        .mc-options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .mc-options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
         .input-group {
             display: flex;
             gap: 10px;
+            margin-top: 15px;
         }
         input[type="text"] {
             flex-grow: 1;
@@ -117,7 +133,6 @@
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        /* New class to hide upcoming locks */
         .hidden-lock {
             display: none;
         }
@@ -128,20 +143,22 @@
 <div class="container">
     <div class="header">
         <h1>🔐 Grammar & Syntax Escape Room</h1>
-        <p class="intro">Crack all 8 locks using your knowledge of the English language. You must solve the current lock to reveal the next one!</p>
+        <p class="intro">Crack all 8 locks using your knowledge of the English language. Select the correct options and type your final code into the lock to reveal the next challenge!</p>
     </div>
 
     <!-- Lock 1 -->
     <div class="lock-box" id="box-1">
         <div class="lock-title">Lock 1: The Voice Vault <span class="status-icon" id="icon-1">🔒</span></div>
         <div class="question-text">
-            Read the three sentences below. Only one is written in the Active Voice. What is the number of the active sentence?<br><br>
-            (1) The championship trophy was lifted by the captain.<br>
-            (2) The coach called a timeout with three seconds left on the clock.<br>
-            (3) The final shot of the game was missed by the point guard.
+            Read the three sentences below. Only one is written in the Active Voice. Select the correct sentence, then type its number into the lock.
+        </div>
+        <div class="mc-options">
+            <label><input type="radio" name="q1"> (1) The championship trophy was lifted by the captain.</label>
+            <label><input type="radio" name="q1"> (2) The coach called a timeout with three seconds left on the clock.</label>
+            <label><input type="radio" name="q1"> (3) The final shot of the game was missed by the point guard.</label>
         </div>
         <div class="input-group">
-            <input type="text" id="input-1" placeholder="Enter number...">
+            <input type="text" id="input-1" placeholder="Enter the number of the correct sentence...">
             <button onclick="checkLock(1, '2', 'Try again! Look for the sentence where the subject is DOING the action.')">Unlock</button>
         </div>
         <div class="error-msg" id="error-1"></div>
@@ -165,13 +182,15 @@
     <div class="lock-box hidden-lock" id="box-3">
         <div class="lock-title">Lock 3: The Structure Safe <span class="status-icon" id="icon-3">🔒</span></div>
         <div class="question-text">
-            Match the sentence type to the correct example to get a 3-letter code. (A) Simple, (B) Compound, (C) Complex.<br><br>
-            (1) Because the bell rang early, the students rushed into the hallway.<br>
-            (2) The teacher handed out the tests, and the room went completely silent.<br>
-            (3) The heavy wooden door slammed shut.
+            Match the sentence type to the correct example to get a 3-letter code. (A) Simple, (B) Compound, (C) Complex.
+        </div>
+        <div class="mc-options">
+            <label>1. Because the bell rang early, the students rushed into the hallway.</label>
+            <label>2. The teacher handed out the tests, and the room went completely silent.</label>
+            <label>3. The heavy wooden door slammed shut.</label>
         </div>
         <div class="input-group">
-            <input type="text" id="input-3" placeholder="Enter 3-letter code (e.g. ABC)...">
+            <input type="text" id="input-3" placeholder="Enter your 3-letter code (e.g., ABC)...">
             <button onclick="checkLock(3, 'cab', 'Try again! Look for your FANBOYS and subordinating conjunctions!')">Unlock</button>
         </div>
         <div class="error-msg" id="error-3"></div>
@@ -182,7 +201,13 @@
         <div class="lock-title">Lock 4: The Syntax Cipher <span class="status-icon" id="icon-4">🔒</span></div>
         <div class="question-text">
             Read these two sentences: "The storm knocked out the power. We had to play board games by flashlight."<br><br>
-            Which subordinating conjunction best combines these to show cause and effect? [ Although / Before / Because / Unless ]
+            Which subordinating conjunction best combines these to show cause and effect? Select your answer, then type the word into the lock.
+        </div>
+        <div class="mc-options">
+            <label><input type="radio" name="q4"> Although</label>
+            <label><input type="radio" name="q4"> Before</label>
+            <label><input type="radio" name="q4"> Because</label>
+            <label><input type="radio" name="q4"> Unless</label>
         </div>
         <div class="input-group">
             <input type="text" id="input-4" placeholder="Enter conjunction...">
@@ -195,13 +220,15 @@
     <div class="lock-box hidden-lock" id="box-5">
         <div class="lock-title">Lock 5: The Comma Code <span class="status-icon" id="icon-5">🔒</span></div>
         <div class="question-text">
-            Which sentence uses commas correctly?<br><br>
-            (1) After the game, we went to get ice cream.<br>
-            (2) After the game we went, to get ice cream.<br>
-            (3) After, the game we went to get ice cream.
+            Which sentence uses commas correctly? Select the best option, then type the number into the lock.
+        </div>
+        <div class="mc-options">
+            <label><input type="radio" name="q5"> (1) After the game, we went to get ice cream.</label>
+            <label><input type="radio" name="q5"> (2) After the game we went, to get ice cream.</label>
+            <label><input type="radio" name="q5"> (3) After, the game we went to get ice cream.</label>
         </div>
         <div class="input-group">
-            <input type="text" id="input-5" placeholder="Enter number...">
+            <input type="text" id="input-5" placeholder="Enter the number...">
             <button onclick="checkLock(5, '1', 'Try again! Look for the introductory phrase.')">Unlock</button>
         </div>
         <div class="error-msg" id="error-5"></div>
@@ -225,13 +252,15 @@
     <div class="lock-box hidden-lock" id="box-7">
         <div class="lock-title">Lock 7: The Parallel Puzzle <span class="status-icon" id="icon-7">🔒</span></div>
         <div class="question-text">
-            Which sentence uses correct parallel structure?<br><br>
-            (1) She likes hiking, to swim, and riding bikes.<br>
-            (2) She likes hiking, swimming, and biking.<br>
-            (3) She likes to hike, swimming, and to ride bikes.
+            Which sentence uses correct parallel structure? Select the option and type its number into the lock.
+        </div>
+        <div class="mc-options">
+            <label><input type="radio" name="q7"> (1) She likes hiking, to swim, and riding bikes.</label>
+            <label><input type="radio" name="q7"> (2) She likes hiking, swimming, and biking.</label>
+            <label><input type="radio" name="q7"> (3) She likes to hike, swimming, and to ride bikes.</label>
         </div>
         <div class="input-group">
-            <input type="text" id="input-7" placeholder="Enter number...">
+            <input type="text" id="input-7" placeholder="Enter the number...">
             <button onclick="checkLock(7, '2', 'Try again! The verb endings need to match completely.')">Unlock</button>
         </div>
         <div class="error-msg" id="error-7"></div>
@@ -279,6 +308,10 @@
             btn.disabled = true;
             btn.style.backgroundColor = '#28a745';
             btn.innerHTML = 'Unlocked!';
+            
+            // Disable radio buttons for the solved lock so they can't be changed
+            let radios = boxDiv.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.disabled = true);
             
             unlockedCount++;
             
