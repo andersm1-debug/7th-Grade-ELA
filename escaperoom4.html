@@ -2,129 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>25-Minute Grammar & Syntax Escape Room</title>
-    <!-- Using the Exact CSS Format Requested -->
+    <title>25-Minute Grammar Escape Room</title>
     <style>
-        :root { --bg-color: #0f172a; --card-bg: #1e293b; --accent-color: #38bdf8; --success-color: #10b981; --error-color: #ef4444; --text-main: #f8fafc; --text-muted: #94a3b8; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; }
+        :root { --bg-color: #0f172a; --card-bg: #1e293b; --accent-color: #38bdf8; --success-color: #10b981; --error-color: #ef4444; --text-main: #f8fafc; }
+        body { font-family: sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; }
         .container { max-width: 900px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid var(--card-bg); padding-bottom: 20px; }
-        h1 { color: var(--accent-color); }
-        .timer-container { font-size: 1.5rem; font-weight: bold; color: #fbbf24; background: #292524; padding: 10px 20px; border-radius: 8px; display: inline-block; margin-top: 10px; border: 1px dashed #fbbf24; }
-        .lock-stage { background-color: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid #334155; display: none; }
+        .lock-stage { background-color: var(--card-bg); padding: 25px; margin-bottom: 30px; display: none; border-radius: 12px; border: 1px solid #334155; }
         .active { display: block; }
-        .options-list { list-style-type: none; padding: 0; }
-        .option-item { background: #334155; padding: 12px; margin-bottom: 10px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; }
-        .option-item.selected { border-color: var(--accent-color); background: #1e293b; }
-        input[type="text"] { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: #fff; margin-top: 15px; box-sizing: border-box; }
-        button { background-color: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        input { padding: 12px; width: 100%; box-sizing: border-box; margin: 10px 0; border-radius: 6px; border: 1px solid #475569; background-color: #0f172a; color: #fff; }
+        button { background: #0284c7; color: white; padding: 12px 24px; border: none; cursor: pointer; font-weight: bold; }
         .feedback { margin-top: 15px; font-weight: bold; display: none; }
-        #victory-screen { text-align: center; display: none; padding: 40px; border: 2px solid var(--success-color); }
     </style>
 </head>
 <body>
 <div class="container">
-    <header>
-        <h1>🔐 Grammar & Syntax Escape Room</h1>
-        <div class="timer-container">⏳ Time Remaining: <span id="timer">25:00</span></div>
-    </header>
+    <h1>25-Minute Grammar & Syntax Room</h1>
+    <div id="timer">Time Remaining: 25:00</div>
 
-    <!-- Locks -->
+    <!-- Lock 1 -->
     <div id="stage1" class="lock-stage active">
-        <p><strong>Lock 1: Active Voice.</strong> "The coach called a timeout." Which is Active Voice? (A) The timeout was called. (B) The coach called a timeout. (C) It was called by the coach. <em>Type the noun the coach called.</em></p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B</li><li class="option-item" data-letter="C" onclick="selectOption(this)">C</li></ul>
-        <input type="text" id="code1" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Active Voice | <strong>Correct Answer:</strong> B | <strong>Keyword:</strong> timeout</p>
+        <p>"The coach called a timeout." Which is Active? (A) The timeout was called. (B) The coach called a timeout. <em>Type the noun the coach called.</em></p>
         <button onclick="check(1, 'B', 'timeout')">Submit</button>
         <div id="feedback1" class="feedback"></div>
     </div>
 
+    <!-- Lock 2 -->
     <div id="stage2" class="lock-stage">
-        <p><strong>Lock 2: Dangling Modifier.</strong> "The student ate pizza wearing a coat." Pizza is wearing the coat! What noun is the modifier accidentally attached to?</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: The pizza</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: The student</li></ul>
-        <input type="text" id="code2" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Dangling Modifiers | <strong>Correct Answer:</strong> A | <strong>Keyword:</strong> pizza</p>
+        <p>"The student ate pizza wearing a coat." What noun is the modifier accidentally attached to?</p>
         <button onclick="check(2, 'A', 'pizza')">Submit</button>
-        <div id="feedback2" class="feedback"></div>
     </div>
 
+    <!-- Lock 3 -->
     <div id="stage3" class="lock-stage">
-        <p><strong>Lock 3: Complex Sentence.</strong> "Because the bell rang early, the students rushed into the hallway." Which conjunction starts the sentence?</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: and</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: early</li><li class="option-item" data-letter="C" onclick="selectOption(this)">C: because</li></ul>
-        <input type="text" id="code3" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Complex Sentences | <strong>Correct Answer:</strong> C | <strong>Keyword:</strong> because</p>
+        <p>"Because the bell rang early, the students rushed into the hallway." Which conjunction starts this sentence?</p>
         <button onclick="check(3, 'C', 'because')">Submit</button>
-        <div id="feedback3" class="feedback"></div>
     </div>
 
+    <!-- Lock 4 -->
     <div id="stage4" class="lock-stage">
-        <p><strong>Lock 4: Conjunctions.</strong> "The storm knocked out the ____. We played board games by flashlight."</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: road</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: power</li></ul>
-        <input type="text" id="code4" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Conjunctions | <strong>Correct Answer:</strong> B | <strong>Keyword:</strong> power</p>
+        <p>"The storm knocked out the ____. We played by flashlight." (Cause/Effect).</p>
         <button onclick="check(4, 'B', 'power')">Submit</button>
-        <div id="feedback4" class="feedback"></div>
     </div>
 
+    <!-- Lock 5 -->
     <div id="stage5" class="lock-stage">
-        <p><strong>Lock 5: Commas.</strong> Correct? (A) After the game, we got ice cream. (B) After the game we got, ice cream. <em>Type the dessert name.</em></p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B</li></ul>
-        <input type="text" id="code5" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Comma Usage | <strong>Correct Answer:</strong> A | <strong>Keyword:</strong> cream</p>
+        <p>"After the game, we got ice cream." Which dessert did they get? (Type it)</p>
         <button onclick="check(5, 'A', 'cream')">Submit</button>
-        <div id="feedback5" class="feedback"></div>
     </div>
 
+    <!-- Lock 6 -->
     <div id="stage6" class="lock-stage">
-        <p><strong>Lock 6: Homophones.</strong> "The students forgot to bring ____ Chromebooks."</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: there</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: they're</li><li class="option-item" data-letter="C" onclick="selectOption(this)">C: their</li></ul>
-        <input type="text" id="code6" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Homophones | <strong>Correct Answer:</strong> C | <strong>Keyword:</strong> chromebooks</p>
+        <p>"The students forgot to bring ____ Chromebooks."</p>
         <button onclick="check(6, 'C', 'chromebooks')">Submit</button>
-        <div id="feedback6" class="feedback"></div>
     </div>
 
+    <!-- Lock 7 -->
     <div id="stage7" class="lock-stage">
-        <p><strong>Lock 7: Parallelism.</strong> Correct? (A) She likes hiking, to swim... (B) She likes hiking, swimming, and biking. <em>Type the water sport verb.</em></p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B</li></ul>
-        <input type="text" id="code7" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Parallel Structure | <strong>Correct Answer:</strong> B | <strong>Keyword:</strong> swimming</p>
+        <p>"She likes hiking, swimming, and ____." (Type the water sport verb)</p>
         <button onclick="check(7, 'B', 'swimming')">Submit</button>
-        <div id="feedback7" class="feedback"></div>
     </div>
 
+    <!-- Lock 8 -->
     <div id="stage8" class="lock-stage">
-        <p><strong>Lock 8: Plural/Possessive.</strong> "The boys left their ____ in the coach's office."</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: backpack</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: backpacks</li></ul>
-        <input type="text" id="code8" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Plural vs Possessive | <strong>Correct Answer:</strong> B | <strong>Keyword:</strong> backpacks</p>
+        <p>"The boys left their ____ in the coach's office."</p>
         <button onclick="check(8, 'B', 'backpacks')">Submit</button>
-        <div id="feedback8" class="feedback"></div>
     </div>
 
+    <!-- Lock 9 -->
     <div id="stage9" class="lock-stage">
-        <p><strong>Lock 9: Pronoun Agreement.</strong> "Everyone must bring ____ own pencil."</p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: his or her</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: their (informal)</li></ul>
-        <input type="text" id="code9" placeholder="Keyword...">
+        <p><strong>Skill:</strong> Pronoun Agreement | <strong>Correct Answer:</strong> A | <strong>Keyword:</strong> pencil</p>
+        <p>"Everyone must bring ____ own pencil."</p>
         <button onclick="check(9, 'A', 'pencil')">Submit</button>
-        <div id="feedback9" class="feedback"></div>
     </div>
 
+    <!-- Lock 10 -->
     <div id="stage10" class="lock-stage">
-        <p><strong>Lock 10: Verbals.</strong> "The exhausted runner appreciated the cheering ____." <em>Type the noun.</em></p>
-        <ul class="options-list"><li class="option-item" data-letter="A" onclick="selectOption(this)">A: crowd</li><li class="option-item" data-letter="B" onclick="selectOption(this)">B: road</li></ul>
-        <input type="text" id="code10" placeholder="Keyword...">
-        <button onclick="check(10, 'A', 'crowd')">Submit</button>
-        <div id="feedback10" class="feedback"></div>
+        <p><strong>Skill:</strong> Verbals | <strong>Correct Answer:</strong> A | <strong>Keyword:</strong> crowd</p>
+        <p>"The exhausted runner appreciated the cheering ____."</p>
+        <button onclick="check(10, 'A', 'crowd')">Submit Final Lock</button>
     </div>
-
-    <div id="victory-screen"><h2>🎉 Escape Successful!</h2></div>
 </div>
 
 <script>
-    let totalSeconds = 25 * 60;
-    setInterval(() => { totalSeconds--; let m = Math.floor(totalSeconds/60); let s = totalSeconds%60; document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }, 1000);
-    function selectOption(el) { el.parentElement.querySelectorAll('.option-item').forEach(i=>i.classList.remove('selected')); el.classList.add('selected'); }
     function check(s, ans, key) {
-        const selected = document.querySelector(`#stage${s} .option-item.selected`)?.getAttribute('data-letter');
-        const input = document.getElementById('code'+s).value.toLowerCase();
-        if(selected === ans && input === key) {
+        const input = prompt("Enter the keyword for this lock:");
+        if(input && input.toLowerCase() === key) {
             document.getElementById('stage'+s).classList.remove('active');
             if(s < 10) document.getElementById('stage'+(s+1)).classList.add('active');
-            else document.getElementById('victory-screen').style.display = "block";
-        } else { document.getElementById('feedback'+s).style.display = "block"; document.getElementById('feedback'+s).innerText = "Incorrect."; }
+            else alert("Escape Successful!");
+        } else { alert("Incorrect."); }
     }
 </script>
 </body>
