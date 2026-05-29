@@ -3,335 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grammar & Syntax Escape Room</title>
+    <title>EOG Strategy Room: Poetry & Structure</title>
     <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e2f;
-            color: #f4f4f9;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
             line-height: 1.6;
-            padding: 20px;
-            margin: 0;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background: #2a2a40;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-        .header {
+
+        header {
             text-align: center;
-            border-bottom: 2px solid #5c5cff;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--card-bg);
             padding-bottom: 20px;
-            margin-bottom: 30px;
         }
+
         h1 {
-            color: #ffffff;
-            margin: 0;
-            font-size: 2.5em;
-        }
-        p.intro {
-            color: #b0b0c0;
-            font-size: 1.1em;
-        }
-        .lock-box {
-            background-color: #353550;
-            border-left: 5px solid #ff5c5c;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        .lock-box.unlocked {
-            border-left: 5px solid #28a745;
-            background-color: #2e4a36;
-        }
-        .lock-title {
-            font-weight: bold;
-            font-size: 1.3em;
+            color: var(--accent-color);
             margin-bottom: 10px;
-            color: #ffffff;
-            display: flex;
-            justify-content: space-between;
         }
-        .status-icon {
-            font-size: 1.2em;
+
+        .timer-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fbbf24;
+            background: #292524;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px dashed #fbbf24;
         }
-        .question-text {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            color: #dcdcdc;
+
+        .essential-question {
+            background-color: #0369a1;
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-color);
         }
-        .mc-options {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #2a2a40;
-            border-radius: 5px;
+
+        .lock-stage {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border: 1px solid #334155;
+            display: none;
         }
-        .mc-options label {
+
+        .lock-stage.active {
             display: block;
-            margin-bottom: 8px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .stage-badge {
+            background-color: #475569;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .excerpt-box {
+            background-color: #0f172a;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .option-item {
+            background: #334155;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background 0.2s;
+            border: 2px solid transparent;
         }
-        .mc-options input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
+
+        .option-item:hover {
+            background: #455a64;
         }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background: #1e293b;
+        }
+
         .input-group {
+            margin-top: 25px;
             display: flex;
             gap: 10px;
-            margin-top: 15px;
         }
+
         input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            font-size: 1.1em;
-            border: 2px solid #5c5cff;
-            border-radius: 5px;
-            background-color: #1e1e2f;
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
             color: #fff;
+            font-size: 1rem;
         }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #ff5c5c;
-        }
+
         button {
-            padding: 10px 20px;
-            font-size: 1.1em;
-            background-color: #5c5cff;
+            background-color: #0284c7;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.2s;
+            font-size: 1rem;
+            transition: background 0.2s;
         }
+
         button:hover {
-            background-color: #4a4ae0;
+            background-color: var(--accent-color);
         }
-        .error-msg {
-            color: #ff5c5c;
+
+        .feedback {
+            margin-top: 15px;
             font-weight: bold;
-            margin-top: 10px;
             display: none;
         }
-        #victory-message {
+
+        .feedback.error {
+            color: var(--error-color);
+            display: block;
+        }
+
+        .feedback.success {
+            color: var(--success-color);
+            display: block;
+        }
+
+        .rationale-panel {
+            background-color: #1e293b;
+            border: 1px solid var(--success-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
             display: none;
+        }
+
+        #victory-screen {
             text-align: center;
-            background-color: #28a745;
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 30px;
-            font-size: 1.5em;
-            font-weight: bold;
-            animation: popIn 0.5s ease;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .hidden-lock {
             display: none;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 2px solid var(--success-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>🔐 Grammar & Syntax Escape Room</h1>
-        <p class="intro">Crack all 8 locks using your knowledge of the English language. Select the correct options and type your final code into the lock to reveal the next challenge!</p>
+    <header>
+        <h1>🔐 EOG Strategy Escape Room (v2)</h1>
+        <p>Outsmart the Test-Makers • Use Rigorous Evidence • Break the Locks</p>
+        <div class="timer-container">⏳ Time Remaining: <span id="timer">45:00</span></div>
+    </header>
+
+    <div class="essential-question">
+        <strong>💡 Essential Question:</strong> "How do I use evidence to outsmart the 'distractors' and uncover the author's true intent?"
     </div>
 
-    <!-- Lock 1 -->
-    <div class="lock-box" id="box-1">
-        <div class="lock-title">Lock 1: The Voice Vault <span class="status-icon" id="icon-1">🔒</span></div>
-        <div class="question-text">
-            Read the three sentences below. Only one is written in the Active Voice. Select the correct sentence, then type its number into the lock.
+    <!-- STAGE 1 -->
+    <div id="stage1" class="lock-stage active">
+        <span class="stage-badge">Lock 1: RL.7.5 (Poetry Structure)</span>
+        <h2>The Musical Brook</h2>
+        <p><strong>Scenario:</strong> Analyze how rhyme scheme contributes to structure. Read the excerpt from <em>The Brook</em> by Alfred, Lord Tennyson.</p>
+        
+        <div class="excerpt-box">
+            I chatter over stony ways,<br>
+            In little sharps and trebles,<br>
+            I bubble into eddying bays,<br>
+            I babble on the pebbles.
         </div>
-        <div class="mc-options">
-            <label><input type="radio" name="q1"> (1) The championship trophy was lifted by the captain.</label>
-            <label><input type="radio" name="q1"> (2) The coach called a timeout with three seconds left on the clock.</label>
-            <label><input type="radio" name="q1"> (3) The final shot of the game was missed by the point guard.</label>
-        </div>
+
+        <p><strong>The Mission Question:</strong> How does the consistent, bouncing rhyme scheme (ways/bays, trebles/pebbles) contribute to the overall structure of the poem?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> By conveying the destructive and violent force of a flood.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> By creating a quick, musical rhythm that mimics the physical flowing of water over rocks.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> By showing that nature is disorganized and refuses to follow predictable patterns.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> By confusing the reader to represent how easily one can get lost in the woods.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the <strong>plural noun</strong> at the end of the stanza that refers to small stones. Type that exact word below.</p>
+
         <div class="input-group">
-            <input type="text" id="input-1" placeholder="Enter the number of the correct sentence...">
-            <button onclick="checkLock(1, '2', 'Try again! Look for the sentence where the subject is DOING the action.')">Unlock</button>
+            <input type="text" id="code1" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(1, 'B', 'pebbles', 'Option B is right. The rhyming loops mimic the continuous movement of nature.', 'noun representing small stones')">Submit Key</button>
         </div>
-        <div class="error-msg" id="error-1"></div>
+        <div id="feedback1" class="feedback"></div>
+        <div id="rationale1" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 2 -->
-    <div class="lock-box hidden-lock" id="box-2">
-        <div class="lock-title">Lock 2: The Modifier Maze <span class="status-icon" id="icon-2">🔒</span></div>
-        <div class="question-text">
-            Read the sentence: "The student ate a warm slice of pizza wearing a heavy winter coat."<br><br>
-            Which word is the modifier "wearing a heavy winter coat" accidentally attached to?
+    <!-- STAGE 2 -->
+    <div id="stage2" class="lock-stage">
+        <span class="stage-badge">Lock 2: RL.7.1 (Inferring Meaning)</span>
+        <h2>The Talking Water</h2>
+        <p><strong>Scenario:</strong> Infer meaning from personification. Re-read the first stanza of <em>The Brook</em>.</p>
+        
+        <div class="excerpt-box">
+            I chatter over stony ways,<br>
+            In little sharps and trebles,<br>
+            I bubble into eddying bays,<br>
+            I babble on the pebbles.
         </div>
+
+        <p><strong>The Mission Question:</strong> In line 1, what is the poet suggesting about the brook by having it state, "I chatter"?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> The brook holds deep, intelligent conversations with the animals that drink from it.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> The brook is complaining about the rocks that are blocking its path.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> The brook makes continuous, lively, and mindless background noise as it moves.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> The brook is warning humans to stay away from its dangerous currents.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the specific <strong>verb</strong> in line 3 that describes what the brook does into the eddying bays. Type that word.</p>
+
         <div class="input-group">
-            <input type="text" id="input-2" placeholder="Enter the exact word...">
-            <button onclick="checkLock(2, 'pizza', 'Try again! Who or what is physically wearing the coat in this sentence?')">Unlock</button>
+            <input type="text" id="code2" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(2, 'C', 'bubble', 'Option C is right. Chatter implies light, continuous, and unstructured noise rather than deep conversation.', 'verb in line 3')">Submit Key</button>
         </div>
-        <div class="error-msg" id="error-2"></div>
+        <div id="feedback2" class="feedback"></div>
+        <div id="rationale2" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 3 -->
-    <div class="lock-box hidden-lock" id="box-3">
-        <div class="lock-title">Lock 3: The Structure Safe <span class="status-icon" id="icon-3">🔒</span></div>
-        <div class="question-text">
-            Match the sentence type to the correct example to get a 3-letter code. (A) Simple, (B) Compound, (C) Complex.
+    <!-- STAGE 3 -->
+    <div id="stage3" class="lock-stage">
+        <span class="stage-badge">Lock 3: RL.7.5 (Structural Contrast)</span>
+        <h2>The Eternal River</h2>
+        <p><strong>Scenario:</strong> Evaluate contrasting structures in poetry. Read the final lines of <em>The Brook</em>.</p>
+        
+        <div class="excerpt-box">
+            I chatter, chatter, as I flow<br>
+            To join the brimming river,<br>
+            For men may come and men may go,<br>
+            But I go on for ever.
         </div>
-        <div class="mc-options">
-            <label>1. Because the bell rang early, the students rushed into the hallway.</label>
-            <label>2. The teacher handed out the tests, and the room went completely silent.</label>
-            <label>3. The heavy wooden door slammed shut.</label>
-        </div>
+
+        <p><strong>The Mission Question:</strong> How does the structural contrast in the final two lines contribute to the poem's meaning?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> It shows that humans are faster and more active than the slow-moving river.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> It proves that nature relies on humans to keep rivers clean.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> It highlights the brook's sadness over being left alone by travelers.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> It emphasizes the brief, temporary nature of human life compared to the eternal lifespan of nature.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the <strong>adjective</strong> used to describe the full "river" the brook joins. Type that word.</p>
+
         <div class="input-group">
-            <input type="text" id="input-3" placeholder="Enter your 3-letter code (e.g., ABC)...">
-            <button onclick="checkLock(3, 'cab', 'Try again! Look for your FANBOYS and subordinating conjunctions!')">Unlock</button>
+            <input type="text" id="code3" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(3, 'D', 'brimming', 'Option D is right. The contrast is explicit: temporary humans vs. the eternal nature of the water.', 'adjective describing the river')">Submit Key</button>
         </div>
-        <div class="error-msg" id="error-3"></div>
+        <div id="feedback3" class="feedback"></div>
+        <div id="rationale3" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 4 -->
-    <div class="lock-box hidden-lock" id="box-4">
-        <div class="lock-title">Lock 4: The Syntax Cipher <span class="status-icon" id="icon-4">🔒</span></div>
-        <div class="question-text">
-            Read these two sentences: "The storm knocked out the power. We had to play board games by flashlight."<br><br>
-            Which subordinating conjunction best combines these to show cause and effect? Select your answer, then type the word into the lock.
+    <!-- STAGE 4 -->
+    <div id="stage4" class="lock-stage">
+        <span class="stage-badge">Lock 4: RL.7.1 (Inferencing)</span>
+        <h2>The Hidden Anger</h2>
+        <p><strong>Scenario:</strong> Analyze the inception of a conflict. Read the first stanza of <em>A Poison Tree</em> by William Blake.</p>
+        
+        <div class="excerpt-box">
+            I was angry with my friend;<br>
+            I told my wrath, my wrath did end.<br>
+            I was angry with my foe:<br>
+            I told it not, my wrath did grow.
         </div>
-        <div class="mc-options">
-            <label><input type="radio" name="q4"> Although</label>
-            <label><input type="radio" name="q4"> Before</label>
-            <label><input type="radio" name="q4"> Because</label>
-            <label><input type="radio" name="q4"> Unless</label>
-        </div>
+
+        <p><strong>The Mission Question:</strong> What can be inferred from the first stanza of the poem?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> The speaker easily forgives everyone they meet.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> Open communication resolves anger, while hiding it causes it to multiply.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> The speaker's enemy forced them to stay silent.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> It is impossible to ever truly make peace with a friend.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the <strong>noun</strong> repeated three times in this stanza that means "extreme anger."</p>
+
         <div class="input-group">
-            <input type="text" id="input-4" placeholder="Enter conjunction...">
-            <button onclick="checkLock(4, 'because', 'Try again! Which word explains WHY you had to play by flashlight?')">Unlock</button>
+            <input type="text" id="code4" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(4, 'B', 'wrath', 'Option B is right. The stanza explicitly contrasts the results of speaking about anger versus hiding it.', 'noun meaning extreme anger')">Submit Key</button>
         </div>
-        <div class="error-msg" id="error-4"></div>
+        <div id="feedback4" class="feedback"></div>
+        <div id="rationale4" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 5 -->
-    <div class="lock-box hidden-lock" id="box-5">
-        <div class="lock-title">Lock 5: The Comma Code <span class="status-icon" id="icon-5">🔒</span></div>
-        <div class="question-text">
-            Which sentence uses commas correctly? Select the best option, then type the number into the lock.
+    <!-- STAGE 5 -->
+    <div id="stage5" class="lock-stage">
+        <span class="stage-badge">Lock 5: RL.7.5 (Stanza Progression)</span>
+        <h2>The Toxic Garden</h2>
+        <p><strong>Scenario:</strong> Track the progression of a metaphor. Read the second stanza of <em>A Poison Tree</em>.</p>
+        
+        <div class="excerpt-box">
+            And I waterd it in fears,<br>
+            Night & morning with my tears:<br>
+            And I sunned it with smiles,<br>
+            And with soft deceitful wiles.
         </div>
-        <div class="mc-options">
-            <label><input type="radio" name="q5"> (1) After the game, we went to get ice cream.</label>
-            <label><input type="radio" name="q5"> (2) After the game we went, to get ice cream.</label>
-            <label><input type="radio" name="q5"> (3) After, the game we went to get ice cream.</label>
-        </div>
+
+        <p><strong>The Mission Question:</strong> Why does the poet start nearly every line in this stanza with the word "And"?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> It creates a structural "snowball" effect, emphasizing the relentless, building growth of the speaker's anger.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> It forces the reader to pause and reflect on the speaker's sadness.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> It breaks the rhyme scheme to show the speaker is losing control.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> It shows that the speaker is changing their mind about seeking revenge.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the <strong>plural noun</strong> in line 2 that the speaker uses to "water" the tree morning and night.</p>
+
         <div class="input-group">
-            <input type="text" id="input-5" placeholder="Enter the number...">
-            <button onclick="checkLock(5, '1', 'Try again! Look for the introductory phrase.')">Unlock</button>
+            <input type="text" id="code5" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(5, 'A', 'tears', 'Option A is right. The repetition of the conjunction builds momentum, mirroring the growth of the grudge.', 'plural noun used to water the tree')">Submit Key</button>
         </div>
-        <div class="error-msg" id="error-5"></div>
+        <div id="feedback5" class="feedback"></div>
+        <div id="rationale5" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 6 -->
-    <div class="lock-box hidden-lock" id="box-6">
-        <div class="lock-title">Lock 6: The "There" Trap <span class="status-icon" id="icon-6">🔒</span></div>
-        <div class="question-text">
-            "The students forgot to bring ____ Chromebooks, so ____ going to have to use the paper copies over ____."<br><br>
-            Type the three missing words in order, separated by spaces.
+    <!-- STAGE 6 -->
+    <div id="stage6" class="lock-stage">
+        <span class="stage-badge">Lock 6: L.7.4 (Context & Symbols)</span>
+        <h2>The Fatal Fruit</h2>
+        <p><strong>Scenario:</strong> Decode vocabulary and symbolic context. Read the final stanzas of <em>A Poison Tree</em>.</p>
+        
+        <div class="excerpt-box">
+            And it grew both day and night.<br>
+            Till it bore an apple bright.<br>
+            And my foe beheld it shine,<br>
+            And he knew that it was mine.<br><br>
+            And into my garden stole,<br>
+            When the night had veild the pole;
         </div>
+
+        <p><strong>The Mission Question:</strong> What does the word "stole" suggest about the foe's actions in the final stanza?</p>
+        
+        <ul class="options-list">
+            <li class="option-item" data-letter="A" onclick="selectOption(this)"><strong>A:</strong> The foe purchased the apple legally.</li>
+            <li class="option-item" data-letter="B" onclick="selectOption(this)"><strong>B:</strong> The foe brought a gift into the garden.</li>
+            <li class="option-item" data-letter="C" onclick="selectOption(this)"><strong>C:</strong> The foe entered the garden secretly and dishonestly.</li>
+            <li class="option-item" data-letter="D" onclick="selectOption(this)"><strong>D:</strong> The foe was invited into the garden as a guest.</li>
+        </ul>
+
+        <p style="color: var(--accent-color); font-weight: bold; font-size: 0.95rem;">🔑 Lock Code Task:</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -5px;">Select the correct letter. Then, find the <strong>adjective</strong> describing the apple that the tree bore. Type it below.</p>
+
         <div class="input-group">
-            <input type="text" id="input-6" placeholder="word word word...">
-            <button onclick="checkLock(6, 'their they\'re there', 'Try again! Remember: Ownership, They are, Location.')">Unlock</button>
+            <input type="text" id="code6" placeholder="Type your code keyword here...">
+            <button onclick="checkLock(6, 'C', 'bright', 'Option C is right. In this context, to steal means to move stealthily or secretly under the cover of night.', 'adjective describing the apple')">Break Final Lock</button>
         </div>
-        <div class="error-msg" id="error-6"></div>
+        <div id="feedback6" class="feedback"></div>
+        <div id="rationale6" class="rationale-panel"></div>
     </div>
 
-    <!-- Lock 7 -->
-    <div class="lock-box hidden-lock" id="box-7">
-        <div class="lock-title">Lock 7: The Parallel Puzzle <span class="status-icon" id="icon-7">🔒</span></div>
-        <div class="question-text">
-            Which sentence uses correct parallel structure? Select the option and type its number into the lock.
-        </div>
-        <div class="mc-options">
-            <label><input type="radio" name="q7"> (1) She likes hiking, to swim, and riding bikes.</label>
-            <label><input type="radio" name="q7"> (2) She likes hiking, swimming, and biking.</label>
-            <label><input type="radio" name="q7"> (3) She likes to hike, swimming, and to ride bikes.</label>
-        </div>
-        <div class="input-group">
-            <input type="text" id="input-7" placeholder="Enter the number...">
-            <button onclick="checkLock(7, '2', 'Try again! The verb endings need to match completely.')">Unlock</button>
-        </div>
-        <div class="error-msg" id="error-7"></div>
+    <div id="victory-screen">
+        <h2>🎉 Escape Successful!</h2>
+        <p>You completed the entire Poetry & Structure Gauntlet within the 45-minute window!</p>
+        <p>By breaking down distractor models, tracking cause/effect structures, and isolating textual evidence, you have unlocked the mastery level.</p>
+        <h3 id="final-time-display" style="color: var(--success-color); font-size: 1.8rem;"></h3>
     </div>
-
-    <!-- Lock 8 -->
-    <div class="lock-box hidden-lock" id="box-8">
-        <div class="lock-title">Lock 8: The Plural/Possessive Safe <span class="status-icon" id="icon-8">🔒</span></div>
-        <div class="question-text">
-            "The two (boy's / boys) left their backpacks in the (coach's / coaches) office."<br><br>
-            Type the two correct words in order, separated by a space.
-        </div>
-        <div class="input-group">
-            <input type="text" id="input-8" placeholder="word word...">
-            <button onclick="checkLock(8, 'boys coach\'s', 'Try again! The first is plural (more than one), the second shows ownership (belongs to one coach).')">Unlock</button>
-        </div>
-        <div class="error-msg" id="error-8"></div>
-    </div>
-
-    <div id="victory-message">
-        🎉 ACCESS GRANTED! 🎉<br>You have successfully hacked all 8 syntax systems!
-    </div>
-
 </div>
 
 <script>
-    let unlockedCount = 0;
+    // 45-Minute Countdown
+    let totalSeconds = 45 * 60;
+    const timerElement = document.getElementById('timer');
+    
+    const countdown = setInterval(() => {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        timerElement.textContent = `${minutes}:${seconds}`;
+        
+        if (totalSeconds <= 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "TIME EXPIRED";
+            alert("The gauntlet clock has hit zero! Refresh to reset.");
+        }
+        totalSeconds--;
+    }, 1000);
 
-    function checkLock(lockNum, correctAns, errorMsgText) {
-        let userInput = document.getElementById('input-' + lockNum).value.toLowerCase().trim();
-        userInput = userInput.replace(/\s+/g, ' ');
+    // Visually select options
+    function selectOption(element) {
+        const siblings = element.parentElement.querySelectorAll('.option-item');
+        siblings.forEach(item => item.classList.remove('selected'));
+        element.classList.add('selected');
+    }
 
-        let errorDiv = document.getElementById('error-' + lockNum);
-        let boxDiv = document.getElementById('box-' + lockNum);
-        let iconSpan = document.getElementById('icon-' + lockNum);
-        let inputField = document.getElementById('input-' + lockNum);
-        let btn = inputField.nextElementSibling;
+    // Get selected letter for a stage
+    function getSelectedLetter(stageID) {
+        const selected = document.querySelector(`#${stageID} .option-item.selected`);
+        return selected ? selected.getAttribute('data-letter') : null;
+    }
 
-        if (userInput === correctAns) {
-            // Success State for current lock
-            errorDiv.style.display = 'none';
-            boxDiv.classList.add('unlocked');
-            iconSpan.innerHTML = '🔓';
-            inputField.disabled = true;
-            btn.disabled = true;
-            btn.style.backgroundColor = '#28a745';
-            btn.innerHTML = 'Unlocked!';
-            
-            // Disable radio buttons for the solved lock so they can't be changed
-            let radios = boxDiv.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => radio.disabled = true);
-            
-            unlockedCount++;
-            
-            // Reveal the next lock and smoothly scroll to it
-            let nextLock = document.getElementById('box-' + (lockNum + 1));
-            if (nextLock) {
-                nextLock.style.display = 'block';
-                nextLock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Universal Check function for all locks
+    function checkLock(stageNum, correctLetter, correctWord, rationaleText, errorHint) {
+        const input = document.getElementById(`code${stageNum}`).value.trim().toLowerCase().replace(/\s+/g, '');
+        const feedback = document.getElementById(`feedback${stageNum}`);
+        const rationale = document.getElementById(`rationale${stageNum}`);
+        const answer = getSelectedLetter(`stage${stageNum}`);
+
+        if (!answer) { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = "❌ Please select an option (A, B, C, or D) before submitting!"; 
+            return; 
+        }
+        if (answer !== correctLetter) { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = "❌ Incorrect selection. You fell for a distractor trap!"; 
+            return; 
+        }
+        
+        if (input === correctWord) {
+            if (stageNum < 6) {
+                feedback.className = "feedback success"; 
+                feedback.innerText = `🔓 Lock ${stageNum} Shattered! Proceeding...`;
+                rationale.style.display = "block"; 
+                rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> ${rationaleText}`;
+                
+                setTimeout(() => { 
+                    document.getElementById(`stage${stageNum}`).classList.remove('active'); 
+                    document.getElementById(`stage${stageNum + 1}`).classList.add('active'); 
+                }, 3000);
+            } else {
+                // Final Lock
+                clearInterval(countdown);
+                feedback.className = "feedback success"; 
+                feedback.innerText = "🔓 Final Gate Pulverized!";
+                rationale.style.display = "block"; 
+                rationale.innerHTML = `<strong>💡 Test-Maker Blueprint:</strong> ${rationaleText}`;
+                
+                setTimeout(() => {
+                    document.getElementById(`stage${stageNum}`).classList.remove('active');
+                    document.getElementById('victory-screen').style.display = "block";
+                    let finalSecondsSpent = (45 * 60) - totalSeconds;
+                    let spentMin = Math.floor(finalSecondsSpent / 60);
+                    let spentSec = finalSecondsSpent % 60;
+                    document.getElementById('final-time-display').innerText = `⏱️ Performance Clock: ${spentMin} minutes and ${spentSec < 10 ? '0' + spentSec : spentSec} seconds!`;
+                }, 3500);
             }
-
-            // Reveal victory message if all are done
-            if (unlockedCount === 8) {
-                let victoryMsg = document.getElementById('victory-message');
-                victoryMsg.style.display = 'block';
-                victoryMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        } else {
-            // Error State
-            errorDiv.innerHTML = errorMsgText;
-            errorDiv.style.display = 'block';
+        } else { 
+            feedback.className = "feedback error"; 
+            feedback.innerText = `❌ Word key is incorrect. Find the ${errorHint}.`; 
         }
     }
 </script>
