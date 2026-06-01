@@ -1,231 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr. Anderson's ELA Hub</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Blueprint | Standards</title>
 
-        :root {
-            --vikings-purple: #4F2683;
-            --vikings-gold: #FFC62F;
-            --pure-white: #FFFFFF;
-            --soft-grey: #f4f4f4;
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--soft-grey);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --orange-bg: #fff3e0;
+      --orange-text: #ef6c00;
+    }
 
-        header {
-            background-color: var(--vikings-purple);
-            color: var(--pure-white);
-            width: 100%;
-            padding: 40px 0;
-            text-align: center;
-            border-bottom: 8px solid var(--vikings-gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        .container {
-            max-width: 800px;
-            width: 90%;
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
 
-        .card {
-            background: var(--pure-white);
-            border-radius: 12px;
-            border-left: 10px solid var(--vikings-purple);
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+    header .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            border-left-color: var(--vikings-gold);
-        }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
 
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: var(--vikings-purple);
-            font-size: 1.4rem;
-        }
+    header p {
+      margin: 18px auto 0;
+      max-width: 680px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
 
-        .card p {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.4;
-        }
+    main {
+      width: min(1150px, 92%);
+      margin: 44px auto;
+    }
 
-        .status-badge {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
 
-        .active { background-color: #e8f5e9; color: #2e7d32; }
-        .placeholder { background-color: #fff3e0; color: #ef6c00; }
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 230px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
 
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-    </style>
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
+
+    .card h2 {
+      margin: 12px 0 10px;
+      color: var(--purple);
+      font-size: 1.28rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .active {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .placeholder {
+      background: var(--orange-bg);
+      color: var(--orange-text);
+    }
+
+    .disabled {
+      opacity: 0.68;
+      cursor: not-allowed;
+    }
+
+    .disabled:hover {
+      transform: none;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    .home-card {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.55);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <span class="eyebrow">Standards Library</span>
+    <h1>The Blueprint</h1>
+    <p>Explore seventh-grade ELA standards through interactive lessons, review activities, and classroom-ready practice.</p>
+  </header>
 
-<header>
-    <h1>The Blueprint (Standards)</h1>
-</header>
+  <main>
+    <div class="container">
 
-<div class="container">
-    
-<a href="index.html" class="card">
+      <a href="index.html" class="card home-card">
         <div>
-            <h2>Return to Hub</h2>
-            <p>Return to the home page!</p>
+          <h2>Return to Hub</h2>
+          <p>Go back to the main 7th Grade ELA Hub.</p>
+        </div>
+        <span class="status-badge active">Home</span>
+      </a>
+
+      <a href="RL7.4Mood&Tone.html" class="card">
+        <div>
+          <h2>RL 7.4: “Annabel Lee”</h2>
+          <p>Determine word meaning and analyze how rhyme, repetition, sound, and word choice affect meaning and tone.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-<a href="RL7.4Mood&Tone.html" class="card">
+      <a href="RI7.3SalemWitchTrial.html" class="card">
         <div>
-            <h2>RL 7.4 <br> "Annabel Lee" </h2>
-            <p>Determine the meaning of words and phrases as they are used in a text; analyze the impact of rhymes and repetitions of sounds on meaning and tone in a specific line or section of a literary work.</p>
+          <h2>RI 7.3: Salem Witch Trials</h2>
+          <p>Analyze how individuals, events, and ideas interact in colonial Salem.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
-    
-    <a href="RI7.3SalemWitchTrial.html" class="card">
+      </a>
+
+      <a href="RL7.2Streetlightsglare.html" class="card">
         <div>
-            <h2>RI 7.3: Salem Witch Trials</h2>
-            <p>Analyze how individuals, events, and ideas interact in colonial Salem.</p>
+          <h2>RL 7.2: The Streetlights Glare</h2>
+          <p>Determine a theme, analyze its development, and provide an objective summary of the text.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-    <a href="RL7.2Streetlightsglare.html" class="card">
+      <a href="RI7.1RI7.2TheUnsinkableMollyBrown.html" class="card">
         <div>
-             <h2>RL 7.2: The Streetlights Glare</h2>
-            <p>Determine a theme of a text and analyze
-its development over the course of the text;
-provide an objective summary of the text.</p>
+          <h2>RI 7.2: The Unsinkable Molly Brown</h2>
+          <p>Determine central ideas, analyze their development, and provide an objective summary.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-     <a href="RI7.1RI7.2TheUnsinkableMollyBrown.html" class="card">
+      <a href="MonstersonMapleStreet.html" class="card">
         <div>
-             <h2>RI 7.2: The Unsinkable Molly Brown</h2>
-            <p>Determine two or more central ideas in a text and analyze their development over the course of the text; provide an objective summary of the text.</p>
+          <h2>RL 7.3: Monsters on Maple Street</h2>
+          <p>Analyze how story elements interact, including how setting shapes characters and plot.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-<a href="MonstersonMapleStreet.html" class="card">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RL 7.3: Monsters on Maple Street</h2>
-            <p>Analyze how particular elements of a story or drama interact (e.g., how setting shapes the characters or plot).</p>
-        </div>
-       <span class="status-badge active">Live Interaction</span>
-    </a>
-    
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
-        <div>
-            <h2>RI 7.4</h2>
-            <p>Determine the meaning of words and phrases as they are used in a text; analyze the impact of a specific word choice on meaning and tone.</p>
+          <h2>RI 7.4</h2>
+          <p>Determine word and phrase meaning and analyze how specific word choices affect meaning and tone.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RL 7.5</h2>
-            <p> Analyze how a drama's or poem's (or other literary genres)  form or structure contributes to its meaning.</p>
+          <h2>RL 7.5</h2>
+          <p>Analyze how a drama’s, poem’s, or other literary form’s structure contributes to meaning.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RL 7.6</h2>
-            <p>Analyze how an author develops 
-and contrasts the perspectives of 
-different characters in a text.</p>
+          <h2>RL 7.6</h2>
+          <p>Analyze how an author develops and contrasts the perspectives of different characters.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RI 7.5</h2>
-            <p>RI.7.5  Analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to the development of the ideas.</p>
+          <h2>RI 7.5</h2>
+          <p>Analyze how an author structures a text and how major sections contribute to the whole.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RI 7.6</h2>
-            <p>Analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to the development of the ideas.</p>
+          <h2>RI 7.6</h2>
+          <p>Analyze how an author develops point of view or purpose in a text.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>RI7.8</h2>
-            <p>Trace and evaluate the argument and specific claims in a text, assessing whether the reasoning is sound and the evidence is relevant and sufficient to
-support the claims.</p>
+          <h2>RI 7.8</h2>
+          <p>Trace and evaluate arguments and claims, including whether reasoning is sound and evidence is relevant.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
+      </a>
 
-<a href="#" class="card" style="opacity: 0.7; cursor: not-allowed;">
+      <a href="#" class="card disabled" aria-disabled="true">
         <div>
-            <h2>Coming Soon</h2>
-            <p>Under Construction</p>
+          <h2>Coming Soon</h2>
+          <p>More standards-based activities are on the way.</p>
         </div>
         <span class="status-badge placeholder">Under Construction</span>
-    </a>
-    
-</div>
- 
-<footer>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
     &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
-</footer>
-
+  </footer>
 </body>
 </html>
