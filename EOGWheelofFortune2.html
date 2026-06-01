@@ -38,6 +38,22 @@
             text-transform: uppercase;
         }
 
+        #category-display {
+            background: var(--gold);
+            color: var(--dark-blue);
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 1.45rem;
+            letter-spacing: 2px;
+            text-align: center;
+            padding: 10px 25px;
+            margin: 0 0 15px;
+            border-radius: 12px;
+            border: 4px solid white;
+            box-shadow: 0 5px 14px rgba(0,0,0,0.45);
+            text-transform: uppercase;
+            max-width: 90%;
+        }
+
         #puzzle-display {
             background-color: #06164d;
             padding: 20px;
@@ -234,8 +250,16 @@
 
         .team-score:last-child { border: none; }
 
+        .game-note {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #dbeafe;
+            font-weight: bold;
+        }
+
         @media (max-width: 700px) {
             h1 { font-size: 2.4rem; }
+            #category-display { font-size: 1.15rem; }
             #wheel-container { width: 300px; height: 300px; }
             #wheel { width: 270px; height: 270px; }
             .letter-slot { width: 34px; height: 45px; font-size: 1.55rem; }
@@ -246,6 +270,7 @@
 
 <h1>EOG Wheel of Fortune</h1>
 
+<div id="category-display">CATEGORY</div>
 <div id="puzzle-display"></div>
 
 <div class="game-container">
@@ -262,6 +287,7 @@
         <input type="text" id="letter-input" maxlength="1" placeholder="?">
         <button onclick="guessLetter()">GUESS LETTER</button>
         <button onclick="nextPuzzle()" style="background: #244aa8; color: white; box-shadow: 0 5px 0 #041142;">NEXT PUZZLE</button>
+        <div class="game-note">Suggested pacing: 8-12 puzzles usually fills about 30 minutes.</div>
     </div>
 </div>
 
@@ -273,14 +299,37 @@
 
 <script>
     const puzzles = [
-        "PERSONIFICATION", "METAPHOR", "HYPERBOLE", "ALLITERATION", 
-        "TEXT STRUCTURE", "CONTEXT CLUES", "AUTHOR PURPOSE", "SENSORY IMAGERY",
-        "INFERENCE", "CENTRAL IDEA", "CAUSE AND EFFECT", "HOMOPHONES"
+        { category: "LITERARY DEVICE", answer: "PERSONIFICATION" },
+        { category: "LITERARY DEVICE", answer: "METAPHOR" },
+        { category: "LITERARY DEVICE", answer: "HYPERBOLE" },
+        { category: "LITERARY DEVICE", answer: "ALLITERATION" },
+        { category: "READING SKILL", answer: "INFERENCE" },
+        { category: "READING SKILL", answer: "CENTRAL IDEA" },
+        { category: "READING SKILL", answer: "CONTEXT CLUES" },
+        { category: "READING SKILL", answer: "AUTHOR PURPOSE" },
+        { category: "TEXT STRUCTURE", answer: "CAUSE AND EFFECT" },
+        { category: "TEXT STRUCTURE", answer: "PROBLEM AND SOLUTION" },
+        { category: "TEXT STRUCTURE", answer: "COMPARE AND CONTRAST" },
+        { category: "TEXT STRUCTURE", answer: "SEQUENCE OF EVENTS" },
+        { category: "ELA VOCABULARY", answer: "SENSORY IMAGERY" },
+        { category: "ELA VOCABULARY", answer: "POINT OF VIEW" },
+        { category: "ELA VOCABULARY", answer: "THEME" },
+        { category: "ELA VOCABULARY", answer: "MOOD" },
+        { category: "WORD STUDY", answer: "HOMOPHONES" },
+        { category: "WORD STUDY", answer: "PREFIX" },
+        { category: "WORD STUDY", answer: "SUFFIX" },
+        { category: "WORD STUDY", answer: "ROOT WORD" },
+        { category: "TESTING TERM", answer: "BEST EVIDENCE" },
+        { category: "TESTING TERM", answer: "MAIN IDEA" },
+        { category: "TESTING TERM", answer: "SUPPORTING DETAILS" },
+        { category: "TESTING TERM", answer: "SUMMARY" }
     ];
 
     const values = [100, 200, 500, "BANKRUPT", 300, 1000];
     let currentPuzzle = "";
+    let currentCategory = "";
     let guessedLetters = [];
+    let usedPuzzleIndexes = [];
     let currentSpinValue = 0;
     let rotation = 0;
 
@@ -289,9 +338,22 @@
     }
 
     function nextPuzzle() {
-        const randomIndex = Math.floor(Math.random() * puzzles.length);
-        currentPuzzle = puzzles[randomIndex];
+        if (usedPuzzleIndexes.length === puzzles.length) {
+            usedPuzzleIndexes = [];
+        }
+
+        let randomIndex = Math.floor(Math.random() * puzzles.length);
+        while (usedPuzzleIndexes.includes(randomIndex)) {
+            randomIndex = Math.floor(Math.random() * puzzles.length);
+        }
+
+        usedPuzzleIndexes.push(randomIndex);
+        currentPuzzle = puzzles[randomIndex].answer;
+        currentCategory = puzzles[randomIndex].category;
         guessedLetters = [];
+        currentSpinValue = 0;
+
+        document.getElementById('category-display').innerText = "CATEGORY: " + currentCategory;
         displayPuzzle();
         document.getElementById('status').innerText = "New Puzzle! Spin for points.";
     }
@@ -337,15 +399,19 @@
 
         if (!letter || currentSpinValue === "BANKRUPT") return;
 
+        if (guessedLetters.includes(letter)) {
+            document.getElementById('status').innerText = letter + " has already been guessed. Try another letter.";
+            return;
+        }
+
         if (currentPuzzle.includes(letter)) {
-            if (!guessedLetters.includes(letter)) {
-                guessedLetters.push(letter);
-                const count = (currentPuzzle.match(new RegExp(letter, "g")) || []).length;
-                document.getElementById('status').innerText = `Yes! There are ${count} ${letter}'s. Spin again!`;
-                displayPuzzle();
-                checkWin();
-            }
+            guessedLetters.push(letter);
+            const count = (currentPuzzle.match(new RegExp(letter, "g")) || []).length;
+            document.getElementById('status').innerText = `Yes! There are ${count} ${letter}'s. Spin again!`;
+            displayPuzzle();
+            checkWin();
         } else {
+            guessedLetters.push(letter);
             document.getElementById('status').innerText = "Sorry, no " + letter + ". Next team's turn!";
         }
     }
@@ -353,7 +419,7 @@
     function checkWin() {
         const isWon = [...currentPuzzle.replace(/\s/g, "")].every(char => guessedLetters.includes(char));
         if (isWon) {
-            document.getElementById('status').innerText = "PUZZLE SOLVED! Excellent work!";
+            document.getElementById('status').innerText = "PUZZLE SOLVED! Excellent work! Click Next Puzzle to continue.";
         }
     }
 
