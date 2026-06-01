@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr. Anderson's ELA Hub</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --orange-bg: #fff3e0;
+      --orange-text: #ef6c00;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    header .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 620px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 44px auto;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 205px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
+
+    .card h2 {
+      margin: 12px 0 10px;
+      color: var(--purple);
+      font-size: 1.35rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .active {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .placeholder {
+      background: var(--orange-bg);
+      color: var(--orange-text);
+    }
+
+    .disabled {
+      opacity: 0.68;
+      cursor: not-allowed;
+    }
+
+    .disabled:hover {
+      transform: none;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span class="eyebrow">Mr. Anderson's Classroom</span>
+    <h1>7th Grade ELA Hub</h1>
+    <p>Games, review tools, vocabulary practice, grammar modules, and classroom resources in one place.</p>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <a href="prompt-repo.html" class="card">
+        <div>
+          <h2>The Teacher Assistant</h2>
+          <p>AI prompts and helpful tools for teachers.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="standards.html" class="card">
+        <div>
+          <h2>The Blueprint</h2>
+          <p>Standards-based activities for everything we have covered so far.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="Vocabulary.html" class="card">
+        <div>
+          <h2>Vocab Vault</h2>
+          <p>Practice activities for vocabulary words from class.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="DGP.html" class="card">
+        <div>
+          <h2>Grammar Garage</h2>
+          <p>Interactive DGP modules for grammar practice.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="MUGShots.html" class="card">
+        <div>
+          <h2>MUG Shot Sentences</h2>
+          <p>Review sentence mechanics, usage, and grammar.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="EOGReview.html" class="card">
+        <div>
+          <h2>EOG Review</h2>
+          <p>Escape rooms, games, and rationale lockers.</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="#" class="card disabled" aria-disabled="true">
+        <div>
+          <h2>Attacking Answers</h2>
+          <p>This section is under construction.</p>
+        </div>
+        <span class="status-badge placeholder">Coming Soon</span>
+      </a>
+
+      <a href="#" class="card disabled" aria-disabled="true">
+        <div>
+          <h2>Coming Soon</h2>
+          <p>More ELA tools are on the way.</p>
+        </div>
+        <span class="status-badge placeholder">Under Construction</span>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
+  </footer>
+</body>
+</html>
