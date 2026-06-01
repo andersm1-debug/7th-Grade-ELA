@@ -1,171 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr. Anderson's ELA Hub</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grammar Garage | DGP</title>
 
-        :root {
-            --vikings-purple: #4F2683;
-            --vikings-gold: #FFC62F;
-            --pure-white: #FFFFFF;
-            --soft-grey: #f4f4f4;
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--soft-grey);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+    }
 
-        header {
-            background-color: var(--vikings-purple);
-            color: var(--pure-white);
-            width: 100%;
-            padding: 40px 0;
-            text-align: center;
-            border-bottom: 8px solid var(--vikings-gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        .container {
-            max-width: 800px;
-            width: 90%;
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
 
-        .card {
-            background: var(--pure-white);
-            border-radius: 12px;
-            border-left: 10px solid var(--vikings-purple);
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+    header .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            border-left-color: var(--vikings-gold);
-        }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
 
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: var(--vikings-purple);
-            font-size: 1.4rem;
-        }
+    header p {
+      margin: 18px auto 0;
+      max-width: 680px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
 
-        .card p {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.4;
-        }
+    main {
+      width: min(1050px, 92%);
+      margin: 44px auto;
+    }
 
-        .status-badge {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 22px;
+    }
 
-        .active { background-color: #e8f5e9; color: #2e7d32; }
-        .placeholder { background-color: #fff3e0; color: #ef6c00; }
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 190px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
 
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-    </style>
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
+
+    .card h2 {
+      margin: 12px 0 10px;
+      color: var(--purple);
+      font-size: 1.35rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .active {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .home-card {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.55);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <span class="eyebrow">Daily Grammar Practice</span>
+    <h1>Grammar Garage</h1>
+    <p>Work through each day of DGP with focused grammar, mechanics, sentence analysis, and diagramming practice.</p>
+  </header>
 
-<header>
-    <h1>Grammar Garage (DGP)</h1>
-</header>
+  <main>
+    <div class="container">
 
-<div class="container">
-    
-<a href="index.html" class="card">
+      <a href="index.html" class="card home-card">
         <div>
-            <h2>Return to Hub</h2>
-            <p>Return to the home page!</p>
+          <h2>Return to Hub</h2>
+          <p>Go back to the main 7th Grade ELA Hub.</p>
+        </div>
+        <span class="status-badge active">Home</span>
+      </a>
+
+      <a href="dgp-master.html" class="card">
+        <div>
+          <h2>Monday</h2>
+          <p>Identify and review parts of speech.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-<a href="dgp-master.html" class="card">
+      <a href="dgp-Tuesday.html" class="card">
         <div>
-            <h2>Monday</h2>
-            <p>Parts of Speech</p>
+          <h2>Tuesday</h2>
+          <p>Practice sentence parts, phrases, and structure.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
-    
-<a href="dgp-Tuesday.html" class="card">
+      </a>
+
+      <a href="dgp-Wednesday.html" class="card">
         <div>
-            <h2>Tuesday</h2>
-            <p>Sentence Parts and Phrases.</p>
+          <h2>Wednesday</h2>
+          <p>Analyze clauses, sentence type, and sentence purpose.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
-  
-<a href="dgp-Wednesday.html" class="card">
-        <div>
-            <h2>Wednesday</h2>
-            <p>Clauses, Sentence Type, Purpose</p>
-        </div>
-       <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-<a href="dgp-Thursday.html" class="card">
+      <a href="dgp-Thursday.html" class="card">
         <div>
-            <h2>Thursday</h2>
-            <p>Mechanics & Punctuation</p>
+          <h2>Thursday</h2>
+          <p>Review capitalization, mechanics, punctuation, and usage.</p>
         </div>
         <span class="status-badge active">Live Interaction</span>
-    </a>
+      </a>
 
-    <a href="dgp-Friday.html" class="card">
+      <a href="dgp-Friday.html" class="card">
         <div>
-            <h2>Friday</h2>
-            <p>Diagramming</p>
+          <h2>Friday</h2>
+          <p>Practice sentence diagramming and complete weekly review.</p>
         </div>
-       <span class="status-badge active">Live Interaction</span>
-    </a>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
 
-    
-</div>
- 
-<footer>
+    </div>
+  </main>
+
+  <footer>
     &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
-</footer>
-
+  </footer>
 </body>
 </html>
