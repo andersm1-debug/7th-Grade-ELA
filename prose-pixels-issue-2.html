@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prose & Pixels | Edition 2</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --code-bg: #f8f6fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .top-link {
+      display: inline-block;
+      margin: 0 8px 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .top-link:hover { text-decoration: underline; }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 44px auto;
+    }
+
+    .hero-card,
+    .section-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    .hero-card { border-top: 7px solid var(--gold); }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--purple);
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      color: var(--purple);
+      font-size: 1.15rem;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    strong { color: var(--text); }
+
+    ul { padding-left: 1.25rem; }
+
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px dashed rgba(79, 38, 131, 0.3);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 14px 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .challenge {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.65);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-bg);
+      color: var(--green-text);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 48px 20px 42px; }
+      main { margin-top: 28px; }
+      .hero-card,
+      .section-card { padding: 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="newsletters.html" class="top-link">← Newsletter Archive</a>
+    <a href="index.html" class="top-link">Return to Hub</a>
+    <br />
+    <span class="eyebrow">Edition 2</span>
+    <h1>Prose & Pixels</h1>
+    <p>AI as a Writing Partner: helping students revise with purpose while giving teachers practical tools for examples, rubrics, and feedback.</p>
+  </header>
+
+  <main>
+    <section class="hero-card">
+      <span class="badge">AI Coach Newsletter</span>
+      <h2>Edition 2: AI as a Writing Partner</h2>
+      <p>Hi Team,</p>
+      <p>We know the elephant in the room: if AI can write a perfect essay in three seconds, what happens to our writing assignments?</p>
+      <p>It is time to shift the narrative. AI is not just a shortcut for students; it can be a collaborative tool for both the drafting process and our own grading workflows.</p>
+    </section>
+
+    <section class="section-card">
+      <h2>The “Work Smarter” Spotlight</h2>
+      <p>Here are four ways to use AI as a writing partner.</p>
+
+      <ul>
+        <li><strong>The “Critique the Bot” Method:</strong> Project a generic AI paragraph and have students humanize it with sensory details, stronger vocabulary, and varied sentence structure.</li>
+        <li><strong>The “Targeted Feedback Buddy”:</strong> Teach students to ask AI for focused revision feedback, such as checking transitions or evidence, before submitting a draft.</li>
+        <li><strong>The “Exemplar Creator”:</strong> Use AI to generate leveled examples of writing so students can see what Level 1, 2, 3, and 4 responses look like.</li>
+        <li><strong>The “Rubric Evaluator”:</strong> Paste in your rubric and a student draft to get preliminary scoring notes and targeted feedback aligned to your criteria.</li>
+      </ul>
+    </section>
+
+    <section class="section-card">
+      <h2>The AI Coach’s Toolbox</h2>
+      <p>Copy and paste these prompts when you want to support writing instruction without starting from scratch.</p>
+
+      <h3>Prompt 1: The “Bland Baseline” Generator</h3>
+      <div class="prompt-box">Write a structurally perfect but incredibly boring and generic 1-paragraph response to the following prompt: [Insert Writing Prompt Here]. Do not use sensory details, varied sentence structure, or strong vocabulary. Make it sound like a robot wrote it so my students can practice revising and humanizing it.</div>
+
+      <h3>Prompt 2: The “Feedback Buddy”</h3>
+      <div class="prompt-box">You are an expert writing tutor. Review the following draft for a [Insert Essay Type]. Do NOT rewrite the essay for me. Instead, tell me if my thesis statement is clear, and point out two places where I need more evidence to support my claim. Here is my draft: [Paste Draft]</div>
+
+      <h3>Prompt 3: The “Exemplar Creator”</h3>
+      <div class="prompt-box">I am grading a [Insert Grade Level & Subject] assignment. The prompt is: [Insert Prompt]. Please generate three short example essays for my students to read: one that represents a low-performing Level 2 response, one that is an average Level 3 response, and one that is an exceptional Level 4 response. Highlight the key differences between the three.</div>
+
+      <h3>Prompt 4: The “Rubric Evaluator”</h3>
+      <div class="prompt-box">You are an expert middle school teacher. I am going to provide you with my grading rubric and a student's essay. Please evaluate the essay based strictly on the rubric categories provided.
+
+For your response:
+1. Provide a score for each category.
+2. Quote specific evidence from the student's text to justify the score.
+3. Offer two actionable steps for improvement.
+
+Rubric: [Paste Your Rubric Here]
+Student Essay: [Paste Student Draft Here]</div>
+    </section>
+
+    <section class="section-card challenge">
+      <h2>The AI Champion Weekly Challenge</h2>
+      <p>We want to see how this changes the writing process in your room!</p>
+      <p><strong>The Challenge:</strong> Generate an AI exemplar essay using Prompt #3 for your next writing assignment and show it to your class before they draft.</p>
+      <p><strong>The Reward:</strong> Hit reply and let us know how the kids reacted. We will feature your win in the next newsletter.</p>
+    </section>
+
+    <section class="section-card">
+      <p>Best,</p>
+      <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
+  </footer>
+</body>
+</html>
+```
