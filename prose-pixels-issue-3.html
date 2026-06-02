@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prose & Pixels | Edition 3</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --code-bg: #f8f6fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .top-link {
+      display: inline-block;
+      margin: 0 8px 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .top-link:hover { text-decoration: underline; }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 780px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1000px, 92%);
+      margin: 44px auto;
+    }
+
+    .hero-card,
+    .section-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    .hero-card { border-top: 7px solid var(--gold); }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--purple);
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      color: var(--purple);
+      font-size: 1.15rem;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    strong { color: var(--text); }
+
+    ul { padding-left: 1.25rem; }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .week-card {
+      background: var(--code-bg);
+      border: 1px solid rgba(79, 38, 131, 0.16);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .week-card h3 {
+      margin-top: 0;
+    }
+
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px dashed rgba(79, 38, 131, 0.3);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 14px 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .challenge {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.65);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-bg);
+      color: var(--green-text);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 48px 20px 42px; }
+      main { margin-top: 28px; }
+      .hero-card,
+      .section-card { padding: 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="newsletters.html" class="top-link">← Newsletter Archive</a>
+    <a href="index.html" class="top-link">Return to Hub</a>
+    <br />
+    <span class="eyebrow">Edition 3</span>
+    <h1>Prose & Pixels</h1>
+    <p>Decoding the EOGs: using AI as a test analyst to study released assessments, identify patterns, and build strategic review materials.</p>
+  </header>
+
+  <main>
+    <section class="hero-card">
+      <span class="badge">AI Coach Newsletter</span>
+      <h2>Edition 3: Decoding the EOGs</h2>
+      <p>Hey Team!</p>
+      <p>Testing season is approaching, which means it is time to shift gears into review mode. For Edition 3 of <strong>Prose & Pixels</strong>, we are focusing on how AI can act as your personal EOG analyst.</p>
+      <p>You do not have to copy and paste everything. You can upload a PDF of a released EOG or benchmark directly into your AI tool and ask it to decode the test’s structure and rigor.</p>
+    </section>
+
+    <section class="section-card">
+      <h2>The “Work Smarter” Spotlight: Deconstructing the State Test</h2>
+      <p>Instead of guessing which strategies will be most effective, we can have AI analyze previous tests to scout the opposition, identify the playbook, and help us build a winning game plan.</p>
+
+      <p><strong>The Coach’s Hack:</strong> Upload a released Grade 7 Reading EOG PDF directly into Gemini or another AI tool, then ask it to analyze the test.</p>
+
+      <p><strong>Result:</strong> The AI can identify Depth of Knowledge levels, common question stems, recurring academic vocabulary, and the overall style of the assessment. Once the AI understands the “code” of the EOG, it can help create aligned review materials for any unit.</p>
+    </section>
+
+    <section class="section-card">
+      <h2>Example AI-Generated EOG Roadmap</h2>
+      <p>This sample six-week roadmap shows how AI can help structure a strategic review plan for 7th Grade ELA.</p>
+
+      <div class="roadmap">
+        <div class="week-card">
+          <h3>Week 1: The Detective Work</h3>
+          <p><strong>Focus:</strong> RI.7.1 and RL.7.1</p>
+          <p><strong>Skill:</strong> Inference and textual evidence.</p>
+          <p><strong>Activity:</strong> “Prove It!” Students highlight the exact sentence that proves or disproves a claim before answering.</p>
+        </div>
+
+        <div class="week-card">
+          <h3>Week 2: The Big Picture</h3>
+          <p><strong>Focus:</strong> RI.7.2 and RL.7.2</p>
+          <p><strong>Skill:</strong> Central idea and theme.</p>
+          <p><strong>Activity:</strong> “Theme vs. Topic Sorting” with topic cards and matching theme cards.</p>
+        </div>
+
+        <div class="week-card">
+          <h3>Week 3: Word Surgery</h3>
+          <p><strong>Focus:</strong> RI.7.4 and RL.7.4</p>
+          <p><strong>Skill:</strong> Vocabulary in context and tone.</p>
+          <p><strong>Activity:</strong> “Context Clue Replace” using nonsense words and surrounding clues.</p>
+        </div>
+
+        <div class="week-card">
+          <h3>Week 4: The Architect’s Blueprint</h3>
+          <p><strong>Focus:</strong> RI.7.5 and RL.7.5</p>
+          <p><strong>Skill:</strong> Text structure and author’s purpose.</p>
+          <p><strong>Activity:</strong> “Paragraph Puzzle” with a five-paragraph text cut into strips.</p>
+        </div>
+
+        <div class="week-card">
+          <h3>Week 5: EOG Bootcamp</h3>
+          <p><strong>Focus:</strong> Mixed review and distractor analysis.</p>
+          <p><strong>Skill:</strong> Recognizing “almost right” answers.</p>
+          <p><strong>Activity:</strong> “Trash the Distractor” where students identify the trap answer and explain why it is wrong.</p>
+        </div>
+
+        <div class="week-card">
+          <h3>Week 6: Stamina & Strategy</h3>
+          <p><strong>Focus:</strong> Reading endurance and confidence.</p>
+          <p><strong>Skill:</strong> Test stamina and state of mind.</p>
+          <p><strong>Activity:</strong> Five-minute mindfulness exercises and confidence-building warm-ups.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>The AI Coach’s Toolbox</h2>
+      <p>Use these prompts to build your own EOG roadmap or aligned question sets.</p>
+
+      <h3>1. The “Test Analyzer” Prompt</h3>
+      <div class="prompt-box">I have attached a released standardized test for my grade and subject. Please analyze this document and decode:
+
+1. The most common question stems used.
+2. The Depth of Knowledge levels most frequently assessed.
+3. The recurring academic vocabulary used in the questions and answer choices.
+
+Once you have decoded it, confirm you understand the rigor and style so I can give you a new text or unit topic to create strategically aligned questions for.</div>
+
+      <h3>2. The “6-Week EOG Roadmap” Prompt</h3>
+      <div class="prompt-box">Act as an expert instructional coach. I need to build a comprehensive 6-week EOG review plan for my [Grade/Subject] students. We meet [Number] times a week for [Minutes] per class.
+
+Please create a week-by-week pacing guide that targets the most heavily tested standards in my subject, based on my grade-level analysis. Include a weekly focus, whole-group and small-group remediation strategies, and interactive review activities. Dedicate Week 6 to test stamina and confidence-building.</div>
+
+      <h3>3. The “EOG Question Generator” Prompt</h3>
+      <div class="prompt-box">Now, please read the following text: [Insert Text Here].
+
+Generate 5 multiple-choice questions based on this text. The questions must perfectly mimic the style, stems, and rigor of the decoded released test I uploaded earlier.
+
+Requirements:
+1. Focus on Depth of Knowledge levels 2 and 3.
+2. Include at least one question asking the student to infer meaning from a specific paragraph.
+3. Provide an Answer Key at the bottom that includes a brief rationale for why the correct answer is right, and why the other options are common distractors.</div>
+
+      <h3>4. The “Test Anxiety Reducer” Prompt</h3>
+      <div class="prompt-box">Provide 3 quick, 5-minute mindfulness or team-building activities I can do with my students right before we begin a standardized test. The goal is to lower their anxiety, boost their confidence, and get them focused. Keep them simple and require no materials.</div>
+    </section>
+
+    <section class="section-card challenge">
+      <h2>The AI Champion Weekly Challenge</h2>
+      <p><strong>The Challenge:</strong> Try uploading a released test or benchmark for your subject using the “Test Analyzer” prompt above.</p>
+      <p><strong>The Reward:</strong> Email us your AI-generated roadmap or let us know what the AI discovered about your test.</p>
+    </section>
+
+    <section class="section-card">
+      <p>See you in the halls,</p>
+      <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
+  </footer>
+</body>
+</html>
+```
