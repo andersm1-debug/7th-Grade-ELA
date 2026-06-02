@@ -127,15 +127,39 @@
 
     ul { padding-left: 1.25rem; }
 
+    .prompt-wrapper {
+      position: relative;
+      margin: 14px 0 20px;
+    }
+
     .prompt-box {
       background: var(--code-bg);
       border: 1px dashed rgba(79, 38, 131, 0.3);
       border-radius: 18px;
-      padding: 18px;
-      margin: 14px 0 20px;
+      padding: 52px 18px 18px;
       color: var(--muted);
       line-height: 1.6;
       white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.72rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .copy-btn:hover {
+      background: var(--purple-dark);
     }
 
     .challenge {
@@ -156,6 +180,37 @@
       margin-bottom: 12px;
     }
 
+    .issue-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin: 36px 0 10px;
+    }
+
+    .issue-nav a {
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(50, 24, 92, 0.12);
+    }
+
+    .issue-nav a:hover {
+      background: var(--purple-dark);
+    }
+
+    .issue-nav a:first-child {
+      justify-self: start;
+    }
+
+    .issue-nav a:last-child {
+      justify-self: end;
+    }
+
     footer {
       text-align: center;
       padding: 28px 20px 40px;
@@ -163,11 +218,26 @@
       font-size: 0.9rem;
     }
 
+    @media (max-width: 650px) {
+      .issue-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-nav a,
+      .issue-nav a:first-child,
+      .issue-nav a:last-child {
+        justify-self: stretch;
+      }
+    }
+
     @media (max-width: 600px) {
       header { padding: 48px 20px 42px; }
       main { margin-top: 28px; }
+
       .hero-card,
-      .section-card { padding: 22px; }
+      .section-card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
@@ -208,16 +278,27 @@
       <p>Copy and paste these prompts when you want to support writing instruction without starting from scratch.</p>
 
       <h3>Prompt 1: The “Bland Baseline” Generator</h3>
-      <div class="prompt-box">Write a structurally perfect but incredibly boring and generic 1-paragraph response to the following prompt: [Insert Writing Prompt Here]. Do not use sensory details, varied sentence structure, or strong vocabulary. Make it sound like a robot wrote it so my students can practice revising and humanizing it.</div>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Write a structurally perfect but incredibly boring and generic 1-paragraph response to the following prompt: [Insert Writing Prompt Here]. Do not use sensory details, varied sentence structure, or strong vocabulary. Make it sound like a robot wrote it so my students can practice revising and humanizing it.</div>
+      </div>
 
       <h3>Prompt 2: The “Feedback Buddy”</h3>
-      <div class="prompt-box">You are an expert writing tutor. Review the following draft for a [Insert Essay Type]. Do NOT rewrite the essay for me. Instead, tell me if my thesis statement is clear, and point out two places where I need more evidence to support my claim. Here is my draft: [Paste Draft]</div>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">You are an expert writing tutor. Review the following draft for a [Insert Essay Type]. Do NOT rewrite the essay for me. Instead, tell me if my thesis statement is clear, and point out two places where I need more evidence to support my claim. Here is my draft: [Paste Draft]</div>
+      </div>
 
       <h3>Prompt 3: The “Exemplar Creator”</h3>
-      <div class="prompt-box">I am grading a [Insert Grade Level & Subject] assignment. The prompt is: [Insert Prompt]. Please generate three short example essays for my students to read: one that represents a low-performing Level 2 response, one that is an average Level 3 response, and one that is an exceptional Level 4 response. Highlight the key differences between the three.</div>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">I am grading a [Insert Grade Level & Subject] assignment. The prompt is: [Insert Prompt]. Please generate three short example essays for my students to read: one that represents a low-performing Level 2 response, one that is an average Level 3 response, and one that is an exceptional Level 4 response. Highlight the key differences between the three.</div>
+      </div>
 
       <h3>Prompt 4: The “Rubric Evaluator”</h3>
-      <div class="prompt-box">You are an expert middle school teacher. I am going to provide you with my grading rubric and a student's essay. Please evaluate the essay based strictly on the rubric categories provided.
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">You are an expert middle school teacher. I am going to provide you with my grading rubric and a student's essay. Please evaluate the essay based strictly on the rubric categories provided.
 
 For your response:
 1. Provide a score for each category.
@@ -226,6 +307,7 @@ For your response:
 
 Rubric: [Paste Your Rubric Here]
 Student Essay: [Paste Student Draft Here]</div>
+      </div>
     </section>
 
     <section class="section-card challenge">
@@ -239,11 +321,33 @@ Student Essay: [Paste Student Draft Here]</div>
       <p>Best,</p>
       <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
     </section>
+
+    <nav class="issue-nav">
+      <a href="prose-pixels-issue-1.html">← Previous Issue</a>
+      <a href="newsletters.html">Newsletter Archive</a>
+      <a href="prose-pixels-issue-3.html">Next Issue →</a>
+    </nav>
   </main>
 
   <footer>
     &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
   </footer>
+
+  <script>
+    function copyPrompt(button) {
+      const promptText = button.nextElementSibling.innerText;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        const originalText = button.innerText;
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+          button.innerText = originalText;
+        }, 1600);
+      }).catch(() => {
+        alert("Clipboard access denied. Please manually copy the prompt.");
+      });
+    }
+  </script>
 </body>
 </html>
-```
