@@ -1,223 +1,302 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI PROMPT REPOSITORY</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Assistant | Prompt Repository</title>
 
-        body {
-            background-color: #0b0f19;
-            background-image: linear-gradient(rgba(88, 166, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(88, 166, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #c9d1d9;
-            font-family: 'Share Tech Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
 
-        #repo-container {
-            background: rgba(11, 15, 25, 0.95);
-            border: 2px solid #212d40;
-            border-top: 8px solid #58a6ff;
-            padding: 40px;
-            width: 100%;
-            max-width: 1200px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            position: relative;
-            border-radius: 8px;
-        }
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --code-bg: #f8f6fc;
+    }
 
-        .hub-link {
-            position: absolute;
-            top: 20px;
-            left: 25px;
-            color: #8b949e;
-            text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            transition: 0.2s;
-            font-family: 'Orbitron', sans-serif;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .hub-link:hover { color: #58a6ff; }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        .repo-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.8rem;
-            text-align: center;
-            margin: 10px 0 5px 0;
-            color: #58a6ff;
-            letter-spacing: 2px;
-        }
-        
-        .sub-title {
-            text-align: center;
-            color: #8b949e;
-            font-size: 1rem;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
 
-        /* Category Sections */
-        .category-section {
-            margin-bottom: 50px;
-        }
+    .hub-link {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
 
-        .category-header {
-            font-family: 'Orbitron', sans-serif;
-            color: #f2e05a;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #30363d;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+    .hub-link:hover {
+      text-decoration: underline;
+    }
 
-        .prompt-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-        }
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
 
-        /* Individual Prompt Cards */
-        .prompt-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            transition: 0.2s;
-        }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
 
-        .prompt-card:hover {
-            border-color: #58a6ff;
-            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.1);
-        }
+    header p {
+      margin: 18px auto 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
 
-        .prompt-title {
-            color: #e6edf3;
-            font-size: 1.1rem;
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 10px;
-        }
+    main {
+      width: min(1200px, 92%);
+      margin: 44px auto;
+    }
 
-        .prompt-text {
-            color: #8b949e;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            background: #0d1117;
-            padding: 15px;
-            border-radius: 4px;
-            border: 1px dashed #484f58;
-            flex-grow: 1;
-            margin-bottom: 15px;
-            white-space: pre-wrap;
-            overflow-y: auto;
-            max-height: 250px;
-        }
+    .category-section {
+      margin-bottom: 46px;
+    }
 
-        /* Custom Scrollbar for Prompt Text */
-        .prompt-text::-webkit-scrollbar { width: 6px; }
-        .prompt-text::-webkit-scrollbar-track { background: #0d1117; }
-        .prompt-text::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
-        .prompt-text::-webkit-scrollbar-thumb:hover { background: #58a6ff; }
+    .category-header {
+      color: var(--purple);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid rgba(255, 198, 47, 0.85);
+    }
 
-        .copy-btn {
-            background: #21262d;
-            color: #58a6ff;
-            border: 1px solid #30363d;
-            padding: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.2s;
-            text-transform: uppercase;
-        }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      gap: 22px;
+    }
 
-        .copy-btn:hover {
-            background: #58a6ff;
-            color: #0d1117;
-        }
+    .prompt-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
 
-        /* Toast Notification */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #3fb950;
-            color: #fff;
-            text-align: center;
-            border-radius: 4px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-        }
+    .prompt-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
 
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
+    .prompt-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
 
-    </style>
+    .prompt-title {
+      margin: 12px 0 12px;
+      color: var(--purple);
+      font-size: 1.2rem;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .prompt-text {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      background: var(--code-bg);
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px dashed rgba(79, 38, 131, 0.25);
+      flex-grow: 1;
+      margin-bottom: 18px;
+      white-space: pre-wrap;
+      overflow-y: auto;
+      max-height: 260px;
+    }
+
+    .prompt-text::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .prompt-text::-webkit-scrollbar-track {
+      background: #eee8f7;
+      border-radius: 999px;
+    }
+
+    .prompt-text::-webkit-scrollbar-thumb {
+      background: rgba(79, 38, 131, 0.45);
+      border-radius: 999px;
+    }
+
+    .copy-btn {
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 12px 14px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: transform 0.18s ease, background 0.18s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .copy-btn:hover {
+      background: var(--purple-dark);
+      transform: translateY(-2px);
+    }
+
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: var(--green-text);
+      color: #fff;
+      text-align: center;
+      border-radius: 999px;
+      padding: 14px 18px;
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transition: opacity 0.3s ease, bottom 0.3s ease;
+    }
+
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<div id="lab-container">
+  <header>
     <a href="index.html" class="hub-link">← Return to Hub</a>
-    <h1 class="repo-title">AI PROMPT REPOSITORY</h1>
-    <p class="sub-title">FACULTY RESOURCE DIRECTORY</p>
+    <br />
+    <span class="eyebrow">Faculty Resource Directory</span>
+    <h1>The Teacher Assistant</h1>
+    <p>Copy-ready AI prompts for lesson planning, differentiation, assessment, classroom communication, and interactive learning tools.</p>
+  </header>
 
-    <div class="category-section">
-        <div class="category-header">Instructional Planning & WIN Blocks</div>
-        <div class="prompt-grid">
-            <div class="prompt-card">
-                <div class="prompt-title">Passage & Vocabulary Generator</div>
-                <div class="prompt-text" id="prompt-1">Act as an expert [Insert Grade Level] teacher. I am teaching [Insert Standard] to my students.
+  <main>
+
+    <section class="category-section">
+      <h2 class="category-header">Instructional Planning & WIN Blocks</h2>
+
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <div class="prompt-title">Passage & Vocabulary Generator</div>
+          <div class="prompt-text" id="prompt-1">Act as an expert [Insert Grade Level] teacher. I am teaching [Insert Standard] to my students.
 
 Generate a core passage of about 300 words.
 Include a tiered vocabulary list (Tier 1, 2, and 3 words). [Insert key vocabulary if you have words you would like to be used]
 Suggest two ways to differentiate the Process for struggling vs. advanced readers.
 Suggest three Product options (low-prep, medium-prep, and high-prep) that all prove the student met the objective: [Insert Standard]</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-1')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">WIN Block Intervention Planner</div>
-                <div class="prompt-text" id="prompt-2">Act as an expert middle school teacher. I need a 3-day WIN (What I Need) block intervention plan for a small group of students who are struggling with [Insert Standard/Topic]. Provide specific, 20-minute daily activities that are highly engaging and do not rely on standard worksheets.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-2')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Engaging Lesson Hooks</div>
-                <div class="prompt-text" id="prompt-3">I am teaching a lesson about [Insert Topic] tomorrow. Give me 5 highly engaging "lesson hooks" to start the class. They should take under 5 minutes, require no special materials, and immediately grab their attention.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-3')">Copy Prompt</button>
-            </div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-1')">Copy Prompt</button>
         </div>
-    </div>
 
-    <div class="category-section">
-        <div class="category-header">Differentiation & Scaffolding</div>
-        <div class="prompt-grid">
-            <div class="prompt-card">
-                <div class="prompt-title">Choice Board Architect</div>
-                <div class="prompt-text" id="prompt-4">Act as an expert [Insert Grade Level] teacher. Using the text/topic [Insert Name of Text or Topic] and the learning standard [Insert Standard Code], create a 3x3 Student Choice Board.
+        <div class="prompt-card">
+          <div class="prompt-title">WIN Block Intervention Planner</div>
+          <div class="prompt-text" id="prompt-2">Act as an expert middle school teacher. I need a 3-day WIN (What I Need) block intervention plan for a small group of students who are struggling with [Insert Standard/Topic]. Provide specific, 20-minute daily activities that are highly engaging and do not rely on standard worksheets.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-2')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Engaging Lesson Hooks</div>
+          <div class="prompt-text" id="prompt-3">I am teaching a lesson about [Insert Topic] tomorrow. Give me 5 highly engaging "lesson hooks" to start the class. They should take under 5 minutes, require no special materials, and immediately grab their attention.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-3')">Copy Prompt</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <h2 class="category-header">Differentiation & Scaffolding</h2>
+
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <div class="prompt-title">Choice Board Architect</div>
+          <div class="prompt-text" id="prompt-4">Act as an expert [Insert Grade Level] teacher. Using the text/topic [Insert Name of Text or Topic] and the learning standard [Insert Standard Code], create a 3x3 Student Choice Board.
 
 Ensure the board follows these requirements:
 Focus: Every task must directly assess the student's ability to [Insert Specific Learning Goal].
@@ -228,11 +307,12 @@ Row 2: Application & Analysis (Moderate difficulty)
 Row 3: Synthesis & Evaluation (Higher difficulty)
 Vocabulary: Include a requirement to use the following key terms: [Insert 3-5 Vocabulary Words].
 Formatting: Present the final output in a clear 3x3 table.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-4')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Master Differentiation Strategist</div>
-                <div class="prompt-text" id="prompt-5">Act as an expert [Insert Grade Level] teacher. Provide differentiation strategies for a lesson based on the following:
+          <button class="copy-btn" onclick="copyPrompt('prompt-4')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Master Differentiation Strategist</div>
+          <div class="prompt-text" id="prompt-5">Act as an expert [Insert Grade Level] teacher. Provide differentiation strategies for a lesson based on the following:
 Standard/Objective: [Paste your standard or learning goal]
 Current Lesson Context: [e.g., Intro to Ecosystems]
 
@@ -241,27 +321,30 @@ Content (The Input): Suggest 3 ways to present the material to accommodate diffe
 Process (The Sense-Making): Suggest 2-3 different activities students can do to grapple with the content.
 Product (The Output): Provide 3 options for how students can demonstrate mastery.
 Constraint: Ensure all options remain strictly aligned to the core standard provided.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-5')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Leveling a Reading Text</div>
-                <div class="prompt-text" id="prompt-6">Take the text provided below and rewrite it to a [Insert Lexile/Grade Level] reading level. Maintain the core concepts, tone, and crucial vocabulary, but simplify the sentence structures and provide brief context clues for the hardest words: [Paste Text]</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-6')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Vocabulary Extractor</div>
-                <div class="prompt-text" id="prompt-15">Analyze the following text and extract the top 10 most challenging Tier 2 academic vocabulary words. For each word, provide a middle-school-friendly definition and a short, relatable example sentence: [Paste Text]</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-15')">Copy Prompt</button>
-            </div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-5')">Copy Prompt</button>
         </div>
-    </div>
 
-    <div class="category-section">
-        <div class="category-header">Interactive & Multimedia Learning</div>
-        <div class="prompt-grid">
-            <div class="prompt-card">
-                <div class="prompt-title">Digital Escape Room Coder</div>
-                <div class="prompt-text" id="prompt-7">I am a [Insert Grade Level] teacher looking to create an interactive digital breakout room for my students. I need a single-file HTML/JavaScript web application that they can run in any browser.
+        <div class="prompt-card">
+          <div class="prompt-title">Leveling a Reading Text</div>
+          <div class="prompt-text" id="prompt-6">Take the text provided below and rewrite it to a [Insert Lexile/Grade Level] reading level. Maintain the core concepts, tone, and crucial vocabulary, but simplify the sentence structures and provide brief context clues for the hardest words: [Paste Text]</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-6')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Vocabulary Extractor</div>
+          <div class="prompt-text" id="prompt-15">Analyze the following text and extract the top 10 most challenging Tier 2 academic vocabulary words. For each word, provide a middle-school-friendly definition and a short, relatable example sentence: [Paste Text]</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-15')">Copy Prompt</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-section">
+      <h2 class="category-header">Interactive & Multimedia Learning</h2>
+
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <div class="prompt-title">Digital Escape Room Coder</div>
+          <div class="prompt-text" id="prompt-7">I am a [Insert Grade Level] teacher looking to create an interactive digital breakout room for my students. I need a single-file HTML/JavaScript web application that they can run in any browser.
 
 1. Topic & Standards: The topic is [Insert Topic]. Specific concepts to cover: [List 3-5 concepts].
 2. Structure: 4 'Rooms' or 'Vaults'. Each room presents a challenge related to the concepts.
@@ -271,11 +354,12 @@ Room 3: Focus on [Concept 3].
 Room 4: A final challenge combining all concepts.
 3. Technical: Single self-contained HTML file (all CSS/JS included). Use modern responsive design. Include a progress bar, 'lock status' indicator, and clear feedback (e.g., 'Access Denied'). Include a 'Success Screen' summary.
 4. Aesthetic Theme: The theme should be [Insert Theme, e.g., Space Exploration, Cyberpunk Hacker].</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-7')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Educational Podcast Scriptwriter</div>
-                <div class="prompt-text" id="prompt-8">Role: Act as a world-class educational podcaster and subject matter expert in [Insert Subject].
+          <button class="copy-btn" onclick="copyPrompt('prompt-7')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Educational Podcast Scriptwriter</div>
+          <div class="prompt-text" id="prompt-8">Role: Act as a world-class educational podcaster and subject matter expert in [Insert Subject].
 Task: Write a compelling, high-energy podcast script titled "[Insert Unit Name]" designed for [Insert Grade Level] students.
 Narrator Persona: Use a [Insert Tone, e.g., "enthusiastic science explorer"] voice. Speak directly to the students.
 
@@ -286,17 +370,18 @@ The "Why it Matters": Connect the topic to a real-world application or modern my
 Call to Action: End with a "Research Challenge" where students have to find specific information.
 Formatting: Include stage directions for the AI voice (e.g., Say in a whisper).
 Tone: Keep sentences short and rhythmic. Avoid jargon unless defined with a relatable comparison.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-8')">Copy Prompt</button>
-            </div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-8')">Copy Prompt</button>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div class="category-section">
-        <div class="category-header">Assessment & Evaluation</div>
-        <div class="prompt-grid">
-            <div class="prompt-card">
-                <div class="prompt-title">High-Quality Quiz Designer</div>
-                <div class="prompt-text" id="prompt-9">Role: You are an expert Instructional Designer and Subject Matter Expert in [Insert Grade level, Subject Area].
+    <section class="category-section">
+      <h2 class="category-header">Assessment & Evaluation</h2>
+
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <div class="prompt-title">High-Quality Quiz Designer</div>
+          <div class="prompt-text" id="prompt-9">Role: You are an expert Instructional Designer and Subject Matter Expert in [Insert Grade level, Subject Area].
 Task: Create a high-quality quiz for [Insert Grade Level] students.
 
 Quiz Parameters:
@@ -313,66 +398,76 @@ Source Material: [Paste text here or ask AI to generate based on general grade-l
 Output Requirements:
 Provide a Student Version (questions only).
 Provide a Teacher Answer Key that includes the correct answer, a brief "Rationale," and an "Explanation for Distractors" to help me address student errors.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-9')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Standard Alignment Breakdown</div>
-                <div class="prompt-text" id="prompt-10">Break down the following state standard into clear, measurable learning targets for students. Then, suggest 3 distinct ways I can assess if students have mastered these specific targets: [Paste Standard Here]</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-10')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Rubric Generator</div>
-                <div class="prompt-text" id="prompt-11">Create a 4-point grading rubric for a middle school assignment where students must [Describe Assignment]. The rubric should evaluate 3 categories: [Category 1], [Category 2], and [Category 3]. Make the language student-friendly.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-11')">Copy Prompt</button>
-            </div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-9')">Copy Prompt</button>
         </div>
-    </div>
 
-    <div class="category-section">
-        <div class="category-header">Communication & Management</div>
-        <div class="prompt-grid">
-            <div class="prompt-card">
-                <div class="prompt-title">Positive Parent Email</div>
-                <div class="prompt-text" id="prompt-12">Draft a short, positive email to a parent. Their student, [Student Name], has been struggling recently but showed massive improvement today during our lesson on [Topic]. Keep the tone professional, warm, and encouraging.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-12')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Behavior Redirection Script</div>
-                <div class="prompt-text" id="prompt-13">Provide a script for a 1-on-1 hallway conversation with a student who is repeatedly [Insert Behavior, e.g., talking over others]. The script should focus on restorative practices, empathy, and getting the student back on track without escalating the situation.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-13')">Copy Prompt</button>
-            </div>
-            <div class="prompt-card">
-                <div class="prompt-title">Sentence Starters Generator</div>
-                <div class="prompt-text" id="prompt-14">I am asking my students to write a paragraph answering the following prompt: [Paste Prompt]. Please generate 5 differentiated sentence starters I can provide to my struggling writers to help them begin their paragraphs.</div>
-                <button class="copy-btn" onclick="copyPrompt('prompt-14')">Copy Prompt</button>
-            </div>
+        <div class="prompt-card">
+          <div class="prompt-title">Standard Alignment Breakdown</div>
+          <div class="prompt-text" id="prompt-10">Break down the following state standard into clear, measurable learning targets for students. Then, suggest 3 distinct ways I can assess if students have mastered these specific targets: [Paste Standard Here]</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-10')">Copy Prompt</button>
         </div>
-    </div>
 
-</div>
+        <div class="prompt-card">
+          <div class="prompt-title">Rubric Generator</div>
+          <div class="prompt-text" id="prompt-11">Create a 4-point grading rubric for a middle school assignment where students must [Describe Assignment]. The rubric should evaluate 3 categories: [Category 1], [Category 2], and [Category 3]. Make the language student-friendly.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-11')">Copy Prompt</button>
+        </div>
+      </div>
+    </section>
 
-<div id="toast">Prompt copied to clipboard!</div>
+    <section class="category-section">
+      <h2 class="category-header">Communication & Management</h2>
 
-<script>
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <div class="prompt-title">Positive Parent Email</div>
+          <div class="prompt-text" id="prompt-12">Draft a short, positive email to a parent. Their student, [Student Name], has been struggling recently but showed massive improvement today during our lesson on [Topic]. Keep the tone professional, warm, and encouraging.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-12')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Behavior Redirection Script</div>
+          <div class="prompt-text" id="prompt-13">Provide a script for a 1-on-1 hallway conversation with a student who is repeatedly [Insert Behavior, e.g., talking over others]. The script should focus on restorative practices, empathy, and getting the student back on track without escalating the situation.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-13')">Copy Prompt</button>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-title">Sentence Starters Generator</div>
+          <div class="prompt-text" id="prompt-14">I am asking my students to write a paragraph answering the following prompt: [Paste Prompt]. Please generate 5 differentiated sentence starters I can provide to my struggling writers to help them begin their paragraphs.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-14')">Copy Prompt</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
+  </footer>
+
+  <div id="toast">Prompt copied to clipboard!</div>
+
+  <script>
     function copyPrompt(elementId) {
-        const promptText = document.getElementById(elementId).innerText;
-        
-        navigator.clipboard.writeText(promptText).then(() => {
-            showToast();
-        }).catch(err => {
-            console.error('Failed to copy text: ', err);
-            alert("Clipboard access denied. Please manually copy the text.");
-        });
+      const promptText = document.getElementById(elementId).innerText;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        showToast();
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+        alert("Clipboard access denied. Please manually copy the text.");
+      });
     }
 
     function showToast() {
-        const toast = document.getElementById("toast");
-        toast.className = "show";
-        
-        setTimeout(function(){
-            toast.className = toast.className.replace("show", "");
-        }, 3000);
+      const toast = document.getElementById("toast");
+      toast.className = "show";
+
+      setTimeout(function() {
+        toast.className = toast.className.replace("show", "");
+      }, 3000);
     }
-</script>
+  </script>
 </body>
 </html>
+```
