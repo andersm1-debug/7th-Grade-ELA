@@ -147,15 +147,39 @@
       text-decoration: underline;
     }
 
+    .prompt-wrapper {
+      position: relative;
+      margin: 14px 0 20px;
+    }
+
     .prompt-box {
       background: var(--code-bg);
       border: 1px dashed rgba(79, 38, 131, 0.3);
       border-radius: 18px;
-      padding: 18px;
-      margin: 14px 0 20px;
+      padding: 52px 18px 18px;
       color: var(--muted);
       line-height: 1.6;
       white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.72rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .copy-btn:hover {
+      background: var(--purple-dark);
     }
 
     .challenge {
@@ -176,11 +200,58 @@
       margin-bottom: 12px;
     }
 
+    .issue-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin: 36px 0 10px;
+    }
+
+    .issue-nav a {
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(50, 24, 92, 0.12);
+    }
+
+    .issue-nav a:hover {
+      background: var(--purple-dark);
+    }
+
+    .issue-nav a:first-child {
+      justify-self: start;
+    }
+
+    .issue-nav a:last-child {
+      justify-self: end;
+    }
+
     footer {
       text-align: center;
       padding: 28px 20px 40px;
       color: var(--muted);
       font-size: 0.9rem;
+    }
+
+    @media (max-width: 650px) {
+      .issue-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-nav span {
+        display: none;
+      }
+
+      .issue-nav a,
+      .issue-nav a:first-child,
+      .issue-nav a:last-child {
+        justify-self: stretch;
+      }
     }
 
     @media (max-width: 600px) {
@@ -246,7 +317,9 @@
       <p>Want to build your own interactive games in seconds? Copy these prompts into Gemini or ChatGPT and replace the bracketed text with your own vocabulary.</p>
 
       <h3>1. The “Full Suite” Prompt</h3>
-      <div class="prompt-box">I am a teacher looking to create a comprehensive study suite for my students. My focus is on the prefixes [Insert Prefixes here, e.g., Pre-, Re-, Un-]. Please use this word list: [Insert Word List & Definitions here].
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">I am a teacher looking to create a comprehensive study suite for my students. My focus is on the prefixes [Insert Prefixes here, e.g., Pre-, Re-, Un-]. Please use this word list: [Insert Word List & Definitions here].
 
 Please generate the following four items:
 1. An Interactive Cloze activity using React with a dynamic word bank.
@@ -255,9 +328,12 @@ Please generate the following four items:
 4. A Timed Challenge Game using React where students match definitions to words against a 60-second clock.
 
 Please ensure the UI is modern, mobile-friendly, and uses a clean educational aesthetic with clear feedback for correct and incorrect answers.</div>
+      </div>
 
       <h3>2. The “Side-by-Side Quiz” Prompt</h3>
-      <div class="prompt-box">Create an interactive “Side-by-Side” vocabulary quiz using React.
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Create an interactive “Side-by-Side” vocabulary quiz using React.
 
 The Layout: Divide the screen into two panels. On the left, display a sentence with a blank and the dictionary definition. On the right, provide four multiple-choice buttons.
 
@@ -266,9 +342,12 @@ The Features: Include a top progress bar, a score tracker, and a Hint badge that
 The Content:
 Prefixes: [Insert Prefixes]
 Words: [Insert Word List]</div>
+      </div>
 
       <h3>3. The “Sorting Game” Prompt</h3>
-      <div class="prompt-box">Create a “Prefix Sorting Challenge” in React.
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Create a “Prefix Sorting Challenge” in React.
 
 The Goal: Students see a word and must click one of three category buckets based on the prefix meaning.
 
@@ -281,9 +360,12 @@ Words to Sort:
 [Insert Word List]
 
 UI Requirements: Provide immediate visual feedback with checkmarks and Xs, a progress bar, and a Victory Screen showing a summary of the sorted words at the end.</div>
+      </div>
 
       <h3>4. The “Interactive Cloze” Prompt</h3>
-      <div class="prompt-box">Create an interactive “Cloze” fill-in-the-blank activity using React.
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Create an interactive “Cloze” fill-in-the-blank activity using React.
 
 The Layout: Display a series of sentences where the target vocabulary words are replaced by text input fields. At the top of the screen, include a dynamic Word Bank that strikes through words once the student has typed them into a blank.
 
@@ -292,6 +374,7 @@ The Features: Include a Check Answers button that highlights correct entries in 
 The Content:
 Prefixes: [Insert Prefixes]
 Words: [Insert Word List]</div>
+      </div>
     </section>
 
     <section class="section-card challenge">
@@ -312,15 +395,33 @@ Words: [Insert Word List]</div>
       <p>See you in the halls,</p>
       <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
     </section>
+
     <nav class="issue-nav">
-  <span></span>
-  <a href="newsletters.html">Newsletter Archive</a>
-  <a href="prose-pixels-issue-2.html">Next Issue →</a>
-</nav>
+      <span></span>
+      <a href="newsletters.html">Newsletter Archive</a>
+      <a href="prose-pixels-issue-2.html">Next Issue →</a>
+    </nav>
   </main>
 
   <footer>
     &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
   </footer>
+
+  <script>
+    function copyPrompt(button) {
+      const promptText = button.nextElementSibling.innerText;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        const originalText = button.innerText;
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+          button.innerText = originalText;
+        }, 1600);
+      }).catch(() => {
+        alert("Clipboard access denied. Please manually copy the prompt.");
+      });
+    }
+  </script>
 </body>
 </html>
