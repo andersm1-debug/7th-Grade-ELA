@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prose & Pixels | Edition 1</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --code-bg: #f8f6fc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .top-link {
+      display: inline-block;
+      margin: 0 8px 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .top-link:hover {
+      text-decoration: underline;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 44px auto;
+    }
+
+    .hero-card,
+    .section-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    .hero-card {
+      border-top: 7px solid var(--gold);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--purple);
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      color: var(--purple);
+      font-size: 1.15rem;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    .resource-list a {
+      color: var(--purple);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .resource-list a:hover {
+      text-decoration: underline;
+    }
+
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px dashed rgba(79, 38, 131, 0.3);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 14px 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .challenge {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.65);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-bg);
+      color: var(--green-text);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .hero-card,
+      .section-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="newsletters.html" class="top-link">← Newsletter Archive</a>
+    <a href="index.html" class="top-link">Return to Hub</a>
+    <br />
+    <span class="eyebrow">Edition 1</span>
+    <h1>Prose & Pixels</h1>
+    <p>Vocabulary Innovation: using AI to create quick, interactive vocabulary practice that saves time and boosts student engagement.</p>
+  </header>
+
+  <main>
+    <section class="hero-card">
+      <span class="badge">AI Coach Newsletter</span>
+      <h2>Edition 1: Vocabulary Innovation</h2>
+      <p>Hey Team!</p>
+      <p>As your AI Coaches, we want to start sharing quick “wins” that save you prep time while boosting student engagement. Welcome to the first edition of <strong>Prose & Pixels</strong>!</p>
+    </section>
+
+    <section class="section-card">
+      <h2>The “Work Smarter” Spotlight</h2>
+      <p>We have all been there: staring at a list of 20 vocabulary words and wondering how to make them stick. For Unit 15 — <strong>Inter, Mid, Non</strong> — we used AI to turn our standard word list into interactive activities in seconds.</p>
+
+      <p><strong>The Coaches’ Hack:</strong> We asked Gemini to write “Would You Rather” questions for 12-year-olds using these words.</p>
+
+      <p><strong>Result:</strong> A Monday morning bell-ringer that had students actually debating the definition of words like “mediocre” and “intermittent.”</p>
+    </section>
+
+    <section class="section-card">
+      <h2>The Vocabulary Resource Vault</h2>
+      <p>These were built for the 7th Grade ELA unit. Add your links once they are ready.</p>
+
+      <ul class="resource-list">
+        <li><a href="#">Cloze Suite</a> — Interactive fill-in-the-blank practice.</li>
+        <li><a href="#">Multiple Choice</a> — Quiz with context clues and instant feedback.</li>
+        <li><a href="#">Side-by-Side Quiz</a> — Split-screen quiz focused on sentences.</li>
+        <li><a href="#">Sorting Challenge</a> — The “Bucket Game” where students sort words into prefix categories.</li>
+        <li><a href="#">Timed Challenge</a> — A high-speed matching game to build fluency.</li>
+        <li><a href="#">Drag & Drop</a> — Interactive activity with a word bank and hints.</li>
+      </ul>
+    </section>
+
+    <section class="section-card">
+      <h2>The AI Coach’s Toolbox</h2>
+      <p>Want to build your own interactive games in seconds? Copy these prompts into Gemini or ChatGPT and replace the bracketed text with your own vocabulary.</p>
+
+      <h3>1. The “Full Suite” Prompt</h3>
+      <div class="prompt-box">I am a teacher looking to create a comprehensive study suite for my students. My focus is on the prefixes [Insert Prefixes here, e.g., Pre-, Re-, Un-]. Please use this word list: [Insert Word List & Definitions here].
+
+Please generate the following four items:
+1. An Interactive Cloze activity using React with a dynamic word bank.
+2. An Interactive Matching Game using React where students select a word and then its definition.
+3. A Side-by-Side Multiple Choice Quiz using React that shows a context sentence on the left and 4 options on the right.
+4. A Timed Challenge Game using React where students match definitions to words against a 60-second clock.
+
+Please ensure the UI is modern, mobile-friendly, and uses a clean educational aesthetic with clear feedback for correct and incorrect answers.</div>
+
+      <h3>2. The “Side-by-Side Quiz” Prompt</h3>
+      <div class="prompt-box">Create an interactive “Side-by-Side” vocabulary quiz using React.
+
+The Layout: Divide the screen into two panels. On the left, display a sentence with a blank and the dictionary definition. On the right, provide four multiple-choice buttons.
+
+The Features: Include a top progress bar, a score tracker, and a Hint badge that mentions the prefix meaning.
+
+The Content:
+Prefixes: [Insert Prefixes]
+Words: [Insert Word List]</div>
+
+      <h3>3. The “Sorting Game” Prompt</h3>
+      <div class="prompt-box">Create a “Prefix Sorting Challenge” in React.
+
+The Goal: Students see a word and must click one of three category buckets based on the prefix meaning.
+
+Buckets:
+[Prefix 1 Meaning]
+[Prefix 2 Meaning]
+[Prefix 3 Meaning]
+
+Words to Sort:
+[Insert Word List]
+
+UI Requirements: Provide immediate visual feedback with checkmarks and Xs, a progress bar, and a Victory Screen showing a summary of the sorted words at the end.</div>
+
+      <h3>4. The “Interactive Cloze” Prompt</h3>
+      <div class="prompt-box">Create an interactive “Cloze” fill-in-the-blank activity using React.
+
+The Layout: Display a series of sentences where the target vocabulary words are replaced by text input fields. At the top of the screen, include a dynamic Word Bank that strikes through words once the student has typed them into a blank.
+
+The Features: Include a Check Answers button that highlights correct entries in green and incorrect ones in red. For incorrect entries, display the correct word underneath. Include a Victory Modal with a trophy when the student achieves 100% accuracy.
+
+The Content:
+Prefixes: [Insert Prefixes]
+Words: [Insert Word List]</div>
+    </section>
+
+    <section class="section-card challenge">
+      <h2>The AI Champion Weekly Challenge</h2>
+      <p>We want to see what you are building!</p>
+      <p><strong>The Challenge:</strong> Use one of the prompts above to create an activity for your current unit.</p>
+      <p><strong>The Reward:</strong> Email us the link or a screenshot. We will feature the “Activity of the Week” in our next newsletter.</p>
+    </section>
+
+    <section class="section-card">
+      <h2>Tips for Best Results</h2>
+      <ul>
+        <li><strong>Provide Context:</strong> Add, “Please generate high-interest context sentences for middle-school students.”</li>
+        <li><strong>Specify Design:</strong> Mention terms like “Tailwind CSS” or “rounded corners” for a modern look.</li>
+        <li><strong>Mobile-First:</strong> Always ask the AI to make the apps responsive and touch-friendly for iPads or phones.</li>
+      </ul>
+
+      <p>See you in the halls,</p>
+      <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
+  </footer>
+</body>
+</html>
+```
