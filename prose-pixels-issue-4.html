@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prose & Pixels | Edition 4</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --code-bg: #f8f6fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .top-link {
+      display: inline-block;
+      margin: 0 8px 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .top-link:hover {
+      text-decoration: underline;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 760px;
+      color: rgba(255,255,255,0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1000px, 92%);
+      margin: 44px auto;
+    }
+
+    .hero-card,
+    .section-card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 28px rgba(50,24,92,0.08);
+    }
+
+    .hero-card {
+      border-top: 7px solid var(--gold);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--purple);
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      color: var(--purple);
+      margin-top: 20px;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .strategy-card {
+      background: var(--code-bg);
+      border: 1px solid rgba(79,38,131,0.15);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .strategy-card h3 {
+      margin-top: 0;
+    }
+
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px dashed rgba(79,38,131,0.3);
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 15px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .challenge {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255,198,47,0.65);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-bg);
+      color: var(--green-text);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="newsletters.html" class="top-link">← Newsletter Archive</a>
+    <a href="index.html" class="top-link">Return to Hub</a>
+
+    <br>
+
+    <span class="eyebrow">Edition 4</span>
+    <h1>Prose & Pixels</h1>
+    <p>AI + WIN = WIN: Using AI to build differentiated intervention activities in minutes instead of hours.</p>
+  </header>
+
+  <main>
+
+    <section class="hero-card">
+      <span class="badge">AI Coach Newsletter</span>
+
+      <h2>Edition 4: AI + WIN = WIN</h2>
+
+      <p>Hey Team!</p>
+
+      <p>
+        As we push through the spring semester, finding extra minutes in the day feels nearly impossible.
+        For Edition 4 of <strong>Prose & Pixels</strong>, we are tackling WIN (What I Need) time and
+        exploring how AI can handle the heavy lifting of planning differentiated activities.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <h2>1. The Coffee Break Plan</h2>
+
+      <p>
+        WIN time gives us a chance to meet students exactly where they are, but planning
+        differentiated activities on top of everything else can be exhausting.
+      </p>
+
+      <p>
+        Imagine using the few minutes it takes your morning coffee to brew to generate
+        an entire WIN lesson that is already leveled, differentiated, and ready to use.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <h2>2. The Paradigm Shift</h2>
+
+      <p>
+        Instead of viewing WIN time as another planning burden, think of AI as a
+        high-speed teaching assistant.
+      </p>
+
+      <p>
+        You become the facilitator while AI generates customized texts, activities,
+        interventions, and extension tasks that match student needs.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <h2>3 Ways AI Can Plan WIN Time For You</h2>
+
+      <div class="strategy-grid">
+
+        <div class="strategy-card">
+          <h3>Instant Leveled Texts</h3>
+
+          <p>
+            Paste a challenging article into AI and ask it to rewrite the text at
+            multiple reading levels.
+          </p>
+
+          <p>
+            Students can discuss the same content while reading at a level that matches
+            their needs.
+          </p>
+        </div>
+
+        <div class="strategy-card">
+          <h3>Targeted Skill Practice</h3>
+
+          <p>
+            Ask AI to generate short passages and questions focused on a specific skill.
+          </p>
+
+          <p>
+            Example: Main idea practice using a passage about a popular video game,
+            athlete, or current event.
+          </p>
+        </div>
+
+        <div class="strategy-card">
+          <h3>Automated Choice Boards</h3>
+
+          <p>
+            Give AI a standard and ask it to generate a three-option choice board.
+          </p>
+
+          <p>
+            One creative task, one analytical task, and one hands-on task instantly.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>Teacher Prompt of the Week</h2>
+
+      <div class="prompt-box">Act as a middle school intervention specialist.
+
+Write a highly engaging, 150-word mystery story about a missing artifact.
+
+Then generate 3 multiple-choice questions focusing on citing textual evidence.
+
+Provide an answer key with brief explanations for why the incorrect distractors are wrong.</div>
+    </section>
+
+    <section class="section-card">
+      <h2>Prompt Repository Quick Hits</h2>
+
+      <ul>
+        <li><strong>The Simplifier:</strong> "Take this text and rewrite it for a student reading at a 4th-grade level while keeping the core concepts intact."</li>
+
+        <li><strong>The Hook:</strong> "Write a 5-question trivia game about [Topic] to introduce our new unit."</li>
+
+        <li><strong>The Debate Starter:</strong> "Give me 3 controversial, middle-school-appropriate debate prompts related to [Standard/Topic] that require students to pick a side."</li>
+      </ul>
+    </section>
+
+    <section class="section-card">
+      <h2>Student Benefits</h2>
+
+      <p>
+        When AI generates targeted tasks, students receive immediate practice tailored to
+        their interests and skill levels.
+      </p>
+
+      <p>
+        AI can also act as a Socratic tutor, offering hints, explanations, and guided
+        questioning rather than simply providing answers.
+      </p>
+
+      <p>
+        This transforms intervention into active, self-paced learning.
+      </p>
+    </section>
+
+    <section class="section-card challenge">
+      <h2>The AI Champion Weekly Challenge</h2>
+
+      <p>
+        Try just one strategy from this newsletter.
+      </p>
+
+      <p>
+        Copy the Prompt of the Week, paste it into your favorite AI tool,
+        and use whatever it generates with students.
+      </p>
+
+      <p>
+        Let the AI do the work and reclaim a few minutes of your planning time.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <p>You've more than earned it.</p>
+
+      <p><strong>— Mrs. Pugh & Mr. Anderson</strong></p>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
+  </footer>
+</body>
+</html>
+```
