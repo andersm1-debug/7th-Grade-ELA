@@ -145,15 +145,39 @@
       margin-top: 0;
     }
 
+    .prompt-wrapper {
+      position: relative;
+      margin: 14px 0 20px;
+    }
+
     .prompt-box {
       background: var(--code-bg);
       border: 1px dashed rgba(79, 38, 131, 0.3);
       border-radius: 18px;
-      padding: 18px;
-      margin: 14px 0 20px;
+      padding: 52px 18px 18px;
       color: var(--muted);
       line-height: 1.6;
       white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.72rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .copy-btn:hover {
+      background: var(--purple-dark);
     }
 
     .challenge {
@@ -174,6 +198,37 @@
       margin-bottom: 12px;
     }
 
+    .issue-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin: 36px 0 10px;
+    }
+
+    .issue-nav a {
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(50, 24, 92, 0.12);
+    }
+
+    .issue-nav a:hover {
+      background: var(--purple-dark);
+    }
+
+    .issue-nav a:first-child {
+      justify-self: start;
+    }
+
+    .issue-nav a:last-child {
+      justify-self: end;
+    }
+
     footer {
       text-align: center;
       padding: 28px 20px 40px;
@@ -181,11 +236,26 @@
       font-size: 0.9rem;
     }
 
+    @media (max-width: 650px) {
+      .issue-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-nav a,
+      .issue-nav a:first-child,
+      .issue-nav a:last-child {
+        justify-self: stretch;
+      }
+    }
+
     @media (max-width: 600px) {
       header { padding: 48px 20px 42px; }
       main { margin-top: 28px; }
+
       .hero-card,
-      .section-card { padding: 22px; }
+      .section-card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
@@ -272,21 +342,29 @@
       <p>Use these prompts to build your own EOG roadmap or aligned question sets.</p>
 
       <h3>1. The “Test Analyzer” Prompt</h3>
-      <div class="prompt-box">I have attached a released standardized test for my grade and subject. Please analyze this document and decode:
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">I have attached a released standardized test for my grade and subject. Please analyze this document and decode:
 
 1. The most common question stems used.
 2. The Depth of Knowledge levels most frequently assessed.
 3. The recurring academic vocabulary used in the questions and answer choices.
 
 Once you have decoded it, confirm you understand the rigor and style so I can give you a new text or unit topic to create strategically aligned questions for.</div>
+      </div>
 
       <h3>2. The “6-Week EOG Roadmap” Prompt</h3>
-      <div class="prompt-box">Act as an expert instructional coach. I need to build a comprehensive 6-week EOG review plan for my [Grade/Subject] students. We meet [Number] times a week for [Minutes] per class.
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Act as an expert instructional coach. I need to build a comprehensive 6-week EOG review plan for my [Grade/Subject] students. We meet [Number] times a week for [Minutes] per class.
 
 Please create a week-by-week pacing guide that targets the most heavily tested standards in my subject, based on my grade-level analysis. Include a weekly focus, whole-group and small-group remediation strategies, and interactive review activities. Dedicate Week 6 to test stamina and confidence-building.</div>
+      </div>
 
       <h3>3. The “EOG Question Generator” Prompt</h3>
-      <div class="prompt-box">Now, please read the following text: [Insert Text Here].
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Now, please read the following text: [Insert Text Here].
 
 Generate 5 multiple-choice questions based on this text. The questions must perfectly mimic the style, stems, and rigor of the decoded released test I uploaded earlier.
 
@@ -294,9 +372,13 @@ Requirements:
 1. Focus on Depth of Knowledge levels 2 and 3.
 2. Include at least one question asking the student to infer meaning from a specific paragraph.
 3. Provide an Answer Key at the bottom that includes a brief rationale for why the correct answer is right, and why the other options are common distractors.</div>
+      </div>
 
       <h3>4. The “Test Anxiety Reducer” Prompt</h3>
-      <div class="prompt-box">Provide 3 quick, 5-minute mindfulness or team-building activities I can do with my students right before we begin a standardized test. The goal is to lower their anxiety, boost their confidence, and get them focused. Keep them simple and require no materials.</div>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Provide 3 quick, 5-minute mindfulness or team-building activities I can do with my students right before we begin a standardized test. The goal is to lower their anxiety, boost their confidence, and get them focused. Keep them simple and require no materials.</div>
+      </div>
     </section>
 
     <section class="section-card challenge">
@@ -309,11 +391,33 @@ Requirements:
       <p>See you in the halls,</p>
       <p><strong>Your AI Champions, Mrs. Pugh & Mr. Anderson</strong></p>
     </section>
+
+    <nav class="issue-nav">
+      <a href="prose-pixels-issue-2.html">← Previous Issue</a>
+      <a href="newsletters.html">Newsletter Archive</a>
+      <a href="prose-pixels-issue-4.html">Next Issue →</a>
+    </nav>
   </main>
 
   <footer>
     &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
   </footer>
+
+  <script>
+    function copyPrompt(button) {
+      const promptText = button.nextElementSibling.innerText;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        const originalText = button.innerText;
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+          button.innerText = originalText;
+        }, 1600);
+      }).catch(() => {
+        alert("Clipboard access denied. Please manually copy the prompt.");
+      });
+    }
+  </script>
 </body>
 </html>
-```
