@@ -83,7 +83,7 @@
     header p {
       margin: 18px auto 0;
       max-width: 760px;
-      color: rgba(255,255,255,0.86);
+      color: rgba(255, 255, 255, 0.86);
       font-size: 1.08rem;
       line-height: 1.6;
     }
@@ -95,12 +95,12 @@
 
     .hero-card,
     .section-card {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--card-border);
       border-radius: 24px;
       padding: 28px;
       margin-bottom: 24px;
-      box-shadow: 0 12px 28px rgba(50,24,92,0.08);
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
     }
 
     .hero-card {
@@ -115,8 +115,9 @@
     }
 
     h3 {
+      margin: 24px 0 10px;
       color: var(--purple);
-      margin-top: 20px;
+      font-size: 1.15rem;
     }
 
     p,
@@ -143,7 +144,7 @@
 
     .strategy-card {
       background: var(--code-bg);
-      border: 1px solid rgba(79,38,131,0.15);
+      border: 1px solid rgba(79, 38, 131, 0.15);
       border-radius: 18px;
       padding: 18px;
     }
@@ -152,20 +153,44 @@
       margin-top: 0;
     }
 
+    .prompt-wrapper {
+      position: relative;
+      margin: 14px 0 20px;
+    }
+
     .prompt-box {
       background: var(--code-bg);
-      border: 1px dashed rgba(79,38,131,0.3);
+      border: 1px dashed rgba(79, 38, 131, 0.3);
       border-radius: 18px;
-      padding: 18px;
-      margin-top: 15px;
-      white-space: pre-wrap;
-      line-height: 1.6;
+      padding: 52px 18px 18px;
       color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.72rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .copy-btn:hover {
+      background: var(--purple-dark);
     }
 
     .challenge {
       background: linear-gradient(135deg, #ffffff, #fff7dc);
-      border-color: rgba(255,198,47,0.65);
+      border-color: rgba(255, 198, 47, 0.65);
     }
 
     .badge {
@@ -181,11 +206,73 @@
       margin-bottom: 12px;
     }
 
+    .issue-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin: 36px 0 10px;
+    }
+
+    .issue-nav a {
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(50, 24, 92, 0.12);
+    }
+
+    .issue-nav a:hover {
+      background: var(--purple-dark);
+    }
+
+    .issue-nav a:first-child {
+      justify-self: start;
+    }
+
+    .issue-nav a:last-child {
+      justify-self: end;
+    }
+
     footer {
       text-align: center;
       padding: 28px 20px 40px;
       color: var(--muted);
       font-size: 0.9rem;
+    }
+
+    @media (max-width: 650px) {
+      .issue-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-nav span {
+        display: none;
+      }
+
+      .issue-nav a,
+      .issue-nav a:first-child,
+      .issue-nav a:last-child {
+        justify-self: stretch;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .hero-card,
+      .section-card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
@@ -194,175 +281,153 @@
   <header>
     <a href="newsletters.html" class="top-link">← Newsletter Archive</a>
     <a href="index.html" class="top-link">Return to Hub</a>
-
-    <br>
-
+    <br />
     <span class="eyebrow">Edition 4</span>
     <h1>Prose & Pixels</h1>
-    <p>AI + WIN = WIN: Using AI to build differentiated intervention activities in minutes instead of hours.</p>
+    <p>AI + WIN = WIN: using AI to build differentiated intervention activities in minutes instead of hours.</p>
   </header>
 
   <main>
-
     <section class="hero-card">
       <span class="badge">AI Coach Newsletter</span>
-
       <h2>Edition 4: AI + WIN = WIN</h2>
 
       <p>Hey Team!</p>
 
-      <p>
-        As we push through the spring semester, finding extra minutes in the day feels nearly impossible.
-        For Edition 4 of <strong>Prose & Pixels</strong>, we are tackling WIN (What I Need) time and
-        exploring how AI can handle the heavy lifting of planning differentiated activities.
-      </p>
+      <p>As we push through the spring semester, finding extra minutes in the day feels nearly impossible. For Edition 4 of <strong>Prose & Pixels</strong>, we are tackling the daily WIN block — specifically, how AI can handle the heavy lifting of designing these activities so you can focus your energy where it matters most.</p>
     </section>
 
     <section class="section-card">
       <h2>1. The Coffee Break Plan</h2>
 
-      <p>
-        WIN time gives us a chance to meet students exactly where they are, but planning
-        differentiated activities on top of everything else can be exhausting.
-      </p>
+      <p>WIN time is our chance to reach kids exactly where they are, but finding the time to draw up a differentiated playbook on top of your core classes can be incredibly time-consuming.</p>
 
-      <p>
-        Imagine using the few minutes it takes your morning coffee to brew to generate
-        an entire WIN lesson that is already leveled, differentiated, and ready to use.
-      </p>
+      <p>You already leave it all on the field for your primary lessons, and your planning time is finite. What if you could reclaim that time?</p>
+
+      <p>In the few minutes it takes to pack a reusable K-Cup and let your morning mug brew, you could have your entire WIN block planned, leveled, and ready to deploy.</p>
     </section>
 
     <section class="section-card">
       <h2>2. The Paradigm Shift</h2>
 
-      <p>
-        Instead of viewing WIN time as another planning burden, think of AI as a
-        high-speed teaching assistant.
-      </p>
+      <p>What if we flipped the script?</p>
 
-      <p>
-        You become the facilitator while AI generates customized texts, activities,
-        interventions, and extension tasks that match student needs.
-      </p>
+      <p>Instead of WIN time being a drain on your planning period, imagine it as the space where you deploy a high-speed teaching assistant. AI is not just another tech initiative to learn; it is a co-teacher ready to take the heavy lifting of differentiation completely off your plate.</p>
+
+      <p>You step back into the role of facilitator and let AI build the custom materials your students need.</p>
     </section>
 
     <section class="section-card">
       <h2>3 Ways AI Can Plan WIN Time For You</h2>
 
       <div class="strategy-grid">
-
         <div class="strategy-card">
           <h3>Instant Leveled Texts</h3>
-
-          <p>
-            Paste a challenging article into AI and ask it to rewrite the text at
-            multiple reading levels.
-          </p>
-
-          <p>
-            Students can discuss the same content while reading at a level that matches
-            their needs.
-          </p>
+          <p>Found a strong article but know half your WIN group will struggle with the vocabulary?</p>
+          <p>Paste it into your AI tool and ask it to rewrite the text at a 5th-grade and a 9th-grade reading level. Now the whole group can discuss the same topic while reading at their own comfort level.</p>
         </div>
 
         <div class="strategy-card">
           <h3>Targeted Skill Practice</h3>
-
-          <p>
-            Ask AI to generate short passages and questions focused on a specific skill.
-          </p>
-
-          <p>
-            Example: Main idea practice using a passage about a popular video game,
-            athlete, or current event.
-          </p>
+          <p>Need a quick intervention on a specific skill?</p>
+          <p>Ask AI to write a high-interest paragraph about a trending video game, current sports star, or student-friendly topic, followed by targeted questions on skills like main idea or citing evidence.</p>
         </div>
 
         <div class="strategy-card">
           <h3>Automated Choice Boards</h3>
-
-          <p>
-            Give AI a standard and ask it to generate a three-option choice board.
-          </p>
-
-          <p>
-            One creative task, one analytical task, and one hands-on task instantly.
-          </p>
+          <p>Type in your focus standard and ask AI to generate a three-option choice board.</p>
+          <p>For example: one creative task, one analytical task, and one hands-on task. Instant differentiated engagement with almost no formatting required.</p>
         </div>
-
       </div>
     </section>
 
     <section class="section-card">
       <h2>Teacher Prompt of the Week</h2>
 
-      <div class="prompt-box">Act as a middle school intervention specialist.
+      <p>Copy and paste this prompt when you need a quick WIN activity focused on textual evidence.</p>
 
-Write a highly engaging, 150-word mystery story about a missing artifact.
-
-Then generate 3 multiple-choice questions focusing on citing textual evidence.
-
-Provide an answer key with brief explanations for why the incorrect distractors are wrong.</div>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Act as a middle school intervention specialist. Write a highly engaging, 150-word mystery story about a missing artifact. Then, generate 3 multiple-choice questions focusing on citing textual evidence. Provide an answer key with brief explanations for why the incorrect distractors are wrong.</div>
+      </div>
     </section>
 
     <section class="section-card">
       <h2>Prompt Repository Quick Hits</h2>
 
-      <ul>
-        <li><strong>The Simplifier:</strong> "Take this text and rewrite it for a student reading at a 4th-grade level while keeping the core concepts intact."</li>
+      <p>Keep these quick-hit prompts in your back pocket for zero-prep WIN days.</p>
 
-        <li><strong>The Hook:</strong> "Write a 5-question trivia game about [Topic] to introduce our new unit."</li>
+      <h3>The Simplifier</h3>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Take this text and rewrite it for a student reading at a 4th-grade level, keeping the core concepts intact.</div>
+      </div>
 
-        <li><strong>The Debate Starter:</strong> "Give me 3 controversial, middle-school-appropriate debate prompts related to [Standard/Topic] that require students to pick a side."</li>
-      </ul>
+      <h3>The Hook</h3>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Write a 5-question trivia game about [Topic] to introduce our new unit.</div>
+      </div>
+
+      <h3>The Debate Starter</h3>
+      <div class="prompt-wrapper">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+        <div class="prompt-box">Give me 3 controversial, middle-school-appropriate debate prompts related to [Standard/Topic] that require students to pick a side.</div>
+      </div>
     </section>
 
     <section class="section-card">
       <h2>Student Benefits</h2>
 
-      <p>
-        When AI generates targeted tasks, students receive immediate practice tailored to
-        their interests and skill levels.
-      </p>
+      <p>When we let AI generate targeted tasks, students thrive. They get immediate, low-stakes practice tailored to their exact interests and skill needs.</p>
 
-      <p>
-        AI can also act as a Socratic tutor, offering hints, explanations, and guided
-        questioning rather than simply providing answers.
-      </p>
+      <p>Students can also use AI as a Socratic tutor by asking it for hints or step-by-step explanations rather than simply waiting for the right answer.</p>
 
-      <p>
-        This transforms intervention into active, self-paced learning.
-      </p>
+      <p>That turns intervention into active, self-paced discovery.</p>
     </section>
 
     <section class="section-card challenge">
       <h2>The AI Champion Weekly Challenge</h2>
 
-      <p>
-        Try just one strategy from this newsletter.
-      </p>
+      <p>Our challenge to you this week is gentle: try just one of these strategies.</p>
 
-      <p>
-        Copy the Prompt of the Week, paste it into your favorite AI tool,
-        and use whatever it generates with students.
-      </p>
+      <p><strong>The Challenge:</strong> Grab the Prompt of the Week, paste it into your AI tool, and use exactly what it gives you.</p>
 
-      <p>
-        Let the AI do the work and reclaim a few minutes of your planning time.
-      </p>
+      <p><strong>The Reward:</strong> Let AI do the work so you can buy yourself 15 minutes of peace during your prep period today.</p>
+
+      <p>You have more than earned it.</p>
     </section>
 
     <section class="section-card">
-      <p>You've more than earned it.</p>
-
       <p><strong>— Mrs. Pugh & Mr. Anderson</strong></p>
     </section>
 
+    <nav class="issue-nav">
+      <a href="prose-pixels-issue-3.html">← Previous Issue</a>
+      <a href="newsletters.html">Newsletter Archive</a>
+      <span></span>
+    </nav>
   </main>
 
   <footer>
     &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
   </footer>
+
+  <script>
+    function copyPrompt(button) {
+      const promptText = button.nextElementSibling.innerText;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        const originalText = button.innerText;
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+          button.innerText = originalText;
+        }, 1600);
+      }).catch(() => {
+        alert("Clipboard access denied. Please manually copy the prompt.");
+      });
+    }
+  </script>
 </body>
 </html>
-```
