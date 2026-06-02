@@ -1,0 +1,292 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prose & Pixels | AI Newsletters</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .hub-link {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hub-link:hover {
+      text-decoration: underline;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1150px, 92%);
+      margin: 44px auto;
+    }
+
+    .intro-panel {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    .intro-panel h2 {
+      margin: 0 0 10px;
+      color: var(--purple);
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+    }
+
+    .intro-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 245px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
+
+    .issue-number {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    .card h2 {
+      margin: 8px 0 10px;
+      color: var(--purple);
+      font-size: 1.3rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .home-card {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.55);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <br />
+    <span class="eyebrow">AI Integration Newsletter</span>
+    <h1>Prose & Pixels</h1>
+    <p>Quick AI wins, classroom-ready prompts, and practical ideas for saving teachers time while boosting student engagement.</p>
+  </header>
+
+  <main>
+    <section class="intro-panel">
+      <h2>Newsletter Archive</h2>
+      <p>Browse each issue below. Replace the # symbols with your final PDF or newsletter links when you are ready.</p>
+    </section>
+
+    <div class="container">
+
+      <a href="index.html" class="card home-card">
+        <div>
+          <div class="issue-number">Home</div>
+          <h2>Return to Hub</h2>
+          <p>Go back to the main 7th Grade ELA Hub.</p>
+        </div>
+        <span class="status-badge">Home</span>
+      </a>
+
+      <a href="#" class="card">
+        <div>
+          <div class="issue-number">Edition 1</div>
+          <h2>Vocabulary Innovation</h2>
+          <p>Use AI to turn vocabulary lists into interactive practice, games, sorting challenges, and cloze activities.</p>
+        </div>
+        <span class="status-badge">Newsletter</span>
+      </a>
+
+      <a href="#" class="card">
+        <div>
+          <div class="issue-number">Edition 2</div>
+          <h2>AI as a Writing Partner</h2>
+          <p>Explore ways AI can support drafting, revision, exemplars, rubric feedback, and student writing voice.</p>
+        </div>
+        <span class="status-badge">Newsletter</span>
+      </a>
+
+      <a href="#" class="card">
+        <div>
+          <div class="issue-number">Edition 3</div>
+          <h2>Decoding the EOGs</h2>
+          <p>Use AI to analyze released tests, identify question patterns, and build strategic review materials.</p>
+        </div>
+        <span class="status-badge">Newsletter</span>
+      </a>
+
+      <a href="#" class="card">
+        <div>
+          <div class="issue-number">Edition 4</div>
+          <h2>AI + WIN = WIN!</h2>
+          <p>Plan differentiated WIN blocks with leveled texts, targeted skill practice, choice boards, and quick interventions.</p>
+        </div>
+        <span class="status-badge">Newsletter</span>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Prose & Pixels | AI Coaches Mrs. Pugh & Mr. Anderson
+  </footer>
+</body>
+</html>
+```
