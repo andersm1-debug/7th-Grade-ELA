@@ -1,13 +1,190 @@
-<div style="text-align: center; max-width: 1100px; margin: 0 auto;">
-  
-  <!-- Back to ELA Hub Button -->
-  <div style="margin-bottom: 20px;">
-    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/" style="background-color: #039be5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-family: sans-serif; font-weight: bold; font-size: 16px; display: inline-block;">
-      ⬅ Return to ELA Hub
-    </a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ELA Calendar | 7th Grade ELA Hub</title>
 
-  <!-- Google Calendar Embed -->
-  <iframe src="https://calendar.google.com/calendar/embed?height=700&wkst=1&ctz=America%2FNew_York&showPrint=0&src=Y18xYTg3ZWEyNDNhMTA4MzliYTExNjdlZjA0NGNiZTE5ZWZmMDQyNWY1YzdjNmE2NjQ1OTUzMDBkMDI2NjgwNWRmQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5" style="border:solid 1px #777" width="1100" height="700" frameborder="0" scrolling="no"></iframe>
-  
-</div>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    .hub-link {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hub-link:hover {
+      text-decoration: underline;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 720px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1150px, 92%);
+      margin: 44px auto;
+    }
+
+    .calendar-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      overflow: hidden;
+    }
+
+    .calendar-header {
+      margin-bottom: 20px;
+    }
+
+    .calendar-header h2 {
+      margin: 0 0 8px;
+      color: var(--purple);
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+    }
+
+    .calendar-header p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .calendar-frame {
+      width: 100%;
+      height: 700px;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .calendar-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .calendar-card {
+        padding: 18px;
+      }
+
+      .calendar-frame {
+        height: 620px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="hub-link">← Return to Hub</a>
+    <br />
+    <span class="eyebrow">Class Calendar</span>
+    <h1>ELA Calendar</h1>
+    <p>Check upcoming class activities, deadlines, reminders, and important ELA dates.</p>
+  </header>
+
+  <main>
+    <section class="calendar-card">
+      <div class="calendar-header">
+        <h2>Upcoming ELA Events</h2>
+        <p>Use the calendar below to keep track of what is coming up in class.</p>
+      </div>
+
+      <div class="calendar-frame">
+        <iframe src="https://calendar.google.com/calendar/embed?height=700&wkst=1&ctz=America%2FNew_York&showPrint=0&src=Y18xYTg3ZWEyNDNhMTA4MzliYTExNjdlZjA0NGNiZTE5ZWZmMDQyNWY1YzdjNmE2NjQ1OTUzMDBkMDI2NjgwNWRmQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 ELA with Mr. A | Class Calendar
+  </footer>
+</body>
+</html>
