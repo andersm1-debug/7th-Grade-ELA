@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Philosopher", hint: "Root: PHIL (Love)", definition: "A person who studies ideas about knowledge, truth, and the nature of the universe", sentence: "The ancient Greek ______ spent his life questioning the meaning of justice.", options: ["Deport", "Philosopher", "Reporter", "Commit"] },
+            { word: "Deport", hint: "Root: PORT (Carry)", definition: "To expel a foreigner from a country, typically on grounds of illegal status", sentence: "The government had to ______ the individual for violating his visa terms.", options: ["Deport", "Import", "Philology", "Submit"] },
+            { word: "Philanthropist", hint: "Root: PHIL (Love)", definition: "A person who promotes the welfare of others, especially by generous donations", sentence: "The wealthy ______ donated millions to build a new children's hospital.", options: ["Remit", "Portable", "Philanthropist", "Permit"] },
+            { word: "Permit", hint: "Root: MIS / MIT (Send)", definition: "To formally allow someone to do something; to give authorization", sentence: "You must have a signed ______ to go on the field trip next week.", options: ["Permit", "Reporter", "Mission", "Bibliophile"] },
+            { word: "Reporter", hint: "Root: PORT (Carry)", definition: "A person who gathers and reports news for media", sentence: "The ______ stood in the rain to give a live update on the hurricane.", options: ["Intermission", "Remiss", "Philosopher", "Reporter"] },
+            { word: "Remit", hint: "Root: MIS / MIT (Send)", definition: "To cancel a debt or punishment; to send money in payment", sentence: "Please ______ your payment to the address listed on the invoice.", options: ["Remit", "Submit", "Deport", "Philanthropist"] },
+            { word: "Import", hint: "Root: PORT (Carry)", definition: "To bring goods into a country from abroad for sale", sentence: "The United States continues to ______ coffee from countries in South America.", options: ["Philology", "Import", "Commit", "Permit"] },
+            { word: "Philology", hint: "Root: PHIL (Love)", definition: "The study of literary texts and written records to determine meaning", sentence: "Her interest in ______ led her to translate ancient manuscripts from the Middle Ages.", options: ["Mission", "Remiss", "Philology", "Reporter"] },
+            { word: "Mission", hint: "Root: MIS / MIT (Send)", definition: "An important assignment involving travel; a strong vocation", sentence: "The astronauts were focused on their ______ to collect rock samples from Mars.", options: ["Mission", "Philosopher", "Intermission", "Portable"] },
+            { word: "Bibliophile", hint: "Root: PHIL (Love)", definition: "A person who loves or collects books", sentence: "As a true ______, she had floor-to-ceiling shelves of fantasy novels in every room of her house.", options: ["Deport", "Bibliophile", "Import", "Remit"] },
+            { word: "Remiss", hint: "Root: MIS / MIT (Send)", definition: "Lacking care or attention to duty; negligent", sentence: "I would be ______ if I didn't thank everyone who helped me win this award.", options: ["Philanthropist", "Remiss", "Commit", "Submit"] },
+            { word: "Submit", hint: "Root: MIS / MIT (Send)", definition: "To yield to authority; to present a proposal for judgment", sentence: "Don't forget to ______ your final essay before the midnight deadline.", options: ["Submit", "Permit", "Reporter", "Bibliophile"] },
+            { word: "Intermission", hint: "Root: MIS / MIT (Send)", definition: "A pause or break between parts of a play, movie, or concert", sentence: "During the ______, the audience went to the lobby to buy snacks.", options: ["Portable", "Philology", "Intermission", "Mission"] },
+            { word: "Portable", hint: "Root: PORT (Carry)", definition: "Able to be easily carried or moved", sentence: "I bought a ______ charger so I wouldn't run out of battery while taking pictures of my dogs, Sara and Jamie, on our hike.", options: ["Commit", "Deport", "Remiss", "Portable"] },
+            { word: "Commit", hint: "Root: MIS / MIT (Send)", definition: "To pledge or bind a person to a policy; to consign for safekeeping", sentence: "If you want to make the team, you have to ______ to attending every practice.", options: ["Commit", "Import", "Philosopher", "Remit"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
