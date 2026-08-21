@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Contrast", hint: "Prefix: CONTRA- (Against)", definition: "Showing how things are different", sentence: "In your essay, you should ______ the two main characters to show their differences.", options: ["Enzyme", "Contrast", "Embellish", "Bipartisan"] },
+            { word: "Enable", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "To give someone the power to do something", sentence: "A special password will ______ you to access the high-security files.", options: ["Contraption", "Enable", "Bifocals", "Contradict"] },
+            { word: "Enlighten", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "To inform or give new insight; to create illumination", sentence: "He hoped the documentary would ______ the audience about climate change.", options: ["Enlighten", "Contraband", "Bicep", "Engrave"] },
+            { word: "Engrave", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "To cut or carve onto a hard surface", sentence: "The jeweler will ______ the couple's initials inside the gold ring.", options: ["Bicameral", "Embark", "Engrave", "Contrast"] },
+            { word: "Biennial", hint: "Prefix: BI- (Two)", definition: "Happening every two years", sentence: "The ______ art festival only occurs in even-numbered years.", options: ["Biennial", "Enable", "Contradict", "Embellish"] },
+            { word: "Bicameral", hint: "Prefix: BI- (Two)", definition: "Having two parts or two chambers", sentence: "The U.S. Congress is a ______ legislature, consisting of the House and Senate.", options: ["Enlighten", "Bipartisan", "Bicameral", "Contraption"] },
+            { word: "Contraption", hint: "Prefix: CONTRA- (Against)", definition: "A mechanical device", sentence: "He built a strange ______ made of gears and springs to flip his pancakes.", options: ["Contraband", "Bifocals", "Contraption", "Enable"] },
+            { word: "Contraband", hint: "Prefix: CONTRA- (Against)", definition: "Goods that have been imported or exported illegally", sentence: "Customs officers searched the ship for ______ hidden in the cargo.", options: ["Embark", "Contrast", "Bicep", "Contraband"] },
+            { word: "Bipartisan", hint: "Prefix: BI- (Two)", definition: "In politics, referring to two political parties", sentence: "The new law passed with ______ support from both sides of the aisle.", options: ["Enzyme", "Bipartisan", "Engrave", "Biennial"] },
+            { word: "Embark", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "To board a ship, aircraft, or other vehicle", sentence: "The passengers were ready to ______ on their long journey across the Atlantic.", options: ["Embark", "Contradict", "Bicameral", "Enlighten"] },
+            { word: "Embellish", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "To make more attractive by adding decorative details", sentence: "The storyteller would often ______ the facts to make the tale more exciting.", options: ["Contraption", "Embellish", "Bipartisan", "Contraband"] },
+            { word: "Bifocals", hint: "Prefix: BI- (Two)", definition: "Eyeglasses with lenses having two different sections for seeing", sentence: "Since he had trouble seeing both near and far, his doctor prescribed ______.", options: ["Biennial", "Enable", "Bifocals", "Embark"] },
+            { word: "Bicep", hint: "Prefix: BI- (Two)", definition: "Skeletal muscle having two origins; flexes the forearm", sentence: "He did curls at the gym to strengthen his ______ muscle.", options: ["Contrast", "Bicep", "Enzyme", "Engrave"] },
+            { word: "Enzyme", hint: "Prefix: EN/EM- (In/Into/Cause to)", definition: "Protein that increases the rate of chemical reactions", sentence: "Saliva contains an ______ that helps start the process of digestion.", options: ["Embellish", "Contradict", "Enzyme", "Bicameral"] },
+            { word: "Contradict", hint: "Prefix: CONTRA- (Against)", definition: "To deny the truth by asserting the opposite", sentence: "You should not ______ your own testimony if you want people to believe you.", options: ["Bipartisan", "Contradict", "Contraband", "Bifocals"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
