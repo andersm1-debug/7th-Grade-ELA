@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 15 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Interfere", hint: "Prefix: INTER- (Between)", definition: "To get involved so as to hinder an action", sentence: "Please do not ______ with the ongoing investigation.", options: ["Nonentity", "Interfere", "Midterms", "Interim"] },
+            { word: "Interim", hint: "Prefix: INTER- (Between)", definition: "The time between one process, person, or event", sentence: "In the ______ between presidents, the vice president managed the office.", options: ["Interrupt", "Interim", "Nonfiction", "Midrange"] },
+            { word: "Interrupt", hint: "Prefix: INTER- (Between)", definition: "Unexpectedly cause a person to stop what they are doing", sentence: "It is rude to ______ someone while they are giving a speech.", options: ["Interrupt", "Intermittent", "Nonpartisan", "Midiron"] },
+            { word: "Intermittent", hint: "Prefix: INTER- (Between)", definition: "Happening at irregular intervals", sentence: "The radio signal was ______ because of the heavy thunderstorm.", options: ["Mediocre", "Nondescript", "International", "Intermittent"] },
+            { word: "International", hint: "Prefix: INTER- (Between)", definition: "Between other countries", sentence: "The ______ airport serves travelers from all over the world.", options: ["Noncombatants", "Interfere", "International", "Mediation"] },
+            { word: "Midterms", hint: "Prefix: MID/MEDI- (Middle)", definition: "Middle of an academic term", sentence: "I need to study all weekend for my history ______.", options: ["Midterms", "Nonentity", "Interrupt", "Midrange"] },
+            { word: "Mediocre", hint: "Prefix: MID/MEDI- (Middle)", definition: "Only moderate quality; not very good", sentence: "The food at the new restaurant was only ______; I've had much better.", options: ["Interim", "Mediocre", "Nonpartisan", "Midiron"] },
+            { word: "Mediation", hint: "Prefix: MID/MEDI- (Middle)", definition: "Negotiation to solve a dispute conducted by an impartial party", sentence: "The two companies went to ______ to avoid a costly lawsuit.", options: ["Nondescript", "Intermittent", "Mediation", "Nonfiction"] },
+            { word: "Midrange", hint: "Prefix: MID/MEDI- (Middle)", definition: "Middle of a series", sentence: "The car is priced in the ______, making it affordable for many families.", options: ["International", "Midrange", "Interfere", "Noncombatants"] },
+            { word: "Midiron", hint: "Prefix: MID/MEDI- (Middle)", definition: "Golf club used for middle distance shots", sentence: "The golfer selected a ______ for his second shot on the par four.", options: ["Midiron", "Interrupt", "Mediocre", "Nonentity"] },
+            { word: "Nonfiction", hint: "Prefix: NON- (Not)", definition: "Writing based on facts, real events, and real people", sentence: "I enjoy reading ______ about historical figures and scientific discoveries.", options: ["Interim", "Mediation", "Nonpartisan", "Nonfiction"] },
+            { word: "Noncombatants", hint: "Prefix: NON- (Not)", definition: "Used to describe citizens in times of war", sentence: "International law is designed to protect ______ during military conflicts.", options: ["Midterms", "Nondescript", "Noncombatants", "Intermittent"] },
+            { word: "Nonpartisan", hint: "Prefix: NON- (Not)", definition: "Does not support the ideas of any political party", sentence: "The group is ______ and focuses on voting rights for all citizens.", options: ["Midrange", "Nonpartisan", "Interfere", "International"] },
+            { word: "Nondescript", hint: "Prefix: NON- (Not)", definition: "Appearance is ordinary, dull, and not attractive", sentence: "The spy lived in a ______ house that blended in with the rest of the street.", options: ["Nondescript", "Noncombatants", "Midiron", "Interrupt"] },
+            { word: "Nonentity", hint: "Prefix: NON- (Not)", definition: "The state of not existing", sentence: "The ghost in the story was a ______ that could not be seen or felt.", options: ["Mediocre", "Nonfiction", "Nonentity", "Interim"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
