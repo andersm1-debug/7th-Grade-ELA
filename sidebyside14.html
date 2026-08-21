@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Irrelevant", hint: "Prefix: IN/IM/IL/IR- (Not)", definition: "Not to the point; not applicable or pertinent", sentence: "That comment is ______ to the current discussion about ancient Egypt.", options: ["Irrelevant", "Impossible", "Monologue", "Microchip"] },
+            { word: "Incapable", hint: "Prefix: IN/IM/IL/IR- (Not)", definition: "Not able to do something; unskilled; unable", sentence: "Without a ladder, the cat was ______ of reaching the bird's nest.", options: ["Micromanage", "Incapable", "Monotony", "Illicit"] },
+            { word: "Impossible", hint: "Prefix: IN/IM/IL/IR- (Not)", definition: "Not able to occur, exist, or be done", sentence: "Getting a perfect score on the hardest test in the world felt ______.", options: ["Monotheistic", "Incompetent", "Impossible", "Microscope"] },
+            { word: "Illicit", hint: "Prefix: IN/IM/IL/IR- (Not)", definition: "Not permitted, unlawful, or improper", sentence: "The detective discovered an ______ trade occurring in the docks at midnight.", options: ["Illicit", "Monopoly", "Microcosm", "Irrelevant"] },
+            { word: "Incompetent", hint: "Prefix: IN/IM/IL/IR- (Not)", definition: "Not having or showing the necessary skills to do something successfully", sentence: "The ______ repairman actually made the broken sink leak even more.", options: ["Microscope", "Incompetent", "Monotone", "Incapable"] },
+            { word: "Microscope", hint: "Prefix: MICRO- (Small)", definition: "Device that produces magnified images of structures too small to see with the unaided eye", sentence: "In science lab, we used a ______ to look at the patterns on a fly's wing.", options: ["Monologue", "Impossible", "Microscope", "Microchip"] },
+            { word: "Microchip", hint: "Prefix: MICRO- (Small)", definition: "A miniature electronic circuit used to control computers", sentence: "The new ______ in the computer allows it to process data twice as fast.", options: ["Microwave", "Illicit", "Microchip", "Monotony"] },
+            { word: "Microwave", hint: "Prefix: MICRO- (Small)", definition: "A short electromagnetic wave used to cook or heat food", sentence: "If you are in a rush, you can heat your dinner in the ______.", options: ["Incompetent", "Microwave", "Monopoly", "Microcosm"] },
+            { word: "Micromanage", hint: "Prefix: MICRO- (Small)", definition: "To manage or control with excessive attention to minor details", sentence: "I prefer a teacher who gives us freedom rather than one who tries to ______ us.", options: ["Irrelevant", "Monotheistic", "Micromanage", "Monotone"] },
+            { word: "Microcosm", hint: "Prefix: MICRO- (Small)", definition: "A miniature world; a system viewed as a model of a larger one", sentence: "The classroom environment is often a ______ of the larger society.", options: ["Microcosm", "Monologue", "Impossible", "Incapable"] },
+            { word: "Monologue", hint: "Prefix: MONO- (One)", definition: "A dramatic sketch performed by one actor", sentence: "The actor rehearsed his long ______ for the play's final scene.", options: ["Microchip", "Monologue", "Illicit", "Monotony"] },
+            { word: "Monotone", hint: "Prefix: MONO- (One)", definition: "A constant pitch or tone of voice", sentence: "The robot spoke in a boring ______ that made the students sleepy.", options: ["Microwave", "Monotone", "Incompetent", "Irrelevant"] },
+            { word: "Monotheistic", hint: "Prefix: MONO- (One)", definition: "Relating to the belief that there is only one God", sentence: "Christianity, Islam, and Judaism are all ______ religions.", options: ["Monotheistic", "Microcosm", "Impossible", "Micromanage"] },
+            { word: "Monopoly", hint: "Prefix: MONO- (One)", definition: "Complete control of a product or business by one person or group", sentence: "The electric company has a ______ because there are no other power providers.", options: ["Incapable", "Monopoly", "Monologue", "Microscope"] },
+            { word: "Monotony", hint: "Prefix: MONO- (One)", definition: "Tedious sameness or repetitiveness", sentence: "The ______ of the long highway drive was broken when we saw the mountains.", options: ["Illicit", "Microchip", "Monotony", "Monotheistic"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
