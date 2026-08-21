@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Indigenous", hint: "Root: GENE (Birth / Origin)", definition: "Born in; Grown naturally in the region", sentence: "The kangaroo is ______ to Australia and is found nowhere else in the wild.", options: ["Illumination", "Indigenous", "Egregious", "Telepathy"] },
+            { word: "Gregarious", hint: "Root: GREG (Group / Herd)", definition: "Outgoing; sociable; living with the herd", sentence: "Because she is so ______, she is always surrounded by friends at parties.", options: ["Gregarious", "Telescope", "Generation", "Desegregate"] },
+            { word: "Illumination", hint: "Root: LUC / LUM (Light)", definition: "Creating light", sentence: "The fireworks provided a brilliant ______ of the night sky.", options: ["Generic", "Telephone", "Illumination", "Translucent"] },
+            { word: "Desegregate", hint: "Root: GREG (Group / Herd)", definition: "To do away with separate groups; to bring together", sentence: "The landmark ruling required the city to ______ its public schools.", options: ["Generous", "Desegregate", "Luminary", "Gregarious"] },
+            { word: "Egregious", hint: "Root: GREG (Group / Herd)", definition: "Standing out from the group in an unfavorable way", sentence: "The player was ejected for an ______ foul that broke the rules of the game.", options: ["Egregious", "Aggregate", "Telegraph", "Indigenous"] },
+            { word: "Telephone", hint: "Root: TELE (Far off)", definition: "To hear sounds from far away; an instrument for reproducing sounds", sentence: "I used the ______ to call my grandmother who lives in another state.", options: ["Translucent", "Generous", "Telephone", "Telescope"] },
+            { word: "Translucent", hint: "Root: LUC / LUM (Light)", definition: "Allowing light to travel through", sentence: "The frosted glass window was ______, letting in light but blurring the view.", options: ["Generation", "Translucent", "Telepathy", "Illumination"] },
+            { word: "Aggregate", hint: "Root: GREG (Group / Herd)", definition: "Formed by the collection of units into a body or mass", sentence: "The library is an ______ of thousands of different books and records.", options: ["Gregarious", "Egregious", "Generic", "Aggregate"] },
+            { word: "Luminary", hint: "Root: LUC / LUM (Light)", definition: "A natural light-giving body, especially the sun or moon", sentence: "At night, the moon is the brightest ______ in our sky.", options: ["Luminary", "Desegregate", "Telegraph", "Telephone"] },
+            { word: "Generic", hint: "Root: GENE (Birth / Origin)", definition: "Typical of the original but not coming from the true source", sentence: "I saved money by buying the ______ brand of cereal instead of the name brand.", options: ["Translucent", "Indigenous", "Generic", "Generation"] },
+            { word: "Telepathy", hint: "Root: TELE (Far off)", definition: "Knowing how someone from far away is feeling", sentence: "In the movie, the twins used ______ to share thoughts without speaking.", options: ["Telepathy", "Luminary", "Generous", "Aggregate"] },
+            { word: "Telescope", hint: "Root: TELE (Far off)", definition: "A device for looking at objects that are far away", sentence: "We used the ______ to get a clear view of the rings of Saturn.", options: ["Telephone", "Telescope", "Gregarious", "Egregious"] },
+            { word: "Generation", hint: "Root: GENE (Birth / Origin)", definition: "A group of people born around the same time", sentence: "My grandfather’s ______ grew up without the internet or cell phones.", options: ["Illumination", "Telegraph", "Generation", "Desegregate"] },
+            { word: "Telegraph", hint: "Root: TELE (Far off)", definition: "Writing from a distance via electric transmission", sentence: "Before the telephone, the ______ was the fastest way to send a message across the country.", options: ["Aggregate", "Telepathy", "Translucent", "Telegraph"] },
+            { word: "Generous", hint: "Root: GENE (Birth / Origin)", definition: "Very giving; as if born with money", sentence: "It was very ______ of him to donate his entire allowance to the charity.", options: ["Generous", "Generic", "Luminary", "Indigenous"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
