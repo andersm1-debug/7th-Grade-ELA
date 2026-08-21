@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Spectacles", hint: "Root: SPEC / SPIC (See / Look)", definition: "Eyeglasses", sentence: "I can't read the menu without my ______.", options: ["Credentials", "Beneficial", "Spectacles", "Perspective"] },
+            { word: "Credentials", hint: "Root: CRED (Believe)", definition: "A document proving someone’s identity", sentence: "The reporter showed her ______ to get backstage at the concert.", options: ["Credentials", "Fidelity", "Accreditation", "Confidant"] },
+            { word: "Accreditation", hint: "Root: CRED (Believe)", definition: "Being recognized as having a particular status", sentence: "The university received its ______ after a long review of its programs.", options: ["Retrospect", "Accreditation", "Benefit", "Credible"] },
+            { word: "Benefile", hint: "Root: BENE (Good)", definition: "A good person", sentence: "The community looked up to him because he was a true ______.", options: ["Infidel", "Suspicious", "Benefile", "Spectator"] },
+            { word: "Fidelity", hint: "Root: FID (Trust / Faith)", definition: "Trustworthiness; faithfulness", sentence: "The dog's ______ to its owner was clear when it refused to leave his side.", options: ["Fidelity", "Benevolent", "Credentials", "Retrospect"] },
+            { word: "Perspective", hint: "Root: SPEC / SPIC (See / Look)", definition: "Viewpoint; complete outlook", sentence: "Traveling to other countries can give you a new ______ on the world.", options: ["Accreditation", "Perspective", "Beneficial", "Credible"] },
+            { word: "Credible", hint: "Root: CRED (Believe)", definition: "Convincing; believable", sentence: "The witness provided a ______ account of the events that night.", options: ["Confidant", "Spectacles", "Credible", "Benefile"] },
+            { word: "Benefit", hint: "Root: BENE (Good)", definition: "An advantage; to be helpful", sentence: "Eating vegetables provides a great ______ to your overall health.", options: ["Benefit", "Infidel", "Fidelity", "Suspicious"] },
+            { word: "Retrospect", hint: "Root: SPEC / SPIC (See / Look)", definition: "To see or review the past", sentence: "In ______, I should have studied more for the final exam.", options: ["Benevolent", "Retrospect", "Spectator", "Perspective"] },
+            { word: "Benevolent", hint: "Root: BENE (Good)", definition: "Well meaning and kindly", sentence: "The ______ donor gave enough money to build a new playground.", options: ["Credentials", "Credible", "Benevolent", "Accreditation"] },
+            { word: "Infidel", hint: "Root: FID (Trust / Faith)", definition: "A person who does not believe in religion", sentence: "In the ancient story, the ______ was cast out of the village.", options: ["Infidel", "Benefit", "Spectacles", "Confidant"] },
+            { word: "Beneficial", hint: "Root: BENE (Good)", definition: "Favorable or advantageous", sentence: "Learning a second language is ______ for your brain and your career.", options: ["Fidelity", "Beneficial", "Suspicious", "Retrospect"] },
+            { word: "Confidant", hint: "Root: FID (Trust / Faith)", definition: "One to whom secrets or private matters are told", sentence: "She told her ______ everything, knowing her secrets were safe.", options: ["Perspective", "Benevolent", "Confidant", "Credible"] },
+            { word: "Suspicious", hint: "Root: SPEC / SPIC (See / Look)", definition: "Having distrust of someone or something", sentence: "The guard became ______ when he saw the car circling the building twice.", options: ["Suspicious", "Benefile", "Infidel", "Spectator"] },
+            { word: "Spectator", hint: "Root: SPEC / SPIC (See / Look)", definition: "An observer", sentence: "The ______ cheered loudly when the player hit the home run.", options: ["Benefit", "Spectator", "Accreditation", "Beneficial"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
