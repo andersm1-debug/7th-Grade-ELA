@@ -1,1 +1,174 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11 Vocabulary Quiz</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Back Link to Home Page -->
+    <div class="w-full max-w-5xl">
+        <a href="index.html" class="text-slate-500 hover:text-blue-600 font-bold text-lg mb-4 inline-block transition-colors">
+            ← HUB_CENTRAL
+        </a>
+    </div>
+
+    <!-- The quiz loads inside this root div -->
+    <div id="root" class="w-full max-w-5xl"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            { word: "Autonomy", hint: "Prefix: AUTO- (Self)", definition: "Political independence", sentence: "The small nation desired ______ to make its own laws and decisions.", options: ["Combat", "Autonomy", "Disingenuous", "Automatic"] },
+            { word: "Distant", hint: "Prefix: DIS- (Away)", definition: "To stand apart; far away", sentence: "The sound of the train was so ______ that I could barely hear it.", options: ["Autograph", "Distant", "Complete", "Cooperate"] },
+            { word: "Cooperate", hint: "Prefix: CO/CON- (Together)", definition: "To work with or together", sentence: "If we don't ______, we will never finish this group project on time.", options: ["Discount", "Cooperate", "Autobiography", "Distract"] },
+            { word: "Disassemble", hint: "Prefix: DIS- (Away)", definition: "To take apart", sentence: "My dad had to ______ the lawnmower to find the broken spark plug.", options: ["Disassemble", "Conformist", "Correct", "Autonomy"] },
+            { word: "Correct", hint: "Prefix: CO/CON- (Together)", definition: "To make right", sentence: "Please use a red pen to ______ your mistakes on the practice test.", options: ["Correct", "Distant", "Combat", "Dislocate"] },
+            { word: "Conformist", hint: "Prefix: CO/CON- (Together)", definition: "One who acts the same as others", sentence: "She was never a ______; she always wore unique clothes that she made herself.", options: ["Automatic", "Disassemble", "Conformist", "Discount"] },
+            { word: "Discount", hint: "Prefix: DIS- (Away)", definition: "A markdown on price", sentence: "The store offered a 50% ______ on all winter coats in March.", options: ["Distract", "Discount", "Cooperate", "Autograph"] },
+            { word: "Disingenuous", hint: "Prefix: DIS- (Away)", definition: "Not straightforward or honest", sentence: "It was ______ of him to claim he was sick just to avoid the meeting.", options: ["Disingenuous", "Complete", "Autonomy", "Disassemble"] },
+            { word: "Automatic", hint: "Prefix: AUTO- (Self)", definition: "Working by itself; Self-regulating", sentence: "The sprinkler system is ______ and turns on every morning at 6 AM.", options: ["Automatic", "Conformist", "Distant", "Correct"] },
+            { word: "Combat", hint: "Prefix: CO/CON- (Together)", definition: "To fight with", sentence: "Scientists are working on new ways to ______ pollution in our oceans.", options: ["Autobiography", "Combat", "Discount", "Disingenuous"] },
+            { word: "Autobiography", hint: "Prefix: AUTO- (Self)", definition: "A book about someone's life written by that person", sentence: "I am writing my own ______ to share my life story with my grandkids.", options: ["Dislocate", "Autobiography", "Cooperate", "Automatic"] },
+            { word: "Dislocate", hint: "Prefix: DIS- (Away)", definition: "To put out of place, especially a bone or joint", sentence: "A hard fall during the game caused him to ______ his elbow.", options: ["Dislocate", "Distract", "Combat", "Autonomy"] },
+            { word: "Complete", hint: "Prefix: CO/CON- (Together)", definition: "Having all necessary parts; finished", sentence: "You need one more stamp to ______ your collection.", options: ["Complete", "Autograph", "Disassemble", "Disingenuous"] },
+            { word: "Distract", hint: "Prefix: DIS- (Away)", definition: "To draw attention away from", sentence: "The loud construction noise outside began to ______ me from my reading.", options: ["Conformist", "Distract", "Autobiography", "Correct"] },
+            { word: "Autograph", hint: "Prefix: AUTO- (Self)", definition: "A person's own signature", sentence: "The author was happy to ______ copies of her new book for fans.", options: ["Discount", "Dislocate", "Autograph", "Complete"] }
+        ];
+
+        function Quiz() {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showHint, setShowHint] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+            const [feedback, setFeedback] = useState(null);
+
+            const handleAnswer = (selectedOption) => {
+                const isCorrect = selectedOption === quizData[currentQuestion].word;
+                
+                if (isCorrect) {
+                    setFeedback('correct');
+                    setScore(score + 1);
+                } else {
+                    setFeedback('incorrect');
+                }
+
+                setTimeout(() => {
+                    setFeedback(null);
+                    setShowHint(false);
+                    if (currentQuestion + 1 < quizData.length) {
+                        setCurrentQuestion(currentQuestion + 1);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 1000);
+            };
+
+            const resetQuiz = () => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setShowHint(false);
+                setQuizComplete(false);
+                setFeedback(null);
+            };
+
+            if (quizComplete) {
+                return (
+                    <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
+                        <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <button 
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            const q = quizData[currentQuestion];
+            const progress = ((currentQuestion) / quizData.length) * 100;
+
+            return (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-full h-[600px]">
+                    <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="font-semibold text-lg flex-1">Score: {score} / {quizData.length}</div>
+                        <div className="flex-1 max-w-md bg-slate-600 rounded-full h-3 mx-4">
+                            <div className="bg-blue-400 h-3 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="font-semibold text-lg flex-1 text-right">Question {currentQuestion + 1} of {quizData.length}</div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center bg-slate-50">
+                            <div className="mb-6">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Definition</span>
+                                <p className="text-xl font-medium text-slate-800 mt-1 italic">"{q.definition}"</p>
+                            </div>
+                            
+                            <div className="mb-8">
+                                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">Sentence</span>
+                                <p className="text-2xl font-bold text-blue-900 mt-2 leading-snug">{q.sentence}</p>
+                            </div>
+
+                            <div>
+                                {!showHint ? (
+                                    <button 
+                                        onClick={() => setShowHint(true)}
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                    >
+                                        💡 Need a Hint?
+                                    </button>
+                                ) : (
+                                    <div className="inline-block bg-amber-200 text-amber-900 px-4 py-2 rounded-full font-bold animate-pulse">
+                                        {q.hint}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
+                            <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
+                            {q.options.map((option, index) => {
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                
+                                if (feedback && option === q.word) {
+                                    btnClass += "bg-green-100 border-green-500 text-green-800";
+                                } else if (feedback === 'incorrect' && option !== q.word) {
+                                    btnClass += "bg-slate-50 border-slate-200 text-slate-400 opacity-50";
+                                } else {
+                                    btnClass += "bg-white border-slate-300 text-slate-700 hover:border-blue-500 hover:bg-blue-50";
+                                }
+
+                                return (
+                                    <button 
+                                        key={index}
+                                        disabled={feedback !== null}
+                                        onClick={() => handleAnswer(option)}
+                                        className={btnClass}
+                                    >
+                                        {option}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Quiz />, document.getElementById('root'));
+    </script>
+</body>
+</html>
