@@ -117,6 +117,12 @@
             font-family: 'Metamorphous', serif;
             cursor: pointer;
             margin-top: 20px;
+            transition: 0.2s;
+        }
+        
+        .valhalla-btn:hover {
+            background: #e2d1b3;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
     </style>
 </head>
@@ -234,15 +240,64 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("rune-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:Metamorphous; color:#d4af37;">SAGA COMPLETE</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>The journey is written in the stars.</p>
-                <a href="index.html" class="valhalla-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Metamorphous', serif; color:#d4af37; font-size: 2.5rem; margin-top: 0; text-shadow: 2px 2px 4px #000;">SAGA COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#d4af37; text-shadow: 2px 2px 4px #000;">${pct}%</p>
+                <p style="color:#e2d1b3;">The journey is written in the stars. Record your name for the sagas.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(0,0,0,0.4); padding: 25px; border: 2px solid #8b4513; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
+                    <p style="color: #d4af37; font-family: 'Metamorphous', serif; font-size: 1.1rem; margin-top: 0; letter-spacing: 1px;">ENTER WARRIOR'S NAME</p>
+                    <input type="text" id="student-name" placeholder="FIRST & LAST NAME" style="background: #1a1612; border: 1px solid #8b4513; color: #e2d1b3; padding: 12px; width: 80%; max-width: 300px; font-family: 'Almendra', serif; font-size: 1.2rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="valhalla-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">CARVE INTO RUNESTONE</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="valhalla-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO VILLAGE</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("The runes are blank! Please enter your name.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "CARVING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Viking Vocab Week 13"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #d4af37; font-family: 'Metamorphous', serif; margin: 0; text-shadow: 2px 2px 4px #000;">CARVED FOR ETERNITY</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("A storm blocked the raven! Network issue detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY CARVING";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
