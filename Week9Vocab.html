@@ -1,3 +1,10 @@
+Here is your fully updated **THE GREAT ARCHIVE: WK 9** code!
+
+I have built the data bridge directly into the ancient library aesthetic. When students finish, the system will ask them to "Sign the Ledger" before sealing the archive and sending their score to your Google Sheet.
+
+Just copy this, replace your current Week 9 code, and **paste your Google Web App URL** in the `scriptURL` variable at the bottom!
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,6 +131,12 @@
             font-family: 'Cinzel', serif;
             cursor: pointer;
             margin-top: 20px;
+            transition: 0.2s;
+        }
+        
+        .proceed-btn:hover {
+            background: #2b261d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -242,18 +255,69 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:Cinzel; color:#3d2b1f;">COLLECTION ARCHIVED</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>The library's knowledge grows. Return to the hub.</p>
-                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Cinzel', serif; color:#3d2b1f; font-size: 2.2rem; margin-top: 0;">COLLECTION ARCHIVED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#2b261d;">${pct}%</p>
+                <p style="font-family:'IM Fell English SC', serif; color:#4a3728;">The library's knowledge grows. Record your contribution.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(0,0,0,0.05); padding: 25px; border: 1px solid #7a5c41; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05);">
+                    <p style="color: #3d2b1f; font-family: 'Cinzel', serif; font-size: 1.1rem; margin-top: 0; font-weight: bold;">SIGN THE LEDGER</p>
+                    <input type="text" id="student-name" placeholder="SCRIBE'S FULL NAME" style="background: #f4ebd9; border: 1px solid #7a5c41; color: #2b261d; padding: 12px; width: 80%; max-width: 300px; font-family: 'IM Fell English SC', serif; font-size: 1.1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="proceed-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">SEAL THE ARCHIVE</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="proceed-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO HUB</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("ARCHIVE ERROR: The ledger requires a signature.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "SEALING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "The Great Archive Week 9"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #3d2b1f; font-family: 'Cinzel', serif; margin: 0;">LEDGER SIGNED & SEALED</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("THE INK SPILLED! Network issue detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY SIGNATURE";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
 </script>
 </body>
 </html>
+
+```
