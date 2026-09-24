@@ -111,15 +111,25 @@
             z-index: 1000;
             text-align: center;
             width: 80%;
+            max-width: 400px;
+            box-shadow: 0 0 30px #00ff41;
         }
 
         .close-btn {
             background: #00ff41;
+            color: #000;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
             font-weight: bold;
             margin-top: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            transition: 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 10px #00ff41;
         }
     </style>
 </head>
@@ -136,7 +146,7 @@
     </div>
 
     <div id="root-decoder">
-        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px;">> Active Affix Reference</p>
+        <p style="font-size:0.7rem; text-transform:uppercase; margin-bottom:10px; color: #008f11;">> Active Affix Reference</p>
         <div class="decoder-grid">
             <div class="decoder-item"><b>BI-</b> TWO</div>
             <div class="decoder-item"><b>CONTRA-</b> AGAINST</div>
@@ -146,8 +156,8 @@
 </div>
 
 <div id="feedback-modal">
-    <h2 id="fb-title" style="font-family:'Orbitron';">SYSTEM_LOG</h2>
-    <p id="fb-text" style="margin-bottom:10px; line-height: 1.4;"></p>
+    <h2 id="fb-title" style="font-family:'Orbitron', sans-serif;">SYSTEM_LOG</h2>
+    <p id="fb-text" style="margin-bottom:10px; line-height: 1.4; color: #fff;"></p>
     <button class="close-btn" onclick="nextWord()">PROCEED</button>
 </div>
 
@@ -234,9 +244,67 @@
         document.getElementById("feedback-modal").style.display = "none";
         current++;
         if (current < wordBank.length) loadWord();
-        else {
-            document.getElementById("quiz-content").innerHTML = `<div style="text-align:center;"><h2 style='font-family:Orbitron;'>BREACH_SUCCESS: ${Math.round((score/wordBank.length)*100)}%</h2><a href="index.html" class="option-btn" style="text-decoration:none; display:inline-block; text-align:center;">RETURN_TO_BASE</a></div>`;
+        else showFinal();
+    }
+
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
+    function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
+        const pct = Math.round((score/wordBank.length)*100);
+        
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Orbitron', sans-serif; color:#00ff41; text-shadow: 0 0 10px #00ff41; margin-top:0;">SYSTEM BREACHED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#fff; text-shadow: 0 0 10px #00ff41;">${pct}%</p>
+                <p style="color:#e0e0e0;">All week 12 encryptions bypassed.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(0, 20, 0, 0.5); padding: 25px; border: 1px dashed #00ff41; box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.2);">
+                    <p style="color: #00ff41; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-top: 0; letter-spacing: 1px;">LOG HACKER ALIAS</p>
+                    <input type="text" id="student-name" placeholder="ENTER ALIAS" style="background: #050505; border: 1px solid #00ff41; color: #00ff41; padding: 12px; width: 80%; max-width: 300px; font-family: 'Share Tech Mono', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="close-btn" style="margin-top: 0; padding: 12px 30px; display: inline-block;" onclick="transmitScore(${pct})">UPLOAD PAYLOAD</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="close-btn" style="text-decoration:none; display:none; margin-top: 20px;">_EXIT_TO_HUB</a>
+            </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("SYSTEM ERROR: Hacker alias required to upload payload.");
+            return;
         }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "UPLOADING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "System Breach Week 12"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #00ff41; font-family: 'Orbitron', sans-serif; margin: 0; text-shadow: 0 0 10px #00ff41;">PAYLOAD DELIVERED</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("UPLOAD FAILED. Firewall interference detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY UPLOAD";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
