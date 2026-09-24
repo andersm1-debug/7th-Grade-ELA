@@ -1,3 +1,10 @@
+Here is your fully updated **OBSERVATORY LAB: WK 7** code!
+
+I created a `showFinal()` function to replace the old ending and built the data transmission bridge right into your cyan, deep-space aesthetic. The inputs and buttons are styled to match the glowing neon "Orbitron" look perfectly.
+
+Just copy this, replace your current Week 7 code, and remember to **paste your Google Web App URL** in the `scriptURL` variable at the bottom!
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,6 +133,12 @@
             cursor: pointer;
             font-weight: bold;
             margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -243,19 +256,72 @@
         document.getElementById("result-modal").style.display = "none";
         current++;
         if (current < wordBank.length) loadWord();
-        else {
-            const pct = Math.round((score/wordBank.length)*100);
-            document.getElementById("quiz-content").innerHTML = `
-                <div style="text-align:center; padding: 20px;">
-                    <h2 style="font-family:Orbitron; color:#fff;">ANALYSIS COMPLETE</h2>
-                    <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                    <p>All week 7 data points recorded.</p>
-                    <a href="index.html" class="action-btn" style="text-decoration:none; display:inline-block;">RETURN_TO_HUB</a>
-                </div>`;
+        else showFinal();
+    }
+
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
+    function showFinal() {
+        // Hide the reference grid so the final screen is clean
+        document.getElementById("ref-grid").style.display = "none";
+        
+        const pct = Math.round((score/wordBank.length)*100);
+        
+        document.getElementById("quiz-content").innerHTML = `
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Orbitron'; color:#fff; text-shadow: 0 0 10px #00e5ff;">ANALYSIS COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#00e5ff;">${pct}%</p>
+                <p style="color:#e0e0e0;">All week 7 data points recorded.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(0, 229, 255, 0.05); padding: 25px; border: 1px dashed #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);">
+                    <p style="color: #00e5ff; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-top: 0; letter-spacing: 1px;">UPLOAD RESEARCH DATA</p>
+                    <input type="text" id="student-name" placeholder="RESEARCHER NAME" style="background: #0a0b10; border: 1px solid #00e5ff; color: #00e5ff; padding: 12px; width: 80%; max-width: 300px; font-family: 'Roboto Mono', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="action-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">TRANSMIT TO SERVER</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="action-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN_TO_HUB</a>
+            </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("SYSTEM ERROR: Researcher name required for transmission.");
+            return;
         }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "TRANSMITTING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Observatory Lab Week 7"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #00e5ff; font-family: 'Orbitron'; margin: 0; text-shadow: 0 0 10px #00e5ff;">DATA SYNC COMPLETE</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("TRANSMISSION FAILED. Deep space interference detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY TRANSMISSION";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
 </script>
 </body>
 </html>
+
+```
