@@ -1,3 +1,8 @@
+Here is your fully updated **COMM ARRAY: WEEK 1** code with the invisible data bridge built directly into the terminal aesthetic.
+
+I restyled the input box and buttons to match your neon-green, dark hacker theme. Just paste your Google Web App URL into the `scriptURL` line near the very bottom, save it, and your students' scores will start flowing directly into your grading spreadsheet!
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,6 +132,12 @@
             font-family: 'Syncopate', sans-serif;
             cursor: pointer;
             margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .proceed-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px #00ff41;
         }
     </style>
 </head>
@@ -249,18 +260,69 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'Syncopate'; color:#fff;">COMMUNICATION SECURED</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>All week 1 signals have been processed.</p>
-                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Syncopate'; color:#fff; text-shadow: 0 0 10px #00ff41;">COMMUNICATION SECURED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#00ff41;">${pct}%</p>
+                <p style="color:#d1d1d1;">All week 1 signals have been processed.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(0, 20, 0, 0.8); padding: 25px; border: 1px dashed #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);">
+                    <p style="color: #fff; font-family: 'Syncopate', sans-serif; font-size: 1rem; margin-top: 0; text-shadow: 0 0 5px #00ff41;">LOG OPERATIVE DATA</p>
+                    <input type="text" id="student-name" placeholder="ENTER CREDENTIALS (NAME)" style="background: #010a01; border: 1px solid #00ff41; color: #00ff41; padding: 12px; width: 80%; max-width: 300px; font-family: 'Share Tech Mono', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="proceed-btn" style="margin-top: 0;" onclick="transmitScore(${pct})">UPLOAD PROTOCOL</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="proceed-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO HUB</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("SYSTEM ERROR: Credentials required. Please enter your name.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "UPLOADING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Comm Array Week 1"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #00ff41; font-family: 'Syncopate'; margin: 0; text-shadow: 0 0 10px #00ff41;">DATA SYNC COMPLETE</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("UPLOAD FAILED. Network interference detected. Screenshot your score.");
+                transmitBtn.innerText = "RETRY UPLOAD";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
 </script>
 </body>
 </html>
+
+```
