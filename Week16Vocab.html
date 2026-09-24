@@ -87,6 +87,7 @@
             font-family: inherit;
             font-size: 1.05rem;
             transition: all 0.3s ease;
+            border-radius: 4px;
         }
 
         .choice-btn:hover {
@@ -132,6 +133,14 @@
             cursor: pointer;
             margin-top: 20px;
             letter-spacing: 2px;
+            border-radius: 4px;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        
+        .next-trial-btn:hover {
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(224, 225, 221, 0.6);
         }
     </style>
 </head>
@@ -253,15 +262,64 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'Cinzel'; color:#e0e1dd;">PANTHEON ASCENDED</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>Your knowledge of the roots is legendary.</p>
-                <a href="index.html" class="next-trial-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Cinzel', serif; color:#e0e1dd; font-size: 2.5rem; margin-top: 0; text-shadow: 0 0 15px rgba(224, 225, 221, 0.5);">PANTHEON ASCENDED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#e0e1dd;">${pct}%</p>
+                <p style="color:#bdc3c7; font-family:'Quicksand', sans-serif;">Your knowledge of the roots is legendary.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(255, 255, 255, 0.05); padding: 25px; border: 1px solid #415a77; border-radius: 8px;">
+                    <p style="color: #e0e1dd; font-family: 'Cinzel', serif; font-size: 1.1rem; margin-top: 0; letter-spacing: 1px; font-weight: bold;">OFFER YOUR NAME TO THE GODS</p>
+                    <input type="text" id="student-name" placeholder="FIRST & LAST NAME" style="background: rgba(13, 27, 42, 0.8); border: 1px solid #778da9; color: #e0e1dd; padding: 12px; width: 80%; max-width: 300px; font-family: 'Quicksand', sans-serif; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase; border-radius: 4px;">
+                    <br>
+                    <button id="transmit-btn" class="next-trial-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">SEAL IN THE STARS</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="next-trial-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO HUB</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("THE GODS DEMAND A NAME: Please enter your identity.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "ASCENDING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Cosmic Pantheon Week 16"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #e0e1dd; font-family: 'Cinzel', serif; margin: 0; text-shadow: 0 0 15px rgba(224, 225, 221, 0.5);">LEGEND IMMORTALIZED</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("ASCENSION FAILED. Celestial interference detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY OFFERING";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
