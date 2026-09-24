@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,6 +52,11 @@
             const [quizComplete, setQuizComplete] = useState(false);
             const [feedback, setFeedback] = useState(null);
 
+            // Telemetry State
+            const [studentName, setStudentName] = useState("");
+            const [isTransmitting, setIsTransmitting] = useState(false);
+            const [transmitted, setTransmitted] = useState(false);
+
             const handleAnswer = (selectedOption) => {
                 const isCorrect = selectedOption === quizData[currentQuestion].word;
                 
@@ -74,22 +78,81 @@
                 }, 1000);
             };
 
+            const transmitScore = () => {
+                const name = studentName.trim();
+                if (!name) {
+                    alert("Please enter your full name before submitting.");
+                    return;
+                }
+
+                setIsTransmitting(true);
+
+                // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+                const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+                
+                const activityName = "Week 14 Vocabulary Quiz";
+                const percentage = Math.round((score / quizData.length) * 100);
+
+                const formData = new URLSearchParams();
+                formData.append("name", name);
+                formData.append("activity", activityName);
+                formData.append("score", percentage + "%");
+
+                fetch(scriptURL, { method: "POST", body: formData })
+                    .then(response => {
+                        setIsTransmitting(false);
+                        setTransmitted(true);
+                    })
+                    .catch(error => {
+                        setIsTransmitting(false);
+                        alert("Transmission failed. Please screenshot your score.");
+                    });
+            };
+
             const resetQuiz = () => {
                 setCurrentQuestion(0);
                 setScore(0);
                 setShowHint(false);
                 setQuizComplete(false);
                 setFeedback(null);
+                setStudentName("");
+                setTransmitted(false);
             };
 
             if (quizComplete) {
+                const percentage = Math.round((score / quizData.length) * 100);
                 return (
                     <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md mx-auto mt-8">
                         <h2 className="text-3xl font-bold mb-4 text-slate-800">Quiz Complete!</h2>
-                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length}</p>
+                        <p className="text-xl mb-6">You scored <span className="font-bold text-blue-600">{score}</span> out of {quizData.length} ({percentage}%)</p>
+                        
+                        {!transmitted ? (
+                            <div className="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Enter Your Full Name</label>
+                                <input 
+                                    type="text" 
+                                    value={studentName} 
+                                    onChange={(e) => setStudentName(e.target.value)}
+                                    placeholder="FIRST & LAST NAME"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg mb-3 text-center uppercase font-semibold text-slate-800 focus:outline-none focus:border-blue-600"
+                                />
+                                <button 
+                                    onClick={transmitScore}
+                                    disabled={isTransmitting}
+                                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200 disabled:opacity-50 cursor-pointer"
+                                >
+                                    {isTransmitting ? "Submitting..." : "Submit Score to Teacher"}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="mb-6 bg-green-50 text-green-800 p-4 rounded-lg font-semibold border border-green-200">
+                                ✓ Score successfully recorded!
+                            </div>
+                        )}
+
                         <button 
                             onClick={resetQuiz}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                            className="text-slate-500 hover:text-slate-700 text-sm font-semibold underline cursor-pointer"
                         >
                             Try Again
                         </button>
@@ -126,7 +189,7 @@
                                 {!showHint ? (
                                     <button 
                                         onClick={() => setShowHint(true)}
-                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition"
+                                        className="text-sm bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-semibold hover:bg-amber-200 transition cursor-pointer"
                                     >
                                         💡 Need a Hint?
                                     </button>
@@ -141,7 +204,7 @@
                         <div className="md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-white">
                             <h3 className="text-lg font-semibold text-slate-700 mb-2 text-center">Select the correct word:</h3>
                             {q.options.map((option, index) => {
-                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm ";
+                                let btnClass = "w-full text-left text-lg p-5 rounded-lg border-2 font-medium transition duration-200 shadow-sm cursor-pointer ";
                                 
                                 if (feedback && option === q.word) {
                                     btnClass += "bg-green-100 border-green-500 text-green-800";
