@@ -1,3 +1,12 @@
+Here is your fully updated **THE DETECTIVE'S DESK: WK 6** code!
+
+I have built the invisible data bridge right into the manila case file aesthetic. After they finish the final question, it prompts them to "FILE OFFICIAL REPORT" with their name.
+
+*Note: In the code you pasted, there was a minor syntax error in one of the root decoders (`<div class="decoder-item)<b>VIS / VID</b> SEE</div>`). I went ahead and fixed that missing quote mark for you so the layout won't break.*
+
+Just copy this, replace your Week 6 code, and **paste your Google Web App URL** at the bottom!
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,6 +139,13 @@
             font-family: 'Special Elite', cursive;
             cursor: pointer;
             margin-top: 20px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        
+        .next-btn:hover {
+            background: #a30000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -149,7 +165,7 @@
         <div class="decoder-grid">
             <div class="decoder-item"><b>JUR / JUS</b> LAW</div>
             <div class="decoder-item"><b>MAN</b> HAND</div>
-            <div class="decoder-item)<b>VIS / VID</b> SEE</div>
+            <div class="decoder-item"><b>VIS / VID</b> SEE</div>
         </div>
     </div>
 </div>
@@ -250,18 +266,69 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'Special Elite'; color:#8b0000;">CASE CLOSED</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>Investigation complete. Filing report to hub.</p>
-                <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO HUB</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Special Elite'; color:#8b0000; font-size: 2.5rem;">CASE CLOSED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#1a1a1a;">${pct}%</p>
+                <p style="font-family:'Courier Prime'; color:#2c2c2c;">Investigation complete. File your report below.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(255,255,255,0.5); padding: 25px; border: 1px solid #999; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);">
+                    <p style="color: #8b0000; font-family: 'Special Elite', cursive; font-size: 1.1rem; margin-top: 0; text-transform: uppercase;">FILE OFFICIAL REPORT</p>
+                    <input type="text" id="student-name" placeholder="DETECTIVE'S FULL NAME" style="background: #fdfdfd; border: 1px solid #2c2c2c; color: #2c2c2c; padding: 12px; width: 80%; max-width: 300px; font-family: 'Courier Prime', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="next-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">SUBMIT TO PRECINCT</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="next-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO HUB</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("REPORT ERROR: Detective's name required on all files.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "FILING REPORT...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Detective Desk Week 6"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #228b22; font-family: 'Special Elite'; margin: 0;">REPORT FILED SUCCESSFULLY</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("FILING FAILED. Network interference. Please screenshot your case score.");
+                transmitBtn.innerText = "RETRY FILING";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
 </script>
 </body>
 </html>
+
+```
