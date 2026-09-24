@@ -129,6 +129,12 @@
             font-family: 'Orbitron', sans-serif;
             cursor: pointer;
             margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .proceed-btn:hover {
+            box-shadow: 0 0 15px rgba(242, 224, 90, 0.4);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -250,15 +256,64 @@
         else showFinal();
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
+        // Hide the root decoder so it doesn't crowd the final screen
+        document.getElementById("root-decoder").style.display = "none";
+        
         const pct = Math.round((score/wordBank.length)*100);
+        
         document.getElementById("quiz-content").innerHTML = `
-            <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'Orbitron'; color:#fff;">VAULT SECURED</h2>
-                <p style="font-size:3.5rem; margin:10px 0;">${pct}%</p>
-                <p>All week 3 identities have been confirmed.</p>
-                <a href="index.html" class="proceed-btn" style="text-decoration:none; display:inline-block;">EXIT VAULT</a>
+            <div style="text-align:center; padding: 20px 0;">
+                <h2 style="font-family:'Orbitron'; color:#fff; text-shadow: 0 0 10px rgba(242, 224, 90, 0.5);">VAULT SECURED</h2>
+                <p style="font-size:3.5rem; margin:10px 0; color:#f2e05a;">${pct}%</p>
+                <p style="color:#8b949e;">All week 3 identities have been confirmed.</p>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: #0d1117; padding: 25px; border: 1px dashed #f2e05a; box-shadow: 0 0 15px rgba(242, 224, 90, 0.1);">
+                    <p style="color: #f2e05a; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-top: 0; letter-spacing: 1px;">VERIFY AGENT IDENTITY</p>
+                    <input type="text" id="student-name" placeholder="FIRST & LAST NAME" style="background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 12px; width: 80%; max-width: 300px; font-family: 'Share Tech Mono', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase;">
+                    <br>
+                    <button id="transmit-btn" class="proceed-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">LOG CLEARANCE</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="proceed-btn" style="text-decoration:none; display:none; margin-top: 20px;">EXIT VAULT</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("SECURITY FAULT: Agent name required for clearance.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "ENCRYPTING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Identity Vault Week 3"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #f2e05a; font-family: 'Orbitron'; margin: 0; text-shadow: 0 0 10px rgba(242, 224, 90, 0.5);">CLEARANCE LOGGED</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("ENCRYPTION FAILED. Connection lost. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY CLEARANCE";
+                transmitBtn.disabled = false;
+            });
     }
 
     loadWord();
