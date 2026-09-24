@@ -426,19 +426,67 @@
         }
     }
 
+    // --- UPDATED FINAL SCREEN WITH DATA TRANSMISSION ---
     function showFinal() {
         document.getElementById("progress-fill").style.width = "100%";
         document.getElementById("format-label").style.display = "none";
         document.getElementById("cloze-input-area").style.display = "none";
         document.getElementById("mcq-options").style.display = "none";
         document.getElementById("word-bank").style.display = "none";
+        
+        const pct = Math.round((score/allQuestions.length)*100);
+
         document.getElementById("quiz-content").innerHTML = `
             <div style="text-align:center; padding: 30px 0;">
-                <h2 style="font-family:'Orbitron'; font-size: 2.5rem; color: #ffb703;">PROTOCOL COMPLETE</h2>
-                <p style="font-size:3.5rem; margin:10px 0; font-family:'Share Tech Mono';">${Math.round((score/allQuestions.length)*100)}%</p>
+                <h2 style="font-family:'Orbitron'; font-size: 2.5rem; color: #ffb703; margin-top:0;">PROTOCOL COMPLETE</h2>
+                <p style="font-size:3.5rem; margin:10px 0; font-family:'Share Tech Mono'; color:#fff;">${pct}%</p>
                 <p style="font-size: 1.2rem; color: #8b949e;">You scored ${score} out of ${allQuestions.length}.</p>
-                <a href="index.html" class="next-btn" style="text-decoration:none; display:inline-block;">RETURN TO DASHBOARD</a>
+                
+                <!-- DATA TRANSMISSION SECTOR -->
+                <div id="transmission-sector" style="margin-top: 30px; background: rgba(11, 15, 25, 0.9); padding: 25px; border: 1px dashed #ffb703; box-shadow: 0 0 15px rgba(255, 183, 3, 0.1);">
+                    <p style="color: #ffb703; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-top: 0; letter-spacing: 1px;">INITIALIZE DATA TRANSMISSION</p>
+                    <input type="text" id="student-name" placeholder="ENTER OPERATIVE NAME" style="background: #0b0f19; border: 1px solid #ffb703; color: #ffb703; padding: 12px; width: 80%; max-width: 300px; font-family: 'Share Tech Mono', monospace; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none; text-transform: uppercase; border-radius: 4px;">
+                    <br>
+                    <button id="transmit-btn" class="next-btn" style="margin-top: 0; padding: 12px 30px;" onclick="transmitScore(${pct})">TRANSMIT TO SERVER</button>
+                </div>
+                
+                <a href="index.html" id="return-btn" class="next-btn" style="text-decoration:none; display:none; margin-top: 20px;">RETURN TO DASHBOARD</a>
             </div>`;
+    }
+
+    // --- INVISIBLE BRIDGE FETCH FUNCTION ---
+    function transmitScore(percentage) {
+        const studentName = document.getElementById("student-name").value.trim();
+        if (!studentName) {
+            alert("SYSTEM ERROR: Operative name required for transmission.");
+            return;
+        }
+
+        const transmitBtn = document.getElementById("transmit-btn");
+        transmitBtn.innerText = "TRANSMITTING...";
+        transmitBtn.disabled = true;
+
+        // PASTE YOUR GOOGLE WEB APP URL RIGHT HERE
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxrM6yW54o3wLC6FMVZUd2ZJ9W5W--TgVYzmZozcBXd6EDIpa79EdUCTZt54CS6kiPh/exec";
+        
+        // This tag tells your spreadsheet which assignment the score came from
+        const activityName = "Suffix Protocol Week 22"; 
+
+        const formData = new URLSearchParams();
+        formData.append("name", studentName);
+        formData.append("activity", activityName);
+        formData.append("score", percentage + "%");
+
+        fetch(scriptURL, { method: "POST", body: formData })
+            .then(response => {
+                document.getElementById("transmission-sector").innerHTML = `<h3 style="color: #ffb703; font-family: 'Orbitron'; margin: 0; text-shadow: 0 0 10px rgba(255, 183, 3, 0.5);">TRANSFER COMPLETE</h3>`;
+                document.getElementById("return-btn").style.display = "inline-block";
+            })
+            .catch(error => {
+                alert("TRANSMISSION FAILED. Network interference detected. Please screenshot your score.");
+                transmitBtn.innerText = "RETRY TRANSMISSION";
+                transmitBtn.disabled = false;
+            });
     }
 
     // Allow "Enter" key for submission, but ONLY on Cloze questions
