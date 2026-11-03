@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Iron Crucible</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 100px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">The Iron Crucible</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Tier 1+ Enrichment • Historical Realism / Moral Conflict • DOK 3</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> The foundry floor of the Krupp arms works in Essen vibrated with a rhythmic thrum that felt less like machinery and more like a collective pulse. It was the autumn of 1913. Through clerestory windows, late afternoon sun broke through sulfurous coal smoke in shafts of oxidized copper. Karl stood beside the vertical press, checking the hydraulic gauge. Before him lay the rough-forged breech block of a 420-millimeter siege howitzer-a monstrous cylinder of nickel steel that engineers referenced in hushed whispers.[cite: 1]</p>
+        <p><strong>[¶2]</strong> "A masterpiece of metallurgical discipline, wouldn't you say, Herr Weber?" The voice belonged to Chief Inspector Eisen, whose gray wool coat seemed perpetually impervious to the foundry's drifting graphite dust. Eisen ran a white-gloved thumb along the polished circumference of the cooling jacket, lingering over the microscopic tolerance marks Karl had etched into the steel.[cite: 1]</p>
+        <p><strong>[¶3]</strong> "The tensile strength exceeds imperial naval specifications by twelve percent," Karl replied evenly, keeping his eyes on the vernier calipers in his palm. "The alloy will withstand pressures beyond forty thousand atmospheres without grain boundary rupture."[cite: 1]</p>
+        <p><strong>[¶4]</strong> "You speak as though this were a specimen in a university laboratory, Karl," Eisen murmured, tone marked by the gentle condescension of men whose authority derives from imperial decree rather than technical craft. "This is not physics; this is diplomacy forged in iron. It is the instrument that will preserve the peace of Central Europe by making the prospect of war unendurable."[cite: 1]</p>
+        <p><strong>[¶5]</strong> Karl looked at the massive breech block. In the cool sheen of the metal, he did not see peace; he saw the mathematical inevitability of shattered stone and pulverized bone. He had spent eight months calculating thermal expansion coefficients so this breech would cycle with clockwork fluidity in sub-zero mud.[cite: 1]</p>
+        <p><strong>[¶6]</strong> "Peace," Karl echoed softly, touching the cold bevel of the housing. "Provided the weapon never meets an adversary who believes himself equally invulnerable."[cite: 1]</p>
+    </div>
+
+    <h3>Dual Perspective & Ethical Tension</h3>
+    
+    <div class="q-item">
+        <p><strong>1. Opposing Philosophical Frameworks</strong><br>
+        What flawed assumption underpins Eisen's view of deterrence through terror? What is the moral burden of the detached technician, like Karl?[cite: 1]</p>
+        <div id="tags-q1">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q1-fear">fear/deterrence</span>
+            <span class="word-tag" id="tag-q1-destruction">destruction/responsibility</span>
+        </div>
+        <textarea id="ta-q1" placeholder="Type your critical analysis here..." oninput="checkWords('q1', ['fear', 'deterrence', 'destruction', 'responsibility', 'weapon', 'peace'])"></textarea>
+    </div>
+
+    <div class="q-item">
+        <p><strong>2. Objective Correlative & Social Insulation</strong><br>
+        Explain how Eisen's "white-gloved thumb" in a coal-dusted foundry functions as a symbol of aristocratic insulation from the physical and moral realities of mechanized warfare:[cite: 1]</p>
+        <div id="tags-q2">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q2-clean">clean/untouched</span>
+            <span class="word-tag" id="tag-q2-elite">elite/distant</span>
+        </div>
+        <textarea id="ta-q2" placeholder="Type your response here..." oninput="checkWords('q2', ['clean', 'untouched', 'protected', 'elite', 'wealthy', 'distant'])"></textarea>
+    </div>
+
+    <div class="q-item" style="border-bottom:none;">
+        <p><strong>3. Socratic Dialogue Extension (The Technician's Rebuttal)</strong><br>
+        Extend their dialogue following Karl's final warning in Paragraph 6. Have Karl use an engineering/metallurgical concept (e.g., thermal stress, brittleness, fatigue) as a metaphor for the instability of imperial diplomacy:[cite: 1]</p>
+        <div id="tags-q3">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q3-pressure">pressure/stress</span>
+            <span class="word-tag" id="tag-q3-break">break/crack</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type your continuation here..." oninput="checkWords('q3', ['pressure', 'stress', 'break', 'crack', 'brittle', 'fatigue', 'heat'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Adv: The Iron Crucible";
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let wordsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { wordsFound++; }
+        });
+
+        let percentage = Math.round((wordsFound / totalTags) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing analytic depth (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7';
+            res.style.color = '#166534';
+            res.innerHTML = `DOK 3 Conceptual Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2';
+            res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
