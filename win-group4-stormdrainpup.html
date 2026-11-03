@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Storm Drain Pup</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        .line-num { color: var(--primary); font-weight: bold; margin-right: 5px; }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 8px; font-weight: 600; color: var(--primary); cursor: pointer; font-size:1em; }
+        select.correct { background: #dcfce7; border-color: var(--correct); color: #166534; }
+        select.incorrect { background: #fee2e2; border-color: var(--incorrect); color: #991b1b; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; font-size: 1.1em; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 4: The Storm Drain Pup</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Foundational Intervention • Character Tracking</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><span class="line-num">[1]</span> Heavy rain poured over the empty street.[cite: 13]</p>
+        <p><span class="line-num">[2]</span> Marcus ran home with his coat over his head.[cite: 13]</p>
+        <p><span class="line-num">[3]</span> Suddenly, Marcus stopped on the wet sidewalk.[cite: 13]</p>
+        <p><span class="line-num">[4]</span> He heard a faint, tiny whine from under the street grate.[cite: 13]</p>
+        <p><span class="line-num">[5]</span> Marcus dropped to his knees in the mud.[cite: 13]</p>
+        <p><span class="line-num">[6]</span> He clicked on his small phone light and looked down into the dark drain.[cite: 13]</p>
+        <p><span class="line-num">[7]</span> Two small brown eyes blinked back up at him.[cite: 13]</p>
+        <p><span class="line-num">[8]</span> A lost puppy was shivering on a dry concrete pipe.[cite: 13]</p>
+        <p><span class="line-num">[9]</span> The rushing water in the street was rising fast.[cite: 13]</p>
+        <p><span class="line-num">[10]</span> Marcus pulled off his dry jacket and reached down through the iron bars.[cite: 13]</p>
+    </div>
+
+    <h3>1. Pronoun Tracking (Who Is Doing the Action?)</h3>
+    <div class="q-item">
+        <p>• Line 6: "He clicked on his small phone light..." Who is He? <br>
+            <select id="q1"><option value="">-- Select --</option><option value="The Puppy">The Puppy</option><option value="Marcus">Marcus</option></select>
+        </p>
+        <p>• Line 7: "Two small brown eyes blinked back up at him." Who has brown eyes? <br>
+            <select id="q2"><option value="">-- Select --</option><option value="The Puppy">The Puppy</option><option value="Marcus">Marcus</option></select>
+        </p>
+    </div>
+
+    <h3>2. Story Fact Matrix</h3>
+    <div class="q-item">
+        <p>Who is the person? <select id="q3"><option value="">-- Select --</option><option value="Marcus">Marcus</option><option value="drain">drain</option><option value="fast">fast</option></select>[cite: 13]</p>
+        <p>Where is the puppy stuck? In the dark storm <select id="q4"><option value="">-- Select --</option><option value="Marcus">Marcus</option><option value="drain">drain</option><option value="fast">fast</option></select>[cite: 13]</p>
+        <p>What is the danger? The water was rising <select id="q5"><option value="">-- Select --</option><option value="Marcus">Marcus</option><option value="drain">drain</option><option value="fast">fast</option></select>[cite: 13]</p>
+    </div>
+
+    <h3>3. Character Motivation</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p>Why does Marcus take off his dry jacket? (Line 10)[cite: 13]</p>
+        <select id="q6" style="width:100%;">
+            <option value="">-- Select Answer --</option>
+            <option value="A">A. He is too hot from running in the storm.</option>
+            <option value="B">B. He wants to use his jacket to wrap and lift the cold puppy.</option>
+            <option value="C">C. He wants to leave his coat on the sidewalk.</option>
+        </select>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Grade & Turn In</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G4: Storm Drain Pup";
+    const answers = ["Marcus", "The Puppy", "Marcus", "drain", "fast", "B"];
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        for(let i=1; i<=6; i++) {
+            const el = document.getElementById(`q${i}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === answers[i-1]) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        }
+
+        let percentage = Math.round((score / 6) * 100);
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `You scored ${score}/6 (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Comprehension Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
