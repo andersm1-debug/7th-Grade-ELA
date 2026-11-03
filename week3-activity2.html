@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 - Activity 2: Sentences</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; }
+        .word-chip { background: white; padding: 5px 12px; border-radius: 999px; font-size: 0.9em; font-weight: 600; color: var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        select.correct { background: #dcfce7; border-color: var(--correct); color: #166534; }
+        select.incorrect { background: #fee2e2; border-color: var(--incorrect); color: #991b1b; }
+        .q-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week3.html" class="back-link">&larr; Back to Week 3</a>
+    <a href="week3-activity1.html">Act 1: Story</a>
+    <a href="week3-activity2.html" class="active">Act 2: Sentences</a>
+    <a href="week3-activity3.html">Act 3: Writing</a>
+    <a href="week3-activity4.html">Act 4: Riddles</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Activity 2: Vocabulary in Context</h2>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="word-bank" id="bank"></div>
+    <div id="questions"></div>
+    <button id="submitBtn" onclick="grade()" style="margin-top:20px;">Grade & Turn In</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hQTGB3p-5Jh0tHgY_oAcHNCmFD4ZCq4146hgHhUch__AHMQrVgD2PTZn6crK3BbR/exec"; 
+    const ACTIVITY_NAME = "Week 3 Activity 2: Sentences";
+
+    const words = ["spectacles", "credentials", "accreditation", "benefile", "fidelity", "perspective", "credible", "benefit", "retrospect", "benevolent", "infidel", "beneficial", "confidant", "suspicious", "spectator"].sort();
+    
+    const questions = [
+        "The old man wore a pair of wire-rimmed [blank] to read the small print in the newspaper.",
+        "Before letting her into the secure building, the guard checked the doctor's [blank].",
+        "The hospital finally received its official [blank], proving it met all safety and health standards.",
+        "Because he volunteers every weekend at the shelter, everyone considers him a true [blank].",
+        "The knight swore an oath of absolute [blank] to the king, promising to remain loyal forever.",
+        "From the bird's eye [blank], the entire city looked like a tiny, glowing toy town.",
+        "The lawyer presented a highly [blank] witness whose convincing story helped win the case.",
+        "One major [blank] of eating vegetables is that they give your body plenty of natural energy.",
+        "In [blank], I probably should have studied for the test instead of playing video games all night.",
+        "The [blank] queen kindly donated half her gold to feed the hungry villagers.",
+        "The ancient texts described him as an [blank] because he did not believe in the kingdom's religion.",
+        "Drinking plenty of water is highly [blank] for your health and helps you stay awake.",
+        "She told all her deepest secrets to her diary, treating it like her closest [blank].",
+        "The police officer became [blank] when he saw the masked man sneaking around the bank.",
+        "I couldn't play in the soccer game because of my broken ankle, so I had to sit and watch as a [blank]."
+    ];
+    
+    const answers = ["spectacles", "credentials", "accreditation", "benefile", "fidelity", "perspective", "credible", "benefit", "retrospect", "benevolent", "infidel", "beneficial", "confidant", "suspicious", "spectator"];
+
+    document.getElementById('bank').innerHTML = words.map(w => `<span class="word-chip">${w}</span>`).join('');
+    const options = `<option value="">--</option>` + words.map(w => `<option value="${w}">${w}</option>`).join('');
+    
+    document.getElementById('questions').innerHTML = questions.map((q, i) => 
+        `<div class="q-item"><strong>${i+1}.</strong> ${q.replace('[blank]', `<select id="q${i+1}" class="vocab-select">${options}</select>`)}</div>`
+    ).join('');
+
+    document.querySelectorAll('select').forEach(sel => sel.addEventListener('change', updateDropdowns));
+
+    function updateDropdowns() {
+        const selected = Array.from(document.querySelectorAll('select')).map(s => s.value).filter(v => v);
+        document.querySelectorAll('select').forEach(sel => {
+            const current = sel.value;
+            Array.from(sel.options).forEach(opt => {
+                opt.disabled = opt.value && selected.includes(opt.value) && opt.value !== current;
+            });
+        });
+    }
+
+    function grade() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        answers.forEach((ans, i) => {
+            const el = document.getElementById(`q${i+1}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === ans) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        });
+        
+        const percentage = Math.round((score / 15) * 100);
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `You got ${score}/15 correct (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
