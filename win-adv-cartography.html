@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Cartographer's Deception</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 100px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">The Cartographer's Deception</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Group 1: Advanced Enrichment • Philosophy of Geography • DOK 3</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> For centuries, the cartographic enterprise has been cloaked in the aura of scientific infallibility. We are conditioned to view maps as objective mirrors of the physical world, empirical documents devoid of human bias. However, this assumption belies a fundamental geometric impossibility: one cannot project a three-dimensional sphere onto a two-dimensional plane without introducing mathematical distortion. Every map is an inherently rhetorical document, a curated argument about how the world ought to be perceived, where the mapmaker’s aesthetic and political choices dictate which truths are preserved and which are sacrificed.</p>
+        <p><strong>[¶2]</strong> The Mercator projection, introduced in 1569, exemplifies this phenomenon. By expanding the scale of longitudinal lines as they approach the poles, the map artificially inflates the landmasses of North America and Europe while drastically compressing the equatorial regions of the Global South. For generations of students, this visual hierarchy reinforced a profound geopolitical arrogance. The mathematical distortion of the paper transitioned seamlessly into psychological conditioning, subtly validating the imperial dominance of the Northern Hemisphere by granting it unearned visual magnitude.</p>
+        <p><strong>[¶3]</strong> The danger of cartography culminates when the drawing ceases to describe the landscape and instead begins to command it. During the colonial era, European diplomats gathered in unadorned parlors to carve straight, arbitrary lines across the map of Africa and the Middle East. These borders did not reflect existing ethnic, linguistic, or ecological realities; rather, the map preceded the territory. The ink dictated the reality, cleaving ancient communities in half and forging artificial nations through cartographic decree. Thus, the map is rarely a passive reflection of the world; it is an active mandate for how it must be ruled.</p>
+    </div>
+
+    <h3>Strategic Synthesis & Conceptual Deconstruction</h3>
+    
+    <div class="q-item">
+        <p><strong>1. Rhetorical Deconstruction & Paradox</strong><br>
+        Evaluate the paradoxical statement in Paragraph 3: "the map preceded the territory." Explain how this phrase exposes the power of mapmakers to actively create reality rather than merely measure it:</p>
+        <div id="tags-q1">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q1-create">create/force</span>
+            <span class="word-tag" id="tag-q1-control">control/power</span>
+        </div>
+        <textarea id="ta-q1" placeholder="Type your critical analysis here..." oninput="checkWords('q1', ['create', 'force', 'make', 'control', 'power', 'rule'])"></textarea>
+    </div>
+
+    <div class="q-item">
+        <p><strong>2. The Epistemic Paradigm Matrix</strong><br>
+        Based on Paragraph 2, how does the mathematical distortion of the Mercator projection transition into "psychological conditioning"? Connect the physical size on the map to the geopolitical mindset of the viewer.</p>
+        <div id="tags-q2">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q2-size">size/scale</span>
+            <span class="word-tag" id="tag-q2-dominant">dominant/important</span>
+        </div>
+        <textarea id="ta-q2" placeholder="Type your response here..." oninput="checkWords('q2', ['size', 'scale', 'big', 'dominant', 'important', 'superior'])"></textarea>
+    </div>
+
+    <div class="q-item" style="border-bottom:none;">
+        <p><strong>3. Dialectical Counter-Argument (The Navigator's Defense)</strong><br>
+        Assume the perspective of a 16th-century Maritime Navigator. Defend the Mercator projection against the modern critique of geopolitical bias. Explain why this specific mathematical distortion (which turns curved sailing routes into perfectly straight lines on paper) was an essential, life-saving innovation for global travel:</p>
+        <div id="tags-q3">
+            Target concepts to include: 
+            <span class="word-tag" id="tag-q3-navigate">navigate/sail</span>
+            <span class="word-tag" id="tag-q3-survive">survive/safe</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type your counter-argument here..." oninput="checkWords('q3', ['navigate', 'sail', 'travel', 'survive', 'safe', 'practical', 'tool'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Adv: Cartographer's Deception";
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let wordsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { wordsFound++; }
+        });
+
+        let percentage = Math.round((wordsFound / totalTags) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing analytic depth (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7';
+            res.style.color = '#166534';
+            res.innerHTML = `DOK 3 Conceptual Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2';
+            res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
