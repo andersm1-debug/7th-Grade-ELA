@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The High-Tension Line</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 2: The High-Tension Line</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Proficient Extension • Fluency & Subtext</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> From three hundred feet above the Snake River Canyon, the high-voltage transmission tower swayed four inches in the November crosswind—an intentional engineering allowance that felt significantly less reassuring when suspended from an aluminum work harness. David adjusted his lanyard, clipped his dual carabiners to the cold galvanized lattice, and glanced across the catwalk at his apprentice, Mateo.[cite: 5]</p>
+        <p><strong>[¶2]</strong> Mateo's knuckles were bone-white against the safety railing. Below them, the river looked like an unspooled ribbon of dark jade slicing through basalt cliffs. This was Mateo's first high-altitude reconductoring run, replacing vintage copper cables with high-efficiency carbon-composite lines.[cite: 5]</p>
+        <p><strong>[¶3]</strong> "The steel is supposed to flex, Mateo," David called over the wind, keeping his voice relaxed and measured. "Rigid metal snaps under wind shear. Flexible metal survives."[cite: 5]</p>
+        <p><strong>[¶4]</strong> Mateo nodded stiffly, his arm trembling slightly as he reached for his insulated torque wrench. "It's not the steel moving that bothers me, David. It's the eighty thousand volts humming inside those lines while we're touching them."[cite: 5]</p>
+        <p><strong>[¶5]</strong> David didn't laugh or offer an easy platitude. Instead, he unclipped his magnetic inspection mirror and held it out so Mateo could see his own reflection against the vast sky. "Respecting the current keeps you alive," David said quietly. "Trusting your harness keeps you working. Know the difference between the two."[cite: 5]</p>
+    </div>
+
+    <h3>1. Fluency & Syntactic Parsing</h3>
+    <div class="q-item">
+        <p><em>"...the tower swayed four inches in the crosswind—an intentional engineering allowance that felt significantly less reassuring when suspended from an aluminum work harness."</em></p>
+        <p>Grammatical Subject: <select id="q1"><option value="">--</option><option value="tower">The tower</option><option value="wind">The crosswind</option><option value="harness">The harness</option></select></p>
+        <p>The sentence contrasts the engineer's calculation with human: <select id="q2"><option value="">--</option><option value="fatigue">metal fatigue</option><option value="fear">fear / instinct</option><option value="speed">wind speed</option></select></p>
+    </div>
+
+    <h3>2. Vocabulary in Context</h3>
+    <div class="q-item">
+        <p>Based on how David avoids empty clichés like "You'll be fine," define <strong>platitude</strong> in your own words, and explain why an empty platitude is dangerous in high-voltage linework:[cite: 5]</p>
+        <div id="tags-q3">
+            Target concepts: 
+            <span class="word-tag" id="tag-q3-empty">empty/meaningless</span>
+            <span class="word-tag" id="tag-q3-fake">fake/cliché</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type your response here..." oninput="checkWords('q3', ['empty', 'meaningless', 'fake', 'cliche', 'cliché', 'worthless'])"></textarea>
+    </div>
+
+    <h3>3. Character Action & Symbolic Subtext Matrix</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p><strong>A. Explaining why the steel flexes:</strong> How is "flexible metal survives" a metaphor for how Mateo must handle his fear?[cite: 5]</p>
+        <div id="tags-q4">
+            Target concepts: <span class="word-tag" id="tag-q4-adapt">adapt/bend</span>
+        </div>
+        <textarea id="ta-q4" placeholder="Type your analysis here..." oninput="checkWords('q4', ['adapt', 'bend', 'control', 'accept'])"></textarea>
+        
+        <p style="margin-top:15px;"><strong>B. Holding up the mirror:</strong> Why does David force Mateo to look at his own face suspended 300 feet in the air?[cite: 5]</p>
+        <div id="tags-q5">
+            Target concepts: <span class="word-tag" id="tag-q5-face">face/reality</span>
+        </div>
+        <textarea id="ta-q5" placeholder="Type your analysis here..." oninput="checkWords('q5', ['face', 'reality', 'focus', 'himself'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G2: High-Tension Line";
+    const dropdownAnswers = ["tower", "fear"];
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        
+        for(let i=1; i<=2; i++) {
+            const el = document.getElementById(`q${i}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === dropdownAnswers[i-1]) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; score++; }
+        });
+
+        const totalPoints = dropdownAnswers.length + totalTags;
+        let percentage = Math.round((score / totalPoints) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Proficiency Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
