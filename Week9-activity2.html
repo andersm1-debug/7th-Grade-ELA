@@ -60,4 +60,84 @@
         "The ancient king ordered the stone mason to [blank] his royal name into the granite monument.",
         "During World War II, the government used [blank] to draft young men into the military.",
         "The toddler grabbed a green crayon and began to [blank] messy, looping lines all over the living room walls.",
-        "The
+        "The pop star spoke loudly into the [blank] so the fans in the very back of the stadium could hear her.",
+        "The court reporter typed up a complete [blank] of every single word that was spoken during the trial.",
+        "With smartphones in everyone's pockets, internet access is now practically [blank] in our modern society.",
+        "The orchestra played a beautiful, sweeping [blank] that brought the entire audience to tears.",
+        "The narrator of the fantasy novel was [blank], meaning he knew the secret thoughts, feelings, and futures of every single character.",
+        "The poet used words with smooth, soft sounds to create a sense of beautiful [blank] in her poem.",
+        "The choir's song featured complex [blank], with four different vocal melodies playing at the exact same time.",
+        "Before the invention of CDs or streaming music, people listened to records on a wind-up [blank] equipped with a large horn.",
+        "If you want to learn how to pronounce foreign words perfectly, you should study [blank] to understand how the mouth makes sounds.",
+        "The comic book fan bought a massive, 500-page [blank] that contained the first fifty issues of his favorite superhero series."
+    ];
+    
+    const answers = ["prescribe", "omnivore", "inscribe", "conscription", "scribble", "microphone", "transcript", "omnipresent", "symphony", "omniscient", "euphony", "polyphony", "phonograph", "phonetics", "omnibus"];
+
+    document.getElementById('bank').innerHTML = words.map(w => `<span class="word-chip">${w}</span>`).join('');
+    const options = `<option value="">--</option>` + words.map(w => `<option value="${w}">${w}</option>`).join('');
+    
+    document.getElementById('questions').innerHTML = questions.map((q, i) => 
+        `<div class="q-item"><strong>${i+1}.</strong> ${q.replace('[blank]', `<select id="q${i+1}" class="vocab-select">${options}</select>`)}</div>`
+    ).join('');
+
+    document.querySelectorAll('select').forEach(sel => sel.addEventListener('change', updateDropdowns));
+
+    function updateDropdowns() {
+        const selected = Array.from(document.querySelectorAll('select')).map(s => s.value).filter(v => v);
+        document.querySelectorAll('select').forEach(sel => {
+            const current = sel.value;
+            Array.from(sel.options).forEach(opt => {
+                opt.disabled = opt.value && selected.includes(opt.value) && opt.value !== current;
+            });
+        });
+    }
+
+    function grade() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) {
+            alert("Please enter your name before turning in!");
+            return;
+        }
+
+        let score = 0;
+        answers.forEach((ans, i) => {
+            const el = document.getElementById(`q${i+1}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === ans) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        });
+        
+        const percentage = Math.round((score / 15) * 100);
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `You got ${score}/15 correct (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({
+                name: name,
+                activity: ACTIVITY_NAME,
+                score: percentage + "%"
+            })
+        }).then(() => {
+            res.style.background = '#dcfce7';
+            res.style.color = '#166534';
+            res.innerHTML = `Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2';
+            res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
