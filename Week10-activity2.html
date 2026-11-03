@@ -7,9 +7,10 @@
     <style>
         :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
         body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-        .nav { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
         .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
         .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
         .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
         .word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; }
         .word-chip { background: white; padding: 5px 12px; border-radius: 999px; font-size: 0.9em; font-weight: 600; color: var(--primary); }
@@ -27,6 +28,7 @@
 <body>
 
 <div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week10.html" class="back-link">&larr; Back to Week 10</a>
     <a href="Week10-activity1.html">Act 1: Story</a>
     <a href="Week10-activity2.html" class="active">Act 2: Sentences</a>
     <a href="Week10-activity3.html">Act 3: Writing</a>
