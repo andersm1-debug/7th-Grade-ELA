@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Deep Ocean's Living Batteries</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">The Deep Ocean's Living Batteries</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Unit 1: Active Comprehension • Central Idea & Tracking</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> Thousands of meters beneath the ocean's surface, sunlight cannot penetrate the pitch-black water. In this freezing environment, towering chimneys called hydrothermal vents spew mineral-rich fluids directly into the sea from deep within the Earth's crust. For decades, marine biologists assumed life here could barely survive. Yet, thriving communities of giant tube worms, ghost-white crabs, and specialized shrimp crowd around these scalding chimneys.</p>
+        <p><strong>[¶2]</strong> Instead of relying on photosynthesis like plants on land, these deep-sea organisms depend on a process called chemosynthesis. Microscopic bacteria absorb the toxic hydrogen sulfide and iron pouring from the vents, converting those dissolved minerals into usable chemical energy. The tube worms lack mouths and digestive systems; instead, billions of symbiotic bacteria live inside their bodies, feeding their hosts from the inside out.</p>
+        <p><strong>[¶3]</strong> Recently, marine engineers made an even more unexpected discovery: these hydrothermal fields generate measurable electric currents. Because the hot vent fluids carry a heavy electrical charge compared to the cold surrounding seawater, the mineral walls of the chimneys act like natural power cables. Scientists are now testing whether this geological electricity could help explain how the earliest single-celled life formed on Earth.</p>
+    </div>
+
+    <h3>1. Antecedent Tracking</h3>
+    <div class="q-item">
+        <p>Look closely at Paragraph 2: <em>"...billions of symbiotic bacteria live inside their bodies, feeding their hosts from the inside out."</em></p>
+        <p>Write the exact noun that the word "their" refers to:</p>
+        <div id="tags-q1">
+            Target concept: <span class="word-tag" id="tag-q1-worms">tube worms</span>
+        </div>
+        <textarea id="ta-q1" placeholder="Type your response here..." oninput="checkWords('q1', ['tube', 'worms', 'tubeworms'])"></textarea>
+    </div>
+
+    <h3>2. Central Idea Analysis</h3>
+    <div class="q-item">
+        <p>Which statement best captures the central idea of the entire text?</p>
+        <select id="q2" style="width:100%; padding:10px; border: 2px solid #cbd5e1; border-radius: 6px;">
+            <option value="">-- Select Answer --</option>
+            <option value="A">A. Deep-sea hydrothermal vents and the ocean floor ecosystem.</option>
+            <option value="B">B. Hydrothermal vents sustain unique life through chemosynthesis and generate electrical currents.</option>
+            <option value="C">C. Giant tube worms survive without digestive systems because bacteria feed them.</option>
+            <option value="D">D. Scientists use submersibles to explore dark areas of the Earth's crust.</option>
+        </select>
+    </div>
+
+    <h3>3. Text Evidence Verification</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p>Write the exact sentence from Paragraph 3 that explains why vent walls conduct electricity:</p>
+        <div id="tags-q3">
+            Target concepts: 
+            <span class="word-tag" id="tag-q3-charge">electrical charge</span>
+            <span class="word-tag" id="tag-q3-cables">power cables</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type the exact sentence here..." oninput="checkWords('q3', ['charge', 'electrical', 'seawater', 'cables', 'power'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Activity</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Active: Living Batteries";
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        const q2 = document.getElementById('q2');
+        q2.classList.remove('correct', 'incorrect');
+        if(q2.value === "B") { q2.classList.add('correct'); score++; }
+        else { q2.classList.add('incorrect'); }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; score++; }
+        });
+
+        const totalPoints = 1 + totalTags; // 1 dropdown + tags
+        let percentage = Math.round((score / totalPoints) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Comprehension Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
