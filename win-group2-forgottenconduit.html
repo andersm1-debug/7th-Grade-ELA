@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Forgotten Conduit</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 2: The Forgotten Conduit</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Proficient Extension • Deep Inference & Syntactic Stamina</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> For centuries, Roman civil engineering was synonymous with monumental arched aqueducts marching visibly across rolling Italian valleys. Yet beneath the limestone foundations of ancient Lyon, modern archaeologists uncovered a far more daring hydraulic achievement: an inverted siphon engineered to conquer the steep, unbridgeable valley of the Garon River. Where traditional gravity canals were rendered obsolete by sheer topographical drops, Roman military architects abandoned open masonry channels in favor of hermetically sealed lead pipelines capable of withstanding immense hydraulic pressure.[cite: 6]</p>
+        <p><strong>[¶2]</strong> The mechanics relied upon an elementary physical law: water in an enclosed system naturally seeks its own level. Water flowed down the valley slope inside nine parallel conduits, gathered crushing momentum as it plunged into the gorge floor, and then, driven solely by the hydrostatic head built up during its descent, surged uphill along the opposing ridge to empty into a distribution header basin.[cite: 6]</p>
+        <p><strong>[¶3]</strong> Constructing such conduits demanded unprecedented material wealth and metallurgical mastery. Each siphon required thousands of tons of mined lead, casting techniques that eliminated internal seam imperfections, and stone expansion joints designed to endure violent "water hammer" surges when flow rates fluctuated. While triumphal arches and coliseums signaled political dominance through theatrical grandeur, these buried lead arteries represented the true cornerstone of provincial empire: the quiet, stubborn subjugation of geography to sustain urban life in lands Rome claimed but had yet to tame.[cite: 6]</p>
+    </div>
+
+    <h3>1. Fluency & Syntactic Parsing Drill</h3>
+    <div class="q-item">
+        <p>Identify the three progressive action verbs in Paragraph 2 that mirror the path of the water:[cite: 6]</p>
+        <p>Verb 1 (Descent): <select id="q1"><option value="">--</option><option value="surged">surged</option><option value="plunged">plunged</option><option value="flowed">flowed</option></select></p>
+        <p>Verb 2 (Acceleration): <select id="q2"><option value="">--</option><option value="surged">surged</option><option value="plunged">plunged</option><option value="flowed">flowed</option></select></p>
+        <p>Verb 3 (Ascent): <select id="q3"><option value="">--</option><option value="surged">surged</option><option value="plunged">plunged</option><option value="flowed">flowed</option></select></p>
+    </div>
+
+    <h3>2. Vocabulary: Author's Choice</h3>
+    <div class="q-item">
+        <p>In this context, <em>subjugation</em> means forcefully controlling or conquering an obstacle. Explain why the author chose the phrase "the quiet, stubborn subjugation of geography" instead of simply writing that the Romans "adapted to the land":[cite: 6]</p>
+        <div id="tags-q4">
+            Target concepts: 
+            <span class="word-tag" id="tag-q4-force">force/power</span>
+            <span class="word-tag" id="tag-q4-control">control/conquer</span>
+        </div>
+        <textarea id="ta-q4" placeholder="Type your response here..." oninput="checkWords('q4', ['force', 'power', 'control', 'conquer', 'dominate'])"></textarea>
+    </div>
+
+    <h3>3. Deep Inference Matrix: Visible vs. Invisible Power</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p><strong>A. Coliseums & Arches:</strong> What did these grand monuments show about how Rome wanted to be perceived?[cite: 6]</p>
+        <div id="tags-q5">
+            Target concepts: <span class="word-tag" id="tag-q5-show">show/fear</span>
+        </div>
+        <textarea id="ta-q5" placeholder="Type your analysis here..." oninput="checkWords('q5', ['show', 'fear', 'attention', 'superior', 'display'])"></textarea>
+        
+        <p style="margin-top:15px;"><strong>B. Inverted Siphons:</strong> Why does the author call these hidden underground pipes the "true cornerstone" of the empire?[cite: 6]</p>
+        <div id="tags-q6">
+            Target concepts: <span class="word-tag" id="tag-q6-life">life/foundation</span>
+        </div>
+        <textarea id="ta-q6" placeholder="Type your analysis here..." oninput="checkWords('q6', ['life', 'foundation', 'survival', 'real', 'sustain'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G2: Forgotten Conduit";
+    const dropdownAnswers = ["flowed", "plunged", "surged"];
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        for(let i=1; i<=3; i++) {
+            const el = document.getElementById(`q${i}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === dropdownAnswers[i-1]) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; score++; }
+        });
+
+        const totalPoints = dropdownAnswers.length + totalTags;
+        let percentage = Math.round((score / totalPoints) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Proficiency Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
