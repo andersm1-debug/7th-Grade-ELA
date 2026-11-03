@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 - Activity 1: The Story</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; }
+        .word-chip { background: white; padding: 5px 12px; border-radius: 999px; font-size: 0.9em; font-weight: 600; color: var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        select.correct { background: #dcfce7; border-color: var(--correct); color: #166534; }
+        select.incorrect { background: #fee2e2; border-color: var(--incorrect); color: #991b1b; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week12.html" class="back-link">&larr; Back to Week 12</a>
+    <a href="Week12-activity1.html" class="active">Act 1: Story</a>
+    <a href="Week12-activity2.html">Act 2: Sentences</a>
+    <a href="Week12-activity3.html">Act 3: Writing</a>
+    <a href="Week12-activity4.html">Act 4: Riddles</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Activity 1: The Summit Secret</h2>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="word-bank" id="bank"></div>
+    <p style="line-height: 2.2;">
+        The (1) <select id="q1" class="vocab-select"></select> summit, which only happens once every two years, was finally here. To succeed, the opposing political parties had to form a (2) <select id="q2" class="vocab-select"></select> agreement. Senator Vance put on his (3) <select id="q3" class="vocab-select"></select> so he could see the small print on the documents. He was preparing to give a speech to the (4) <select id="q4" class="vocab-select"></select> legislature, consisting of two separate lawmaking chambers. <br><br>
+        His goal was to (5) <select id="q5" class="vocab-select"></select> the politicians with the truth about a new smuggling problem. Criminals were using fast boats to (6) <select id="q6" class="vocab-select"></select> on secret voyages, sneaking illegal (7) <select id="q7" class="vocab-select"></select> into the country. To stop them, Vance wanted to pass a law to (8) <select id="q8" class="vocab-select"></select> the coast guard to use a brand new mechanical (9) <select id="q9" class="vocab-select"></select> that could detect hidden goods inside shipping crates. <br><br>
+        A rival politician tried to (10) <select id="q10" class="vocab-select"></select> Vance, asserting the exact opposite of the truth to deny his claims. However, Vance flexed his (11) <select id="q11" class="vocab-select"></select> muscle, slammed a heavy metal plate on the desk, and pointed out the (12) <select id="q12" class="vocab-select"></select> between the two sides' evidence, showing exactly how different they were. <br><br>
+        The metal plate had a serial number that criminals tried to (13) <select id="q13" class="vocab-select"></select> into the hard surface. They also tried to (14) <select id="q14" class="vocab-select"></select> it with fake decorative details to make it look harmless. However, Vance's scientists found a biological protein (15) <select id="q15" class="vocab-select"></select> on the plate that sped up a chemical reaction, proving it came from a dangerous lab!
+    </p>
+    <button id="submitBtn" onclick="grade()">Grade & Turn In</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hQTGB3p-5Jh0tHgY_oAcHNCmFD4ZCq4146hgHhUch__AHMQrVgD2PTZn6crK3BbR/exec"; 
+    const ACTIVITY_NAME = "Week 12 Activity 1: The Story";
+
+    const words = ["contradict", "contraband", "contrast", "enzyme", "enable", "enlighten", "embark", "engrave", "embellish", "biennial", "bifocals", "bicameral", "bicep", "contraption", "bipartisan"].sort();
+    const answers = ["biennial", "bipartisan", "bifocals", "bicameral", "enlighten", "embark", "contraband", "enable", "contraption", "contradict", "bicep", "contrast", "engrave", "embellish", "enzyme"];
+    
+    document.getElementById('bank').innerHTML = words.map(w => `<span class="word-chip">${w}</span>`).join('');
+    const options = `<option value="">--</option>` + words.map(w => `<option value="${w}">${w}</option>`).join('');
+    
+    document.querySelectorAll('select').forEach(sel => {
+        sel.innerHTML = options;
+        sel.addEventListener('change', updateDropdowns);
+    });
+
+    function updateDropdowns() {
+        const selected = Array.from(document.querySelectorAll('select')).map(s => s.value).filter(v => v);
+        document.querySelectorAll('select').forEach(sel => {
+            const current = sel.value;
+            Array.from(sel.options).forEach(opt => {
+                opt.disabled = opt.value && selected.includes(opt.value) && opt.value !== current;
+            });
+        });
+    }
+
+    function grade() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) {
+            alert("Please enter your name before turning in!");
+            return;
+        }
+
+        let score = 0;
+        answers.forEach((ans, i) => {
+            const el = document.getElementById(`q${i+1}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === ans) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        });
+        
+        const percentage = Math.round((score / 15) * 100);
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `You got ${score}/15 correct (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({
+                name: name,
+                activity: ACTIVITY_NAME,
+                score: percentage + "%"
+            })
+        }).then(() => {
+            res.style.background = '#dcfce7';
+            res.style.color = '#166534';
+            res.innerHTML = `Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2';
+            res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
