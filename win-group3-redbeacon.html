@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Red Beacon</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 3: The Red Beacon</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Strategic Scaffold • Plot Summary & Motive</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> Rain lashed against the windshield of the patrol truck. Ranger Maya gripped the steering wheel, peering through the foggy glass into the blackness of Blackwood Gorge. It was past midnight, and the radio sputtered with static. A lone teenage hiker was missing along the ridge trail, hours after an unexpected flash flood washed out the footbridge.[cite: 10]</p>
+        <p><strong>[¶2]</strong> Maya knew standard rescue protocol: wait for the storm to clear before hiking into the ravine. But rising creek waters were already chewing away at the dirt embankments. If the hiker was trapped near the riverbank, waiting until sunrise would be too late. She grabbed her pack: thermal blankets, a loud whistle, and a flare.[cite: 10]</p>
+        <p><strong>[¶3]</strong> Stepping out into the gale, Maya fought through mud along the canyon rim. Above the roar of rushing water, she blew three sharp, piercing blasts on her whistle—the universal signal for distress. She paused, straining to listen. From deep down in the dark gorge, a tiny flicker of red light blinked back three times.[cite: 10]</p>
+    </div>
+
+    <h3>1. SWBST Plot Summary Organizer</h3>
+    <div class="q-item">
+        <p>Fill in the missing details using the story events:[cite: 10]</p>
+        <p><strong>Wanted:</strong> to locate and rescue a missing teenage <select id="q1"><option value="">--</option><option value="whistle">whistle</option><option value="rising">rising</option><option value="hiker">hiker</option><option value="red light">red light</option></select> before morning,</p>
+        <p><strong>But:</strong> safety rules said to wait, but the river was <select id="q2"><option value="">--</option><option value="whistle">whistle</option><option value="rising">rising</option><option value="hiker">hiker</option><option value="red light">red light</option></select></p>
+        <p><strong>So:</strong> too quickly, she entered the storm and blew three sharp blasts on her <select id="q3"><option value="">--</option><option value="whistle">whistle</option><option value="rising">rising</option><option value="hiker">hiker</option><option value="red light">red light</option></select></p>
+        <p><strong>Then:</strong> a flashing <select id="q4"><option value="">--</option><option value="whistle">whistle</option><option value="rising">rising</option><option value="hiker">hiker</option><option value="red light">red light</option></select> blinked back from the gorge, confirming the hiker's location.</p>
+    </div>
+
+    <h3>2. Character Action & Reasoning</h3>
+    <div class="q-item">
+        <p>Complete the scaffolded sentence frame below:[cite: 10]</p>
+        <p><em>Maya decided to break the rescue rule because she realized that if she waited for daylight... The text proves this in Paragraph 2 when it states that the water was...</em></p>
+        <div id="tags-q5">
+            Target concepts: 
+            <span class="word-tag" id="tag-q5-late">too late/die</span>
+            <span class="word-tag" id="tag-q5-chewing">chewing/embankment</span>
+        </div>
+        <textarea id="ta-q5" placeholder="Type your response here..." oninput="checkWords('q5', ['late', 'die', 'chewing', 'destroying', 'washing', 'embankment'])"></textarea>
+    </div>
+
+    <h3>3. Inferential Check</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p>Why did the hiker blink their light exactly three times?[cite: 10]</p>
+        <select id="q5" style="width:100%; padding:10px;">
+            <option value="">-- Select Answer --</option>
+            <option value="A">A. The flashlight's battery was flickering out.</option>
+            <option value="B">B. The hiker was answering Maya's three whistle blasts to confirm rescue.</option>
+            <option value="C">C. Three flashes was the only setting the light had.</option>
+            <option value="D">D. The hiker was attempting to start a campfire.</option>
+        </select>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Grade & Turn In</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G3: Red Beacon";
+    const dropdownAnswers = ["hiker", "rising", "whistle", "red light", "B"];
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        for(let i=1; i<=5; i++) {
+            const el = document.getElementById(`q${i}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === dropdownAnswers[i-1]) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; score++; }
+        });
+
+        const totalPoints = dropdownAnswers.length + totalTags;
+        let percentage = Math.round((score / totalPoints) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Comprehension Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
