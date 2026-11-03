@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocab Vault | Week 17</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+    :root {
+      --purple: #4f2683;
+      --purple-dark: #32185c;
+      --gold: #ffc62f;
+      --white: #ffffff;
+      --bg: #f6f3fb;
+      --text: #231f2e;
+      --muted: #6b6477;
+      --card-border: #e6def2;
+      --green-bg: #e8f5e9;
+      --green-text: #2e7d32;
+      --orange-bg: #fff3e0;
+      --orange-text: #ef6c00;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 47, 0.22), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: var(--white);
+      padding: 64px 24px 54px;
+      text-align: center;
+      border-bottom: 8px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(79, 38, 131, 0.25);
+    }
+
+    header .eyebrow {
+      display: inline-block;
+      background: rgba(255, 198, 47, 0.18);
+      color: var(--gold);
+      border: 1px solid rgba(255, 198, 47, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      margin: 18px auto 0;
+      max-width: 680px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1150px, 92%);
+      margin: 44px auto;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 195px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--purple), var(--gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79, 38, 131, 0.35);
+      box-shadow: 0 20px 42px rgba(50, 24, 92, 0.16);
+    }
+
+    .card h2 {
+      margin: 12px 0 10px;
+      color: var(--purple);
+      font-size: 1.2rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .active {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .placeholder {
+      background: var(--orange-bg);
+      color: var(--orange-text);
+    }
+
+    .home-card {
+      background: linear-gradient(135deg, #ffffff, #fff7dc);
+      border-color: rgba(255, 198, 47, 0.55);
+    }
+
+    .disabled {
+      opacity: 0.68;
+      cursor: not-allowed;
+    }
+
+    .disabled:hover {
+      transform: none;
+      box-shadow: 0 12px 28px rgba(50, 24, 92, 0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 42px;
+      }
+
+      main {
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span class="eyebrow">Week 17 Vocabulary</span>
+    <h1>Vocab Vault</h1>
+    <p>Graded - The SidebySide and Vocabulary Practice will be graded.</p>
+    <p>W.I.N. Activities - Do during W.I.N. Time</p>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <a href="index.html" class="card home-card">
+        <div>
+          <h2>Return to Hub</h2>
+          <p>Go back to the main 7th Grade ELA Hub.</p>
+        </div>
+        <span class="status-badge active">Home</span>
+      </a>
+
+       <a href="sidebyside17.html" class="card">
+        <div>
+          <h2>Graded: Week 17 Side by Side</h2>
+          <p>Post, Semi, Un, Syn</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+      
+ <a href="Week17Vocab.html" class="card">
+        <div>
+          <h2>Graded: Week 17 Vocabulary Practice</h2>
+          <p>Post, Semi, Un, Syn</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+ <a href="Week17-activity1.html" class="card">
+        <div>
+          <h2>W.I.N Time: Week 17 Activity 1</h2>
+          <p>The Story</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+      
+       <a href="Week17-activity2.html" class="card">
+        <div>
+          <h2>W.I.N Time: Week 17 Activity 2</h2>
+          <p>Practice Sentences</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+<a href="Week17-activity3.html" class="card">
+        <div>
+          <h2>W.I.N Time: Week 17 Activity 3</h2>
+          <p>Writing & Target Checks</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+<a href="Week17-activity4.html" class="card">
+        <div>
+          <h2>W.I.N Time: Week 17 Activity 4</h2>
+          <p>Riddles</p>
+        </div>
+        <span class="status-badge active">Live Interaction</span>
+      </a>
+
+      <a href="#" class="card disabled" aria-disabled="true">
+        <div>
+          <h2>Coming Soon</h2>
+          <p>More vocabulary practice is under construction.</p>
+        </div>
+        <span class="status-badge placeholder">Under Construction</span>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 ELA with Mr. A | AI Coach & 7th Grade ELA
+  </footer>
+</body>
+</html>
+```
