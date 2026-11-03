@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 - Activity 3: Writing</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week12.html" class="back-link">&larr; Back to Week 12</a>
+    <a href="Week12-activity1.html">Act 1: Story</a>
+    <a href="Week12-activity2.html">Act 2: Sentences</a>
+    <a href="Week12-activity3.html" class="active">Act 3: Writing</a>
+    <a href="Week12-activity4.html">Act 4: Riddles</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Activity 3: "Would You Rather?"</h2>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <p style="text-align:center;">Explain your choice in 1-2 sentences. You <strong>MUST</strong> use the target words in your answer. The tags below will turn green when you type them correctly!</p>
+    
+    <div id="questions"></div>
+    <button id="submitBtn" onclick="gradeAndTurnIn()" style="margin-top:20px;">Turn In Writing Assignment</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9hQTGB3p-5Jh0tHgY_oAcHNCmFD4ZCq4146hgHhUch__AHMQrVgD2PTZn6crK3BbR/exec"; 
+    const ACTIVITY_NAME = "Week 12 Activity 3: Writing";
+
+    const data = [
+        { q: "Would you rather use a strange mechanical contraption that acts as an enzyme to speed up your digestion, OR wear bifocals forever?", words: ["contraption", "enzyme", "bifocals"] },
+        { q: "Would you rather embark on a dangerous journey to find illegal contraband, OR try to pass a bipartisan law in a bicameral government?", words: ["embark", "contraband", "bipartisan", "bicameral"] },
+        { q: "Would you rather embellish your car with crazy decorations to contrast with everyone else, OR carefully engrave your name into every item you own?", words: ["embellish", "contrast", "engrave"] },
+        { q: "Would you rather enable a machine to enlighten the world with truth, OR contradict every single thing your friends say?", words: ["enable", "enlighten", "contradict"] },
+        { q: "Would you rather attend a boring biennial meeting once every two years, OR have to do one thousand bicep curls every morning?", words: ["biennial", "bicep"] }
+    ];
+
+    document.getElementById('questions').innerHTML = data.map((d, i) => `
+        <div class="q-item">
+            <p><strong>${i+1}.</strong> ${d.q}</p>
+            <div id="tags-${i}">
+                Target Words: ${d.words.map(w => `<span class="word-tag" id="tag-${i}-${w}">${w}</span>`).join('')}
+            </div>
+            <textarea id="ta-${i}" placeholder="Type your answer here..." oninput="checkWords(${i})"></textarea>
+        </div>
+    `).join('');
+
+    function checkWords(index) {
+        const text = document.getElementById(`ta-${index}`).value.toLowerCase();
+        data[index].words.forEach(w => {
+            const tag = document.getElementById(`tag-${index}-${w}`);
+            if(text.includes(w)) { tag.classList.add('found'); } 
+            else { tag.classList.remove('found'); }
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) {
+            alert("Please enter your name before turning in!");
+            return;
+        }
+
+        let wordsFound = 0;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) wordsFound++;
+        });
+        
+        const percentage = Math.round((wordsFound / 15) * 100);
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `You used ${wordsFound}/15 target words (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({
+                name: name,
+                activity: ACTIVITY_NAME,
+                score: percentage + "%"
+            })
+        }).then(() => {
+            res.style.background = '#dcfce7';
+            res.style.color = '#166534';
+            res.innerHTML = `Word Usage Score: ${percentage}%<br><strong>✅ Writing Assignment Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2';
+            res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
