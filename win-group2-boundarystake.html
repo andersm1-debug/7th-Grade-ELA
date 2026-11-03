@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Boundary Stake</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 2: The Boundary Stake</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Proficient Extension • Dialogue Subtext & Symbolic Action</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> The transit level rested on its yellow tripod, brass fittings catching the cold November glare that filtered through the stand of red oaks. Marcus rotated the azimuth screw until the crosshairs aligned with the rusted iron pin half-buried beneath forty years of decomposing leaf litter. According to the county surveyor's plat from 1984, this pin marked the boundary line between the Miller family orchard and the developer's newly purchased eastern parcel.[cite: 6]</p>
+        <p><strong>[¶2]</strong> "It's three feet inside their fence line, isn't it?" The question came from behind Marcus. Mr. Miller stood with his work gloves wedged into the waistband of his faded duck canvas overalls, shoulders hunched against the morning frost. He wasn't looking through the optics; his eyes were fixed on the row of mature Stayman Winesap apple trees whose roots curled across the surveyor's sightline.[cite: 6]</p>
+        <p><strong>[¶3]</strong> "The iron pin is where the iron pin is, Mr. Miller," Marcus said, keeping his pencil steady against his field notebook. "The satellite receiver verified the coordinates with the county benchmark down on Old Mill Road."[cite: 6]</p>
+        <p><strong>[¶4]</strong> Miller didn't raise his voice. He reached out and snapped a dead twig off the nearest bough, rolling the brittle wood between calloused fingers until it turned to cedar-colored dust. "My grandfather planted those Winesaps the spring he came back from Normandy. That wire fence went up two years later when the cattle broke through the creek. Nobody measured with satellites then. We measured with handshakes."[cite: 6]</p>
+        <p><strong>[¶5]</strong> Marcus clicked his mechanical pencil lead back into its barrel. He glanced down at the official deed registry in his clipboard, then back at the graying orchardist whose boots were planted firmly in the disputed three feet of soil.[cite: 6]</p>
+    </div>
+
+    <h3>1. Characterization Through Micro-Action</h3>
+    <div class="q-item">
+        <p>What does Miller's act of crushing the twig into dust symbolize about his emotional state and what he fears will happen to his family's orchard in Paragraph 4?[cite: 6]</p>
+        <div id="tags-q1">
+            Target concepts: 
+            <span class="word-tag" id="tag-q1-loss">loss/anger</span>
+            <span class="word-tag" id="tag-q1-destroy">destroy/history</span>
+        </div>
+        <textarea id="ta-q1" placeholder="Type your response here..." oninput="checkWords('q1', ['loss', 'anger', 'destroy', 'history', 'gone'])"></textarea>
+    </div>
+
+    <h3>2. Conflicting Worldviews Matrix</h3>
+    <div class="q-item">
+        <p><strong>A. Marcus (The Surveyor):</strong> His basis of truth is satellite coordinates and deeds. What does this patch of ground represent to him?[cite: 6]</p>
+        <div id="tags-q2">
+            Target concepts: <span class="word-tag" id="tag-q2-data">data/law</span>
+        </div>
+        <textarea id="ta-q2" placeholder="Type your analysis here..." oninput="checkWords('q2', ['data', 'law', 'business', 'money', 'fact'])"></textarea>
+        
+        <p style="margin-top:15px;"><strong>B. Mr. Miller (The Orchardist):</strong> His basis of truth is generational memory. What does this patch of ground represent to him?[cite: 6]</p>
+        <div id="tags-q3">
+            Target concepts: <span class="word-tag" id="tag-q3-family">family/memory</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type your analysis here..." oninput="checkWords('q3', ['family', 'memory', 'blood', 'history', 'life'])"></textarea>
+    </div>
+
+    <h3>3. Inferential Analysis: The Ending Subtext</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p>Why does Marcus click his mechanical pencil lead back in instead of writing? What does this silence reveal about his internal dilemma between duty and empathy in Paragraph 5?[cite: 6]</p>
+        <div id="tags-q4">
+            Target concepts: 
+            <span class="word-tag" id="tag-q4-pause">pause/hesitate</span>
+            <span class="word-tag" id="tag-q4-empathy">empathy/guilt</span>
+        </div>
+        <textarea id="ta-q4" placeholder="Type your analysis here..." oninput="checkWords('q4', ['pause', 'hesitate', 'empathy', 'guilt', 'conflict', 'stop'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G2: Boundary Stake";
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; }
+        });
+
+        let percentage = Math.round((tagsFound / totalTags) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Proficiency Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
