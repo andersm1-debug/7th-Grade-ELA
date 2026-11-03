@@ -7,9 +7,10 @@
     <style>
         :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
         body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-        .nav { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
         .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
         .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
         .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
         .word-bank { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; }
         .word-chip { background: white; padding: 5px 12px; border-radius: 999px; font-size: 0.9em; font-weight: 600; color: var(--primary); }
@@ -26,6 +27,7 @@
 <body>
 
 <div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week10.html" class="back-link">&larr; Back to Week 10</a>
     <a href="Week10-activity1.html" class="active">Act 1: Story</a>
     <a href="Week10-activity2.html">Act 2: Sentences</a>
     <a href="Week10-activity3.html">Act 3: Writing</a>
@@ -82,46 +84,3 @@
         if (!name) {
             alert("Please enter your name before turning in!");
             return;
-        }
-
-        let score = 0;
-        answers.forEach((ans, i) => {
-            const el = document.getElementById(`q${i+1}`);
-            el.classList.remove('correct', 'incorrect');
-            if(el.value === ans) { el.classList.add('correct'); score++; }
-            else { el.classList.add('incorrect'); }
-        });
-        
-        const percentage = Math.round((score / 15) * 100);
-        const res = document.getElementById('results');
-        const btn = document.getElementById('submitBtn');
-        
-        res.style.display = 'block';
-        res.style.background = '#eff6ff';
-        res.style.color = '#1e3a8a';
-        res.innerHTML = `You got ${score}/15 correct (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
-        btn.disabled = true;
-
-        fetch(WEB_APP_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain" },
-            body: JSON.stringify({
-                name: name,
-                activity: ACTIVITY_NAME,
-                score: percentage + "%"
-            })
-        }).then(() => {
-            res.style.background = '#dcfce7';
-            res.style.color = '#166534';
-            res.innerHTML = `Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
-        }).catch(err => {
-            res.style.background = '#fee2e2';
-            res.style.color = '#991b1b';
-            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
-            btn.disabled = false;
-        });
-    }
-</script>
-</body>
-</html>
