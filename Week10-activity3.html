@@ -7,9 +7,10 @@
     <style>
         :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
         body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-        .nav { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
         .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
         .nav a.active { background: var(--primary); color: white; }
+        .nav a.back-link { background: #475569; color: white; }
         .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
         .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
         textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
@@ -26,6 +27,7 @@
 <body>
 
 <div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/Week10.html" class="back-link">&larr; Back to Week 10</a>
     <a href="Week10-activity1.html">Act 1: Story</a>
     <a href="Week10-activity2.html">Act 2: Sentences</a>
     <a href="Week10-activity3.html" class="active">Act 3: Writing</a>
