@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Reading Lab: The Master's Timing</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --correct: #22c55e; --incorrect: #ef4444; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .nav a { background: #e2e8f0; padding: 8px 15px; text-decoration: none; color: #1e293b; border-radius: 6px; font-weight: bold; }
+        .nav a.back-link { background: #475569; color: white; }
+        .card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; }
+        .passage { background:#f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--primary); }
+        select { background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; font-weight: 600; color: var(--primary); cursor: pointer; }
+        .q-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1em; resize: vertical; min-height: 80px; margin-top: 10px; box-sizing: border-box;}
+        textarea:focus { outline: none; border-color: var(--primary); }
+        .word-tag { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #475569; margin-right: 5px; transition: 0.2s;}
+        .word-tag.found { background: #dcfce7; color: #166534; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group input { padding: 10px; width: 100%; max-width: 300px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1em; text-align: center; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #results { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="https://andersm1-debug.github.io/7th-Grade-ELA/index.html" class="back-link">&larr; Back to ELA Hub</a>
+</div>
+
+<div class="card">
+    <h2 style="color:var(--primary); text-align:center;">Group 2: The Master's Timing</h2>
+    <p style="text-align:center; color:#64748b; margin-top:-10px;">Proficient Extension • Character Motive & Pacing Subtext</p>
+    
+    <div class="input-group">
+        <input type="text" id="studentName" placeholder="Enter your First & Last Name">
+    </div>
+
+    <div class="passage">
+        <p><strong>[¶1]</strong> The brass bell above the door chimed sharply, interrupting the rhythmic ticking that filled Julian’s repair shop. A man in a tailored suit stepped inside, checking his smartwatch twice before he even reached the counter. He placed a tarnished 1920s pocket watch onto the velvet mat. "I need this fully restored," the man said, tapping his finger impatiently against his phone screen. "I’m flying to Tokyo on Thursday. Can you expedite it?"</p>
+        <p><strong>[¶2]</strong> Julian didn't reach for the watch immediately. He adjusted his jeweler's loupe and studied the frantic micro-movements of the executive standing before him. "I cannot expedite a century of rust, Mr. Vance," Julian said softly. "The mainspring must be soaked in oil for three days. If I force the gears to turn before they are ready, the teeth will shear completely."</p>
+        <p><strong>[¶3]</strong> Vance frowned, clearly unaccustomed to hearing the word 'no'. "I’ll pay double your usual rate. Rush delivery."</p>
+        <p><strong>[¶4]</strong> Julian gently picked up the pocket watch, feeling the heavy, cold brass in his palm. It had belonged to someone who understood that time was a companion to be walked alongside, not an obstacle to be sprinted past. "You misunderstand the transaction," Julian replied, handing the watch back across the counter. "You are paying for my patience, not my speed. If you cannot wait for the oil to seep, this is not the shop for you."</p>
+    </div>
+
+    <h3>1. Fluency & Contrast in Pacing</h3>
+    <div class="q-item">
+        <p>Identify the contrast between how the two men interact with time in Paragraphs 1 and 2:</p>
+        <p>Mr. Vance (The Executive) values: <select id="q1"><option value="">--</option><option value="speed">Speed and rushing</option><option value="care">Care and patience</option></select></p>
+        <p>Julian (The Watchmaker) values: <select id="q2"><option value="">--</option><option value="speed">Speed and rushing</option><option value="care">Care and patience</option></select></p>
+    </div>
+
+    <h3>2. Character Motive & Subtext</h3>
+    <div class="q-item">
+        <p>Why does Julian refuse Mr. Vance's offer to pay double the rate in Paragraph 3? What does this reveal about his core values?</p>
+        <div id="tags-q3">
+            Target concepts: 
+            <span class="word-tag" id="tag-q3-respect">respect/craft</span>
+            <span class="word-tag" id="tag-q3-quality">quality/patience</span>
+        </div>
+        <textarea id="ta-q3" placeholder="Type your response here..." oninput="checkWords('q3', ['respect', 'craft', 'quality', 'patience', 'pride'])"></textarea>
+    </div>
+
+    <h3>3. Symbolic Object Analysis</h3>
+    <div class="q-item" style="border-bottom:none;">
+        <p>In Paragraph 4, Julian notes that the heavy brass pocket watch belonged to someone who understood time was a "companion," not an "obstacle." What does the pocket watch symbolize in this story compared to Vance's smartwatch?</p>
+        <div id="tags-q4">
+            Target concepts: 
+            <span class="word-tag" id="tag-q4-time">time/history</span>
+            <span class="word-tag" id="tag-q4-care">care/connection</span>
+        </div>
+        <textarea id="ta-q4" placeholder="Type your analysis here..." oninput="checkWords('q4', ['time', 'history', 'care', 'connection', 'meaning', 'past'])"></textarea>
+    </div>
+
+    <button id="submitBtn" onclick="gradeAndTurnIn()">Turn In Analysis</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbweCu5k2nJERb1W7RLEbOYAZAHlB72KI6i3aatc_oybpfanfDRAoGD1JeKjaYg9EJlM/exec"; 
+    const ACTIVITY_NAME = "WIN Comp G2: The Master's Timing";
+    const dropdownAnswers = ["speed", "care"];
+
+    function checkWords(qId, words) {
+        const text = document.getElementById(`ta-${qId}`).value.toLowerCase();
+        words.forEach(w => {
+            document.querySelectorAll(`.word-tag[id^="tag-${qId}"]`).forEach(tag => {
+                if(tag.textContent.includes(w.split('/')[0]) || text.includes(w)) {
+                    if (text.includes(w)) tag.classList.add('found');
+                }
+            });
+        });
+    }
+
+    function gradeAndTurnIn() {
+        const name = document.getElementById('studentName').value.trim();
+        if (!name) { alert("Please enter your name before turning in!"); return; }
+
+        let score = 0;
+        for(let i=1; i<=2; i++) {
+            const el = document.getElementById(`q${i}`);
+            el.classList.remove('correct', 'incorrect');
+            if(el.value === dropdownAnswers[i-1]) { el.classList.add('correct'); score++; }
+            else { el.classList.add('incorrect'); }
+        }
+
+        let tagsFound = 0;
+        let totalTags = document.querySelectorAll('.word-tag').length;
+        document.querySelectorAll('.word-tag').forEach(tag => {
+            if(tag.classList.contains('found')) { tagsFound++; score++; }
+        });
+
+        const totalPoints = dropdownAnswers.length + totalTags;
+        let percentage = Math.round((score / totalPoints) * 100);
+        if (percentage > 100) percentage = 100;
+        
+        const res = document.getElementById('results');
+        const btn = document.getElementById('submitBtn');
+        
+        res.style.display = 'block';
+        res.style.background = '#eff6ff';
+        res.style.color = '#1e3a8a';
+        res.innerHTML = `Response recorded. Computing score (${percentage}%).<br><em>Turning in to Google Drive...</em>`;
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST", mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name: name, activity: ACTIVITY_NAME, score: percentage + "%" })
+        }).then(() => {
+            res.style.background = '#dcfce7'; res.style.color = '#166534';
+            res.innerHTML = `Proficiency Score: ${percentage}%<br><strong>✅ Turned In Successfully!</strong>`;
+        }).catch(err => {
+            res.style.background = '#fee2e2'; res.style.color = '#991b1b';
+            res.innerHTML = `<strong>❌ Error turning in. Please try again.</strong>`;
+            btn.disabled = false;
+        });
+    }
+</script>
+</body>
+</html>
